@@ -5,10 +5,13 @@ Proprietary and confidential.
 Written by Aravinth Raj R <aravinthr235@gmail.com>, 2025.
 */
 
+import {useTheme} from './hooks';
+
 const App = () => {
+  const theme = useTheme();
   return (
     <>
-    <div>
+    <div style={{backgroundColor:theme.colors.text}}>
        <div>Hello</div>
     </div>
   </>
