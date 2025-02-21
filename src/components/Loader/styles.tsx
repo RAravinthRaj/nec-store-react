@@ -42,12 +42,16 @@ export const LottieLoader = styled(Lottie)<{ $useModalLoader: boolean }>`
   }
 `;
 
-export const LoadingText = styled.div<{ $useModalLoader: boolean }>`
+export const LoadingText = styled.div<{
+  $useModalLoader: boolean;
+  $fontFamily: string;
+}>`
   margin: ${(props) => (props?.$useModalLoader ? "0 0 0 10px" : "-50px 0 0 0")};
   display: flex;
   justify-content: center;
   align-items: center;
   font-weight: 500;
+  font-family: ${(props) => props?.$fontFamily};
   font-size: ${(props) => (props?.$useModalLoader ? "16px" : "18px")};
   letter-spacing: 0.2px;
   white-space: pre-line;

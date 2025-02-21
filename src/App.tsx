@@ -6,11 +6,12 @@ Written by Aravinth Raj R <aravinthr235@gmail.com>, 2025.
 */
 import { Loader } from "./components";
 import { ThemeProvider } from "./hooks";
+import { SignIn } from "./pages";
 
 const App = () => {
   return (
     <ThemeProvider>
-      <Loader useModalLoader={false} />
+      <SignIn />
     </ThemeProvider>
   );
 };
