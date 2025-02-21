@@ -4,124 +4,57 @@ Unauthorized copying of this file, via any medium, is strictly prohibited.
 Proprietary and confidential.  
 Written by Aravinth Raj R <aravinthr235@gmail.com>, 2025.
 */
-import styled, { keyframes, css } from "styled-components";
+import styled from "styled-components";
+import Lottie from "react-lottie-player";
+import { Modal } from "react-bootstrap";
 
-export const circleOuterAnimation = keyframes`
-  0% { stroke-dashoffset: 25; }
-  25% { stroke-dashoffset: 0; }
-  65% { stroke-dashoffset: 301; }
-  80% { stroke-dashoffset: 276; }
-  100% { stroke-dashoffset: 276; }
-`;
-
-export const circleMiddleAnimation = keyframes`
-  0% { stroke-dashoffset: 17; }
-  25% { stroke-dashoffset: 0; }
-  65% { stroke-dashoffset: 204; }
-  80% { stroke-dashoffset: 187; }
-  100% { stroke-dashoffset: 187; }
-`;
-
-export const circleInnerAnimation = keyframes`
-  0% { stroke-dashoffset: 9; }
-  25% { stroke-dashoffset: 0; }
-  65% { stroke-dashoffset: 106; }
-  80% { stroke-dashoffset: 97; }
-  100% { stroke-dashoffset: 97; }
-`;
-
-export const textAnimation = keyframes`
-  0% { clip-path: inset(0 100% 0 0); }
-  50% { clip-path: inset(0); }
-  100% { clip-path: inset(0 0 0 100%); }
-`;
-
-export const LoaderWrapper = styled.div<{
-  $primary: string;
-  $secondary: string;
-}>`
-  --background: ${({ $secondary }) => $secondary};
-  --front-color: ${({ $primary }) => $primary};
-  --back-color: #c3c8de;
-  --text-color: #414856;
-  width: 100px;
-  height: 100px;
-  border-radius: 50px;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+export const LoaderMainContainer = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
-  text-align: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  padding: 20px;
 `;
 
-export const SvgContainer = styled.svg`
-  position: absolute;
+export const ModalContainer = styled(Modal)`
+  background-color: rgba(0, 0, 0, 0.4);
+`;
+
+export const ModalInnerContainer = styled.div<{ $bgColor: string }>`
+  background-color: ${(props) => props?.$bgColor};
+  border-radius: 5px;
   display: flex;
-  justify-content: center;
+  flex-direction: row;
   align-items: center;
+  justify-content: center;
+  padding: 10px;
 `;
 
-export const Circle = styled.circle<{ $variant: string; $size: string }>`
-  position: absolute;
-  fill: none;
-  stroke-width: 6px;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-  transform: rotate(-100deg);
-  transform-origin: center;
-  stroke: ${({ $variant }) =>
-    $variant === "back" ? "var(--back-color)" : "var(--front-color)"};
-  stroke-dasharray: ${({ $size }) =>
-    $size === "outer"
-      ? "62.75 188.25"
-      : $size === "middle"
-      ? "42.5 127.5"
-      : "22 66"};
-  animation: ${({ $size, $variant }) =>
-    css`
-      ${$variant === "back"
-        ? $size === "outer"
-          ? circleOuterAnimation
-          : $size === "middle"
-          ? circleMiddleAnimation
-          : circleInnerAnimation
-        : $size === "outer"
-        ? css`
-            ${circleOuterAnimation} 1.8s ease infinite 0.15s
-          `
-        : $size === "middle"
-        ? css`
-            ${circleMiddleAnimation} 1.8s ease infinite 0.1s
-          `
-        : css`
-            ${circleInnerAnimation} 1.8s ease infinite 0.05s
-          `}
-    `};
-  animation-duration: 1.8s;
-  animation-timing-function: ease;
-  animation-iteration-count: infinite;
+export const LottieLoader = styled(Lottie)<{ $useModalLoader: boolean }>`
+  width: ${(props) => (props?.$useModalLoader ? "100px" : "400px")};
+  height: ${(props) => (props?.$useModalLoader ? "100px" : "400px")};
+
+  @media (max-width: 576px) {
+    width: ${(props) => (props?.$useModalLoader ? "100px" : "300px")};
+    height: ${(props) => (props?.$useModalLoader ? "100px" : "300px")};
+  }
 `;
 
-export const Text = styled.div`
-  position: absolute;
-  bottom: -30px;
-  white-space: nowrap;
+export const LoadingText = styled.div<{ $useModalLoader: boolean }>`
+  margin: ${(props) => (props?.$useModalLoader ? "0 0 0 10px" : "-50px 0 0 0")};
   display: flex;
   justify-content: center;
   align-items: center;
   font-weight: 500;
-  font-size: 18px;
+  font-size: ${(props) => (props?.$useModalLoader ? "16px" : "18px")};
   letter-spacing: 0.2px;
-  color: var(--text-color);
-  &::after {
-    content: attr(data-text);
-    color: var(--front-color);
-    animation: ${textAnimation} 3.6s ease infinite;
-    position: absolute;
-    left: 0;
+  white-space: pre-line;
+  text-align: center;
+
+  @media (max-width: 576px) {
+    margin: ${(props) =>
+      props?.$useModalLoader ? "0 0 0 10px" : "-30px 0 0 0"};
   }
 `;
