@@ -16,6 +16,7 @@ export const theme = {
     white: "#ffffff",
     black: "#000000",
     backGround: "#F1F0EC",
+    textsecondary: "#D9D9D9",
   },
   fonts: {
     sourceSerifPro: "Source Serif Pro",
