@@ -10,6 +10,7 @@ import * as S from "./styles";
 import { OTPInput } from "../Otp";
 import { toast } from "react-toastify";
 import { SIGNIN_CONFIG } from "../../config";
+import { Link } from "react-router-dom";
 
 export const SignInForm = () => {
   const theme = useTheme();
@@ -128,10 +129,12 @@ export const SignInForm = () => {
         <S.SignUpSubText $textColor={theme.colors.textSecondary}>
           {SIGNIN_CONFIG.signUpText}
           {"  "}
-          <S.SignUpBold $textColor={theme.colors.primary}>
-            {"  "}
-            {SIGNIN_CONFIG.signUpDirect}
-          </S.SignUpBold>
+          <Link to="/signup">
+            <S.SignUpBold $textColor={theme.colors.primary}>
+              {"  "}
+              {SIGNIN_CONFIG.signUpDirect}
+            </S.SignUpBold>
+          </Link>
         </S.SignUpSubText>
       </S.SignUpContainer>
     );

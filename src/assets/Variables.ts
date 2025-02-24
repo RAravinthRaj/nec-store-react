@@ -6,6 +6,7 @@ Written by Aravinth Raj R <aravinthr235@gmail.com>, 2025.
 */
 import loader from "../assets/lotties/loader.json";
 import signInBgImage from "../assets/images/signIn.png";
+import signUpBgImage from "../assets/images/SignUp.png";
 import logo from "../assets/images/logo.png";
 
 export const theme = {
@@ -22,6 +23,7 @@ export const theme = {
   },
   images: {
     signInBgImage,
+    signUpBgImage,
     logo,
   },
   lotties: {

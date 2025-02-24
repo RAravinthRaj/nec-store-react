@@ -6,12 +6,12 @@ Written by Aravinth Raj R <aravinthr235@gmail.com>, 2025.
 */
 import { Toaster } from "./components";
 import { ThemeProvider } from "./hooks";
-import { SignIn } from "./pages";
+import { Navigator } from "./navigator";
 
 const App = () => {
   return (
     <ThemeProvider>
-      <SignIn />
+      <Navigator />
       <Toaster />
     </ThemeProvider>
   );
