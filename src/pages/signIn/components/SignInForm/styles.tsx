@@ -143,7 +143,7 @@ export const SignUpContainer = styled.div`
   }
 `;
 
-export const SignUpSubText = styled.h6<{ $textColor: string }>`
+export const SignUpSubText = styled.div<{ $textColor: string }>`
   color: ${(props) => props?.$textColor};
 `;
 

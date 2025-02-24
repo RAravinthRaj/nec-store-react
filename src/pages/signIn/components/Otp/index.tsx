@@ -44,7 +44,7 @@ export const OTPInput = ({ length = 6, onChange }: OTPInputProps) => {
     <S.OtpContainer>
       {Array.from({ length }).map((_, index) => (
         <S.OtpInput
-          $bgColor={theme.colors.textSecondary}
+          $bgColor={theme.colors.OTPBoxColor}
           $activeColor={theme.colors.primary}
           key={index}
           maxLength={1}

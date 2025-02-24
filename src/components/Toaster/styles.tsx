@@ -9,4 +9,12 @@ import { ToastContainer } from "react-toastify";
 
 export const Toaster = styled(ToastContainer)`
   font-size: 14px;
+
+  @media (max-width: 576px) {
+    width: 60%;
+    font-size: 12px;
+    padding: 5px;
+    margin-left: auto;
+    margin-top: 5%;
+  }
 `;

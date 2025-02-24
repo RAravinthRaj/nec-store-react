@@ -16,6 +16,7 @@ export const SignInForm = () => {
   const [email, setEmail] = useState("");
   const [OTPVisible, setOTPVisible] = useState(false);
   const [seconds, setSeconds] = useState(0);
+  const [read, setRead] = useState(false);
 
   useEffect(() => {
     if (seconds <= 0) {
@@ -33,8 +34,9 @@ export const SignInForm = () => {
   const _onSubmitEmail = () => {
     if (email === "") {
       toast.info("Please enter your Email.");
-    } else {
+    } else if (!OTPVisible) {
       setOTPVisible(true);
+      setRead(true);
       setSeconds(30);
       toast.success(`A OTP has been sent to the email ${email}.`);
     }
@@ -49,8 +51,8 @@ export const SignInForm = () => {
     return (
       <S.HeaderContainer>
         <S.HeaderTitle>{SIGNIN_CONFIG.headerTitle}</S.HeaderTitle>
-        <S.HeaderSubtitle $textColor={"#707070"}>
-          Good to See you again
+        <S.HeaderSubtitle $textColor={theme.colors.textSecondary}>
+          {SIGNIN_CONFIG.headerSubTitle}
         </S.HeaderSubtitle>
       </S.HeaderContainer>
     );
@@ -64,6 +66,7 @@ export const SignInForm = () => {
           type="email"
           placeholder="Email ID"
           onChange={(e) => setEmail(e.target.value)}
+          readOnly={read}
         />
       </S.InputWrapper>
     );
@@ -100,7 +103,7 @@ export const SignInForm = () => {
               $textColor={theme.colors.primary}
               onClick={() => _resetOTP()}
             >
-              Resend OTP
+              {SIGNIN_CONFIG.resendTitle}
             </S.SignUpBold>
           </S.ResendContainer>
         );
@@ -109,7 +112,8 @@ export const SignInForm = () => {
       return (
         <S.ResendContainer>
           <S.Resend>
-            Resend OTP in 00 : {seconds < 10 ? `0${seconds}` : seconds}
+            {SIGNIN_CONFIG.resendTimer}
+            {seconds < 10 ? `0${seconds}` : seconds}
           </S.Resend>
         </S.ResendContainer>
       );
@@ -121,11 +125,12 @@ export const SignInForm = () => {
   const _renderFooter = () => {
     return (
       <S.SignUpContainer>
-        <S.SignUpSubText $textColor={"#707070"}>
-          New to NEC Store?{" "}
+        <S.SignUpSubText $textColor={theme.colors.textSecondary}>
+          {SIGNIN_CONFIG.signUpText}
+          {"  "}
           <S.SignUpBold $textColor={theme.colors.primary}>
-            {" "}
-            Sign Up
+            {"  "}
+            {SIGNIN_CONFIG.signUpDirect}
           </S.SignUpBold>
         </S.SignUpSubText>
       </S.SignUpContainer>
@@ -138,8 +143,9 @@ export const SignInForm = () => {
       {_renderEmail()}
       {_renderOTP()}
       {_renderResend()}
-      {_renderButton(OTPVisible ? "Sign In" : "Get OTP", () =>
-        _onSubmitEmail()
+      {_renderButton(
+        OTPVisible ? SIGNIN_CONFIG.signInText : SIGNIN_CONFIG.getOTPText,
+        () => _onSubmitEmail()
       )}
       {_renderFooter()}
     </S.FormMainContainer>

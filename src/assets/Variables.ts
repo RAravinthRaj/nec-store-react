@@ -13,10 +13,9 @@ export const theme = {
     primary: "#0424C8",
     secondary: "#207CC9",
     tertiary: "#A0C4FF",
-    white: "#ffffff",
-    black: "#000000",
     backGround: "#F1F0EC",
-    textSecondary: "#D9D9D9",
+    textSecondary: "#707070",
+    OTPBoxColor: "#D9D9D9",
   },
   fonts: {
     sourceSerifPro: "Source Serif Pro",
