@@ -4,5 +4,9 @@ Unauthorized copying of this file, via any medium, is strictly prohibited.
 Proprietary and confidential.  
 Written by Aravinth Raj R <aravinthr235@gmail.com>, 2025.
 */
-export * from "./Loader";
-export * from "./Toaster";
+import styled from "styled-components";
+import { ToastContainer } from "react-toastify";
+
+export const Toaster = styled(ToastContainer)`
+  font-size: 14px;
+`;

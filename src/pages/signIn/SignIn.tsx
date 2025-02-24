@@ -4,13 +4,12 @@ Unauthorized copying of this file, via any medium, is strictly prohibited.
 Proprietary and confidential.  
 Written by Aravinth Raj R <aravinthr235@gmail.com>, 2025.
 */
-
-import { Container } from "./components";
+import { ContainerComp } from "./components";
 
 const SignIn = () => {
   return (
     <>
-      <Container />
+      <ContainerComp />
     </>
   );
 };

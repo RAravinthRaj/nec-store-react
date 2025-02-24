@@ -8,19 +8,20 @@ import React, { useRef } from "react";
 import * as S from "./styles";
 import { useTheme } from "../../../../hooks";
 
-type OTPInputProps = {
+interface OTPInputProps {
   length?: number;
   onChange: (otp: string) => void;
-};
+}
 
 type InputRef = HTMLInputElement | null;
 type ChangeEvent = React.ChangeEvent<HTMLInputElement>;
 type KeyDownEvent = React.KeyboardEvent<HTMLInputElement>;
 
-const OTPInput: React.FC<OTPInputProps> = ({ length = 6, onChange }) => {
+export const OTPInput = ({ length = 6, onChange }: OTPInputProps) => {
+  const theme = useTheme();
   const inputs = useRef<InputRef[]>([]);
 
-  const handleChange = (index: number, e: ChangeEvent) => {
+  const _handleChange = (index: number, e: ChangeEvent) => {
     const value = e.target.value;
     if (/^[0-9]$/.test(value)) {
       if (index < length - 1) {
@@ -33,30 +34,27 @@ const OTPInput: React.FC<OTPInputProps> = ({ length = 6, onChange }) => {
     onChange(otp);
   };
 
-  const handleKeyDown = (index: number, e: KeyDownEvent) => {
+  const _handleKeyDown = (index: number, e: KeyDownEvent) => {
     if (e.key === "Backspace" && !inputs.current[index]?.value && index > 0) {
       inputs.current[index - 1]?.focus();
     }
   };
 
-  const theme = useTheme();
-
   return (
     <S.OtpContainer>
       {Array.from({ length }).map((_, index) => (
         <S.OtpInput
-          $bgColor={theme.colors.textsecondary}
+          $bgColor={theme.colors.textSecondary}
+          $activeColor={theme.colors.primary}
           key={index}
           maxLength={1}
           ref={(el: HTMLInputElement | null): void => {
             inputs.current[index] = el;
           }}
-          onChange={(e) => handleChange(index, e)}
-          onKeyDown={(e) => handleKeyDown(index, e)}
+          onChange={(e) => _handleChange(index, e)}
+          onKeyDown={(e) => _handleKeyDown(index, e)}
         />
       ))}
     </S.OtpContainer>
   );
 };
-
-export default OTPInput;

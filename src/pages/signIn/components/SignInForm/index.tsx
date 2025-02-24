@@ -7,13 +7,14 @@ Written by Aravinth Raj R <aravinthr235@gmail.com>, 2025.
 import { useTheme } from "../../../../hooks";
 import { useState, useEffect } from "react";
 import * as S from "./styles";
-import OTPInput from "../Otp";
+import { OTPInput } from "../Otp";
 import { toast } from "react-toastify";
+import { SIGNIN_CONFIG } from "../../config";
 
 export const SignInForm = () => {
   const theme = useTheme();
-  const [OtpBox, setOtpBox] = useState(false);
-  const [mail, setmail] = useState("");
+  const [email, setEmail] = useState("");
+  const [OTPVisible, setOTPVisible] = useState(false);
   const [seconds, setSeconds] = useState(0);
 
   useEffect(() => {
@@ -29,80 +30,118 @@ export const SignInForm = () => {
     return () => clearInterval(timer);
   }, [seconds]);
 
-  const handleValues = () => {
-    if (mail !== "") {
-      setOtpBox(true);
-      setSeconds(30);
-      toast.success(`OTP has sent to ${mail}`, { style: { fontSize: "14px" } });
+  const _onSubmitEmail = () => {
+    if (email === "") {
+      toast.info("Please enter your Email.");
     } else {
-      toast.error("Please Enter Your Mail", { style: { fontSize: "14px" } });
+      setOTPVisible(true);
+      setSeconds(30);
+      toast.success(`A OTP has been sent to the email ${email}.`);
     }
   };
 
-  const reset = () => {
+  const _resetOTP = () => {
     setSeconds(30);
-    toast.info("OTP has been resend to your mail", {
-      style: { fontSize: "14px" },
-    });
+    toast.success(`A OTP has been sent to the email ${email}.`);
+  };
+
+  const _renderHeader = () => {
+    return (
+      <S.HeaderContainer>
+        <S.HeaderTitle>{SIGNIN_CONFIG.headerTitle}</S.HeaderTitle>
+        <S.HeaderSubtitle $textColor={"#707070"}>
+          Good to See you again
+        </S.HeaderSubtitle>
+      </S.HeaderContainer>
+    );
+  };
+
+  const _renderEmail = () => {
+    return (
+      <S.InputWrapper $bgColor={theme.colors.backGround} $active={!OTPVisible}>
+        <S.MailIcon $bgColor={theme.colors.primary} />
+        <S.EmailInput
+          type="email"
+          placeholder="Email ID"
+          onChange={(e) => setEmail(e.target.value)}
+        />
+      </S.InputWrapper>
+    );
+  };
+
+  const _renderButton = (title: string, onClick: () => void) => {
+    return (
+      <S.Button $bgColor={theme.colors.primary} onClick={onClick}>
+        {title}
+      </S.Button>
+    );
+  };
+
+  const _renderOTP = () => {
+    if (OTPVisible) {
+      return (
+        <OTPInput
+          onChange={function (otp: string): void {
+            console.log("Here is the OTP", otp);
+          }}
+        />
+      );
+    }
+
+    return null;
+  };
+
+  const _renderResend = () => {
+    if (OTPVisible) {
+      if (seconds === 0) {
+        return (
+          <S.ResendContainer>
+            <S.SignUpBold
+              $textColor={theme.colors.primary}
+              onClick={() => _resetOTP()}
+            >
+              Resend OTP
+            </S.SignUpBold>
+          </S.ResendContainer>
+        );
+      }
+
+      return (
+        <S.ResendContainer>
+          <S.Resend>
+            Resend OTP in 00 : {seconds < 10 ? `0${seconds}` : seconds}
+          </S.Resend>
+        </S.ResendContainer>
+      );
+    }
+
+    return null;
+  };
+
+  const _renderFooter = () => {
+    return (
+      <S.SignUpContainer>
+        <S.SignUpSubText $textColor={"#707070"}>
+          New to NEC Store?{" "}
+          <S.SignUpBold $textColor={theme.colors.primary}>
+            {" "}
+            Sign Up
+          </S.SignUpBold>
+        </S.SignUpSubText>
+      </S.SignUpContainer>
+    );
   };
 
   return (
-    <S.SignInForm>
-      <S.Text $textColor={theme.colors.black}>Sign In</S.Text>
-      <S.SubText $textColor={theme.colors.black}>
-        Good to See you again
-      </S.SubText>
-      <S.EForm>
-        <S.InputWrapper $bgColor={theme.colors.backGround} $edit={OtpBox}>
-          <S.MailIcon $bgColor={theme.colors.primary} />
-          <S.Input
-            type="email"
-            placeholder="Email ID"
-            $bgColor={theme.colors.backGround}
-            onChange={(e) => setmail(e.target.value)}
-          />
-        </S.InputWrapper>
-        {!OtpBox && (
-          <>
-            <S.Button
-              $bgColor={theme.colors.primary}
-              onClick={() => handleValues()}
-            >
-              Get OTP
-            </S.Button>
-          </>
-        )}
-        {OtpBox && (
-          <>
-            <OTPInput
-              onChange={function (otp: string): void {
-                throw new Error("Function not implemented.");
-              }}
-            />
-            <S.ResendFrame>
-              {seconds === 0 ? (
-                <S.SignUpBold
-                  $textColor={theme.colors.primary}
-                  onClick={() => reset()}
-                >
-                  Resend OTP
-                </S.SignUpBold>
-              ) : (
-                <S.Resend $textColor={theme.colors.black}>
-                  Resend OTP in 00:{seconds < 10 ? `0${seconds}` : seconds}
-                </S.Resend>
-              )}
-            </S.ResendFrame>
-            <S.Button $bgColor={theme.colors.primary}>Sign In</S.Button>
-          </>
-        )}
-        <S.SignUpText>
-          <S.SignUpSubText $textColor={theme.colors.black}>
-            New to NEC Store ?
-          </S.SignUpSubText>
-          <S.SignUpBold $textColor={theme.colors.primary}>Sign Up</S.SignUpBold>
-        </S.SignUpText>
-      </S.EForm>
-    </S.SignInForm>
+    <S.FormMainContainer>
+      {_renderHeader()}
+      {_renderEmail()}
+      {_renderOTP()}
+      {_renderResend()}
+      {_renderButton(OTPVisible ? "Sign In" : "Get OTP", () =>
+        _onSubmitEmail()
+      )}
+      {_renderFooter()}
+    </S.FormMainContainer>
   );
 };
