@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { GoMail } from "react-icons/go";
 import { HiOutlineUser } from "react-icons/hi2";
+import { LiaUniversitySolid } from "react-icons/lia";
 import { SlBadge } from "react-icons/sl";
 
 export const FormMainContainer = styled.div`
@@ -86,6 +87,12 @@ export const RollNumberIcon = styled(SlBadge)<{ $bgColor: string }>`
   color: ${(props) => props?.$bgColor};
   font-size: 20px;
   margin-right: 15px;
+`;
+
+export const DepartmentIcon = styled(LiaUniversitySolid)<{ $bgColor: string }>`
+  color: ${(props) => props?.$bgColor};
+  font-size: 24px;
+  margin-right: 11px;
   margin-top: 1px;
 `;
 
@@ -162,5 +169,11 @@ export const SignInBold = styled.h6<{ $textColor: string }>`
 
   &:hover::after {
     width: 100%;
+  }
+`;
+
+export const Scroll = styled.div`
+  @media (max-width: 576px) {
+    overflow-y: auto;
   }
 `;

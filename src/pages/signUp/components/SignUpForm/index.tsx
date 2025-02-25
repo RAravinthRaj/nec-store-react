@@ -5,22 +5,32 @@ Proprietary and confidential.
 Written by Aravinth Raj R <aravinthr235@gmail.com>, 2025.
 */
 import { useTheme } from "../../../../hooks";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import * as S from "./styles";
 import { toast } from "react-toastify";
 import { SIGNUP_CONFIG } from "../../config";
 import { Link, useNavigate } from "react-router-dom";
+import { DropdownDepartment } from "../DropdownDepartment";
+
+export interface ISignUpForm {}
 
 export const SignUpForm = () => {
   const theme = useTheme();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [rollNumber, setRollNumber] = useState("");
+  const [selectedDepartment, setSelectedDepartment] = useState<string | null>(
+    "Department"
+  );
 
   const navigate = useNavigate();
-
   const _checkvalidity = () => {
-    if (name !== "" && email !== "" && rollNumber !== "") {
+    if (
+      name !== "" &&
+      email !== "" &&
+      rollNumber !== "" &&
+      selectedDepartment !== "Department"
+    ) {
       toast.success("Signed Up Successfully !!!");
       navigate("/");
     } else {
@@ -41,7 +51,7 @@ export const SignUpForm = () => {
 
   const _getDetails = () => {
     return (
-      <>
+      <div>
         <S.InputWrapper $bgColor={theme.colors.backGround}>
           <S.UserIcon $bgColor={theme.colors.primary} />
           <S.Input
@@ -67,14 +77,13 @@ export const SignUpForm = () => {
           />
         </S.InputWrapper>
         <S.InputWrapper $bgColor={theme.colors.backGround}>
-          <S.MailIcon $bgColor={theme.colors.primary} />
-          <S.Input
-            type="input"
-            placeholder="Department"
-            onChange={(e) => setEmail(e.target.value)}
+          <S.DepartmentIcon $bgColor={theme.colors.primary} />
+          <DropdownDepartment
+            selectedDepartment={selectedDepartment}
+            setSelectedDepartment={setSelectedDepartment}
           />
         </S.InputWrapper>
-      </>
+      </div>
     );
   };
 
@@ -109,9 +118,11 @@ export const SignUpForm = () => {
   return (
     <S.FormMainContainer>
       {_renderHeader()}
-      {_getDetails()}
-      {_renderButton(SIGNUP_CONFIG.headerTitle)}
-      {_renderFooter()}
+      <S.Scroll>
+        {_getDetails()}
+        {_renderButton(SIGNUP_CONFIG.headerTitle)}
+        {_renderFooter()}
+      </S.Scroll>
     </S.FormMainContainer>
   );
 };

@@ -8,6 +8,8 @@ import { useTheme } from "../../../../hooks";
 import { SignUpForm } from "../SignUpForm";
 import * as S from "./styles";
 
+export interface IContainerComp {}
+
 export const ContainerComp = () => {
   const theme = useTheme();
 

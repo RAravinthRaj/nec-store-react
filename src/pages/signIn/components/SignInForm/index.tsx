@@ -12,6 +12,8 @@ import { toast } from "react-toastify";
 import { SIGNIN_CONFIG } from "../../config";
 import { Link } from "react-router-dom";
 
+export interface ISignInForm {}
+
 export const SignInForm = () => {
   const theme = useTheme();
   const [email, setEmail] = useState("");
