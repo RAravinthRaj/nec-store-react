@@ -10,7 +10,7 @@ import * as S from "./styles";
 
 export interface IContainerComp {}
 
-export const ContainerComp = () => {
+export const ContainerComp = ({}: IContainerComp) => {
   const theme = useTheme();
 
   const _renderImageComp = () => {

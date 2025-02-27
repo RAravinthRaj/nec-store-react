@@ -6,6 +6,8 @@ Written by Aravinth Raj R <aravinthr235@gmail.com>, 2025.
 */
 import { SignIn } from "../pages";
 import { SignUp } from "../pages";
+import { RoleSelection } from "../pages";
+
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 export const Navigator = () => {
@@ -14,6 +16,7 @@ export const Navigator = () => {
       <Routes>
         <Route path="/" element={<SignIn />} />
         <Route path="/signup" element={<SignUp />} />
+        <Route path="/roles" element={<RoleSelection />} />
       </Routes>
     </BrowserRouter>
   );

@@ -14,7 +14,7 @@ import { DropdownDepartment } from "../DropdownDepartment";
 
 export interface ISignUpForm {}
 
-export const SignUpForm = () => {
+export const SignUpForm = ({}: ISignUpForm) => {
   const theme = useTheme();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");

@@ -11,4 +11,5 @@ export const SIGNUP_CONFIG = {
   resendTimer: "Resend OTP in 00 : ",
   signInText: "Already a Customer ? ",
   signInDirect: "Sign In",
+  departments: ["CSE", "IT", "MECH", "AI&DS", "Civil", "EEE", "ECE"],
 };

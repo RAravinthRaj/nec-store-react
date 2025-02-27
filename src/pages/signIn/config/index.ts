@@ -9,8 +9,10 @@ export const SIGNIN_CONFIG = {
   headerSubTitle: "Good to See you again",
   resendTitle: "Resend OTP",
   resendTimer: "Resend OTP in 00 : ",
-  signUpText: "New to NEC Store?",
-  signUpDirect: "Sign Up",
+  signUpText: "New to NEC Store?   ",
+  signUpDirect: "   Sign Up",
   signInText: "Sign In",
   getOTPText: "Get OTP",
+  checkEmailToast: "Please enter your Email.",
+  OTPSentText: "A OTP has been sent to the email ",
 };

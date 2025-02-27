@@ -7,6 +7,7 @@ Written by Aravinth Raj R <aravinthr235@gmail.com>, 2025.
 import * as S from "./styles";
 import { useTheme } from "../../../../hooks";
 import Dropdown from "react-bootstrap/Dropdown";
+import { SIGNUP_CONFIG } from "../../config";
 
 export interface IDropDownDepartment {
   selectedDepartment: string | null;
@@ -17,7 +18,7 @@ export const DropdownDepartment = ({
   selectedDepartment,
   setSelectedDepartment,
 }: IDropDownDepartment) => {
-  const departments = ["CSE", "IT", "MECH", "AI&DS", "Civil", "EEE", "ECE"];
+  const departments = SIGNUP_CONFIG.departments;
   const theme = useTheme();
 
   const handleSelect = (eventKey: string | null) => {

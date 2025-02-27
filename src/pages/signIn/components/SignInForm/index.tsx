@@ -10,16 +10,20 @@ import * as S from "./styles";
 import { OTPInput } from "../Otp";
 import { toast } from "react-toastify";
 import { SIGNIN_CONFIG } from "../../config";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export interface ISignInForm {}
 
-export const SignInForm = () => {
+export const SignInForm = ({}: ISignInForm) => {
   const theme = useTheme();
   const [email, setEmail] = useState("");
   const [OTPVisible, setOTPVisible] = useState(false);
   const [seconds, setSeconds] = useState(0);
   const [read, setRead] = useState(false);
+  const [otp, SetOtp] = useState("");
+
+  const navigate = useNavigate();
+  const roles = ["Admin", "Retailer", "Customer"];
 
   useEffect(() => {
     if (seconds <= 0) {
@@ -36,18 +40,22 @@ export const SignInForm = () => {
 
   const _onSubmitEmail = () => {
     if (email === "") {
-      toast.info("Please enter your Email.");
+      toast.info(SIGNIN_CONFIG.checkEmailToast);
     } else if (!OTPVisible) {
       setOTPVisible(true);
       setRead(true);
       setSeconds(30);
-      toast.success(`A OTP has been sent to the email ${email}.`);
+      toast.success(`${SIGNIN_CONFIG.OTPSentText}${email}`);
+    } else if (OTPVisible && otp === "111111" && roles.length > 1) {
+      return navigate("/roles");
+    } else {
+      toast.warn("You have Entered wrong OTP");
     }
   };
 
   const _resetOTP = () => {
     setSeconds(30);
-    toast.success(`A OTP has been sent to the email ${email}.`);
+    toast.success(`${SIGNIN_CONFIG.OTPSentText}${email}`);
   };
 
   const _renderHeader = () => {
@@ -88,7 +96,7 @@ export const SignInForm = () => {
       return (
         <OTPInput
           onChange={function (otp: string): void {
-            console.log("Here is the OTP", otp);
+            SetOtp(otp);
           }}
         />
       );
@@ -130,10 +138,8 @@ export const SignInForm = () => {
       <S.SignUpContainer>
         <S.SignUpSubText $textColor={theme.colors.textSecondary}>
           {SIGNIN_CONFIG.signUpText}
-          {"  "}
           <Link to="/signup">
             <S.SignUpBold $textColor={theme.colors.primary}>
-              {"  "}
               {SIGNIN_CONFIG.signUpDirect}
             </S.SignUpBold>
           </Link>
