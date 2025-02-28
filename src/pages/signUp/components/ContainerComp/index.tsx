@@ -5,7 +5,7 @@ Proprietary and confidential.
 Written by Aravinth Raj R <aravinthr235@gmail.com>, 2025.
 */
 import { useTheme } from "../../../../hooks";
-import { SignInForm } from "../SignInForm";
+import { SignUpForm } from "../SignUpForm";
 import * as S from "./styles";
 
 export interface IContainerComp {}
@@ -17,7 +17,7 @@ export const ContainerComp = ({}: IContainerComp) => {
     return (
       <S.ImageCompContainer $bgColor={theme.colors.backGround}>
         <S.Logo src={theme.images.logo} />
-        <S.SignInBgImage src={theme.images.signInBgImage} />
+        <S.SignInBgImage src={theme.images.signUpBgImage} />
       </S.ImageCompContainer>
     );
   };
@@ -25,7 +25,7 @@ export const ContainerComp = ({}: IContainerComp) => {
   return (
     <S.MainContainer>
       {_renderImageComp()}
-      <SignInForm />
+      <SignUpForm />
     </S.MainContainer>
   );
 };

@@ -4,6 +4,14 @@ Unauthorized copying of this file, via any medium, is strictly prohibited.
 Proprietary and confidential.  
 Written by Aravinth Raj R <aravinthr235@gmail.com>, 2025.
 */
-export { default as SignIn } from "./signIn/SignIn";
-export { default as SignUp } from "./signUp/SignUp";
-export { default as RoleSelection } from "./RoleSelection/RoleSelection";
+import { ContainerComp } from "./components";
+
+const RoleSelection = () => {
+  return (
+    <>
+      <ContainerComp />
+    </>
+  );
+};
+
+export default RoleSelection;
