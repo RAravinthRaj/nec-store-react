@@ -103,10 +103,8 @@ export const SignUpForm = ({}: ISignUpForm) => {
       <S.SignInContainer>
         <S.SignInSubText $textColor={theme.colors.textSecondary}>
           {SIGNUP_CONFIG.signInText}
-          {"  "}
           <Link to="/">
             <S.SignInBold $textColor={theme.colors.primary}>
-              {"  "}
               {SIGNUP_CONFIG.signInDirect}
             </S.SignInBold>
           </Link>

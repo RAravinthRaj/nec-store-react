@@ -9,7 +9,7 @@ export const SIGNUP_CONFIG = {
   headerSubTitle: "Welcome to NEC Store",
   resendTitle: "Resend OTP",
   resendTimer: "Resend OTP in 00 : ",
-  signInText: "Already a Customer ? ",
-  signInDirect: "Sign In",
+  signInText: "Already a Customer ?  ",
+  signInDirect: "  Sign In",
   departments: ["CSE", "IT", "MECH", "AI&DS", "Civil", "EEE", "ECE"],
 };
