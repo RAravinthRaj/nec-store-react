@@ -7,3 +7,4 @@ Written by Aravinth Raj R <aravinthr235@gmail.com>, 2025.
 export { default as SignIn } from "./signIn/SignIn";
 export { default as SignUp } from "./signUp/SignUp";
 export { default as RoleSelection } from "./RoleSelection/RoleSelection";
+export { default as Products } from "./Products/Products";

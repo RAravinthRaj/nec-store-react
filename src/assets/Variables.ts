@@ -11,6 +11,9 @@ import admin from "../assets/images/admin.png";
 import logo from "../assets/images/logo.png";
 import retailer from "../assets/images/retailer.png";
 import customer from "../assets/images/customer.png";
+import products from "../assets/images/Products.png";
+import orders from "../assets/images/Order.png";
+import sales from "../assets/images/Sales.png";
 
 export const theme = {
   colors: {
@@ -31,6 +34,9 @@ export const theme = {
     admin,
     retailer,
     customer,
+    products,
+    orders,
+    sales,
   },
   lotties: {
     loader,
