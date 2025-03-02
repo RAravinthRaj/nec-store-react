@@ -19,12 +19,27 @@ export const DrawerBox = styled(Box)<{ $bgColor: string }>`
 export const Icon = styled.img<{ $bgColor: string }>`
   height: 16%;
   width: 16%;
+
+  @media (max-width: 768px) {
+    height: 14%;
+    width: 14%;
+  }
 `;
 
 export const Divider = styled.div`
   border: solid 0.5px black;
   width: 85%;
   margin: 0 15px;
+  transform: scaleY(0.1);
+
+  @media (max-width: 768px) {
+    margin: 5px 15px;
+    transform: scaleY(0.1);
+  }
+
+  @media (max-width: 576px) {
+    margin: 0 15px;
+  }
 `;
 
 export const Item = styled(ListItemButton)`
@@ -38,8 +53,22 @@ export const CustomList = styled(List)`
 
 export const ItemText = styled(ListItemText)`
   .MuiTypography-root {
-    font-weight: 600;
+    font-weight: 550;
     font-size: 20px;
+  }
+
+  @media (max-width: 768px) {
+    .MuiTypography-root {
+      font-weight: 550;
+      font-size: 19px;
+    }
+  }
+
+  @media (max-width: 576px) {
+    .MuiTypography-root {
+      font-weight: 550;
+      font-size: 16px;
+    }
   }
 `;
 
@@ -70,4 +99,20 @@ export const ItemContainer = styled(ListItem)<{
         color: ${$hoverbgColor};
       }
       `};
+`;
+
+export const Logo = styled.img`
+  height: 22%;
+  width: 22%;
+  margin-left: -6px;
+`;
+
+export const Title = styled.div`
+  font-size: 18px;
+  font-weight: 600;
+
+  @media (max-width: 576px) {
+    font-weight: 550;
+    font-size: 15px;
+  }
 `;

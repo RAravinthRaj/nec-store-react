@@ -1,22 +1,20 @@
-/* 
-© 2025 Aravinth Raj R. All rights reserved.
-Unauthorized copying of this file, via any medium, is strictly prohibited.
-Proprietary and confidential.  
-Written by Aravinth Raj R <aravinthr235@gmail.com>, 2025.
-*/
-import * as React from "react";
 import Drawer from "@mui/material/Drawer";
-import Button from "@mui/material/Button";
-import { GiHamburgerMenu } from "react-icons/gi";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import * as S from "./styles";
 import { useTheme } from "../../hooks";
 import { useState } from "react";
+import { SIDEDRAW_CONFIG } from "./config";
 
-export const SideDrawer = () => {
-  const [open, setOpen] = React.useState(false);
+export interface ISideDrawer {
+  menu: boolean;
+  toggleMenu: () => void;
+}
+
+export const SideDrawer = ({ menu, toggleMenu }: ISideDrawer) => {
   const isMobile = useMediaQuery("(max-width: 768px)");
+  const isTab = useMediaQuery("(min-width: 559px)");
   const theme = useTheme();
+  console.log(open);
 
   const retailerActions = ["Products", "Orders", "Sales"];
 
@@ -26,18 +24,18 @@ export const SideDrawer = () => {
     setActiveAction((prev) => (prev === role ? null : role));
   };
 
-  const toggleDrawer = (newOpen: boolean) => () => {
-    setOpen(newOpen);
-  };
-
-  const DrawerList = (
-    <S.DrawerBox
-      $bgColor={theme.colors.secondaryBackGround}
-      sx={{ width: isMobile ? 200 : 250 }}
-      role="presentation"
-      onClick={isMobile ? toggleDrawer(false) : undefined}
-    >
+  const _navigationlist = () => {
+    return (
       <S.CustomList>
+        {isMobile && (
+          <div>
+            <S.Item>
+              <S.Logo src={theme.images.logo}></S.Logo>
+              <S.Title>{SIDEDRAW_CONFIG.title}</S.Title>
+            </S.Item>
+            <S.Divider />
+          </div>
+        )}
         {retailerActions.map((text, key) => {
           const currRole: any = text.toLowerCase();
           const isActive = activeAction === text;
@@ -64,24 +62,41 @@ export const SideDrawer = () => {
           );
         })}
       </S.CustomList>
+    );
+  };
+
+  const DrawerList = (
+    <S.DrawerBox
+      $bgColor={theme.colors.secondaryBackGround}
+      sx={{
+        width: isTab ? 250 : 180,
+      }}
+      role="presentation"
+      onClick={isMobile ? toggleMenu : undefined}
+    >
+      {_navigationlist()}
     </S.DrawerBox>
   );
 
   return (
     <div>
       {!isMobile ? (
-        <Drawer open={true} variant="permanent">
+        <Drawer
+          open={true}
+          variant="permanent"
+          PaperProps={{
+            style: {
+              zIndex: 100,
+              marginTop: !isMobile ? "83px" : "0px",
+            },
+          }}
+        >
           {DrawerList}
         </Drawer>
       ) : (
-        <>
-          <Button onClick={toggleDrawer(true)}>
-            <GiHamburgerMenu />
-          </Button>
-          <Drawer open={open} onClose={toggleDrawer(false)}>
-            {DrawerList}
-          </Drawer>
-        </>
+        <Drawer open={menu} onClose={toggleMenu}>
+          {DrawerList}
+        </Drawer>
       )}
     </div>
   );

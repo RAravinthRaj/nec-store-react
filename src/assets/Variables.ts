@@ -14,6 +14,10 @@ import customer from "../assets/images/customer.png";
 import products from "../assets/images/Products.png";
 import orders from "../assets/images/Order.png";
 import sales from "../assets/images/Sales.png";
+import user from "../assets/images/user.png";
+import switchrole from "../assets/images/Change User.png";
+import viewprofile from "../assets/images/dashboard.png";
+import logout from "../assets/images/Logout.png";
 
 export const theme = {
   colors: {
@@ -23,6 +27,7 @@ export const theme = {
     backGround: "#F1F0EC",
     textSecondary: "#707070",
     secondaryBackGround: "#D9D9D9",
+    secondaryOptional: "#9AC4E6",
   },
   fonts: {
     sourceSerifPro: "Source Serif Pro",
@@ -37,6 +42,10 @@ export const theme = {
     products,
     orders,
     sales,
+    user,
+    switchrole,
+    viewprofile,
+    logout,
   },
   lotties: {
     loader,
