@@ -14,11 +14,12 @@ import ListItem from "@mui/material/ListItem";
 export const DrawerBox = styled(Box)<{ $bgColor: string }>`
   height: 100%;
   background-color: ${(props) => props?.$bgColor};
+  position: fixed;
 `;
 
 export const Icon = styled.img<{ $bgColor: string }>`
-  height: 16%;
-  width: 16%;
+  height: 14%;
+  width: 14%;
 
   @media (max-width: 768px) {
     height: 14%;

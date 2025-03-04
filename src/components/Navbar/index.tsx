@@ -19,8 +19,14 @@ export const Navbar = ({}: INavbar) => {
 
   const [menu, setMenu] = useState<boolean>(false);
   const [userMenu, setUserMenu] = useState<boolean>(false);
+  const [activeAction, setActiveAction] = useState<string | null>();
+
+  const handleClick = (role: string) => {
+    setActiveAction((prev) => (prev === role ? null : role));
+  };
 
   const userOptions = ["View Profile", "Switch Role", "LogOut"];
+  const navigationLinks = ["dashboard", "roles", ""];
 
   const toggleMenu = () => {
     setMenu((prevMenu) => !prevMenu);
@@ -70,16 +76,30 @@ export const Navbar = ({}: INavbar) => {
 
   const _userOption = () => {
     return (
-      <S.UserMenu $bgColor={theme.colors.secondaryBackGround}>
-        {userOptions.map((option, key) => {
+      <S.UserMenu
+        $bgColor={theme.colors.secondaryBackGround}
+        $isOpen={userMenu}
+      >
+        {userOptions.map((option, index) => {
+          const isActive = activeAction === option;
           const value = option.replace(/\s+/g, "").toLowerCase();
+          const link = "/" + navigationLinks[index];
           return (
             <div>
-              <S.UserOption>
-                <S.UserIcon src={theme.images[value]}></S.UserIcon>
-                <S.Title>{option}</S.Title>
-              </S.UserOption>
-              <S.Divider />
+              <S.userNavigation
+                to={link}
+                $hoverbgColor={theme.colors.primary}
+                $isActive={isActive}
+                key={option}
+                onClick={() => handleClick(option)}
+              >
+                <S.UserOption>
+                  <S.UserIcon src={theme.images[value]}></S.UserIcon>
+                  <S.Title>{option}</S.Title>
+                </S.UserOption>
+              </S.userNavigation>
+
+              {index < userOptions.length - 1 && <S.Divider />}
             </div>
           );
         })}

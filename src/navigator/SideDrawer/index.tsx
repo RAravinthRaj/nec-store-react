@@ -87,7 +87,7 @@ export const SideDrawer = ({ menu, toggleMenu }: ISideDrawer) => {
           PaperProps={{
             style: {
               zIndex: 100,
-              marginTop: !isMobile ? "83px" : "0px",
+              marginTop: !isMobile ? "73px" : "0px",
             },
           }}
         >
