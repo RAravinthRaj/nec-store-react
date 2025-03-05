@@ -40,8 +40,6 @@ export const MainContainer = styled(Container)`
 
 export const NavbarContainer = styled.div``;
 
-export const ProductContainer = styled.div``;
-
 export const ActionContainer = styled.div`
   display: flex;
   align-items: center;
@@ -104,6 +102,7 @@ export const ButtonContainer = styled.div`
   flex: 1;
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 30px;
 `;
 
@@ -217,6 +216,7 @@ export const UserOption = styled.div`
   align-items: center;
   gap: 10px;
   margin: 0 10px;
+  cursor: pointer;
 `;
 
 export const PlusButtonContainer = styled(FiPlus)<{ $bgColor: string }>`
@@ -296,4 +296,9 @@ export const IconText = styled.div<{ $bgColor: string }>`
 
 export const DropDownMenu = styled(Dropdown.Menu)`
   margin-top: 10px;
+`;
+
+export const ProductContainer = styled.div`
+  display: grid;
+  grid-template-columns: auto auto auto;
 `;

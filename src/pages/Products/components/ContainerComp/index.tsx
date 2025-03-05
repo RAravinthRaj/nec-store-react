@@ -188,6 +188,11 @@ export const ContainerComp = ({}: IContainerComp) => {
     );
   };
 
+  const div = ["df", "dsf", "sd", "sd", "dsfgs", "sdfds"];
+  const _products = () => {
+    return <S.ProductContainer></S.ProductContainer>;
+  };
+
   const _mainContainerItems = () => {
     return (
       <div>
@@ -203,16 +208,17 @@ export const ContainerComp = ({}: IContainerComp) => {
         {openSortedOptions && _sortedOptions()}
         {isMobile && _mobileActionItems()}
         {isMobile && _showMobileButton()}
+        {_products()}
       </div>
     );
   };
 
   return (
-    <S.ProductContainer>
+    <div>
       <S.NavbarContainer>
         <Navbar />
       </S.NavbarContainer>
       <S.MainContainer>{_mainContainerItems()}</S.MainContainer>
-    </S.ProductContainer>
+    </div>
   );
 };

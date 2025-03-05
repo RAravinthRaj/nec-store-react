@@ -4,7 +4,6 @@ Unauthorized copying of this file, via any medium, is strictly prohibited.
 Proprietary and confidential.  
 Written by Aravinth Raj R <aravinthr235@gmail.com>, 2025.
 */
-import Form from "react-bootstrap/Form";
 import Modal from "react-bootstrap/Modal";
 import styled from "styled-components";
 import { RxCross2 } from "react-icons/rx";
@@ -25,8 +24,10 @@ export const ModalContainer = styled(Modal)`
   }
 
   @media (max-width: 576px) {
-    left: 10%;
-    width: 85%;
+    left: 5%;
+    width: 90%;
+    height: 80%;
+    top: 10%;
   }
 `;
 
@@ -42,7 +43,7 @@ export const Header = styled(Modal.Header)``;
 
 export const CloseButton = styled(RxCross2)`
   position: absolute;
-  right: -3%;
+  right: 0.2%;
   transform: translateY(-160%);
   background: none;
   border: none;
@@ -53,6 +54,12 @@ export const CloseButton = styled(RxCross2)`
 
   media (max-width: 768px) {
     transform: translateY(-170%);
+  }
+
+  @media (max-width: 576px) {
+    transform: translateY(-190%);
+    font-size: 25px;
+    postion: fixed;
   }
 `;
 
@@ -66,12 +73,7 @@ export const InputWrapper = styled.div`
   align-items: center;
 
   @media (max-width: 576px) {
-    width: 100%;
-    height: 45px;
-  }
-
-  @media (max-width: 576px) {
-    margin-bottom: 20px;
+    padding: 8px 15px;
   }
 `;
 
@@ -81,19 +83,23 @@ export const Input = styled.input`
   outline: none;
   font-size: 16px;
   flex: 1;
+
+  @media (max-width: 576px) {
+    font-size: 14px;
+  }
 `;
 
-export const FormGrp = styled(Form.Group)`
-  margin: 0 30px;
-`;
-
-export const Icon = styled.div<{}>`
+export const Icon = styled.div`
   font-size: 16px;
   display: flex;
   align-items: center;
 
   &:hover {
     background: none;
+  }
+
+  @media (max-width: 576px) {
+    font-size: 14px;
   }
 `;
 
@@ -129,7 +135,7 @@ export const Button = styled.button<{ $bgColor: string }>`
   }
 
   @media (max-width: 576px) {
-    width: 100%;
+    width: 85%;
     height: 45px;
   }
 `;
@@ -164,18 +170,27 @@ export const CustomDropdown = styled(Dropdown)`
 export const DropDownIcon = styled(SlArrowDown)<{
   $bgColor: string;
 }>`
-  color: black;
+  color: rgba(0, 0, 0, 0.4);
+  postion: fixed;
   font-size: 13px;
-  position: fixed;
-  margin-left: 410px;
+  margin-left: 500px;
 `;
 
 export const IconText = styled.div<{ $bgColor: string }>`
   color: ${(props) => props.$bgColor};
+
+  @media (max-width: 576px) {
+    font-size: 14px;
+  }
 `;
 
 export const DropDownMenu = styled(Dropdown.Menu)`
   margin-left: 280px;
   margin-top: 10px;
   z-index: 1500;
+
+  @media (max-width: 576px) {
+    margin-left: 80px;
+    width: 10%;
+  }
 `;

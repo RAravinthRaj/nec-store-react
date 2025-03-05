@@ -41,6 +41,7 @@ export const AddItemModal = ({ modalshow, onClose }: IAddItem) => {
           <S.IconText $bgColor={theme.colors.textSecondary}>
             {selectedCategory}
           </S.IconText>
+          {}
           <S.DropDownIcon $bgColor={theme.colors.backGround}></S.DropDownIcon>
         </S.CustomToggle>
         <S.DropDownMenu>

@@ -4,7 +4,6 @@ Unauthorized copying of this file, via any medium, is strictly prohibited.
 Proprietary and confidential.  
 Written by Aravinth Raj R <aravinthr235@gmail.com>, 2025.
 */
-import Form from "react-bootstrap/Form";
 import Modal from "react-bootstrap/Modal";
 import styled from "styled-components";
 import { RxCross2 } from "react-icons/rx";
@@ -16,6 +15,16 @@ export const ModalContainer = styled(Modal)`
   padding: 20px;
   postion: absolute;
   left: 32%;
+
+  @media (max-width: 768px) {
+    width: 50%;
+    left: 25%;
+  }
+
+  @media (max-width: 576px) {
+    width: 85%;
+    left: 8%;
+  }
 `;
 
 export const Title = styled(Modal.Title)`
@@ -26,13 +35,24 @@ export const Header = styled(Modal.Header)``;
 
 export const CloseButton = styled(RxCross2)`
   position: absolute;
-  right: -3%;
+  right: 0.2%;
   transform: translateY(-160%);
   background: none;
   border: none;
   font-size: 38px;
   cursor: pointer;
   color: white;
+  z-index: 2000;
+
+  media (max-width: 768px) {
+    transform: translateY(-170%);
+  }
+
+  @media (max-width: 576px) {
+    transform: translateY(-190%);
+    font-size: 25px;
+    postion: fixed;
+  }
 `;
 
 export const InputWrapper = styled.div`
