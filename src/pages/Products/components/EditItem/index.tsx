@@ -12,12 +12,12 @@ import { useState } from "react";
 import { toast } from "react-toastify";
 import { Dropdown } from "react-bootstrap";
 
-export interface IAddItem {
+export interface IEditItem {
   modalshow: boolean;
   onClose: () => void;
 }
 
-export const AddItemModal = ({ modalshow, onClose }: IAddItem) => {
+export const EditItemModal = ({ modalshow, onClose }: IEditItem) => {
   const theme = useTheme();
 
   const productAdded = () => {
@@ -70,7 +70,7 @@ export const AddItemModal = ({ modalshow, onClose }: IAddItem) => {
       >
         <S.Header>
           <S.CloseButton onClick={onClose}></S.CloseButton>
-          <S.Title id="contained-modal-title-vcenter">Add Item</S.Title>
+          <S.Title id="contained-modal-title-vcenter">Edit Item</S.Title>
         </S.Header>
         <Modal.Body>
           <Form>

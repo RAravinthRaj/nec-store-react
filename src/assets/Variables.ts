@@ -18,6 +18,7 @@ import user from "../assets/images/user.png";
 import switchrole from "../assets/images/Change User.png";
 import viewprofile from "../assets/images/dashboard.png";
 import logout from "../assets/images/Logout.png";
+import tagfile from "../assets/images/TagFile.png";
 
 export const theme = {
   colors: {
@@ -46,6 +47,7 @@ export const theme = {
     switchrole,
     viewprofile,
     logout,
+    tagfile,
   },
   lotties: {
     loader,

@@ -43,6 +43,10 @@ export const NavbarContainer = styled.div``;
 export const ActionContainer = styled.div`
   display: flex;
   align-items: center;
+
+  @media (max-width: 576px) {
+    margin-left: 5%;
+  }
 `;
 
 export const SearchIcon = styled(BsSearch)<{
@@ -300,5 +304,16 @@ export const DropDownMenu = styled(Dropdown.Menu)`
 
 export const ProductContainer = styled.div`
   display: grid;
-  grid-template-columns: auto auto auto;
+  grid-template-columns: repeat(3, 1fr);
+  padding: 30px;
+  place-items: center;
+
+  @media (max-width: 768px) {
+    grid-template-columns: repeat(2, 1fr);
+    margin-left: -5%;
+  }
+
+  @media (max-width: 576px) {
+    grid-template-columns: repeat(1, 1fr);
+  }
 `;

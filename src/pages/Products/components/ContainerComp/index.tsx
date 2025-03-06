@@ -12,6 +12,7 @@ import Dropdown from "react-bootstrap/Dropdown";
 import { useState } from "react";
 import { AddItemModal } from "../AddItem";
 import { AddCategoryModal } from "../AddCategory";
+import { ProductCard } from "../ProductCard";
 
 export interface IContainerComp {}
 
@@ -190,7 +191,14 @@ export const ContainerComp = ({}: IContainerComp) => {
 
   const div = ["df", "dsf", "sd", "sd", "dsfgs", "sdfds"];
   const _products = () => {
-    return <S.ProductContainer></S.ProductContainer>;
+    return (
+      <S.ProductContainer>
+        <ProductCard />
+        <ProductCard />
+        <ProductCard />
+        <ProductCard />
+      </S.ProductContainer>
+    );
   };
 
   const _mainContainerItems = () => {
