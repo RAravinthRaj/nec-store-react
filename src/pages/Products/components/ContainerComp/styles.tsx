@@ -182,7 +182,7 @@ export const SortedSingleOption = styled.div<{
 
 export const SortedNavigation = styled.div<{ $bgColor: string }>`
   position: absolute;
-  top: 11%;
+  top: 7%;
   right: 47.5%;
   background-color: ${(props) => props.$bgColor};
   width: 15%;
@@ -203,13 +203,13 @@ export const SortedNavigation = styled.div<{ $bgColor: string }>`
   }
 
   @media (max-width: 768px) {
-    top: 10%;
+    top: 5%;
     width: 25%;
     right: 17%;
   }
 
   @media (max-width: 576px) {
-    top: 12%;
+    top: 3%;
     width: 40%;
     right: 8%;
   }
@@ -306,7 +306,7 @@ export const ProductContainer = styled.div`
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   padding: 30px;
-  place-items: center;
+  margin-left: 2%;
 
   @media (max-width: 768px) {
     grid-template-columns: repeat(2, 1fr);
@@ -315,5 +315,6 @@ export const ProductContainer = styled.div`
 
   @media (max-width: 576px) {
     grid-template-columns: repeat(1, 1fr);
+    margin-left: 0;
   }
 `;

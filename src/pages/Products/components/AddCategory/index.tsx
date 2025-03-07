@@ -10,6 +10,7 @@ import * as S from "./styles";
 import { useTheme } from "../../../../hooks";
 import { useState } from "react";
 import { toast } from "react-toastify";
+import { PRODUCTS_CONFIG } from "../../config";
 
 export interface IAddCategory {
   modalshow: boolean;
@@ -25,7 +26,7 @@ export const AddCategoryModal = ({ modalshow, onClose }: IAddCategory) => {
   };
 
   const categoryAdded = () => {
-    toast.success("Category Added Successfully");
+    toast.success(PRODUCTS_CONFIG.CategoryToastSuccess);
     onClose();
   };
 
@@ -39,12 +40,14 @@ export const AddCategoryModal = ({ modalshow, onClose }: IAddCategory) => {
     >
       <S.Header>
         <S.CloseButton onClick={onClose}></S.CloseButton>
-        <S.Title id="contained-modal-title-vcenter">Add Category</S.Title>
+        <S.Title id="contained-modal-title-vcenter">
+          {PRODUCTS_CONFIG.AddCategoryTitle}
+        </S.Title>
       </S.Header>
       <Modal.Body>
         <Form>
           <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-            <Form.Label>Category</Form.Label>
+            <Form.Label>{PRODUCTS_CONFIG.Category}</Form.Label>
             <S.InputWrapper>
               <S.Input type="Name" placeholder="Title" />
             </S.InputWrapper>
@@ -56,7 +59,7 @@ export const AddCategoryModal = ({ modalshow, onClose }: IAddCategory) => {
           $bgColor={theme.colors.primary}
           onClick={() => categoryAdded()}
         >
-          Add
+          {PRODUCTS_CONFIG.AddButton}
         </S.Button>
       </S.Footer>
     </S.ModalContainer>

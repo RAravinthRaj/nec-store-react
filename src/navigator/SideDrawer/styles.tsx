@@ -10,6 +10,7 @@ import ListItemButton from "@mui/material/ListItemButton";
 import List from "@mui/material/List";
 import ListItemText from "@mui/material/ListItemText";
 import ListItem from "@mui/material/ListItem";
+import { Link } from "react-router-dom";
 
 export const DrawerBox = styled(Box)<{ $bgColor: string }>`
   height: 100%;
@@ -116,4 +117,9 @@ export const Title = styled.div`
     font-weight: 550;
     font-size: 15px;
   }
+`;
+
+export const SideDrawerLink = styled(Link)`
+  text-decoration: none;
+  color: black;
 `;

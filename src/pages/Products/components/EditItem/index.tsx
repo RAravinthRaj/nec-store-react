@@ -11,23 +11,35 @@ import { useTheme } from "../../../../hooks";
 import { useState } from "react";
 import { toast } from "react-toastify";
 import { Dropdown } from "react-bootstrap";
+import { PRODUCTS_CONFIG } from "../../config";
 
 export interface IEditItem {
   modalshow: boolean;
   onClose: () => void;
+  individualProduct: {
+    Title: string;
+    Category: string;
+    Quantity: number;
+    MRP: number;
+  };
 }
 
-export const EditItemModal = ({ modalshow, onClose }: IEditItem) => {
+export const EditItemModal = ({
+  modalshow,
+  onClose,
+  individualProduct,
+}: IEditItem) => {
   const theme = useTheme();
 
   const productAdded = () => {
-    toast.success("Product Added Successfully");
+    toast.success("Product Edited Successfully");
     onClose();
   };
 
   const category = ["Stationary", "dshf", "dsfhdgs"];
 
   const [selectedCategory, setSelectedCategory] = useState("Category");
+
   const handleSelect = (eventKey: string | null) => {
     if (eventKey !== null) {
       setSelectedCategory(eventKey);
@@ -39,7 +51,7 @@ export const EditItemModal = ({ modalshow, onClose }: IEditItem) => {
       <S.CustomDropdown onSelect={handleSelect}>
         <S.CustomToggle $bgColor={theme.colors.backGround}>
           <S.IconText $bgColor={theme.colors.textSecondary}>
-            {selectedCategory}
+            {individualProduct.Category}
           </S.IconText>
           {}
           <S.DropDownIcon $bgColor={theme.colors.backGround}></S.DropDownIcon>
@@ -75,34 +87,40 @@ export const EditItemModal = ({ modalshow, onClose }: IEditItem) => {
         <Modal.Body>
           <Form>
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-              <Form.Label>Title</Form.Label>
+              <Form.Label>{PRODUCTS_CONFIG.Title}</Form.Label>
               <S.InputWrapper>
-                <S.Input type="input" placeholder="Title" />
+                <S.Input type="input" placeholder={individualProduct.Title} />
               </S.InputWrapper>
             </Form.Group>
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-              <Form.Label>Category</Form.Label>
+              <Form.Label>{PRODUCTS_CONFIG.Category}</Form.Label>
               <S.InputWrapper>
                 <S.Icon>{_showDropDown()}</S.Icon>
               </S.InputWrapper>
             </Form.Group>
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-              <Form.Label>Quantity</Form.Label>
+              <Form.Label>{PRODUCTS_CONFIG.Quantity}</Form.Label>
               <S.InputWrapper>
-                <S.Input type="input" placeholder="Quantity" />
+                <S.Input
+                  type="input"
+                  placeholder={individualProduct.Quantity.toString()}
+                />
               </S.InputWrapper>
             </Form.Group>
             <Form.Group
               className="mb-3"
               controlId="exampleForm.ControlTextarea1"
             >
-              <Form.Label>MRP</Form.Label>
+              <Form.Label>{PRODUCTS_CONFIG.MRP}</Form.Label>
               <S.InputWrapper>
-                <S.Input type="input" placeholder="MRP(in Rupees)" />
+                <S.Input
+                  type="input"
+                  placeholder={individualProduct.MRP.toString()}
+                />
               </S.InputWrapper>
             </Form.Group>
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-              <Form.Label>Image</Form.Label>
+              <Form.Label>{PRODUCTS_CONFIG.Image}</Form.Label>
               <div>
                 <S.InputRounder type="file" placeholder="Full Name" />
               </div>
@@ -114,7 +132,7 @@ export const EditItemModal = ({ modalshow, onClose }: IEditItem) => {
             $bgColor={theme.colors.primary}
             onClick={() => productAdded()}
           >
-            Submit
+            {PRODUCTS_CONFIG.SubmitButton}
           </S.Button>
         </S.Footer>
       </S.ModalContainer>

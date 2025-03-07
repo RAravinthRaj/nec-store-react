@@ -39,6 +39,7 @@ export const SideDrawer = ({ menu, toggleMenu }: ISideDrawer) => {
         {retailerActions.map((text, key) => {
           const currRole: any = text.toLowerCase();
           const isActive = activeAction === text;
+          const link = "/" + text.toLowerCase();
 
           return (
             <div>
@@ -49,13 +50,15 @@ export const SideDrawer = ({ menu, toggleMenu }: ISideDrawer) => {
                 disablePadding
                 onClick={() => handleClick(text)}
               >
-                <S.Item>
-                  <S.Icon
-                    src={theme.images[text.toLowerCase()]}
-                    $bgColor={theme.colors.primary}
-                  ></S.Icon>
-                  <S.ItemText primary={text} />
-                </S.Item>
+                <S.SideDrawerLink to={link}>
+                  <S.Item>
+                    <S.Icon
+                      src={theme.images[text.toLowerCase()]}
+                      $bgColor={theme.colors.primary}
+                    ></S.Icon>
+                    <S.ItemText primary={text} />
+                  </S.Item>
+                </S.SideDrawerLink>
               </S.ItemContainer>
               <S.Divider />
             </div>

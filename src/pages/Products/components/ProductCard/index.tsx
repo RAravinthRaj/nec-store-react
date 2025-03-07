@@ -8,10 +8,30 @@ import { useState } from "react";
 import { useTheme } from "../../../../hooks";
 import * as S from "./styles";
 import { EditItemModal } from "../EditItem";
+import { toast } from "react-toastify";
+import { PRODUCTS_CONFIG } from "../../config";
 
-export const ProductCard = () => {
+export interface IProductCard {
+  individualProduct: {
+    Title: string;
+    Category: string;
+    Quantity: number;
+    MRP: number;
+  };
+}
+
+export const ProductCard = ({ individualProduct }: IProductCard) => {
   const theme = useTheme();
   const [modal, setModal] = useState(false);
+  const isRetailer = true;
+
+  const itemadded = () => {
+    return toast.success("Item Added to Cart");
+  };
+
+  const deleteItem = () => {
+    toast.success("Item Deleted Successfully");
+  };
 
   return (
     <div>
@@ -19,29 +39,54 @@ export const ProductCard = () => {
         <S.ImageContainer>
           <S.Image src={theme.images.tagfile}></S.Image>
         </S.ImageContainer>
-        <S.TitleContainer>Tag File</S.TitleContainer>
+        <S.TitleContainer>{individualProduct.Title}</S.TitleContainer>
         <S.CategoryContainer $bgColor={theme.colors.primary}>
-          Stationary
+          {individualProduct.Category}
         </S.CategoryContainer>
         <S.ProductDes>
-          <S.QuantityContainer>Quantity : 15</S.QuantityContainer>
-          <S.RupeeContainer>MRP : ₹ 50</S.RupeeContainer>
+          <S.QuantityContainer>
+            {PRODUCTS_CONFIG.PrQuantity}
+            {individualProduct.Quantity}
+          </S.QuantityContainer>
+          <S.RupeeContainer>
+            {PRODUCTS_CONFIG.PrMRP} {individualProduct.MRP}
+          </S.RupeeContainer>
         </S.ProductDes>
-        <S.ButtonContainer>
-          <S.Button
-            $bgColor={theme.colors.primary}
-            onClick={() => setModal(true)}
-          >
-            <S.EditIcon></S.EditIcon>Edit
-          </S.Button>
-          <S.Button $bgColor={theme.colors.primary}>
-            <S.DeleteIcon></S.DeleteIcon>Delete
-          </S.Button>
-        </S.ButtonContainer>
+        {isRetailer ? (
+          <S.ButtonContainer>
+            <S.Button
+              $bgColor={theme.colors.primary}
+              onClick={() => setModal(true)}
+            >
+              <S.EditIcon></S.EditIcon>
+              {PRODUCTS_CONFIG.EditButton}
+            </S.Button>
+            <S.Button
+              $bgColor={theme.colors.primary}
+              onClick={() => deleteItem()}
+            >
+              <S.DeleteIcon></S.DeleteIcon>
+              {PRODUCTS_CONFIG.DeleteButton}
+            </S.Button>
+          </S.ButtonContainer>
+        ) : (
+          <S.ButtonContainer>
+            <S.Button
+              $bgColor={theme.colors.primary}
+              onClick={() => {
+                itemadded();
+              }}
+            >
+              <S.CartIcon></S.CartIcon>
+              {PRODUCTS_CONFIG.AddToCartButton}
+            </S.Button>
+          </S.ButtonContainer>
+        )}
       </S.CardContainer>
       <EditItemModal
         modalshow={modal}
         onClose={() => setModal(false)}
+        individualProduct={individualProduct}
       ></EditItemModal>
     </div>
   );

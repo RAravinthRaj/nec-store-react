@@ -11,6 +11,7 @@ import { useTheme } from "../../../../hooks";
 import { useState } from "react";
 import { toast } from "react-toastify";
 import { Dropdown } from "react-bootstrap";
+import { PRODUCTS_CONFIG } from "../../config";
 
 export interface IAddItem {
   modalshow: boolean;
@@ -21,13 +22,15 @@ export const AddItemModal = ({ modalshow, onClose }: IAddItem) => {
   const theme = useTheme();
 
   const productAdded = () => {
-    toast.success("Product Added Successfully");
+    toast.success(PRODUCTS_CONFIG.AddItemToastSuccess);
     onClose();
   };
 
   const category = ["Stationary", "dshf", "dsfhdgs"];
 
-  const [selectedCategory, setSelectedCategory] = useState("Category");
+  const [selectedCategory, setSelectedCategory] = useState(
+    PRODUCTS_CONFIG.Category
+  );
   const handleSelect = (eventKey: string | null) => {
     if (eventKey !== null) {
       setSelectedCategory(eventKey);
@@ -70,24 +73,26 @@ export const AddItemModal = ({ modalshow, onClose }: IAddItem) => {
       >
         <S.Header>
           <S.CloseButton onClick={onClose}></S.CloseButton>
-          <S.Title id="contained-modal-title-vcenter">Add Item</S.Title>
+          <S.Title id="contained-modal-title-vcenter">
+            {PRODUCTS_CONFIG.AddItemTitle}
+          </S.Title>
         </S.Header>
         <Modal.Body>
           <Form>
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-              <Form.Label>Title</Form.Label>
+              <Form.Label>{PRODUCTS_CONFIG.Title}</Form.Label>
               <S.InputWrapper>
                 <S.Input type="input" placeholder="Title" />
               </S.InputWrapper>
             </Form.Group>
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-              <Form.Label>Category</Form.Label>
+              <Form.Label>{PRODUCTS_CONFIG.Category}</Form.Label>
               <S.InputWrapper>
                 <S.Icon>{_showDropDown()}</S.Icon>
               </S.InputWrapper>
             </Form.Group>
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-              <Form.Label>Quantity</Form.Label>
+              <Form.Label>{PRODUCTS_CONFIG.Quantity}</Form.Label>
               <S.InputWrapper>
                 <S.Input type="input" placeholder="Quantity" />
               </S.InputWrapper>
@@ -96,13 +101,13 @@ export const AddItemModal = ({ modalshow, onClose }: IAddItem) => {
               className="mb-3"
               controlId="exampleForm.ControlTextarea1"
             >
-              <Form.Label>MRP</Form.Label>
+              <Form.Label>{PRODUCTS_CONFIG.MRP}</Form.Label>
               <S.InputWrapper>
                 <S.Input type="input" placeholder="MRP(in Rupees)" />
               </S.InputWrapper>
             </Form.Group>
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-              <Form.Label>Image</Form.Label>
+              <Form.Label>{PRODUCTS_CONFIG.Image}</Form.Label>
               <div>
                 <S.InputRounder type="file" placeholder="Full Name" />
               </div>
@@ -114,7 +119,7 @@ export const AddItemModal = ({ modalshow, onClose }: IAddItem) => {
             $bgColor={theme.colors.primary}
             onClick={() => productAdded()}
           >
-            Submit
+            {PRODUCTS_CONFIG.SubmitButton}
           </S.Button>
         </S.Footer>
       </S.ModalContainer>

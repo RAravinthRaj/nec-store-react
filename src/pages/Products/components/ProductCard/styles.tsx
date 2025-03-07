@@ -7,6 +7,7 @@ Written by Aravinth Raj R <aravinthr235@gmail.com>, 2025.
 import styled from "styled-components";
 import { FaPencilAlt } from "react-icons/fa";
 import { ImBin } from "react-icons/im";
+import { LiaCartArrowDownSolid } from "react-icons/lia";
 
 export const CardContainer = styled.div`
   display:flex:
@@ -18,6 +19,24 @@ export const CardContainer = styled.div`
   margin:30px 20px;
   border-radius:10px;
   width:80%;
+  transition : transform ease-in-out 0.2s;
+ 
+
+  &:hover{
+    transform : scale(1.10);
+  }
+
+  @media (max-width: 768px) {
+    padding : 20px 10px;
+    margin:30px 15px;
+  }
+
+  @media (max-width: 576px) {
+    padding : 15px 13px;
+    margin : 20px 0;
+    justify-self:center;
+    align-self:center;
+  }
 `;
 
 export const ImageContainer = styled.div`
@@ -26,13 +45,17 @@ export const ImageContainer = styled.div`
 `;
 
 export const Image = styled.img`
-  width: 45%;
+  width: 55%;
 `;
 
 export const TitleContainer = styled.h3`
   text-align: center;
   font-size: 30px;
   margin: 13px;
+
+  @media (max-width: 576px) {
+    font-size: 25px;
+  }
 `;
 
 export const CategoryContainer = styled.h5<{ $bgColor: string }>`
@@ -40,6 +63,10 @@ export const CategoryContainer = styled.h5<{ $bgColor: string }>`
   text-align: center;
   font-size: 14px;
   margin: 13px;
+
+  @media (max-width: 576px) {
+    font-size: 12px;
+  }
 `;
 
 export const ProductDes = styled.div`
@@ -52,12 +79,20 @@ export const QuantityContainer = styled.h5`
   text-align: center;
   font-size: 14px;
   margin: 13px;
+
+  @media (max-width: 576px) {
+    font-size: 12px;
+  }
 `;
 
 export const RupeeContainer = styled.h5`
   text-align: center;
   font-size: 14px;
   margin: 13px;
+
+  @media (max-width: 576px) {
+    font-size: 12px;
+  }
 `;
 
 export const ButtonContainer = styled.div`
@@ -79,19 +114,38 @@ export const Button = styled.button<{ $bgColor: string }>`
   border-radius: 5px;
   gap: 12px;
   color: white;
+  margin-top: 10px;
 
   @media (max-width: 576px) {
     padding: 5px 0;
     gap: 10px;
+    font-size: 14px;
   }
 `;
 
 export const EditIcon = styled(FaPencilAlt)`
   color: white;
   font-size: 16px;
+
+  @media (max-width: 576px) {
+    font-size: 13px;
+  }
 `;
 
 export const DeleteIcon = styled(ImBin)`
   color: white;
   font-size: 18px;
+
+  @media (max-width: 576px) {
+    font-size: 15px;
+  }
+`;
+
+export const CartIcon = styled(LiaCartArrowDownSolid)`
+  color: white;
+  font-size: 23px;
+
+  @media (max-width: 576px) {
+    font-size: 20px;
+  }
 `;

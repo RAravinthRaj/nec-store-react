@@ -13,6 +13,7 @@ import { useState } from "react";
 import { AddItemModal } from "../AddItem";
 import { AddCategoryModal } from "../AddCategory";
 import { ProductCard } from "../ProductCard";
+import { PRODUCTS_CONFIG } from "../../config";
 
 export interface IContainerComp {}
 
@@ -51,7 +52,7 @@ export const ContainerComp = ({}: IContainerComp) => {
 
   const category = ["All", "Stationary", "dshf", "dsfhdgs"];
 
-  const [selectedCategory, setSelectedCategory] = useState("All");
+  const [selectedCategory, setSelectedCategory] = useState(PRODUCTS_CONFIG.All);
 
   const handleSelect = (eventKey: string | null) => {
     if (eventKey !== null) {
@@ -110,7 +111,8 @@ export const ContainerComp = ({}: IContainerComp) => {
                 setAddModalShow(true);
               }}
             >
-              <S.AddIcon></S.AddIcon>Add Item
+              <S.AddIcon></S.AddIcon>
+              {PRODUCTS_CONFIG.AddItemTitle}
             </S.Button>
             <S.Button
               $bgColor={theme.colors.primary}
@@ -118,7 +120,7 @@ export const ContainerComp = ({}: IContainerComp) => {
                 setCategoryModalShow(true);
               }}
             >
-              <S.AddIcon></S.AddIcon>Add Category
+              <S.AddIcon></S.AddIcon> {PRODUCTS_CONFIG.AddCategoryTitle}
             </S.Button>
           </S.ButtonContainer>
         )}
@@ -136,7 +138,8 @@ export const ContainerComp = ({}: IContainerComp) => {
               setAddModalShow(true);
             }}
           >
-            <S.AddIcon></S.AddIcon>Add Item
+            <S.AddIcon></S.AddIcon>
+            {PRODUCTS_CONFIG.AddItemTitle}
           </S.Button>
           <S.FabDivider />
           <S.Button
@@ -145,7 +148,8 @@ export const ContainerComp = ({}: IContainerComp) => {
               setCategoryModalShow(true);
             }}
           >
-            <S.AddIcon></S.AddIcon>Add Category
+            <S.AddIcon></S.AddIcon>
+            {PRODUCTS_CONFIG.AddCategoryTitle}
           </S.Button>
         </S.FabButton>
       );
@@ -189,14 +193,21 @@ export const ContainerComp = ({}: IContainerComp) => {
     );
   };
 
-  const div = ["df", "dsf", "sd", "sd", "dsfgs", "sdfds"];
+  const products = [
+    { Title: "Tag File", Category: "Stationary", Quantity: 10, MRP: 20 },
+    { Title: "Tag File", Category: "Stationary", Quantity: 10, MRP: 20 },
+    { Title: "Tag File", Category: "Stationary", Quantity: 10, MRP: 20 },
+    { Title: "Tag File", Category: "Stationary", Quantity: 10, MRP: 20 },
+    { Title: "Tag File", Category: "Stationary", Quantity: 10, MRP: 20 },
+    { Title: "Tag File", Category: "Stationary", Quantity: 10, MRP: 20 },
+    { Title: "Tag File", Category: "Stationary", Quantity: 10, MRP: 20 },
+  ];
   const _products = () => {
     return (
       <S.ProductContainer>
-        <ProductCard />
-        <ProductCard />
-        <ProductCard />
-        <ProductCard />
+        {products.map((product) => (
+          <ProductCard individualProduct={product} />
+        ))}
       </S.ProductContainer>
     );
   };
