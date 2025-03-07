@@ -38,7 +38,9 @@ export const EditItemModal = ({
 
   const category = ["Stationary", "dshf", "dsfhdgs"];
 
-  const [selectedCategory, setSelectedCategory] = useState("Category");
+  const [selectedCategory, setSelectedCategory] = useState(
+    individualProduct.Category
+  );
 
   const handleSelect = (eventKey: string | null) => {
     if (eventKey !== null) {
@@ -51,7 +53,7 @@ export const EditItemModal = ({
       <S.CustomDropdown onSelect={handleSelect}>
         <S.CustomToggle $bgColor={theme.colors.backGround}>
           <S.IconText $bgColor={theme.colors.textSecondary}>
-            {individualProduct.Category}
+            {selectedCategory}
           </S.IconText>
           {}
           <S.DropDownIcon $bgColor={theme.colors.backGround}></S.DropDownIcon>
