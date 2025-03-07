@@ -71,6 +71,16 @@ export const UserName = styled.div<{ $bgColor: string }>`
   color: ${(props) => props?.$bgColor};
   font-size: 25px;
   font-weight: 550;
+
+  @media (max-width: 768px) {
+    font-size: 18px;
+    font-weight: 550;
+  }
+
+  @media (max-width: 576px) {
+    font-size: 15px;
+    font-weight: 550;
+  }
 `;
 
 export const ImageBackGround = styled.div`
@@ -117,6 +127,9 @@ export const UserMenu = styled.div<{
   gap: 10px;
   border-radius: 10px;
   z-index:1500;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
 
   &::before {
     content: "";
@@ -173,21 +186,27 @@ export const UserOption = styled.div`
   display: flex;
   align-items: center;
   gap: 10px;
-  margin: 0 10px;
+  margin: 2px 10px;
 `;
 
 export const Divider = styled.div`
   border: solid 0.5px black;
   width: 87%;
-  margin: 8px 10px;
+  margin-top: 10px;
+  margin-right: 10px;
+  margin-left: 10px;
   transform: scaleY(0.1);
 
   @media (max-width: 768px) {
-    margin: 10px 15px;
+    margin-top: 10px;
+    margin-right: 10px;
+    margin-left: 10px;
   }
 
   @media (max-width: 576px) {
-    margin: 7px 10px;
+    margin-top: 10px;
+    margin-right: 10px;
+    margin-left: 10px;
   }
 `;
 
@@ -223,4 +242,11 @@ export const userNavigation = styled(Link)<{
           color: ${$hoverbgColor};
         }
  `};
+`;
+
+export const NameDivider = styled.div`
+  border: solid 0.5px black;
+  width: 87%;
+  margin: 0 10px;
+  transform: scaleY(0.1);
 `;

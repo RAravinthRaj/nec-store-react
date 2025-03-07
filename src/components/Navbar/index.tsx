@@ -6,20 +6,20 @@ Written by Aravinth Raj R <aravinthr235@gmail.com>, 2025.
 */
 import { useTheme } from "../../hooks";
 import * as S from "./styles";
-import useMediaQuery from "@mui/material/useMediaQuery";
 import { useState } from "react";
 import { SideDrawer } from "../../navigator/SideDrawer";
 import { NAVBAR_CONFIG } from "./config";
+import { useMediaQuery } from "@mui/material";
 
 export interface INavbar {}
 
 export const Navbar = ({}: INavbar) => {
   const theme = useTheme();
-  const isMobile = useMediaQuery("(max-width: 768px)");
 
   const [menu, setMenu] = useState<boolean>(false);
   const [userMenu, setUserMenu] = useState<boolean>(false);
   const [activeAction, setActiveAction] = useState<string | null>();
+  const isMobile = useMediaQuery("(max-width:768px)");
 
   const handleClick = (role: string) => {
     setActiveAction((prev) => (prev === role ? null : role));
@@ -80,6 +80,15 @@ export const Navbar = ({}: INavbar) => {
         $bgColor={theme.colors.secondaryBackGround}
         $isOpen={userMenu}
       >
+        {isMobile && (
+          <>
+            <S.UserName $bgColor={theme.colors.primary}>
+              Hii , Aravinth !!
+            </S.UserName>
+            <S.NameDivider />
+          </>
+        )}
+
         {userOptions.map((option, index) => {
           const isActive = activeAction === option;
           const value = option.replace(/\s+/g, "").toLowerCase();

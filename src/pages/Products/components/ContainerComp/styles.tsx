@@ -22,7 +22,7 @@ export const MainContainer = styled(Container)`
   margin-top: 1%;
   overflow-x: hidden;
 
-  @media (max-width: 768px) {
+  @media (max-width: 1024px) {
     top: 0;
     left: 8%;
     width: 100%;
