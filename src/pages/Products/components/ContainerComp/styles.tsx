@@ -13,32 +13,52 @@ import { SlArrowDown } from "react-icons/sl";
 import { Dropdown } from "react-bootstrap";
 
 export const MainContainer = styled(Container)`
-  min-height: 100vh;
-  padding: 20px 40px;
-  position: absolute;
-  top: 9%;
-  left: 17%;
-  width: 83%;
-  margin-top: 1%;
-  overflow-x: hidden;
+  max-width: 100% !important;
+  display: flex;
+  flex-direction: column;
+  left: 0;
+  width: 100% !important;
+  padding: 0 !important;
 
-  @media (max-width: 1024px) {
-    top: 0;
-    left: 8%;
+  @media (max-width: 768px) {
     width: 100%;
-    margin-top: 11%;
   }
 
   @media (max-width: 576px) {
-    top: 0;
-    left: 0;
     width: 100%;
-    margin-top: 17%;
     padding: 20px 10px;
   }
 `;
 
-export const NavbarContainer = styled.div``;
+export const NavbarContainer = styled.div`
+  flex: 1;
+`;
+
+export const PageContainer = styled.div`
+  top: 10%;
+  position: absolute;
+  margin-top: 20px;
+  display: flex;
+  justify-content: center; /* Horizontally center */
+  align-items: center;
+
+  @media (min-width: 1024px) {
+    margin: 25px;
+    left: 10%;
+  }
+
+  @media (min-width: 540px) {
+    margin: 25px;
+    left: 2%;
+  }
+
+  @media (min-width: 1025px) {
+    left: 17%;
+    margin: 25px 50px;
+    padding: 20px;
+    overflow-y: auto;
+  }
+`;
 
 export const ActionContainer = styled.div`
   display: flex;
@@ -46,6 +66,7 @@ export const ActionContainer = styled.div`
 
   @media (max-width: 576px) {
     margin-left: 5%;
+    font-size: 12px;
   }
 `;
 
@@ -54,6 +75,10 @@ export const SearchIcon = styled(BsSearch)<{
 }>`
   color: black;
   font-size: 16px;
+
+  @media (max-width: 576px) {
+    margin-left: -60px;
+  }
 `;
 
 export const Input = styled.input`
@@ -70,7 +95,7 @@ export const Input = styled.input`
 `;
 
 export const InputWrapper = styled.div<{ $bgColor: string }>`
-  flex: 1;
+  flex: 0.8;
   height: 50px;
   border-radius: 7px;
   padding: 10px 20px;
@@ -103,7 +128,7 @@ export const SortIcon = styled(LiaSortAmountDownAltSolid)<{
 `;
 
 export const ButtonContainer = styled.div`
-  flex: 1;
+  flex: 0.8;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -185,7 +210,6 @@ export const SortedNavigation = styled.div<{ $bgColor: string }>`
   top: 7%;
   right: 47.5%;
   background-color: ${(props) => props.$bgColor};
-  width: 15%;
   padding: 10px;
   gap: 10px;
   border-radius: 10px;
@@ -203,15 +227,15 @@ export const SortedNavigation = styled.div<{ $bgColor: string }>`
   }
 
   @media (max-width: 768px) {
-    top: 5%;
+    top: 4%;
     width: 25%;
-    right: 17%;
+    right: 15%;
   }
 
   @media (max-width: 576px) {
-    top: 3%;
+    top: 2.5%;
     width: 40%;
-    right: 8%;
+    right: 6%;
   }
 `;
 
@@ -306,11 +330,10 @@ export const ProductContainer = styled.div`
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   padding: 30px;
-  margin-left: 2%;
+  place-items: center;
 
-  @media (max-width: 768px) {
+  @media (max-width: 1024px) {
     grid-template-columns: repeat(2, 1fr);
-    margin-left: -5%;
   }
 
   @media (max-width: 576px) {

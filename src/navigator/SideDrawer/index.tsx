@@ -4,6 +4,7 @@ import * as S from "./styles";
 import { useTheme } from "../../hooks";
 import { useState } from "react";
 import { SIDEDRAW_CONFIG } from "./config";
+import { useEffect } from "react";
 
 export interface ISideDrawer {
   menu: boolean;
@@ -11,10 +12,26 @@ export interface ISideDrawer {
 }
 
 export const SideDrawer = ({ menu, toggleMenu }: ISideDrawer) => {
-  const isMobile = useMediaQuery("(max-width: 768px)");
-  const isTab = useMediaQuery("(min-width: 559px)");
   const theme = useTheme();
-  console.log(open);
+
+  const useIsNotDesktop = () => {
+    const [isNotDesktop, setIsNotDesktop] = useState(
+      window.matchMedia("(max-width: 1024px)").matches
+    );
+
+    useEffect(() => {
+      const mediaQuery = window.matchMedia("(max-width: 1024px)");
+
+      const handleChange = () => setIsNotDesktop(mediaQuery.matches);
+
+      mediaQuery.addEventListener("change", handleChange);
+      return () => mediaQuery.removeEventListener("change", handleChange);
+    }, []);
+
+    return isNotDesktop;
+  };
+
+  const isMobile = useIsNotDesktop();
 
   const retailerActions = ["Products", "Orders", "Sales"];
 
@@ -72,7 +89,7 @@ export const SideDrawer = ({ menu, toggleMenu }: ISideDrawer) => {
     <S.DrawerBox
       $bgColor={theme.colors.secondaryBackGround}
       sx={{
-        width: isTab ? 250 : 180,
+        width: isMobile ? "38%" : 280,
       }}
       role="presentation"
       onClick={isMobile ? toggleMenu : undefined}

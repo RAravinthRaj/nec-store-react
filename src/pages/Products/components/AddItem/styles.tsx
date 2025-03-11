@@ -11,12 +11,13 @@ import { SlArrowDown } from "react-icons/sl";
 import { Dropdown } from "react-bootstrap";
 
 export const ModalContainer = styled(Modal)`
-  width: 35%;
+  width: 45%;
   display: flex;
   align-items: center;
   padding: 20px;
   postion: absolute;
-  left: 32%;
+  top: 3%;
+  left: 28%;
 
   @media (max-width: 768px) {
     left: 15%;
@@ -93,6 +94,7 @@ export const Icon = styled.div`
   font-size: 16px;
   display: flex;
   align-items: center;
+  color: #ffffff;
 
   &:hover {
     background: none;
@@ -170,7 +172,7 @@ export const CustomDropdown = styled(Dropdown)`
 export const DropDownIcon = styled(SlArrowDown)<{
   $bgColor: string;
 }>`
-  color: rgba(0, 0, 0, 0.4);
+  color: #ffffff;
   postion: fixed;
   font-size: 13px;
   margin-left: 500px;
@@ -185,8 +187,8 @@ export const IconText = styled.div<{ $bgColor: string }>`
 `;
 
 export const DropDownMenu = styled(Dropdown.Menu)`
-  margin-left: 280px;
-  margin-top: 10px;
+  margin-right: 1%;
+  margin-top: 2%;
   z-index: 1500;
 
   @media (max-width: 576px) {

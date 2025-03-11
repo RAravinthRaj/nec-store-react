@@ -10,16 +10,33 @@ import { useState } from "react";
 import { SideDrawer } from "../../navigator/SideDrawer";
 import { NAVBAR_CONFIG } from "./config";
 import { useMediaQuery } from "@mui/material";
+import { useEffect } from "react";
 
 export interface INavbar {}
 
 export const Navbar = ({}: INavbar) => {
   const theme = useTheme();
-
   const [menu, setMenu] = useState<boolean>(false);
   const [userMenu, setUserMenu] = useState<boolean>(false);
   const [activeAction, setActiveAction] = useState<string | null>();
-  const isMobile = useMediaQuery("(max-width:768px)");
+  const useIsNotDesktop = () => {
+    const [isNotDesktop, setIsNotDesktop] = useState(
+      window.matchMedia("(max-width: 1024px)").matches
+    );
+
+    useEffect(() => {
+      const mediaQuery = window.matchMedia("(max-width: 1024px)");
+
+      const handleChange = () => setIsNotDesktop(mediaQuery.matches);
+
+      mediaQuery.addEventListener("change", handleChange);
+      return () => mediaQuery.removeEventListener("change", handleChange);
+    }, []);
+
+    return isNotDesktop;
+  };
+
+  const isMobile = useIsNotDesktop();
 
   const handleClick = (role: string) => {
     setActiveAction((prev) => (prev === role ? null : role));

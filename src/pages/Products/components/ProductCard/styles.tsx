@@ -14,7 +14,7 @@ export const CardContainer = styled.div`
   flex-direction : column;
   align-items : center;
   justify-content:center;
-  padding : 20px 30px;
+  padding : 20px 20px;
   box-shadow : 0px 2px 4px rgba(0,0,0,0.2);
   margin:30px 20px;
   border-radius:10px;
@@ -100,7 +100,7 @@ export const ButtonContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 30px;
+  gap: 25px;
 `;
 
 export const Button = styled.button<{ $bgColor: string }>`

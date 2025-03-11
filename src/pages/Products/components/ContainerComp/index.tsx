@@ -27,7 +27,7 @@ export const ContainerComp = ({}: IContainerComp) => {
   const [showMobile, setShowMobile] = useState(false);
   const [selectedSortedOptions, setSelectedSortedOptions] = useState("");
 
-  const sortedOptions = ["Sort By Title Asc", "Sort BY Title Desc"];
+  const sortedOptions = ["Sort By Title Asc", "Sort By Title Desc"];
 
   const setAddModalShow = ($prop: boolean) => {
     setOpenItem($prop);
@@ -233,11 +233,11 @@ export const ContainerComp = ({}: IContainerComp) => {
   };
 
   return (
-    <div>
+    <S.MainContainer>
       <S.NavbarContainer>
         <Navbar />
       </S.NavbarContainer>
-      <S.MainContainer>{_mainContainerItems()}</S.MainContainer>
-    </div>
+      <S.PageContainer>{_mainContainerItems()}</S.PageContainer>
+    </S.MainContainer>
   );
 };

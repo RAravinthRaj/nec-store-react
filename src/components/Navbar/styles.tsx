@@ -102,15 +102,14 @@ export const UserImage = styled.img`
 export const Icon = styled(GiHamburgerMenu)`
   filter: invert(20%) sepia(94%) saturate(1500%) hue-rotate(220deg)
     brightness(80%) contrast(150%);
+  font-size: 160%;
 
   @media (max-width: 768px) {
-    font-size: 30px;
-    margin: 0 15px;
+    margin: 15px;
   }
 
   @media (max-width: 576px) {
-    font-size: 20px;
-    margin: 0 8px;
+    margin: 8px;
   }
 `;
 

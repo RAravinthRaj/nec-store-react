@@ -9,12 +9,12 @@ import styled from "styled-components";
 import { RxCross2 } from "react-icons/rx";
 
 export const ModalContainer = styled(Modal)`
-  width: 35%;
+  width: 45%;
   display: flex;
   align-items: center;
   padding: 20px;
+  left: 28%;
   postion: absolute;
-  left: 32%;
 
   @media (max-width: 768px) {
     width: 50%;
