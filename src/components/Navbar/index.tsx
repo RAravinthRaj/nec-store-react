@@ -9,7 +9,6 @@ import * as S from "./styles";
 import { useState } from "react";
 import { SideDrawer } from "../../navigator/SideDrawer";
 import { NAVBAR_CONFIG } from "./config";
-import { useMediaQuery } from "@mui/material";
 import { useEffect } from "react";
 
 export interface INavbar {}

@@ -8,6 +8,7 @@ import { SignIn } from "../pages";
 import { SignUp } from "../pages";
 import { RoleSelection } from "../pages";
 import { Products } from "../pages";
+import { Orders } from "../pages";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 export const Navigator = () => {
@@ -18,6 +19,7 @@ export const Navigator = () => {
         <Route path="/signup" element={<SignUp />} />
         <Route path="/roles" element={<RoleSelection />} />
         <Route path="/products" element={<Products />} />
+        <Route path="/orders" element={<Orders />} />
       </Routes>
     </BrowserRouter>
   );
