@@ -71,6 +71,10 @@ export const UserName = styled.div<{ $bgColor: string }>`
   color: ${(props) => props?.$bgColor};
   font-size: 25px;
   font-weight: 550;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-left: 30px;
 
   @media (max-width: 768px) {
     font-size: 18px;
@@ -118,42 +122,36 @@ export const UserMenu = styled.div<{
   $isOpen: boolean;
 }>`
   position: absolute;
-  top: 13%;
+  top: 100px;
   right: 2%;
   background-color: ${(props) => props.$bgColor};
-  width: 12%;
-  padding: 10px;
-  gap: 10px;
-  border-radius: 10px;
-  z-index:1500;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-
+  padding: 15px;
+  gap: 5px;
+  border-radius: 8px;
+  z-index: 1500;
+  display: flex;
+  flex-direction: column;
   &::before {
     content: "";
-    top: -13px;
+    top: -10px;
     position: absolute;
     right: 10px;
-    border-width: 0 10px 10px 10px;
+    border-width: 0 8px 8px 8px;
     border-style: solid;
-    border-color: transparent transparent  ${(props) =>
-      props.$bgColor}; transparent;
+    border-color: transparent transparent ${(props) => props.$bgColor}
+      transparent;
   }
 
   @media (max-width: 768px) {
     top: 10%;
     right: 4%;
-    width: 25%;
   }
 
   @media (max-width: 576px) {
     top: 12%;
     right: 5%;
-    width: 35%;
-    padding: 10px 3px;
+    padding: 8px;
   }
-  
 `;
 
 export const UserIcon = styled.img`
@@ -183,17 +181,13 @@ export const Title = styled.div`
 
 export const UserOption = styled.div`
   display: flex;
-  align-items: center;
   gap: 10px;
-  margin: 2px 10px;
+  margin-left: 30px;
 `;
 
 export const Divider = styled.div`
   border: solid 0.5px black;
-  width: 87%;
-  margin-top: 10px;
-  margin-right: 10px;
-  margin-left: 10px;
+  margin: 8px 5px;
   transform: scaleY(0.1);
 
   @media (max-width: 768px) {
@@ -245,7 +239,6 @@ export const userNavigation = styled(Link)<{
 
 export const NameDivider = styled.div`
   border: solid 0.5px black;
-  width: 87%;
-  margin: 0 10px;
+  margin: 8px 5px;
   transform: scaleY(0.1);
 `;
