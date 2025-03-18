@@ -1,7 +1,7 @@
 import Drawer from "@mui/material/Drawer";
 import * as S from "./styles";
 import { useTheme } from "../../hooks";
-import { useState, useCallback } from "react";
+import { useState } from "react";
 import { SIDEDRAW_CONFIG } from "./config";
 import { useEffect } from "react";
 
@@ -34,20 +34,7 @@ export const SideDrawer = ({ menu, toggleMenu }: ISideDrawer) => {
 
   const retailerActions = ["Products", "Orders", "Sales"];
 
-  const [activeAction, setActiveAction] = useState<string | null>("Products");
-
-  const handleClick = useCallback(
-    (role: string) => {
-      setActiveAction((prev) => (prev === role ? "" : role));
-    },
-    [activeAction]
-  );
-
-  useEffect(() => {
-    console.log("Updated activeAction:", activeAction);
-  }, [activeAction]);
-
-  const _navigationlist = useCallback(() => {
+  const _navigationlist = () => {
     return (
       <S.CustomList>
         {isMobile && (
@@ -60,22 +47,26 @@ export const SideDrawer = ({ menu, toggleMenu }: ISideDrawer) => {
           </div>
         )}
         {retailerActions.map((text) => {
-          const isActive = activeAction === text;
           const link = "/" + text.toLowerCase();
 
           return (
-            <div key={text}>
+            <div>
               <S.ItemContainer
                 $hoverbgColor={theme.colors.primary}
-                $isActive={isActive}
                 disablePadding
-                onClick={() => handleClick(text)}
               >
-                <S.SideDrawerLink to={link}>
+                <S.SideDrawerLink
+                  to={link}
+                  style={({ isActive }) => ({
+                    color: isActive ? theme.colors.primary : "inherit",
+                    display: "block",
+                    width: "100%",
+                  })}
+                >
                   <S.Item>
                     <S.Icon
-                      src={theme.images[text.toLowerCase()]}
                       $bgColor={theme.colors.primary}
+                      src={theme.images[text.toLowerCase()]}
                     />
                     <S.ItemText primary={text} />
                   </S.Item>
@@ -87,7 +78,7 @@ export const SideDrawer = ({ menu, toggleMenu }: ISideDrawer) => {
         })}
       </S.CustomList>
     );
-  }, [activeAction, isMobile]);
+  };
 
   const DrawerList = (
     <S.DrawerBox

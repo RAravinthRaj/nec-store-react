@@ -7,17 +7,13 @@ Written by Aravinth Raj R <aravinthr235@gmail.com>, 2025.
 import Modal from "react-bootstrap/Modal";
 import styled from "styled-components";
 import { RxCross2 } from "react-icons/rx";
-import { SlArrowDown } from "react-icons/sl";
-import { Dropdown } from "react-bootstrap";
 
 export const ModalContainer = styled(Modal)`
-  width: 45%;
   display: flex;
   align-items: center;
-  padding: 20px;
+  padding: 50px;
   postion: absolute;
   top: 3%;
-  left: 28%;
 
   @media (max-width: 768px) {
     left: 15%;
@@ -31,16 +27,6 @@ export const ModalContainer = styled(Modal)`
     top: 10%;
   }
 `;
-
-export const Title = styled(Modal.Title)`
-  margin: 0 auto;
-
-  media (max-width: 768px) {
-    font-size: 18px;
-  }
-`;
-
-export const Header = styled(Modal.Header)``;
 
 export const CloseButton = styled(RxCross2)`
   position: absolute;
@@ -64,62 +50,13 @@ export const CloseButton = styled(RxCross2)`
   }
 `;
 
-export const InputWrapper = styled.div`
-  width: 100%;
-  margin-bottom: 25px;
-  border-radius: 7px;
-  padding: 10px 20px;
-  display: flex;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
-  align-items: center;
-
-  @media (max-width: 576px) {
-    padding: 8px 15px;
-  }
-`;
-
-export const Input = styled.input`
-  background: transparent;
-  border: none;
-  outline: none;
-  font-size: 16px;
-  flex: 1;
-
-  @media (max-width: 576px) {
-    font-size: 14px;
-  }
-`;
-
-export const Icon = styled.div`
-  font-size: 16px;
-  display: flex;
-  align-items: center;
-  color: #ffffff;
-
-  &:hover {
-    background: none;
-  }
-
-  @media (max-width: 576px) {
-    font-size: 14px;
-  }
-`;
-
-export const InputRounder = styled.input`
-  background: transparent;
-  border: none;
-  outline: none;
-  font-size: 13px;
-  flex: 1;
-  gap: 10%;
-`;
-
 export const Button = styled.button<{ $bgColor: string }>`
+  flex: 0.7;
   background-color: ${(props) => props?.$bgColor};
   color: white;
   border: none;
-  width: 60%;
   height: 45px;
+  margin: 30px;
   padding: 10px;
   outline: none;
   font-size: 16px;
@@ -142,57 +79,76 @@ export const Button = styled.button<{ $bgColor: string }>`
   }
 `;
 
-export const Footer = styled(Modal.Footer)`
+export const Footer = styled.div`
   display: flex;
+  flex-direction: row;
   align-items: center;
-  justify-content: center;
+  justify-content: space-around;
 `;
 
-export const CustomToggle = styled(Dropdown.Toggle)<{ $bgColor: string }>`
-  background: none;
-  border: none;
+export const TitleBox = styled.div<{ $bgColor: string }>`
   display: flex;
-  align-items: center;
-  gap: 7px;
-
-  padding: 0;
-  margin: 0;
-  --bs-btn-active-bg: none;
-  --bs-btn-hover-bg: none;
-
-  &::after {
-    display: none;
-  }
-`;
-
-export const CustomDropdown = styled(Dropdown)`
-  margin-right: 17px;
-`;
-
-export const DropDownIcon = styled(SlArrowDown)<{
-  $bgColor: string;
-}>`
-  color: #ffffff;
-  postion: fixed;
-  font-size: 13px;
-  margin-left: 500px;
-`;
-
-export const IconText = styled.div<{ $bgColor: string }>`
-  color: ${(props) => props.$bgColor};
+  flex-direction: row;
+  justify-content: space-around;
+  background-color: ${(props) => props?.$bgColor};
+  padding: 15px;
+  border-radius: 10px;
+  margin: 0 10px;
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.2);
 
   @media (max-width: 576px) {
-    font-size: 14px;
+    overflow-y: auto;
   }
 `;
 
-export const DropDownMenu = styled(Dropdown.Menu)`
-  margin-right: 1%;
-  margin-top: 2%;
-  z-index: 1500;
+export const ItemBox = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  padding: 15px;
+  border-radius: 10px;
+  margin: 5px 10px;
 
   @media (max-width: 576px) {
-    margin-left: 80px;
-    width: 10%;
+    overflow-y: auto;
   }
+`;
+
+export const TitleComp = styled.div`
+  flex: 1;
+  text-align: center;
+  flex-wrap: wrap;
+
+  @media (max-width: 576px) {
+    overflow-y: auto;
+  }
+`;
+
+export const Divider = styled.div`
+  border: solid 0.5px rgba(0, 0, 0, 0.2);
+  transform: scaleY(0.1);
+  width: 90%;
+  margin-right: auto;
+  margin-left: auto;
+
+  @media (max-width: 768px) {
+    margin: 10px 15px;
+  }
+
+  @media (max-width: 576px) {
+    margin: 7px 10px;
+  }
+`;
+
+export const BodyComponent = styled.div`
+  margin: 10px;
+
+  @media (max-width: 576px) {
+    overflow-y: auto;
+  }
+`;
+
+export const Amount = styled.h4`
+  text-align: center;
+  margin-top: 40px;
 `;

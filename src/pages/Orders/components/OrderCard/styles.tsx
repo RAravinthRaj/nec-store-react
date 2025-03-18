@@ -5,9 +5,9 @@ Proprietary and confidential.
 Written by Aravinth Raj R <aravinthr235@gmail.com>, 2025.
 */
 import styled from "styled-components";
-import { FaPencilAlt } from "react-icons/fa";
-import { ImBin } from "react-icons/im";
+import { RxCross2 } from "react-icons/rx";
 import { LiaCartArrowDownSolid } from "react-icons/lia";
+import { MdOutlineRemoveRedEye } from "react-icons/md";
 
 export const CardContainer = styled.div`
   display:flex:
@@ -125,18 +125,18 @@ export const Button = styled.button<{ $bgColor: string }>`
   }
 `;
 
-export const EditIcon = styled(FaPencilAlt)`
+export const ViewIcon = styled(MdOutlineRemoveRedEye)`
   color: white;
-  font-size: 16px;
+  font-size: 20px;
 
   @media (max-width: 576px) {
     font-size: 13px;
   }
 `;
 
-export const DeleteIcon = styled(ImBin)`
+export const DeleteIcon = styled(RxCross2)`
   color: white;
-  font-size: 18px;
+  font-size: 20px;
 
   @media (max-width: 576px) {
     font-size: 15px;

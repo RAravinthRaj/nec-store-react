@@ -7,11 +7,9 @@ Written by Aravinth Raj R <aravinthr235@gmail.com>, 2025.
 import { useTheme } from "../../../../hooks";
 import * as S from "./styles";
 import { Navbar } from "../../../../components";
-import { useMediaQuery } from "@mui/material";
 import Dropdown from "react-bootstrap/Dropdown";
 import { useState } from "react";
-import { AddItemModal } from "../AddItem";
-import { AddCategoryModal } from "../AddCategory";
+import { ViewItemModal } from "../AddItem";
 import { OrderCard } from "../OrderCard";
 import { PRODUCTS_CONFIG } from "../../config";
 
@@ -19,22 +17,15 @@ export interface IContainerComp {}
 
 export const ContainerComp = ({}: IContainerComp) => {
   const theme = useTheme();
-  const isMobile = useMediaQuery("(max-width:768px)");
 
   const [openItem, setOpenItem] = useState(false);
-  const [openCategory, setOpenCategory] = useState(false);
   const [openSortedOptions, setOpenSortedOptions] = useState(false);
-  const [showMobile, setShowMobile] = useState(false);
   const [selectedSortedOptions, setSelectedSortedOptions] = useState("");
 
   const sortedOptions = ["Sort By OrderNo. Asc", "Sort By OrderNo. Desc"];
 
   const setAddModalShow = ($prop: boolean) => {
     setOpenItem($prop);
-  };
-
-  const setCategoryModalShow = ($prop: boolean) => {
-    setOpenCategory($prop);
   };
 
   const openSortedOption = () => {
@@ -44,10 +35,6 @@ export const ContainerComp = ({}: IContainerComp) => {
   const handleClick = ($prop: string) => {
     setSelectedSortedOptions($prop);
     setOpenSortedOptions(!openSortedOptions);
-  };
-
-  const handleFabClick = () => {
-    setShowMobile(!showMobile);
   };
 
   const category = ["All", "OrderNumber", "OrderBy"];
@@ -107,44 +94,6 @@ export const ContainerComp = ({}: IContainerComp) => {
     );
   };
 
-  const _showMobileButton = () => {
-    if (showMobile) {
-      return (
-        <S.FabButton $bgColor={theme.colors.primary}>
-          <S.Button
-            $bgColor={theme.colors.primary}
-            onClick={() => {
-              setAddModalShow(true);
-            }}
-          >
-            <S.AddIcon></S.AddIcon>
-            {PRODUCTS_CONFIG.AddItemTitle}
-          </S.Button>
-          <S.FabDivider />
-          <S.Button
-            $bgColor={theme.colors.primary}
-            onClick={() => {
-              setCategoryModalShow(true);
-            }}
-          >
-            <S.AddIcon></S.AddIcon>
-            {PRODUCTS_CONFIG.AddCategoryTitle}
-          </S.Button>
-        </S.FabButton>
-      );
-    }
-    return null;
-  };
-
-  const _mobileActionItems = () => {
-    return (
-      <S.PlusButtonContainer
-        $bgColor={theme.colors.primary}
-        onClick={() => handleFabClick()}
-      ></S.PlusButtonContainer>
-    );
-  };
-
   const _sortedOptions = () => {
     return (
       <S.SortedNavigation $bgColor={theme.colors.secondaryBackGround}>
@@ -179,7 +128,8 @@ export const ContainerComp = ({}: IContainerComp) => {
     { OrderNumber: "2014", OrderBy: "2312070", Date: "23.05.25", Total: 420 },
     { OrderNumber: "2014", OrderBy: "2312070", Date: "23.05.25", Total: 420 },
   ];
-  const _products = () => {
+
+  const _order = () => {
     return (
       <S.ProductContainer>
         {orders.map((order) => (
@@ -193,18 +143,12 @@ export const ContainerComp = ({}: IContainerComp) => {
     return (
       <div>
         {_actionitems()}
-        <AddItemModal
+        <ViewItemModal
           modalshow={openItem}
           onClose={() => setAddModalShow(false)}
-        ></AddItemModal>
-        <AddCategoryModal
-          modalshow={openCategory}
-          onClose={() => setCategoryModalShow(false)}
-        ></AddCategoryModal>
+        ></ViewItemModal>
         {openSortedOptions && _sortedOptions()}
-        {isMobile && _mobileActionItems()}
-        {isMobile && _showMobileButton()}
-        {_products()}
+        {_order()}
       </div>
     );
   };

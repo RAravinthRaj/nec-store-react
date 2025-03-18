@@ -4,63 +4,24 @@ Unauthorized copying of this file, via any medium, is strictly prohibited.
 Proprietary and confidential.  
 Written by Aravinth Raj R <aravinthr235@gmail.com>, 2025.
 */
-import Form from "react-bootstrap/Form";
 import Modal from "react-bootstrap/Modal";
 import * as S from "./styles";
 import { useTheme } from "../../../../hooks";
-import { useState } from "react";
-import { toast } from "react-toastify";
-import { Dropdown } from "react-bootstrap";
-import { PRODUCTS_CONFIG } from "../../config";
 
 export interface IAddItem {
   modalshow: boolean;
   onClose: () => void;
 }
 
-export const AddItemModal = ({ modalshow, onClose }: IAddItem) => {
+export const ViewItemModal = ({ modalshow, onClose }: IAddItem) => {
   const theme = useTheme();
 
-  const productAdded = () => {
-    toast.success(PRODUCTS_CONFIG.AddItemToastSuccess);
-    onClose();
-  };
-
-  const category = ["Stationary", "dshf", "dsfhdgs"];
-
-  const [selectedCategory, setSelectedCategory] = useState(
-    PRODUCTS_CONFIG.Category
-  );
-  const handleSelect = (eventKey: string | null) => {
-    if (eventKey !== null) {
-      setSelectedCategory(eventKey);
-    }
-  };
-
-  const _showDropDown = () => {
-    return (
-      <S.CustomDropdown onSelect={handleSelect}>
-        <S.CustomToggle $bgColor={theme.colors.backGround}>
-          <S.IconText $bgColor={theme.colors.textSecondary}>
-            {selectedCategory}
-          </S.IconText>
-          {}
-          <S.DropDownIcon $bgColor={theme.colors.backGround}></S.DropDownIcon>
-        </S.CustomToggle>
-        <S.DropDownMenu>
-          {category.map((cat, index) => {
-            return (
-              <div>
-                <Dropdown.Item key={cat} eventKey={cat}>
-                  {cat}
-                </Dropdown.Item>
-              </div>
-            );
-          })}
-        </S.DropDownMenu>
-      </S.CustomDropdown>
-    );
-  };
+  const data = [
+    { No: 1, Pname: "TagFile", Quantity: 20, Price: 20 },
+    { No: 1, Pname: "TagFile", Quantity: 20, Price: 20 },
+    { No: 1, Pname: "TagFile", Quantity: 20, Price: 20 },
+    { No: 1, Pname: "TagFile", Quantity: 20, Price: 20 },
+  ];
 
   const _modalContainer = () => {
     return (
@@ -71,56 +32,33 @@ export const AddItemModal = ({ modalshow, onClose }: IAddItem) => {
         show={modalshow}
         onHide={() => onClose()}
       >
-        <S.Header>
-          <S.CloseButton onClick={onClose}></S.CloseButton>
-          <S.Title id="contained-modal-title-vcenter">
-            {PRODUCTS_CONFIG.AddItemTitle}
-          </S.Title>
-        </S.Header>
+        <S.CloseButton onClick={onClose}></S.CloseButton>
+
         <Modal.Body>
-          <Form>
-            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-              <Form.Label>{PRODUCTS_CONFIG.Title}</Form.Label>
-              <S.InputWrapper>
-                <S.Input type="input" placeholder="Title" />
-              </S.InputWrapper>
-            </Form.Group>
-            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-              <Form.Label>{PRODUCTS_CONFIG.Category}</Form.Label>
-              <S.InputWrapper>
-                <S.Icon>{_showDropDown()}</S.Icon>
-              </S.InputWrapper>
-            </Form.Group>
-            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-              <Form.Label>{PRODUCTS_CONFIG.Quantity}</Form.Label>
-              <S.InputWrapper>
-                <S.Input type="input" placeholder="Quantity" />
-              </S.InputWrapper>
-            </Form.Group>
-            <Form.Group
-              className="mb-3"
-              controlId="exampleForm.ControlTextarea1"
-            >
-              <Form.Label>{PRODUCTS_CONFIG.MRP}</Form.Label>
-              <S.InputWrapper>
-                <S.Input type="input" placeholder="MRP(in Rupees)" />
-              </S.InputWrapper>
-            </Form.Group>
-            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-              <Form.Label>{PRODUCTS_CONFIG.Image}</Form.Label>
+          <S.TitleBox $bgColor={theme.colors.secondaryBackGround}>
+            <S.TitleComp>Sl.No</S.TitleComp>
+            <S.TitleComp>Product Name</S.TitleComp>
+            <S.TitleComp>Quantity</S.TitleComp>
+            <S.TitleComp>MRP</S.TitleComp>
+          </S.TitleBox>
+          <S.BodyComponent>
+            {data.map((d, index) => (
               <div>
-                <S.InputRounder type="file" placeholder="Full Name" />
+                <S.ItemBox key={index}>
+                  <S.TitleComp>{d.No}</S.TitleComp>
+                  <S.TitleComp>{d.Pname}</S.TitleComp>
+                  <S.TitleComp>{d.Quantity}</S.TitleComp>
+                  <S.TitleComp>{d.Price}</S.TitleComp>
+                </S.ItemBox>
+                {index !== data.length - 1 && <S.Divider />}
               </div>
-            </Form.Group>
-          </Form>
+            ))}
+          </S.BodyComponent>
         </Modal.Body>
+        <S.Amount>Total : ₹ 90</S.Amount>
         <S.Footer>
-          <S.Button
-            $bgColor={theme.colors.primary}
-            onClick={() => productAdded()}
-          >
-            {PRODUCTS_CONFIG.SubmitButton}
-          </S.Button>
+          <S.Button $bgColor={theme.colors.primary}>Amount Received</S.Button>
+          <S.Button $bgColor={theme.colors.primary}>Deliver</S.Button>
         </S.Footer>
       </S.ModalContainer>
     );

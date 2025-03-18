@@ -30,30 +30,34 @@ export const MainContainer = styled(Container)`
   }
 `;
 
-export const NavbarContainer = styled.div``;
+export const NavbarContainer = styled.div`
+  flex: 1;
+`;
 
 export const PageContainer = styled.div`
   top: 10%;
   position: absolute;
-  margin: 20px 0 0 50px;
+  margin-top: 20px;
   display: flex;
   justify-content: center;
   align-items: center;
+  width: 150vh;
 
   @media (min-width: 1024px) {
     margin: 25px;
-    margin-left: auto;
+    left: 10%;
   }
 
   @media (min-width: 540px) {
     margin: 25px;
-    margin-left: auto;
+    left: 2%;
   }
 
   @media (min-width: 1025px) {
-    left: 19%;
+    left: 17%;
     margin: 25px 50px;
     padding: 20px;
+    overflow-y: auto;
   }
 `;
 
@@ -331,7 +335,6 @@ export const ProductContainer = styled.div`
   grid-template-columns: repeat(3, 1fr);
   padding: 30px;
   place-items: center;
-  width: 100%;
 
   @media (max-width: 1024px) {
     grid-template-columns: repeat(2, 1fr);

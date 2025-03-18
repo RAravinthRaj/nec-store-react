@@ -10,7 +10,7 @@ import ListItemButton from "@mui/material/ListItemButton";
 import List from "@mui/material/List";
 import ListItemText from "@mui/material/ListItemText";
 import ListItem from "@mui/material/ListItem";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 export const DrawerBox = styled(Box)<{ $bgColor: string }>`
   height: 100%;
@@ -76,7 +76,6 @@ export const ItemText = styled(ListItemText)`
 
 export const ItemContainer = styled(ListItem)<{
   $hoverbgColor: string;
-  $isActive: boolean;
 }>`
   &:hover {
     ${Icon} {
@@ -88,19 +87,6 @@ export const ItemContainer = styled(ListItem)<{
       color: ${($props) => $props?.$hoverbgColor};
     }
   }
-
-  ${({ $isActive, $hoverbgColor }) =>
-    $isActive &&
-    `
-      ${Icon} {
-        filter: invert(20%) sepia(94%) saturate(1500%) hue-rotate(220deg)
-          brightness(80%) contrast(150%);
-      }
-  
-      ${ItemText} {
-        color: ${$hoverbgColor};
-      }
-      `};
 `;
 
 export const Logo = styled.img`
@@ -119,7 +105,14 @@ export const Title = styled.div`
   }
 `;
 
-export const SideDrawerLink = styled(Link)`
+export const SideDrawerLink = styled(NavLink)`
   text-decoration: none;
   color: black;
+
+  &.active {
+    ${Icon} {
+      filter: invert(20%) sepia(94%) saturate(1500%) hue-rotate(220deg)
+        brightness(80%) contrast(150%);
+    }
+  }
 `;
