@@ -9,9 +9,9 @@ import * as S from "./styles";
 import { Navbar } from "../../../../components";
 import Dropdown from "react-bootstrap/Dropdown";
 import { useState } from "react";
-import { ViewItemModal } from "../AddItem";
+import { ViewItemModal } from "../ViewItem";
 import { OrderCard } from "../OrderCard";
-import { PRODUCTS_CONFIG } from "../../config";
+import { ORDERS_CONFIG } from "../../config";
 
 export interface IContainerComp {}
 
@@ -22,7 +22,7 @@ export const ContainerComp = ({}: IContainerComp) => {
   const [openSortedOptions, setOpenSortedOptions] = useState(false);
   const [selectedSortedOptions, setSelectedSortedOptions] = useState("");
 
-  const sortedOptions = ["Sort By OrderNo. Asc", "Sort By OrderNo. Desc"];
+  const sortedOptions = ORDERS_CONFIG.sortedOptions;
 
   const setAddModalShow = ($prop: boolean) => {
     setOpenItem($prop);
@@ -39,7 +39,7 @@ export const ContainerComp = ({}: IContainerComp) => {
 
   const category = ["All", "OrderNumber", "OrderBy"];
 
-  const [selectedCategory, setSelectedCategory] = useState(PRODUCTS_CONFIG.All);
+  const [selectedCategory, setSelectedCategory] = useState(ORDERS_CONFIG.All);
 
   const handleSelect = (eventKey: string | null) => {
     if (eventKey !== null) {

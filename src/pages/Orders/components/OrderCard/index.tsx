@@ -7,8 +7,8 @@ Written by Aravinth Raj R <aravinthr235@gmail.com>, 2025.
 import { useState } from "react";
 import { useTheme } from "../../../../hooks";
 import * as S from "./styles";
-import { ViewItemModal } from "../AddItem";
-import { PRODUCTS_CONFIG } from "../../config";
+import { ViewItemModal } from "../ViewItem";
+import { ORDERS_CONFIG } from "../../config";
 
 export interface IOrderCard {
   individualOrder: {
@@ -27,19 +27,23 @@ export const OrderCard = ({ individualOrder }: IOrderCard) => {
     <div>
       <S.CardContainer>
         <S.TitleContainer $bgColor={theme.colors.primary}>
-          <S.Title>Order Number : {individualOrder.OrderNumber}</S.Title>
+          <S.Title>
+            {ORDERS_CONFIG.OrderNumber}
+            {individualOrder.OrderNumber}
+          </S.Title>
         </S.TitleContainer>
         <S.BodyContainer>
           <S.OrderNameContainer>
-            Order By : {individualOrder.OrderBy}
+            {ORDERS_CONFIG.OrderBy}
+            {individualOrder.OrderBy}
           </S.OrderNameContainer>
 
           <S.DateContainer>
-            Date :{"  "}
+            {ORDERS_CONFIG.Date}
             {individualOrder.Date}
           </S.DateContainer>
           <S.RupeeContainer>
-            {PRODUCTS_CONFIG.PrMRP} {individualOrder.Total}
+            {ORDERS_CONFIG.PrMRP} {individualOrder.Total}
           </S.RupeeContainer>
           <S.ButtonContainer>
             <S.Button
@@ -47,11 +51,11 @@ export const OrderCard = ({ individualOrder }: IOrderCard) => {
               onClick={() => setModal(true)}
             >
               <S.ViewIcon></S.ViewIcon>
-              {PRODUCTS_CONFIG.EditButton}
+              {ORDERS_CONFIG.viewButton}
             </S.Button>
             <S.Button $bgColor={theme.colors.primary}>
               <S.DeleteIcon></S.DeleteIcon>
-              {PRODUCTS_CONFIG.DeleteButton}
+              {ORDERS_CONFIG.DeleteButton}
             </S.Button>
           </S.ButtonContainer>
         </S.BodyContainer>

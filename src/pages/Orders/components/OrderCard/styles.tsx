@@ -6,7 +6,6 @@ Written by Aravinth Raj R <aravinthr235@gmail.com>, 2025.
 */
 import styled from "styled-components";
 import { RxCross2 } from "react-icons/rx";
-import { LiaCartArrowDownSolid } from "react-icons/lia";
 import { MdOutlineRemoveRedEye } from "react-icons/md";
 
 export const CardContainer = styled.div`
@@ -15,7 +14,6 @@ export const CardContainer = styled.div`
   align-items : center;
   justify-content:center;
   box-shadow : 0px 2px 4px rgba(0,0,0,0.2);
-  margin:30px 20px;
   border-radius:10px;
   transition : transform ease-in-out 0.2s;
   width:300px;
@@ -25,15 +23,11 @@ export const CardContainer = styled.div`
   }
 
   @media (max-width: 768px) {
-    padding : 20px 10px;
-    margin:30px 15px;
+    width : 280px;
   }
 
   @media (max-width: 576px) {
-    padding : 15px 13px;
-    margin : 20px 0;
-    justify-self:center;
-    align-self:center;
+     width : 260px;
   }
 `;
 
@@ -48,6 +42,7 @@ export const TitleContainer = styled.div<{ $bgColor: string }>`
   color: white;
   padding: 5px 5px;
   border-radius: 10px 10px 0 0;
+  width: 100%;
 
   @media (max-width: 576px) {
     font-size: 25px;
@@ -62,7 +57,7 @@ export const Title = styled.div`
   border-radius: 10px 10px 0 0;
 
   @media (max-width: 576px) {
-    font-size: 25px;
+    font-size: 17px;
   }
 `;
 
@@ -72,7 +67,7 @@ export const OrderNameContainer = styled.h3`
   margin: 13px;
 
   @media (max-width: 576px) {
-    font-size: 12px;
+    font-size: 14px;
   }
 `;
 
@@ -82,7 +77,7 @@ export const DateContainer = styled.h3`
   margin: 13px;
 
   @media (max-width: 576px) {
-    font-size: 12px;
+    font-size: 14px;
   }
 `;
 
@@ -93,7 +88,7 @@ export const RupeeContainer = styled.h5`
   margin-bottom: 20px;
 
   @media (max-width: 576px) {
-    font-size: 12px;
+    font-size: 14px;
   }
 `;
 
@@ -140,14 +135,5 @@ export const DeleteIcon = styled(RxCross2)`
 
   @media (max-width: 576px) {
     font-size: 15px;
-  }
-`;
-
-export const CartIcon = styled(LiaCartArrowDownSolid)`
-  color: white;
-  font-size: 23px;
-
-  @media (max-width: 576px) {
-    font-size: 20px;
   }
 `;

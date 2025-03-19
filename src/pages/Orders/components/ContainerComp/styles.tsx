@@ -41,35 +41,37 @@ export const PageContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 150vh;
 
   @media (min-width: 1024px) {
-    margin: 25px;
-    left: 10%;
-  }
-
-  @media (min-width: 540px) {
-    margin: 25px;
-    left: 2%;
+    margin-left: auto;
+    margin-right: auto;
+    right: 0;
+    padding: 20px;
   }
 
   @media (min-width: 1025px) {
     left: 17%;
-    margin: 25px 50px;
-    padding: 20px;
-    overflow-y: auto;
+  }
+
+  @media (max-width: 576px) {
+    position: absolute;
+    left: 42%;
+    transform: translate(-50%, 0%);
+  }
+
+  @media (max-width: 768px) {
+    position: absolute;
+    margin-left: 8%;
   }
 `;
 
 export const ActionContainer = styled.div`
   display: flex;
   align-items: center;
-  margin: 0 0 0 50px;
 
   @media (max-width: 576px) {
     margin-left: 5%;
     font-size: 12px;
-    margin: 0;
   }
 `;
 
@@ -78,10 +80,6 @@ export const SearchIcon = styled(BsSearch)<{
 }>`
   color: black;
   font-size: 16px;
-
-  @media (max-width: 576px) {
-    margin-left: -60px;
-  }
 `;
 
 export const Input = styled.input`
@@ -211,8 +209,8 @@ export const SortedSingleOption = styled.div<{
 
 export const SortedNavigation = styled.div<{ $bgColor: string }>`
   position: absolute;
-  top: 7%;
-  right: 16%;
+  top: 12%;
+  right: 20%;
   background-color: ${(props) => props.$bgColor};
   padding: 10px;
   gap: 10px;
@@ -231,15 +229,13 @@ export const SortedNavigation = styled.div<{ $bgColor: string }>`
   }
 
   @media (max-width: 768px) {
-    top: 4%;
-    width: 25%;
-    right: 15%;
+    top: 7%;
+    right: 13%;
   }
 
   @media (max-width: 576px) {
-    top: 2.5%;
-    width: 40%;
-    right: 6%;
+    top: 4%;
+    right: 5%;
   }
 `;
 
@@ -324,6 +320,10 @@ export const DropDownIcon = styled(SlArrowDown)<{
 
 export const IconText = styled.div<{ $bgColor: string }>`
   color: ${(props) => props.$bgColor};
+
+  @media (max-width: 576px) {
+    font-size: 13px;
+  }
 `;
 
 export const DropDownMenu = styled(Dropdown.Menu)`
@@ -332,16 +332,18 @@ export const DropDownMenu = styled(Dropdown.Menu)`
 
 export const ProductContainer = styled.div`
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 40px;
   padding: 30px;
   place-items: center;
+  margin: 0 auto;
+  margin-top: 20px;
 
-  @media (max-width: 1024px) {
-    grid-template-columns: repeat(2, 1fr);
+  @media (max-width: 768px) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   @media (max-width: 576px) {
-    grid-template-columns: repeat(1, 1fr);
-    margin-left: 0;
+    grid-template-columns: repeat(1, minmax(0, 1fr));
   }
 `;

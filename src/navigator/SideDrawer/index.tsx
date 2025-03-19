@@ -84,7 +84,7 @@ export const SideDrawer = ({ menu, toggleMenu }: ISideDrawer) => {
     <S.DrawerBox
       $bgColor={theme.colors.secondaryBackGround}
       sx={{
-        width: isMobile ? "38%" : 280,
+        width: isMobile ? "45%" : 280,
       }}
       role="presentation"
       onClick={isMobile ? toggleMenu : undefined}

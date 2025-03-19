@@ -23,4 +23,5 @@ export const PRODUCTS_CONFIG = {
   EditButton: "Edit",
   DeleteButton: "Delete",
   AddToCartButton: "Add To Cart",
+  sortedOptions: ["Sort By Title Asc", "Sort By Title Desc"],
 };

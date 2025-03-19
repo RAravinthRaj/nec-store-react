@@ -11,27 +11,59 @@ import { RxCross2 } from "react-icons/rx";
 export const ModalContainer = styled(Modal)`
   display: flex;
   align-items: center;
+  justify-content: center;
   padding: 50px;
-  postion: absolute;
+  position: absolute;
   top: 3%;
+  width: 70%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  .modal-dialog {
+    max-width: 90%;
+    margin: 0 auto;
+  }
+
+  .modal-content {
+    width: 100%;
+    overflow-x: auto;
+  }
 
   @media (max-width: 768px) {
-    left: 15%;
-    width: 70%;
+    top: 50%;
+    left: 50%;
+    width: 85%;
+    transform: translate(-50%, -50%);
   }
 
   @media (max-width: 576px) {
-    left: 5%;
-    width: 90%;
-    height: 80%;
-    top: 10%;
+    top: 50%;
+    left: 51.5%;
+    width: 110%;
+    transform: translate(-55%, -50%);
+  }
+`;
+
+export const ModalBody = styled.div`
+  padding: 10px 5px;
+  white-space: nowrap;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+
+  @media (max-width: 768px) {
+    max-height: 55vh;
+  }
+
+  @media (max-width: 576px) {
+    max-height: 50vh;
   }
 `;
 
 export const CloseButton = styled(RxCross2)`
   position: absolute;
-  right: 0.2%;
-  transform: translateY(-160%);
+  top: -7%;
+  right: 22%;
   background: none;
   border: none;
   font-size: 38px;
@@ -39,15 +71,44 @@ export const CloseButton = styled(RxCross2)`
   color: white;
   z-index: 2000;
 
-  media (max-width: 768px) {
-    transform: translateY(-170%);
+  @media (max-width: 768px) {
+    font-size: 32px;
   }
 
   @media (max-width: 576px) {
-    transform: translateY(-190%);
     font-size: 25px;
-    postion: fixed;
+    position: fixed;
   }
+`;
+
+export const TitleBox = styled.div<{ $bgColor: string }>`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  background-color: ${(props) => props?.$bgColor};
+  padding: 15px;
+  border-radius: 10px;
+  margin: 0 10px;
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.2);
+  min-width: 600px;
+`;
+
+export const ItemBox = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  padding: 15px;
+  border-radius: 10px;
+  margin: 5px 10px;
+  min-width: 600px;
+`;
+
+export const TitleComp = styled.div`
+  flex: 1;
+  text-align: center;
+  white-space: normal;
+  min-width: 100px;
+  padding: 0 5px;
 `;
 
 export const Button = styled.button<{ $bgColor: string }>`
@@ -76,6 +137,7 @@ export const Button = styled.button<{ $bgColor: string }>`
   @media (max-width: 576px) {
     width: 85%;
     height: 45px;
+    margin: 10px;
   }
 `;
 
@@ -84,68 +146,31 @@ export const Footer = styled.div`
   flex-direction: row;
   align-items: center;
   justify-content: space-around;
-`;
-
-export const TitleBox = styled.div<{ $bgColor: string }>`
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
-  background-color: ${(props) => props?.$bgColor};
-  padding: 15px;
-  border-radius: 10px;
-  margin: 0 10px;
-  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.2);
 
   @media (max-width: 576px) {
-    overflow-y: auto;
-  }
-`;
-
-export const ItemBox = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
-  padding: 15px;
-  border-radius: 10px;
-  margin: 5px 10px;
-
-  @media (max-width: 576px) {
-    overflow-y: auto;
-  }
-`;
-
-export const TitleComp = styled.div`
-  flex: 1;
-  text-align: center;
-  flex-wrap: wrap;
-
-  @media (max-width: 576px) {
-    overflow-y: auto;
+    flex-direction: column;
   }
 `;
 
 export const Divider = styled.div`
   border: solid 0.5px rgba(0, 0, 0, 0.2);
   transform: scaleY(0.1);
-  width: 90%;
-  margin-right: auto;
-  margin-left: auto;
+  min-width: 500px;
+  margin: 0 10px;
 
   @media (max-width: 768px) {
-    margin: 10px 15px;
+    margin: 10px 20px;
+    min-width: 560px;
   }
 
   @media (max-width: 576px) {
-    margin: 7px 10px;
+    margin: 7px 1px;
+    min-width: 600px;
   }
 `;
 
 export const BodyComponent = styled.div`
   margin: 10px;
-
-  @media (max-width: 576px) {
-    overflow-y: auto;
-  }
 `;
 
 export const Amount = styled.h4`

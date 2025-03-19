@@ -4,23 +4,22 @@ Unauthorized copying of this file, via any medium, is strictly prohibited.
 Proprietary and confidential.  
 Written by Aravinth Raj R <aravinthr235@gmail.com>, 2025.
 */
-export const PRODUCTS_CONFIG = {
+export const ORDERS_CONFIG = {
   AddCategoryTitle: "Add Category",
-  AddItemTitle: "Add Item",
+  Serial: "Sl No.",
+  ProductName: "Product Name",
   Category: "Category",
   Quantity: "Quantity",
   MRP: "MRP",
-  Image: "Image",
-  Title: "Title",
-  AddButton: "Add",
-  SubmitButton: "Submit",
-  CategoryToastSuccess: "Category Added Successfully",
-  AddItemToastSuccess: "Item Added Successfully",
-  CartItemToastSuccess: "Item Added to Cart",
-  All: "All",
-  PrQuantity: "Quantity : ",
-  PrMRP: "MRP : ₹ ",
-  EditButton: "Edit",
+  OrderNumber: "Order Number : ",
+  OrderBy: "Order By : ",
+  Date: "Date : ",
+  PrMRP: "Total : ₹ ",
   DeleteButton: "Delete",
-  AddToCartButton: "Add To Cart",
+  AmountRecieved: "Amount Recieved",
+  Deliver: "Deliver",
+  viewButton: "View",
+  Delete: "Delete",
+  sortedOptions: ["Sort By OrderNo. Asc", "Sort By OrderNo. Desc"],
+  All: "All",
 };

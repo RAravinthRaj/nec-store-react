@@ -27,7 +27,7 @@ export const ContainerComp = ({}: IContainerComp) => {
   const [showMobile, setShowMobile] = useState(false);
   const [selectedSortedOptions, setSelectedSortedOptions] = useState("");
 
-  const sortedOptions = ["Sort By Title Asc", "Sort By Title Desc"];
+  const sortedOptions = PRODUCTS_CONFIG.sortedOptions;
 
   const setAddModalShow = ($prop: boolean) => {
     setOpenItem($prop);
