@@ -159,7 +159,7 @@ export const SignUpBold = styled.h6<{ $textColor: string }>`
     position: absolute;
     left: 0;
     bottom: 0;
-    height: 2px; /* Thickness of the underline */
+    height: 2px;
     width: 0;
     background-color: ${(props) => props?.$textColor};
     transition: width 0.3s ease-in-out;

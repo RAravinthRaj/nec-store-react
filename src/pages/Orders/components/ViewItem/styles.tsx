@@ -20,28 +20,17 @@ export const ModalContainer = styled(Modal)`
   left: 50%;
   transform: translate(-50%, -50%);
 
-  .modal-dialog {
-    max-width: 90%;
-    margin: 0 auto;
-  }
-
-  .modal-content {
-    width: 100%;
-    overflow-x: auto;
-  }
-
   @media (max-width: 768px) {
-    top: 50%;
-    left: 50%;
     width: 85%;
     transform: translate(-50%, -50%);
   }
 
   @media (max-width: 576px) {
+    position: absolute;
     top: 50%;
-    left: 51.5%;
-    width: 110%;
-    transform: translate(-55%, -50%);
+    left: 50%;
+    width: 100%;
+    transform: translate(-50%, -50%);
   }
 `;
 
@@ -62,8 +51,8 @@ export const ModalBody = styled.div`
 
 export const CloseButton = styled(RxCross2)`
   position: absolute;
-  top: -7%;
-  right: 22%;
+  top: -10%;
+  right: 1%;
   background: none;
   border: none;
   font-size: 38px;
@@ -76,8 +65,8 @@ export const CloseButton = styled(RxCross2)`
   }
 
   @media (max-width: 576px) {
-    font-size: 25px;
-    position: fixed;
+    font-size: 30px;
+    top: -7%;
   }
 `;
 
@@ -111,7 +100,7 @@ export const TitleComp = styled.div`
   padding: 0 5px;
 `;
 
-export const Button = styled.button<{ $bgColor: string }>`
+export const Button = styled.button<{ $bgColor: string; $isActive: boolean }>`
   flex: 0.7;
   background-color: ${(props) => props?.$bgColor};
   color: white;
@@ -139,6 +128,12 @@ export const Button = styled.button<{ $bgColor: string }>`
     height: 45px;
     margin: 10px;
   }
+
+  ${({ $isActive }) =>
+    !$isActive &&
+    `   opacity:0.4;
+        cursor:no-drop !important;
+    `};
 `;
 
 export const Footer = styled.div`
