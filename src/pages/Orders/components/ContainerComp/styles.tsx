@@ -49,8 +49,8 @@ export const PageContainer = styled.div`
     padding: 20px;
   }
 
-  @media (min-width: 1025px) {
-    left: 17%;
+  @media (min-width: 1280px) {
+    left: 19.5%;
   }
 
   @media (max-width: 576px) {
@@ -68,6 +68,10 @@ export const PageContainer = styled.div`
 export const ActionContainer = styled.div`
   display: flex;
   align-items: center;
+
+  @media (min-width: 1280px) {
+    margin-left: 50px;
+  }
 
   @media (max-width: 576px) {
     margin-left: 5%;
