@@ -242,3 +242,5 @@ export const NameDivider = styled.div`
   margin: 8px 5px;
   transform: scaleY(0.1);
 `;
+
+export const UserOptionsHolder = styled.div``;

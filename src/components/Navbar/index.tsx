@@ -110,7 +110,7 @@ export const Navbar = ({}: INavbar) => {
           const value = option.replace(/\s+/g, "").toLowerCase();
           const link = "/" + navigationLinks[index];
           return (
-            <div>
+            <S.UserOptionsHolder>
               <S.userNavigation
                 to={link}
                 $hoverbgColor={theme.colors.primary}
@@ -125,7 +125,7 @@ export const Navbar = ({}: INavbar) => {
               </S.userNavigation>
 
               {index < userOptions.length - 1 && <S.Divider />}
-            </div>
+            </S.UserOptionsHolder>
           );
         })}
       </S.UserMenu>
