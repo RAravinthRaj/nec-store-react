@@ -25,15 +25,6 @@ Written by Aravinth Raj R <aravinthr235@gmail.com>, 2025.
   background-color: var(--bs-backdrop-bg);
 }
 
-.modal-backdrop.fade {
-  opacity: 0;
-}
-
-.modal-backdrop.show {
-  opacity: var(--bs-backdrop-opacity);
-}
-
-
 :root {
   --main-font: "Inter", serif;
 

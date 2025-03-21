@@ -1,9 +1,7 @@
 import Drawer from "@mui/material/Drawer";
 import * as S from "./styles";
-import { useTheme } from "../../hooks";
-import { useState } from "react";
+import { useTheme, useIsNotDesktop } from "../../hooks";
 import { SIDEDRAW_CONFIG } from "./config";
-import { useEffect } from "react";
 
 export interface ISideDrawer {
   menu: boolean;
@@ -12,23 +10,6 @@ export interface ISideDrawer {
 
 export const SideDrawer = ({ menu, toggleMenu }: ISideDrawer) => {
   const theme = useTheme();
-
-  const useIsNotDesktop = () => {
-    const [isNotDesktop, setIsNotDesktop] = useState(
-      window.matchMedia("(max-width: 1024px)").matches
-    );
-
-    useEffect(() => {
-      const mediaQuery = window.matchMedia("(max-width: 1024px)");
-
-      const handleChange = () => setIsNotDesktop(mediaQuery.matches);
-
-      mediaQuery.addEventListener("change", handleChange);
-      return () => mediaQuery.removeEventListener("change", handleChange);
-    }, []);
-
-    return isNotDesktop;
-  };
 
   const isMobile = useIsNotDesktop();
 

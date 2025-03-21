@@ -5,101 +5,95 @@ Proprietary and confidential.
 Written by Aravinth Raj R <aravinthr235@gmail.com>, 2025.
 */
 import styled from "styled-components";
-import { FaPencilAlt } from "react-icons/fa";
-import { ImBin } from "react-icons/im";
-import { LiaCartArrowDownSolid } from "react-icons/lia";
+import { RxCross2 } from "react-icons/rx";
+import { MdOutlineRemoveRedEye } from "react-icons/md";
 
 export const CardContainer = styled.div`
   display:flex:
   flex-direction : column;
   align-items : center;
   justify-content:center;
-  padding : 20px 20px;
   box-shadow : 0px 2px 4px rgba(0,0,0,0.2);
-  margin:30px 20px;
   border-radius:10px;
-  width:90%;
   transition : transform ease-in-out 0.2s;
-  gap:40px;
-   overflow-y: hidden;
- 
+  width:300px;
 
   &:hover{
-    transform : scale(1.02);
-    box-shadow : 0px 4px 6px rgba(0,0,0,0.2);
+    transform : scale(1.10);
   }
 
-  @media(max-width:1280px){
-    padding:20px 10px;
+   @media (max-width: 1280px) {
+    width : 280px;
   }
+  
 
   @media (max-width: 768px) {
-    padding : 20px 10px;
-    margin:30px 15px;
+    width : 280px;
   }
 
   @media (max-width: 576px) {
-    padding : 15px 12px;
-    margin : 20px 0;
-    width  : 70%;
-    justify-self:center;
-    align-self:center;
+     width : 260px;
   }
 `;
 
-export const ImageContainer = styled.div`
-  display: flex;
-  justify-content: center;
-`;
-
-export const Image = styled.img`
-  width: 55%;
-`;
-
-export const TitleContainer = styled.h3`
+export const BodyContainer = styled.div`
   text-align: center;
-  font-size: 30px;
-  margin: 13px;
+  padding: 20px;
+`;
+
+export const TitleContainer = styled.div`
+  text-align: center;
+  background-color: rgb(0, 136, 255);
+  color: white;
+  padding: 5px 5px;
+  border-radius: 10px 10px 0 0;
+  width: 100%;
 
   @media (max-width: 576px) {
     font-size: 25px;
   }
 `;
 
-export const CategoryContainer = styled.h5<{ $bgColor: string }>`
-  color: ${(props) => props?.$bgColor};
+export const Title = styled.div`
   text-align: center;
-  font-size: 14px;
-  margin: 13px;
+  color: white;
+  margin: 12px;
+  font-size: 16px;
+  border-radius: 10px 10px 0 0;
 
   @media (max-width: 576px) {
-    font-size: 12px;
+    font-size: 17px;
   }
 `;
 
-export const ProductDes = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-`;
-
-export const QuantityContainer = styled.h5`
+export const OrderNameContainer = styled.h3`
   text-align: center;
-  font-size: 14px;
+  font-size: 16px;
   margin: 13px;
 
   @media (max-width: 576px) {
-    font-size: 12px;
+    font-size: 14px;
+  }
+`;
+
+export const DateContainer = styled.h3`
+  text-align: center;
+  font-size: 16px;
+  margin: 13px;
+
+  @media (max-width: 576px) {
+    font-size: 14px;
   }
 `;
 
 export const RupeeContainer = styled.h5`
   text-align: center;
-  font-size: 14px;
+  font-size: 16px;
   margin: 13px;
+  margin-bottom: 20px;
 
   @media (max-width: 576px) {
-    font-size: 12px;
+    font-size: 14px;
   }
 `;
 
@@ -131,29 +125,20 @@ export const Button = styled.button<{ $bgColor: string }>`
   }
 `;
 
-export const EditIcon = styled(FaPencilAlt)`
+export const ViewIcon = styled(MdOutlineRemoveRedEye)`
   color: white;
-  font-size: 16px;
+  font-size: 20px;
 
   @media (max-width: 576px) {
     font-size: 13px;
   }
 `;
 
-export const DeleteIcon = styled(ImBin)`
+export const DeleteIcon = styled(RxCross2)`
   color: white;
-  font-size: 18px;
+  font-size: 20px;
 
   @media (max-width: 576px) {
     font-size: 15px;
-  }
-`;
-
-export const CartIcon = styled(LiaCartArrowDownSolid)`
-  color: white;
-  font-size: 23px;
-
-  @media (max-width: 576px) {
-    font-size: 20px;
   }
 `;

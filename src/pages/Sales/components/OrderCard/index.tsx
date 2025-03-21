@@ -26,7 +26,7 @@ export const OrderCard = ({ individualOrder }: IOrderCard) => {
   return (
     <div>
       <S.CardContainer>
-        <S.TitleContainer $bgColor={theme.colors.tertiary}>
+        <S.TitleContainer>
           <S.Title>
             {ORDERS_CONFIG.OrderNumber}
             {individualOrder.OrderNumber}

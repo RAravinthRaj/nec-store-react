@@ -14,6 +14,7 @@ import { AddItemModal } from "../AddItem";
 import { AddCategoryModal } from "../AddCategory";
 import { ProductCard } from "../ProductCard";
 import { PRODUCTS_CONFIG } from "../../config";
+import { SideDrawer } from "../../../../navigator/SideDrawer";
 
 export interface IContainerComp {}
 
@@ -23,9 +24,7 @@ export const ContainerComp = ({}: IContainerComp) => {
 
   const [openItem, setOpenItem] = useState(false);
   const [openCategory, setOpenCategory] = useState(false);
-  const [openSortedOptions, setOpenSortedOptions] = useState(false);
   const [showMobile, setShowMobile] = useState(false);
-  const [selectedSortedOptions, setSelectedSortedOptions] = useState("");
 
   const sortedOptions = PRODUCTS_CONFIG.sortedOptions;
 
@@ -37,17 +36,15 @@ export const ContainerComp = ({}: IContainerComp) => {
     setOpenCategory($prop);
   };
 
-  const openSortedOption = () => {
-    setOpenSortedOptions(!openSortedOptions);
-  };
-
-  const handleClick = ($prop: string) => {
-    setSelectedSortedOptions($prop);
-    setOpenSortedOptions(!openSortedOptions);
-  };
-
   const handleFabClick = () => {
     setShowMobile(!showMobile);
+  };
+
+  const [menu, setMenu] = useState(false);
+
+  const handleMenuToggle = (newMenuState: boolean) => {
+    setMenu(newMenuState);
+    console.log("Updated Menu State:", menu);
   };
 
   const category = ["All", "Stationary", "dshf", "dsfhdgs"];
@@ -91,18 +88,18 @@ export const ContainerComp = ({}: IContainerComp) => {
 
     return (
       <S.ActionContainer>
-        <S.InputWrapper $bgColor={theme.colors.backGround}>
-          {_showDropDown()}
-          <S.Input type="input" placeholder="Search" />
-          <S.SearchIcon
-            $bgColor={theme.colors.backGround}
-            onClick={() => selectProducts()}
-          ></S.SearchIcon>
-        </S.InputWrapper>
-        <S.SortIcon
-          $bgColor={theme.colors.backGround}
-          onClick={() => openSortedOption()}
-        ></S.SortIcon>
+        <S.ActionItem>
+          <S.InputWrapper $bgColor={theme.colors.backGround}>
+            {_showDropDown()}
+            <S.Input type="input" placeholder="Search" />
+            <S.SearchIcon
+              $bgColor={theme.colors.backGround}
+              onClick={() => selectProducts()}
+            ></S.SearchIcon>
+          </S.InputWrapper>
+          <S.SortContainer>{_sortedOptions()}</S.SortContainer>
+        </S.ActionItem>
+
         {!isMobile && (
           <S.ButtonContainer>
             <S.Button
@@ -168,28 +165,29 @@ export const ContainerComp = ({}: IContainerComp) => {
 
   const _sortedOptions = () => {
     return (
-      <S.SortedNavigation $bgColor={theme.colors.secondaryBackGround}>
-        {sortedOptions.map((option, index) => {
-          const isActive = selectedSortedOptions === option;
-
-          return (
-            <div>
-              <S.SortedSingleOption
-                $hoverbgColor={theme.colors.primary}
-                $isActive={isActive}
-                key={option}
-                onClick={() => handleClick(option)}
-              >
-                <S.UserOption>
-                  <S.Title>{option}</S.Title>
-                </S.UserOption>
-              </S.SortedSingleOption>
-
-              {index < sortedOptions.length - 1 && <S.Divider />}
-            </div>
-          );
-        })}
-      </S.SortedNavigation>
+      <S.UserContainer>
+        <S.CustomDropdown>
+          <S.CustomToggle $bgColor={theme.colors.backGround}>
+            <S.SortIcon $bgColor={theme.colors.backGround}></S.SortIcon>
+          </S.CustomToggle>
+          <S.SortedDropdownMenu $bgColor={theme.colors.secondaryBackGround}>
+            {sortedOptions.map((dept, index) => (
+              <>
+                <S.SortedDropdownItem
+                  key={dept}
+                  eventKey={dept}
+                  $bgColor={theme.colors.primary}
+                >
+                  <S.SortedIconText>{dept}</S.SortedIconText>
+                </S.SortedDropdownItem>
+                {index !== sortedOptions.length - 1 && (
+                  <S.NameDivider></S.NameDivider>
+                )}
+              </>
+            ))}
+          </S.SortedDropdownMenu>
+        </S.CustomDropdown>
+      </S.UserContainer>
     );
   };
 
@@ -224,7 +222,6 @@ export const ContainerComp = ({}: IContainerComp) => {
           modalshow={openCategory}
           onClose={() => setCategoryModalShow(false)}
         ></AddCategoryModal>
-        {openSortedOptions && _sortedOptions()}
         {isMobile && _mobileActionItems()}
         {isMobile && _showMobileButton()}
         {_products()}
@@ -235,9 +232,14 @@ export const ContainerComp = ({}: IContainerComp) => {
   return (
     <S.MainContainer>
       <S.NavbarContainer>
-        <Navbar />
+        <Navbar menu={menu} onToggleMenu={handleMenuToggle} />
       </S.NavbarContainer>
-      <S.PageContainer>{_mainContainerItems()}</S.PageContainer>
+      <S.BodyConatiner>
+        <S.SideDrawerContainer>
+          <SideDrawer menu={menu} toggleMenu={() => handleMenuToggle(!menu)} />
+        </S.SideDrawerContainer>
+        <S.PageContainer>{_mainContainerItems()}</S.PageContainer>
+      </S.BodyConatiner>
     </S.MainContainer>
   );
 };

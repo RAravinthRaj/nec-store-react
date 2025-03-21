@@ -7,13 +7,15 @@ Written by Aravinth Raj R <aravinthr235@gmail.com>, 2025.
 import styled from "styled-components";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { Link } from "react-router-dom";
+import { Dropdown } from "react-bootstrap";
+import { SlArrowDown } from "react-icons/sl";
 
 export const NavbarContainer = styled.div<{ $bgColor: string }>`
   display: flex;
   align-items: center;
   background-color: ${($props) => $props?.$bgColor};
   width: 100%;
-  padding: 5px 15px;
+  padding: 2px 15px;
   position: fixed;
   z-index: 200;
 
@@ -22,7 +24,7 @@ export const NavbarContainer = styled.div<{ $bgColor: string }>`
   }
 
   @media (max-width: 576px) {
-    padding: 8px 15px;
+    padding: 8px 10px;
   }
 `;
 
@@ -54,9 +56,10 @@ export const TitleText = styled.div`
 export const UserContainer = styled.div`
   flex: 1;
   display: flex;
+  flex-direction: row-reverse;
   align-items: center;
   gap: 20px;
-  margin: 5px 10px;
+  margin: 3px 10px;
 
   &:hover {
     cursor: pointer;
@@ -74,7 +77,7 @@ export const UserName = styled.div<{ $bgColor: string }>`
   display: flex;
   align-items: center;
   gap: 10px;
-  margin-left: 30px;
+  text-align: center;
 
   @media (max-width: 768px) {
     font-size: 18px;
@@ -82,8 +85,9 @@ export const UserName = styled.div<{ $bgColor: string }>`
   }
 
   @media (max-width: 576px) {
-    font-size: 15px;
+    font-size: 17px;
     font-weight: 550;
+    margin: 5px 0;
   }
 `;
 
@@ -117,46 +121,9 @@ export const Icon = styled(GiHamburgerMenu)`
   }
 `;
 
-export const UserMenu = styled.div<{
-  $bgColor: string;
-  $isOpen: boolean;
-}>`
-  position: absolute;
-  top: 100px;
-  right: 2%;
-  background-color: ${(props) => props.$bgColor};
-  padding: 15px;
-  gap: 5px;
-  border-radius: 8px;
-  z-index: 1500;
-  display: flex;
-  flex-direction: column;
-  &::before {
-    content: "";
-    top: -10px;
-    position: absolute;
-    right: 10px;
-    border-width: 0 8px 8px 8px;
-    border-style: solid;
-    border-color: transparent transparent ${(props) => props.$bgColor}
-      transparent;
-  }
-
-  @media (max-width: 768px) {
-    top: 10%;
-    right: 4%;
-  }
-
-  @media (max-width: 576px) {
-    top: 12%;
-    right: 5%;
-    padding: 8px;
-  }
-`;
-
 export const UserIcon = styled.img`
-  height: 13%;
-  width: 14%;
+  height: 14%;
+  width: 15%;
 
   @media (max-width: 768px) {
     height: 14%;
@@ -169,78 +136,103 @@ export const UserIcon = styled.img`
   }
 `;
 
-export const Title = styled.div`
-  font-size: 16px;
-  font-weight: 500;
+export const IconText = styled.div`
+  font-size: 18px;
 
   @media (max-width: 576px) {
-    font-weight: 550;
-    font-size: 12px;
+    font-size: 15px;
   }
 `;
 
-export const UserOption = styled.div`
-  display: flex;
-  gap: 10px;
-  margin-left: 30px;
-`;
-
-export const Divider = styled.div`
-  border: solid 0.5px black;
-  margin: 8px 5px;
-  transform: scaleY(0.1);
-
-  @media (max-width: 768px) {
-    margin-top: 10px;
-    margin-right: 10px;
-    margin-left: 10px;
-  }
-
-  @media (max-width: 576px) {
-    margin-top: 10px;
-    margin-right: 10px;
-    margin-left: 10px;
-  }
-`;
-
-export const userNavigation = styled(Link)<{
-  $hoverbgColor: string;
-  $isActive: boolean;
-}>`
+export const userNavigation = styled(Link)<{}>`
   text-decoration: none;
   color: #000000;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
 
   &:hover {
     ${UserIcon} {
-      filter: invert(20%) sepia(94%) saturate(1500%) hue-rotate(220deg)
-        brightness(80%) contrast(150%);
+      filter: invert(100%) sepia(0%) saturate(0%) brightness(100%)
+        contrast(100%);
     }
 
-    ${Title} {
-      color: ${($props) => $props?.$hoverbgColor};
+    ${IconText} {
+      color: #ffffff;
     }
-
-    cursor: pointer;
   }
-
-  ${({ $isActive, $hoverbgColor }) =>
-    $isActive &&
-    `
-        ${UserIcon} {
-          filter: invert(20%) sepia(94%) saturate(1500%) hue-rotate(220deg)
-            brightness(80%) contrast(150%);
-        }
-    
-        ${Title} {
-          color: ${$hoverbgColor};
-        }
- `};
 `;
 
 export const NameDivider = styled.div`
   border: solid 0.5px black;
-  margin: 8px 5px;
+  margin: 3px;
   transform: scaleY(0.1);
+  width: 95%;
+  left: 5%;
 `;
 
 export const UserOptionsHolder = styled.div``;
+
+export const CustomToggle = styled(Dropdown.Toggle)<{ $bgColor: string }>`
+  background: none;
+  border: none;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+
+  padding: 0;
+  margin: 0;
+  --bs-btn-active-bg: none;
+  --bs-btn-hover-bg: none;
+
+  &::after {
+    display: none;
+  }
+`;
+
+export const CustomDropdown = styled(Dropdown)`
+  margin: 5px;
+`;
+
+export const DropDownIcon = styled(SlArrowDown)<{
+  $bgColor: string;
+}>`
+  color: black;
+  font-size: 13px;
+`;
+
+export const DropdownMenu = styled(Dropdown.Menu)<{ $bgColor: string }>`
+  background-color: ${(props) => props?.$bgColor};
+  width: 200px;
+
+  @media (max-width: 768px) {
+    width: 180px;
+  }
+`;
+
+export const DropdownItem = styled(Dropdown.Item)<{ $bgColor: string }>`
+  font-size: 17px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+
+  &:hover {
+    background: none;
+    ${IconText} {
+      color: ${(props) => props?.$bgColor};
+    }
+
+    ${UserIcon} {
+      filter: invert(20%) sepia(94%) saturate(1500%) hue-rotate(220deg)
+        brightness(80%) contrast(150%);
+    }
+  }
+`;
+
+export const MobileNameContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
