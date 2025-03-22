@@ -9,11 +9,13 @@ import { useTheme } from "../../../../hooks";
 import { useState } from "react";
 import { toast } from "react-toastify";
 import { ROLESELECTION_CONFIG } from "../../config";
+import { useNavigate } from "react-router-dom";
 
 export interface IRoleSelection {}
 
 export const RoleContainer = ({}: IRoleSelection) => {
   const theme = useTheme();
+  const navigate = useNavigate();
 
   const roles = ["Admin", "Retailer", "Customer"];
   const [activeRole, setActiveRole] = useState<string | null>(null);
@@ -26,6 +28,7 @@ export const RoleContainer = ({}: IRoleSelection) => {
     if (activeRole !== null) {
       const data = ROLESELECTION_CONFIG.loginToast + activeRole;
       toast.success(data);
+      navigate("/products");
     } else {
       toast.info(ROLESELECTION_CONFIG.warnToast);
     }

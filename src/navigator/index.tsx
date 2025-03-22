@@ -7,6 +7,9 @@ Written by Aravinth Raj R <aravinthr235@gmail.com>, 2025.
 import { SignIn } from "../pages";
 import { SignUp } from "../pages";
 import { RoleSelection } from "../pages";
+import { Products } from "../pages";
+import { Orders } from "../pages";
+import { Sales } from "../pages";
 
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
@@ -17,6 +20,9 @@ export const Navigator = () => {
         <Route path="/" element={<SignIn />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/roles" element={<RoleSelection />} />
+        <Route path="/products" element={<Products />} />
+        <Route path="/orders" element={<Orders />} />
+        <Route path="/sales" element={<Sales />} />
       </Routes>
     </BrowserRouter>
   );

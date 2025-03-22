@@ -13,13 +13,16 @@ export const MainContainer = styled(Container)`
   flex-direction: column;
   align-items: center;
   padding: 20px;
+  margin-top: 35px;
 
   @media (max-width: 768px) {
     flex-direction: column;
+    margin-top: 20px;
   }
 
   @media (max-width: 576px) {
     flex-direction: column;
+    margin-top: 20px;
   }
 `;
 
@@ -34,7 +37,7 @@ export const Logo = styled.img`
   }
 
   @media (max-width: 576px) {
-    height: 40px;
+    height: 50px;
     width: 50px;
     margin-top: -20px;
   }
