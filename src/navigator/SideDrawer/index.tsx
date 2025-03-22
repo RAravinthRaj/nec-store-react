@@ -1,7 +1,13 @@
+/* 
+© 2025 Aravinth Raj R. All rights reserved.
+Unauthorized copying of this file, via any medium, is strictly prohibited.
+Proprietary and confidential.  
+Written by Aravinth Raj R <aravinthr235@gmail.com>, 2025.
+*/
 import Drawer from "@mui/material/Drawer";
 import * as S from "./styles";
 import { useTheme, useIsNotDesktop } from "../../hooks";
-import { SIDEDRAW_CONFIG } from "./config";
+import { SIDE_DRAWER_CONFIG } from "./config";
 
 export interface ISideDrawer {
   menu: boolean;
@@ -10,34 +16,35 @@ export interface ISideDrawer {
 
 export const SideDrawer = ({ menu, toggleMenu }: ISideDrawer) => {
   const theme = useTheme();
-
   const isMobile = useIsNotDesktop();
 
-  const retailerActions = ["Products", "Orders", "Sales"];
+  const _renderHeaderSM = () => {
+    if (isMobile) {
+      return (
+        <div>
+          <S.Item>
+            <S.Logo src={theme.images.logo} />
+            <S.Title>{SIDE_DRAWER_CONFIG.title}</S.Title>
+          </S.Item>
+          <S.Divider />
+        </div>
+      );
+    }
+  };
 
-  const _navigationlist = () => {
+  const _renderNavigationList = () => {
     return (
       <S.CustomList>
-        {isMobile && (
-          <div>
-            <S.Item>
-              <S.Logo src={theme.images.logo} />
-              <S.Title>{SIDEDRAW_CONFIG.title}</S.Title>
-            </S.Item>
-            <S.Divider />
-          </div>
-        )}
-        {retailerActions.map((text) => {
-          const link = "/" + text.toLowerCase();
-
+        {_renderHeaderSM()}
+        {SIDE_DRAWER_CONFIG.retailerActions.map((item) => {
           return (
-            <div>
+            <div key={item?.id}>
               <S.ItemContainer
-                $hoverbgColor={theme.colors.primary}
+                $hoverBgColor={theme.colors.primary}
                 disablePadding
               >
                 <S.SideDrawerLink
-                  to={link}
+                  to={item?.link}
                   style={({ isActive }) => ({
                     color: isActive ? theme.colors.primary : "inherit",
                     display: "block",
@@ -47,9 +54,9 @@ export const SideDrawer = ({ menu, toggleMenu }: ISideDrawer) => {
                   <S.Item>
                     <S.Icon
                       $bgColor={theme.colors.primary}
-                      src={theme.images[text.toLowerCase()]}
+                      src={item?.imageSrc}
                     />
-                    <S.ItemText primary={text} />
+                    <S.ItemText primary={item?.title} />
                   </S.Item>
                 </S.SideDrawerLink>
               </S.ItemContainer>
@@ -61,39 +68,49 @@ export const SideDrawer = ({ menu, toggleMenu }: ISideDrawer) => {
     );
   };
 
-  const DrawerList = (
-    <S.DrawerBox
-      $bgColor={theme.colors.secondaryBackGround}
-      sx={{
-        width: isMobile ? "45%" : 280,
-      }}
-      role="presentation"
-      onClick={isMobile ? toggleMenu : undefined}
-    >
-      {_navigationlist()}
-    </S.DrawerBox>
-  );
+  const _renderDrawer = () => {
+    return (
+      <S.DrawerBox
+        $bgColor={theme.colors.secondaryBackGround}
+        onClick={isMobile ? toggleMenu : () => {}}
+      >
+        {_renderNavigationList()}
+      </S.DrawerBox>
+    );
+  };
+
+  if (isMobile) {
+    return (
+      <Drawer
+        open={menu}
+        onClose={toggleMenu}
+        slotProps={{
+          paper: {
+            style: {
+              width: "65%",
+            },
+          },
+        }}
+      >
+        {_renderDrawer()}
+      </Drawer>
+    );
+  }
 
   return (
-    <div>
-      {!isMobile ? (
-        <Drawer
-          open={true}
-          variant="permanent"
-          PaperProps={{
-            style: {
-              zIndex: 100,
-              marginTop: !isMobile ? "73px" : "0px",
-            },
-          }}
-        >
-          {DrawerList}
-        </Drawer>
-      ) : (
-        <Drawer open={menu} onClose={toggleMenu}>
-          {DrawerList}
-        </Drawer>
-      )}
-    </div>
+    <Drawer
+      open={true}
+      variant="permanent"
+      slotProps={{
+        paper: {
+          style: {
+            marginTop: "73px",
+            width: "20%",
+          },
+        },
+      }}
+    >
+      {_renderDrawer()}
+    </Drawer>
   );
 };

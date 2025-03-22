@@ -17,7 +17,6 @@ export const NavbarContainer = styled.div<{ $bgColor: string }>`
   width: 100%;
   padding: 2px 15px;
   position: fixed;
-  z-index: 200;
 
   @media (max-width: 768px) {
     padding: 8px 15px;
@@ -144,7 +143,7 @@ export const IconText = styled.div`
   }
 `;
 
-export const userNavigation = styled(Link)<{}>`
+export const userNavigation = styled(Link)`
   text-decoration: none;
   color: #000000;
   display: flex;

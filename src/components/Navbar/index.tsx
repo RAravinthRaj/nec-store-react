@@ -17,29 +17,52 @@ export const Navbar = ({ menu, onToggleMenu }: INavbar) => {
   const theme = useTheme();
   const isMobile = useIsNotDesktop();
 
-  const userOptions = ["View Profile", "Switch Role", "LogOut"];
-  const navigationLinks = ["dashboard", "roles", ""];
-  const toggleMenu = () => {
+  const _toggleMenu = () => {
     const updatedMenuState = !menu;
     onToggleMenu(updatedMenuState);
   };
 
-  const _titleContainer = () => {
-    return (
-      <S.TitleContainer>
-        {!isMobile ? (
-          <S.TitleContainer>
-            <S.Logo src={theme.images.logo} />
-            <S.TitleText>{NAVBAR_CONFIG.title}</S.TitleText>
-          </S.TitleContainer>
-        ) : (
-          <S.Icon onClick={() => toggleMenu()}></S.Icon>
-        )}
-      </S.TitleContainer>
-    );
+  const _renderTitle = () => {
+    if (!isMobile) {
+      return (
+        <S.TitleContainer>
+          <S.Logo src={theme.images.logo} />
+          <S.TitleText>{NAVBAR_CONFIG.title}</S.TitleText>
+        </S.TitleContainer>
+      );
+    }
+
+    return <S.Icon onClick={_toggleMenu}></S.Icon>;
   };
 
-  const _userOptionsshowDropDown = () => {
+  const _renderUserName = () => {
+    if (!isMobile) {
+      return (
+        <S.UserName $bgColor={theme.colors.primary}>
+          Hii , Aravinth !!
+        </S.UserName>
+      );
+    }
+
+    return null;
+  };
+
+  const _renderUserNameSM = () => {
+    if (isMobile) {
+      return (
+        <S.MobileNameContainer>
+          <S.UserName $bgColor={theme.colors.primary}>
+            Hii Aravinth !!
+          </S.UserName>
+          <S.NameDivider></S.NameDivider>
+        </S.MobileNameContainer>
+      );
+    }
+
+    return null;
+  };
+
+  const _renderDropDown = () => {
     return (
       <S.UserContainer>
         <S.CustomDropdown>
@@ -49,52 +72,37 @@ export const Navbar = ({ menu, onToggleMenu }: INavbar) => {
             </S.ImageBackGround>
           </S.CustomToggle>
           <S.DropdownMenu $bgColor={theme.colors.secondaryBackGround}>
-            {isMobile && (
-              <S.MobileNameContainer>
-                <S.UserName $bgColor={theme.colors.primary}>
-                  Hii Aravinth !!
-                </S.UserName>
-                <S.NameDivider></S.NameDivider>
-              </S.MobileNameContainer>
-            )}
-            {userOptions.map((dept, index) => {
-              const icon = dept.replace(/ /g, "").toLowerCase();
-              const link = "/" + navigationLinks[index];
+            {_renderUserNameSM()}
+            {NAVBAR_CONFIG.navBarOptions.map((item, index) => {
               return (
                 <>
                   <S.DropdownItem
-                    key={dept}
-                    eventKey={dept}
+                    key={item?.id}
+                    eventKey={item?.id}
                     $bgColor={theme.colors.primary}
                   >
-                    <S.userNavigation to={link}>
-                      <S.UserIcon src={theme.images[icon]}></S.UserIcon>
-                      <S.IconText>{dept}</S.IconText>
+                    <S.userNavigation to={item?.link}>
+                      <S.UserIcon src={item?.imageSrc}></S.UserIcon>
+                      <S.IconText>{item?.title}</S.IconText>
                     </S.userNavigation>
                   </S.DropdownItem>
-                  {index != userOptions.length - 1 && (
-                    <S.NameDivider></S.NameDivider>
+                  {index != NAVBAR_CONFIG.navBarOptions.length - 1 && (
+                    <S.NameDivider />
                   )}
                 </>
               );
             })}
           </S.DropdownMenu>
         </S.CustomDropdown>
-        {!isMobile && (
-          <S.UserName $bgColor={theme.colors.primary}>
-            Hii , Aravinth !!
-          </S.UserName>
-        )}
+        {_renderUserName()}
       </S.UserContainer>
     );
   };
 
   return (
-    <div>
-      <S.NavbarContainer $bgColor={theme.colors.secondaryOptional}>
-        {_titleContainer()}
-        {_userOptionsshowDropDown()}
-      </S.NavbarContainer>
-    </div>
+    <S.NavbarContainer $bgColor={theme.colors.secondaryOptional}>
+      <S.TitleContainer>{_renderTitle()}</S.TitleContainer>
+      {_renderDropDown()}
+    </S.NavbarContainer>
   );
 };

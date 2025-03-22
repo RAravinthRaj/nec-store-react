@@ -15,7 +15,6 @@ import { NavLink } from "react-router-dom";
 export const DrawerBox = styled(Box)<{ $bgColor: string }>`
   height: 100%;
   background-color: ${(props) => props?.$bgColor};
-  position: fixed;
 `;
 
 export const Icon = styled.img<{ $bgColor: string }>`
@@ -75,7 +74,7 @@ export const ItemText = styled(ListItemText)`
 `;
 
 export const ItemContainer = styled(ListItem)<{
-  $hoverbgColor: string;
+  $hoverBgColor: string;
 }>`
   &:hover {
     ${Icon} {
@@ -84,7 +83,7 @@ export const ItemContainer = styled(ListItem)<{
     }
 
     ${ItemText} {
-      color: ${($props) => $props?.$hoverbgColor};
+      color: ${($props) => $props?.$hoverBgColor};
     }
   }
 `;

@@ -35,8 +35,6 @@ export const NavbarContainer = styled.div`
 `;
 
 export const PageContainer = styled.div`
-  top: 10%;
-  position: absolute;
   margin-top: 20px;
   display: flex;
   justify-content: center;
@@ -45,13 +43,6 @@ export const PageContainer = styled.div`
   @media (min-width: 540px) {
     margin: 20px;
     left: 2%;
-  }
-
-  @media (min-width: 1025px) {
-    left: 17%;
-    margin: 25px 50px;
-    margin-right: 30px;
-    padding: 20px;
   }
 `;
 

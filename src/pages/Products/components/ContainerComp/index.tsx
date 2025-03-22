@@ -230,16 +230,12 @@ export const ContainerComp = ({}: IContainerComp) => {
   };
 
   return (
-    <S.MainContainer>
-      <S.NavbarContainer>
-        <Navbar menu={menu} onToggleMenu={handleMenuToggle} />
-      </S.NavbarContainer>
+    <div>
+      <Navbar menu={menu} onToggleMenu={handleMenuToggle} />
       <S.BodyConatiner>
-        <S.SideDrawerContainer>
-          <SideDrawer menu={menu} toggleMenu={() => handleMenuToggle(!menu)} />
-        </S.SideDrawerContainer>
+        <SideDrawer menu={menu} toggleMenu={() => handleMenuToggle(!menu)} />
         <S.PageContainer>{_mainContainerItems()}</S.PageContainer>
       </S.BodyConatiner>
-    </S.MainContainer>
+    </div>
   );
 };
