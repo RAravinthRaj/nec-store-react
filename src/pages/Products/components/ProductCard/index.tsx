@@ -37,7 +37,7 @@ export const ProductCard = ({ individualProduct }: IProductCard) => {
     <div>
       <S.CardContainer>
         <S.ImageContainer>
-          <S.Image src={theme.images.tagfile}></S.Image>
+          <S.Image src={theme.images.tagFile}></S.Image>
         </S.ImageContainer>
         <S.TitleContainer>{individualProduct.Title}</S.TitleContainer>
         <S.CategoryContainer $bgColor={theme.colors.primary}>

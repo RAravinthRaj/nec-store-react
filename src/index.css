@@ -42,3 +42,12 @@ body {
   min-width: 320px;
   min-height: 100vh;
 }
+
+.custom-nav-dropdown .dropdown-toggle::after {
+  display: none !important; 
+}
+
+.custom-nav-dropdown .dropdown-menu {
+  margin: 0 !important;
+  padding: 0 !important;
+}

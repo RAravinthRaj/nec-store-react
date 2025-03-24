@@ -53,26 +53,38 @@ export const SignUpForm = ({}: ISignUpForm) => {
     setSelectedDepartment(dept);
   };
 
+  const _renderDropdownToggle = () => {
+    return (
+      <S.CustomToggle $bgColor={theme.colors.backGround}>
+        <S.IconText $bgColor={theme.colors.textSecondary}>
+          {selectedDepartment}
+        </S.IconText>
+        <S.DropDownIcon $bgColor={theme.colors.primary}></S.DropDownIcon>
+      </S.CustomToggle>
+    );
+  };
+
+  const _renderDropdownMenu = () => {
+    return (
+      <S.DropDownMenu>
+        {SIGNUP_CONFIG.departments.map((dept, index) => {
+          return (
+            <div key={dept}>
+              <Dropdown.Item key={dept} onClick={() => handleSelect(dept)}>
+                {dept}
+              </Dropdown.Item>
+            </div>
+          );
+        })}
+      </S.DropDownMenu>
+    );
+  };
+
   const _showDropDown = () => {
     return (
       <S.CustomDropdown>
-        <S.CustomToggle $bgColor={theme.colors.backGround}>
-          <S.IconText $bgColor={theme.colors.textSecondary}>
-            {selectedDepartment}
-          </S.IconText>
-          <S.DropDownIcon $bgColor={theme.colors.primary}></S.DropDownIcon>
-        </S.CustomToggle>
-        <S.DropDownMenu>
-          {SIGNUP_CONFIG.departments.map((dept, index) => {
-            return (
-              <div key={dept}>
-                <Dropdown.Item key={dept} onClick={() => handleSelect(dept)}>
-                  {dept}
-                </Dropdown.Item>
-              </div>
-            );
-          })}
-        </S.DropDownMenu>
+        {_renderDropdownToggle()}
+        {_renderDropdownMenu()}
       </S.CustomDropdown>
     );
   };

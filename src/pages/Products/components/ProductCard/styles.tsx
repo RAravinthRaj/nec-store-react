@@ -25,7 +25,7 @@ export const CardContainer = styled.div`
  
 
   &:hover{
-    transform : scale(1.02);
+    transform : scale(1.05);
     box-shadow : 0px 4px 6px rgba(0,0,0,0.2);
   }
 

@@ -244,7 +244,7 @@ export const ProductContainer = styled.div`
   }
 `;
 
-export const BodyConatiner = styled.div`
+export const BodyContainer = styled.div`
   display: flex;
   flex-direction: row;
 

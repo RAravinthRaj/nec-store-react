@@ -37,6 +37,7 @@ export const AddCategoryModal = ({ modalshow, onClose }: IAddCategory) => {
       centered
       show={modalshow}
       onHide={() => onClose()}
+      disableScrollLock
     >
       <S.Header>
         <S.CloseButton onClick={onClose}></S.CloseButton>

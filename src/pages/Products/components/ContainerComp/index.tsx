@@ -7,7 +7,7 @@ Written by Aravinth Raj R <aravinthr235@gmail.com>, 2025.
 import { useTheme } from "../../../../hooks";
 import * as S from "./styles";
 import { Navbar } from "../../../../components";
-import { useMediaQuery } from "@mui/material";
+import { Typography, useMediaQuery } from "@mui/material";
 import Dropdown from "react-bootstrap/Dropdown";
 import { useState } from "react";
 import { AddItemModal } from "../AddItem";
@@ -15,6 +15,13 @@ import { AddCategoryModal } from "../AddCategory";
 import { ProductCard } from "../ProductCard";
 import { PRODUCTS_CONFIG } from "../../config";
 import { SideDrawer } from "../../../../navigator/SideDrawer";
+import Box from "@mui/material/Box";
+import Drawer from "@mui/material/Drawer";
+import AppBar from "@mui/material/AppBar";
+
+import Toolbar from "@mui/material/Toolbar";
+
+const drawerWidth = 240;
 
 export interface IContainerComp {}
 
@@ -44,7 +51,6 @@ export const ContainerComp = ({}: IContainerComp) => {
 
   const handleMenuToggle = (newMenuState: boolean) => {
     setMenu(newMenuState);
-    console.log("Updated Menu State:", menu);
   };
 
   const category = ["All", "Stationary", "dshf", "dsfhdgs"];
@@ -81,7 +87,7 @@ export const ContainerComp = ({}: IContainerComp) => {
     );
   };
 
-  const _actionitems = () => {
+  const _actionItems = () => {
     function selectProducts(): void {
       throw new Error("Function not implemented.");
     }
@@ -213,7 +219,7 @@ export const ContainerComp = ({}: IContainerComp) => {
   const _mainContainerItems = () => {
     return (
       <div>
-        {_actionitems()}
+        {_actionItems()}
         <AddItemModal
           modalshow={openItem}
           onClose={() => setAddModalShow(false)}
@@ -231,11 +237,34 @@ export const ContainerComp = ({}: IContainerComp) => {
 
   return (
     <div>
-      <Navbar menu={menu} onToggleMenu={handleMenuToggle} />
-      <S.BodyConatiner>
-        <SideDrawer menu={menu} toggleMenu={() => handleMenuToggle(!menu)} />
-        <S.PageContainer>{_mainContainerItems()}</S.PageContainer>
-      </S.BodyConatiner>
+      <Box sx={{ display: "flex", zIndex: 0, color: "black" }}>
+        <AppBar position="fixed" sx={{ zIndex: 30 }}>
+          <Navbar menu={menu} onToggleMenu={handleMenuToggle} />
+        </AppBar>
+        <Drawer
+          variant="permanent"
+          sx={{
+            width: drawerWidth,
+            flexShrink: 0,
+            [`& .MuiDrawer-paper`]: {
+              width: drawerWidth,
+              boxSizing: "border-box",
+            },
+            zIndex: 0,
+          }}
+        >
+          <Box sx={{ overflow: "auto" }}>
+            <SideDrawer
+              menu={menu}
+              toggleMenu={() => handleMenuToggle(!menu)}
+            />
+          </Box>
+        </Drawer>
+        <Box sx={{ flexGrow: 1, p: 2, alignItems: "center" }}>
+          <Toolbar />
+          <S.PageContainer>{_mainContainerItems()}</S.PageContainer>
+        </Box>
+      </Box>
     </div>
   );
 };

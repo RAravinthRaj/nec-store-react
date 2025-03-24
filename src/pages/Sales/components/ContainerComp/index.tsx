@@ -138,7 +138,12 @@ export const ContainerComp = ({}: IContainerComp) => {
   return (
     <S.MainContainer>
       <S.NavbarContainer>
-        <Navbar />
+        <Navbar
+          menu={false}
+          onToggleMenu={function (newMenuState: boolean): void {
+            throw new Error("Function not implemented.");
+          }}
+        />
       </S.NavbarContainer>
       <S.PageContainer>{_mainContainerItems()}</S.PageContainer>
     </S.MainContainer>

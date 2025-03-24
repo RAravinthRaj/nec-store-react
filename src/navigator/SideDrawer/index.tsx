@@ -105,7 +105,7 @@ export const SideDrawer = ({ menu, toggleMenu }: ISideDrawer) => {
         paper: {
           style: {
             marginTop: "73px",
-            width: "20%",
+            zIndex: 0,
           },
         },
       }}

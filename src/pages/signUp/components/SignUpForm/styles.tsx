@@ -229,7 +229,7 @@ export const DropDownIcon = styled(SlArrowDown)<{
   $bgColor: string;
 }>`
   color: ${(props) => props?.$bgColor};
-  margin-left: 300px;
+  margin-left: 20%;
   position: fixed;
   font-size: 13px;
 
