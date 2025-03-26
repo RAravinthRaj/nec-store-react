@@ -13,11 +13,14 @@ import { toast } from "react-toastify";
 import { PRODUCTS_CONFIG } from "../../config";
 
 export interface IAddCategory {
-  modalshow: boolean;
+  modalShow: boolean;
   onClose: () => void;
 }
 
-export const AddCategoryModal = ({ modalshow, onClose }: IAddCategory) => {
+export const AddCategoryModal = ({
+  modalShow: modalshow,
+  onClose,
+}: IAddCategory) => {
   const theme = useTheme();
   const [selectedCategory, setSelectedCategory] = useState("");
 

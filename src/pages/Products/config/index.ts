@@ -5,6 +5,7 @@ Proprietary and confidential.
 Written by Aravinth Raj R <aravinthr235@gmail.com>, 2025.
 */
 export const PRODUCTS_CONFIG = {
+  drawerWidth: 240,
   AddCategoryTitle: "Add Category",
   AddItemTitle: "Add Item",
   Category: "Category",
@@ -24,4 +25,13 @@ export const PRODUCTS_CONFIG = {
   DeleteButton: "Delete",
   AddToCartButton: "Add To Cart",
   sortedOptions: ["Sort By Title Asc", "Sort By Title Desc"],
+  products: [
+    { Title: "Tag File", Category: "Stationary", Quantity: 10, MRP: 20 },
+    { Title: "Tag File", Category: "Stationary", Quantity: 10, MRP: 20 },
+    { Title: "Tag File", Category: "Stationary", Quantity: 10, MRP: 20 },
+    { Title: "Tag File", Category: "Stationary", Quantity: 10, MRP: 20 },
+    { Title: "Tag File", Category: "Stationary", Quantity: 10, MRP: 20 },
+    { Title: "Tag File", Category: "Stationary", Quantity: 10, MRP: 20 },
+    { Title: "Tag File", Category: "Stationary", Quantity: 10, MRP: 20 },
+  ],
 };

@@ -14,11 +14,11 @@ import { Dropdown } from "react-bootstrap";
 import { PRODUCTS_CONFIG } from "../../config";
 
 export interface IAddItem {
-  modalshow: boolean;
+  modalShow: boolean;
   onClose: () => void;
 }
 
-export const AddItemModal = ({ modalshow, onClose }: IAddItem) => {
+export const AddItemModal = ({ modalShow: modalshow, onClose }: IAddItem) => {
   const theme = useTheme();
 
   const productAdded = () => {

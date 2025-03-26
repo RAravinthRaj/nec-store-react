@@ -7,7 +7,7 @@ Written by Aravinth Raj R <aravinthr235@gmail.com>, 2025.
 import { useTheme } from "../../../../hooks";
 import * as S from "./styles";
 import { Navbar } from "../../../../components";
-import { Typography, useMediaQuery } from "@mui/material";
+import { useMediaQuery } from "@mui/material";
 import Dropdown from "react-bootstrap/Dropdown";
 import { useState } from "react";
 import { AddItemModal } from "../AddItem";
@@ -19,10 +19,6 @@ import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
 import AppBar from "@mui/material/AppBar";
 
-import Toolbar from "@mui/material/Toolbar";
-
-const drawerWidth = 240;
-
 export interface IContainerComp {}
 
 export const ContainerComp = ({}: IContainerComp) => {
@@ -31,9 +27,9 @@ export const ContainerComp = ({}: IContainerComp) => {
 
   const [openItem, setOpenItem] = useState(false);
   const [openCategory, setOpenCategory] = useState(false);
-  const [showMobile, setShowMobile] = useState(false);
-
-  const sortedOptions = PRODUCTS_CONFIG.sortedOptions;
+  const [menu, setMenu] = useState(false);
+  const [searchProductTitle, setSearchProductTitle] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState(PRODUCTS_CONFIG.All);
 
   const setAddModalShow = ($prop: boolean) => {
     setOpenItem($prop);
@@ -43,19 +39,15 @@ export const ContainerComp = ({}: IContainerComp) => {
     setOpenCategory($prop);
   };
 
-  const handleFabClick = () => {
-    setShowMobile(!showMobile);
-  };
-
-  const [menu, setMenu] = useState(false);
-
   const handleMenuToggle = (newMenuState: boolean) => {
     setMenu(newMenuState);
   };
 
-  const category = ["All", "Stationary", "dshf", "dsfhdgs"];
+  const selectProductTitle = (e: any) => {
+    setSearchProductTitle(e.target.value);
+  };
 
-  const [selectedCategory, setSelectedCategory] = useState(PRODUCTS_CONFIG.All);
+  const category = ["All", "Stationary", "cosmetics", "household"];
 
   const handleSelect = (eventKey: string | null) => {
     if (eventKey !== null) {
@@ -63,77 +55,96 @@ export const ContainerComp = ({}: IContainerComp) => {
     }
   };
 
+  const _renderCategoryDropDownTitle = () => {
+    return (
+      <S.CustomToggle $bgColor={theme.colors.backGround}>
+        <S.IconText $bgColor={theme.colors.textSecondary}>
+          {selectedCategory.substring(0, 4)}
+        </S.IconText>
+        <S.DropDownIcon $bgColor={theme.colors.backGround}></S.DropDownIcon>
+      </S.CustomToggle>
+    );
+  };
+
+  const _renderCategoryDropDownMenu = () => {
+    return (
+      <S.CategoryDropDownMenu>
+        {category.map((cat, id) => {
+          return (
+            <div key={id}>
+              <Dropdown.Item key={cat} eventKey={cat}>
+                {cat}
+              </Dropdown.Item>
+            </div>
+          );
+        })}
+      </S.CategoryDropDownMenu>
+    );
+  };
+
   const _showDropDown = () => {
     return (
       <S.CustomDropdown onSelect={handleSelect}>
-        <S.CustomToggle $bgColor={theme.colors.backGround}>
-          <S.IconText $bgColor={theme.colors.textSecondary}>
-            {selectedCategory.substring(0, 4)}
-          </S.IconText>
-          <S.DropDownIcon $bgColor={theme.colors.backGround}></S.DropDownIcon>
-        </S.CustomToggle>
-        <S.DropDownMenu>
-          {category.map((cat, index) => {
-            return (
-              <div>
-                <Dropdown.Item key={cat} eventKey={cat}>
-                  {cat}
-                </Dropdown.Item>
-              </div>
-            );
-          })}
-        </S.DropDownMenu>
+        {_renderCategoryDropDownTitle()}
+        {_renderCategoryDropDownMenu()}
       </S.CustomDropdown>
     );
   };
 
-  const _actionItems = () => {
-    function selectProducts(): void {
-      throw new Error("Function not implemented.");
+  const _renderTopButton = () => {
+    if (!isMobile) {
+      return (
+        <S.ButtonContainer>
+          <S.Button
+            $bgColor={theme.colors.primary}
+            onClick={() => {
+              setAddModalShow(true);
+            }}
+          >
+            <S.AddIcon></S.AddIcon>
+            {PRODUCTS_CONFIG.AddItemTitle}
+          </S.Button>
+          <S.Button
+            $bgColor={theme.colors.primary}
+            onClick={() => {
+              setCategoryModalShow(true);
+            }}
+          >
+            <S.AddIcon></S.AddIcon> {PRODUCTS_CONFIG.AddCategoryTitle}
+          </S.Button>
+        </S.ButtonContainer>
+      );
     }
+  };
 
+  const _renderSearchBar = () => {
+    return (
+      <S.ActionItem>
+        <S.InputWrapper $bgColor={theme.colors.backGround}>
+          {_showDropDown()}
+          <S.Input type="input" placeholder="Search" />
+          <S.SearchIcon
+            $bgColor={theme.colors.backGround}
+            onChange={(e) => selectProductTitle(e)}
+          ></S.SearchIcon>
+        </S.InputWrapper>
+        <S.SortContainer>{_renderSortedOptions()}</S.SortContainer>
+      </S.ActionItem>
+    );
+  };
+
+  const _renderActionItems = () => {
     return (
       <S.ActionContainer>
-        <S.ActionItem>
-          <S.InputWrapper $bgColor={theme.colors.backGround}>
-            {_showDropDown()}
-            <S.Input type="input" placeholder="Search" />
-            <S.SearchIcon
-              $bgColor={theme.colors.backGround}
-              onClick={() => selectProducts()}
-            ></S.SearchIcon>
-          </S.InputWrapper>
-          <S.SortContainer>{_sortedOptions()}</S.SortContainer>
-        </S.ActionItem>
-
-        {!isMobile && (
-          <S.ButtonContainer>
-            <S.Button
-              $bgColor={theme.colors.primary}
-              onClick={() => {
-                setAddModalShow(true);
-              }}
-            >
-              <S.AddIcon></S.AddIcon>
-              {PRODUCTS_CONFIG.AddItemTitle}
-            </S.Button>
-            <S.Button
-              $bgColor={theme.colors.primary}
-              onClick={() => {
-                setCategoryModalShow(true);
-              }}
-            >
-              <S.AddIcon></S.AddIcon> {PRODUCTS_CONFIG.AddCategoryTitle}
-            </S.Button>
-          </S.ButtonContainer>
-        )}
+        {_renderSearchBar()}
+        {_renderTopButton()}
       </S.ActionContainer>
     );
   };
 
-  const _showMobileButton = () => {
-    if (showMobile) {
-      return (
+  const _renderFabButtonDropDownMenu = () => {
+    return (
+      <S.FabDropDownMenu>
         <S.FabButton $bgColor={theme.colors.primary}>
           <S.Button
             $bgColor={theme.colors.primary}
@@ -155,101 +166,120 @@ export const ContainerComp = ({}: IContainerComp) => {
             {PRODUCTS_CONFIG.AddCategoryTitle}
           </S.Button>
         </S.FabButton>
+      </S.FabDropDownMenu>
+    );
+  };
+
+  const _renderFabButtonDropDown = () => {
+    return (
+      <S.CustomToggle $bgColor={theme.colors.backGround}>
+        <S.PlusButtonContainer
+          $bgColor={theme.colors.primary}
+        ></S.PlusButtonContainer>
+      </S.CustomToggle>
+    );
+  };
+
+  const _renderFabButton = () => {
+    if (isMobile) {
+      return (
+        <S.CustomDropdown onSelect={handleSelect}>
+          {_renderFabButtonDropDown()}
+          {_renderFabButtonDropDownMenu()}
+        </S.CustomDropdown>
       );
     }
-    return null;
   };
 
-  const _mobileActionItems = () => {
+  const _renderSortedOptionsTitle = () => {
     return (
-      <S.PlusButtonContainer
-        $bgColor={theme.colors.primary}
-        onClick={() => handleFabClick()}
-      ></S.PlusButtonContainer>
+      <S.CustomToggle $bgColor={theme.colors.backGround}>
+        <S.SortIcon $bgColor={theme.colors.backGround}></S.SortIcon>
+      </S.CustomToggle>
     );
   };
 
-  const _sortedOptions = () => {
+  const _renderSortedOptionsMenu = () => {
     return (
-      <S.UserContainer>
-        <S.CustomDropdown>
-          <S.CustomToggle $bgColor={theme.colors.backGround}>
-            <S.SortIcon $bgColor={theme.colors.backGround}></S.SortIcon>
-          </S.CustomToggle>
-          <S.SortedDropdownMenu $bgColor={theme.colors.secondaryBackGround}>
-            {sortedOptions.map((dept, index) => (
-              <>
-                <S.SortedDropdownItem
-                  key={dept}
-                  eventKey={dept}
-                  $bgColor={theme.colors.primary}
-                >
-                  <S.SortedIconText>{dept}</S.SortedIconText>
-                </S.SortedDropdownItem>
-                {index !== sortedOptions.length - 1 && (
-                  <S.NameDivider></S.NameDivider>
-                )}
-              </>
-            ))}
-          </S.SortedDropdownMenu>
-        </S.CustomDropdown>
-      </S.UserContainer>
+      <S.SortedDropdownMenu $bgColor={theme.colors.secondaryBackGround}>
+        {PRODUCTS_CONFIG.sortedOptions.map((dept, index) => (
+          <>
+            <S.SortedDropdownItem
+              key={dept}
+              eventKey={dept}
+              $bgColor={theme.colors.primary}
+            >
+              <S.SortedIconText>{dept}</S.SortedIconText>
+            </S.SortedDropdownItem>
+            {index !== PRODUCTS_CONFIG.sortedOptions.length - 1 && (
+              <S.NameDivider />
+            )}
+          </>
+        ))}
+      </S.SortedDropdownMenu>
     );
   };
 
-  const products = [
-    { Title: "Tag File", Category: "Stationary", Quantity: 10, MRP: 20 },
-    { Title: "Tag File", Category: "Stationary", Quantity: 10, MRP: 20 },
-    { Title: "Tag File", Category: "Stationary", Quantity: 10, MRP: 20 },
-    { Title: "Tag File", Category: "Stationary", Quantity: 10, MRP: 20 },
-    { Title: "Tag File", Category: "Stationary", Quantity: 10, MRP: 20 },
-    { Title: "Tag File", Category: "Stationary", Quantity: 10, MRP: 20 },
-    { Title: "Tag File", Category: "Stationary", Quantity: 10, MRP: 20 },
-  ];
+  const _renderSortedOptions = () => {
+    return (
+      <S.CustomDropdown>
+        {_renderSortedOptionsTitle()}
+        {_renderSortedOptionsMenu()}
+      </S.CustomDropdown>
+    );
+  };
+
   const _products = () => {
     return (
       <S.ProductContainer>
-        {products.map((product) => (
+        {PRODUCTS_CONFIG.products.map((product) => (
           <ProductCard individualProduct={product} />
         ))}
       </S.ProductContainer>
     );
   };
 
-  const _mainContainerItems = () => {
+  const _renderModals = () => {
     return (
-      <div>
-        {_actionItems()}
+      <>
         <AddItemModal
-          modalshow={openItem}
+          modalShow={openItem}
           onClose={() => setAddModalShow(false)}
         ></AddItemModal>
         <AddCategoryModal
-          modalshow={openCategory}
+          modalShow={openCategory}
           onClose={() => setCategoryModalShow(false)}
         ></AddCategoryModal>
-        {isMobile && _mobileActionItems()}
-        {isMobile && _showMobileButton()}
+      </>
+    );
+  };
+
+  const _mainContainerItems = () => {
+    return (
+      <div>
+        {_renderActionItems()}
+        {_renderModals()}
+        {_renderFabButton()}
         {_products()}
       </div>
     );
   };
 
-  return (
-    <div>
-      <Box sx={{ display: "flex", zIndex: 0, color: "black" }}>
-        <AppBar position="fixed" sx={{ zIndex: 30 }}>
-          <Navbar menu={menu} onToggleMenu={handleMenuToggle} />
-        </AppBar>
+  const _renderNavbar = () => {
+    return (
+      <AppBar position="fixed" sx={{ zIndex: 30 }}>
+        <Navbar menu={menu} onToggleMenu={handleMenuToggle} />
+      </AppBar>
+    );
+  };
+
+  const _renderSideDrawer = () => {
+    if (!isMobile) {
+      return (
         <Drawer
           variant="permanent"
           sx={{
-            width: drawerWidth,
-            flexShrink: 0,
-            [`& .MuiDrawer-paper`]: {
-              width: drawerWidth,
-              boxSizing: "border-box",
-            },
+            width: PRODUCTS_CONFIG.drawerWidth,
             zIndex: 0,
           }}
         >
@@ -260,10 +290,40 @@ export const ContainerComp = ({}: IContainerComp) => {
             />
           </Box>
         </Drawer>
-        <Box sx={{ flexGrow: 1, p: 2, alignItems: "center" }}>
-          <Toolbar />
-          <S.PageContainer>{_mainContainerItems()}</S.PageContainer>
+      );
+    }
+
+    return (
+      <Drawer variant="persistent">
+        <Box sx={{ overflow: "auto" }}>
+          <SideDrawer menu={menu} toggleMenu={() => handleMenuToggle(!menu)} />
         </Box>
+      </Drawer>
+    );
+  };
+
+  const _renderPage = () => {
+    if (!isMobile) {
+      return (
+        <Box sx={{ flexGrow: 1, mt: 8, p: 4, alignItems: "center" }}>
+          {_mainContainerItems()}
+        </Box>
+      );
+    }
+
+    return (
+      <Box sx={{ flexGrow: 1, mt: 10, p: 2, alignItems: "center" }}>
+        {_mainContainerItems()}
+      </Box>
+    );
+  };
+
+  return (
+    <div>
+      <Box sx={{ display: "flex", p: 2, zIndex: 0 }}>
+        {_renderNavbar()}
+        {_renderSideDrawer()}
+        {_renderPage()}
       </Box>
     </div>
   );
