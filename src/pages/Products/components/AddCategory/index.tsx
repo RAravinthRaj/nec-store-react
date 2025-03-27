@@ -24,13 +24,49 @@ export const AddCategoryModal = ({
   const theme = useTheme();
   const [selectedCategory, setSelectedCategory] = useState("");
 
-  const setSelectCategory = () => {
-    setSelectedCategory(selectedCategory);
-  };
-
   const categoryAdded = () => {
+    setSelectedCategory(selectedCategory);
     toast.success(PRODUCTS_CONFIG.CategoryToastSuccess);
     onClose();
+  };
+
+  const _renderModalHeader = () => {
+    return (
+      <S.Header>
+        <S.CloseButton onClick={onClose}></S.CloseButton>
+        <S.Title id="contained-modal-title-vcenter">
+          {PRODUCTS_CONFIG.AddCategoryTitle}
+        </S.Title>
+      </S.Header>
+    );
+  };
+
+  const _renderModalBody = () => {
+    return (
+      <Modal.Body>
+        <Form>
+          <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+            <Form.Label>{PRODUCTS_CONFIG.Category}</Form.Label>
+            <S.InputWrapper>
+              <S.Input type="Name" placeholder="Title" />
+            </S.InputWrapper>
+          </Form.Group>
+        </Form>
+      </Modal.Body>
+    );
+  };
+
+  const _renderModalFooter = () => {
+    return (
+      <S.Footer>
+        <S.Button
+          $bgColor={theme.colors.primary}
+          onClick={() => categoryAdded()}
+        >
+          {PRODUCTS_CONFIG.AddButton}
+        </S.Button>
+      </S.Footer>
+    );
   };
 
   return (
@@ -42,30 +78,9 @@ export const AddCategoryModal = ({
       onHide={() => onClose()}
       disableScrollLock
     >
-      <S.Header>
-        <S.CloseButton onClick={onClose}></S.CloseButton>
-        <S.Title id="contained-modal-title-vcenter">
-          {PRODUCTS_CONFIG.AddCategoryTitle}
-        </S.Title>
-      </S.Header>
-      <Modal.Body>
-        <Form>
-          <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-            <Form.Label>{PRODUCTS_CONFIG.Category}</Form.Label>
-            <S.InputWrapper>
-              <S.Input type="Name" placeholder="Title" />
-            </S.InputWrapper>
-          </Form.Group>
-        </Form>
-      </Modal.Body>
-      <S.Footer>
-        <S.Button
-          $bgColor={theme.colors.primary}
-          onClick={() => categoryAdded()}
-        >
-          {PRODUCTS_CONFIG.AddButton}
-        </S.Button>
-      </S.Footer>
+      {_renderModalHeader()}
+      {_renderModalBody()}
+      {_renderModalFooter()}
     </S.ModalContainer>
   );
 };

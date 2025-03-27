@@ -8,6 +8,7 @@ import Drawer from "@mui/material/Drawer";
 import * as S from "./styles";
 import { useTheme, useIsNotDesktop } from "../../hooks";
 import { SIDE_DRAWER_CONFIG } from "./config";
+import { Box } from "@mui/material";
 
 export interface ISideDrawer {
   menu: boolean;
@@ -70,10 +71,7 @@ export const SideDrawer = ({ menu, toggleMenu }: ISideDrawer) => {
 
   const _renderDrawer = () => {
     return (
-      <S.DrawerBox
-        $bgColor={theme.colors.secondaryBackGround}
-        onClick={isMobile ? toggleMenu : () => {}}
-      >
+      <S.DrawerBox onClick={isMobile ? toggleMenu : () => {}}>
         {_renderNavigationList()}
       </S.DrawerBox>
     );
@@ -81,19 +79,22 @@ export const SideDrawer = ({ menu, toggleMenu }: ISideDrawer) => {
 
   if (isMobile) {
     return (
-      <Drawer
-        open={menu}
-        onClose={toggleMenu}
-        slotProps={{
-          paper: {
-            style: {
-              width: "65%",
+      <Box>
+        <Drawer
+          open={menu}
+          onClose={toggleMenu}
+          slotProps={{
+            paper: {
+              style: {
+                width: "65%",
+                backgroundColor: theme.colors.secondaryBackGround,
+              },
             },
-          },
-        }}
-      >
-        {_renderDrawer()}
-      </Drawer>
+          }}
+        >
+          {_renderDrawer()}
+        </Drawer>
+      </Box>
     );
   }
 
@@ -106,11 +107,16 @@ export const SideDrawer = ({ menu, toggleMenu }: ISideDrawer) => {
           style: {
             marginTop: "73px",
             zIndex: 0,
+            backgroundColor: theme.colors.secondaryBackGround,
           },
         },
       }}
+      sx={{
+        width: 240,
+        zIndex: 0,
+      }}
     >
-      {_renderDrawer()}
+      <Box sx={{ overflow: "auto" }}>{_renderDrawer()}</Box>
     </Drawer>
   );
 };

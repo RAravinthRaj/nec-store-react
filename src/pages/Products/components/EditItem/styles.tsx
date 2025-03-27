@@ -8,7 +8,7 @@ import Modal from "react-bootstrap/Modal";
 import styled from "styled-components";
 import { RxCross2 } from "react-icons/rx";
 import { SlArrowDown } from "react-icons/sl";
-import { Dropdown } from "react-bootstrap";
+import { Dropdown, Form } from "react-bootstrap";
 
 export const ModalContainer = styled(Modal)`
   width: 45%;
@@ -169,13 +169,13 @@ export const DropDownIcon = styled(SlArrowDown)<{
   $bgColor: string;
 }>`
   color: rgb(255, 255, 255);
-  postion: fixed;
+  position: fixed;
   font-size: 13px;
   margin-left: 500px;
 `;
 
-export const IconText = styled.div<{ $bgColor: string }>`
-  color: ${(props) => props.$bgColor};
+export const IconText = styled.div`
+  color: black;
 
   @media (max-width: 576px) {
     font-size: 14px;

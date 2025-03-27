@@ -14,6 +14,7 @@ export const CardContainer = styled.div`
   flex-direction : column;
   align-items : center;
   justify-content:center;
+  flex-wrap:wrap;
   padding : 20px 20px;
   box-shadow : 0px 2px 4px rgba(0,0,0,0.2);
   margin:30px 20px;
@@ -29,13 +30,10 @@ export const CardContainer = styled.div`
     box-shadow : 0px 4px 6px rgba(0,0,0,0.2);
   }
 
-  @media(max-width:1280px){
-    padding:20px 10px;
-  }
 
   @media (max-width: 768px) {
     padding : 20px 10px;
-    margin:30px 15px;
+    margin : 30px 15px;
   }
 
   @media (max-width: 576px) {
@@ -120,7 +118,7 @@ export const Button = styled.button<{ $bgColor: string }>`
   border: none;
   background-color: ${(props) => props?.$bgColor};
   border-radius: 5px;
-  gap: 12px;
+  gap: 5px;
   color: white;
   margin-top: 10px;
 

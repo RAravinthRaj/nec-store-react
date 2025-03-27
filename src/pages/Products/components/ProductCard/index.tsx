@@ -25,17 +25,17 @@ export const ProductCard = ({ individualProduct }: IProductCard) => {
   const [modal, setModal] = useState(false);
   const isRetailer = true;
 
-  const itemadded = () => {
-    return toast.success("Item Added to Cart");
+  const itemAdded = () => {
+    toast.success("Item Added to Cart");
   };
 
   const deleteItem = () => {
     toast.success("Item Deleted Successfully");
   };
 
-  return (
-    <div>
-      <S.CardContainer>
+  const _renderCardInitialDetails = () => {
+    return (
+      <div>
         <S.ImageContainer>
           <S.Image src={theme.images.tagFile}></S.Image>
         </S.ImageContainer>
@@ -52,42 +52,58 @@ export const ProductCard = ({ individualProduct }: IProductCard) => {
             {PRODUCTS_CONFIG.PrMRP} {individualProduct.MRP}
           </S.RupeeContainer>
         </S.ProductDes>
-        {isRetailer ? (
-          <S.ButtonContainer>
-            <S.Button
-              $bgColor={theme.colors.primary}
-              onClick={() => setModal(true)}
-            >
-              <S.EditIcon></S.EditIcon>
-              {PRODUCTS_CONFIG.EditButton}
-            </S.Button>
-            <S.Button
-              $bgColor={theme.colors.primary}
-              onClick={() => deleteItem()}
-            >
-              <S.DeleteIcon></S.DeleteIcon>
-              {PRODUCTS_CONFIG.DeleteButton}
-            </S.Button>
-          </S.ButtonContainer>
-        ) : (
-          <S.ButtonContainer>
-            <S.Button
-              $bgColor={theme.colors.primary}
-              onClick={() => {
-                itemadded();
-              }}
-            >
-              <S.CartIcon></S.CartIcon>
-              {PRODUCTS_CONFIG.AddToCartButton}
-            </S.Button>
-          </S.ButtonContainer>
-        )}
+      </div>
+    );
+  };
+
+  const _renderButton = () => {
+    if (isRetailer) {
+      return (
+        <S.ButtonContainer>
+          <S.Button
+            $bgColor={theme.colors.primary}
+            onClick={() => setModal(true)}
+          >
+            <S.EditIcon />
+            {PRODUCTS_CONFIG.EditButton}
+          </S.Button>
+          <S.Button
+            $bgColor={theme.colors.primary}
+            onClick={() => deleteItem()}
+          >
+            <S.DeleteIcon />
+            {PRODUCTS_CONFIG.DeleteButton}
+          </S.Button>
+        </S.ButtonContainer>
+      );
+    }
+
+    return (
+      <S.ButtonContainer>
+        <S.Button
+          $bgColor={theme.colors.primary}
+          onClick={() => {
+            itemAdded();
+          }}
+        >
+          <S.CartIcon />
+          {PRODUCTS_CONFIG.AddToCartButton}
+        </S.Button>
+      </S.ButtonContainer>
+    );
+  };
+
+  return (
+    <div>
+      <S.CardContainer>
+        {_renderCardInitialDetails()}
+        {_renderButton()}
       </S.CardContainer>
       <EditItemModal
-        modalshow={modal}
+        modalShow={modal}
         onClose={() => setModal(false)}
         individualProduct={individualProduct}
-      ></EditItemModal>
+      />
     </div>
   );
 };

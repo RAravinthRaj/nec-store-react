@@ -109,9 +109,8 @@ export const UserImage = styled.img`
   }
 `;
 
-export const Icon = styled(GiHamburgerMenu)`
-  filter: invert(20%) sepia(94%) saturate(1500%) hue-rotate(220deg)
-    brightness(80%) contrast(150%);
+export const Icon = styled(GiHamburgerMenu)<{ $bgColor: string }>`
+  color: ${(props) => props?.$bgColor};
   font-size: 160%;
 
   @media (max-width: 768px) {
@@ -176,6 +175,8 @@ export const DropdownMenu = styled.div<{ $bgColor: string }>`
   background-color: ${(props) => props?.$bgColor};
   padding: 5px 12px;
   border-radius: 10px;
+  filter: drop-shadow(0px 2px 8px rgba(0, 0, 0, 0.2));
+  transition: opacity 0.6s ease-out 0.2s, transform 0.6s ease-out 0.2s;
 
   @media (max-width: 768px) {
     width: 180px;
@@ -185,6 +186,7 @@ export const DropdownMenu = styled.div<{ $bgColor: string }>`
 export const DropdownItem = styled(NavDropdown.Item)<{ $bgColor: string }>`
   font-size: 17px;
   display: flex;
+  width: 170px;
   flex-direction: row;
   align-items: center;
   padding: 4px 0;

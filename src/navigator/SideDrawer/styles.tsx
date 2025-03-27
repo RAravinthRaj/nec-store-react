@@ -12,9 +12,8 @@ import ListItemText from "@mui/material/ListItemText";
 import ListItem from "@mui/material/ListItem";
 import { NavLink } from "react-router-dom";
 
-export const DrawerBox = styled(Box)<{ $bgColor: string }>`
+export const DrawerBox = styled(Box)`
   height: 100%;
-  background-color: ${(props) => props?.$bgColor};
 `;
 
 export const Icon = styled.img<{ $bgColor: string }>`

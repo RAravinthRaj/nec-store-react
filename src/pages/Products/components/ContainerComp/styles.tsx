@@ -10,12 +10,12 @@ import { LiaSortAmountDownAltSolid } from "react-icons/lia";
 import { FiPlus } from "react-icons/fi";
 import { SlArrowDown } from "react-icons/sl";
 import { Dropdown } from "react-bootstrap";
+import { Box, Menu, MenuItem } from "@mui/material";
 
 export const ActionContainer = styled.div`
   display: flex;
   align-items: center;
   padding: 0 20px;
-  flex-wrap: wrap;
 
   @media (max-width: 768px) {
     gap: 10px;
@@ -24,6 +24,7 @@ export const ActionContainer = styled.div`
   @media (max-width: 576px) {
     justify-content: center;
     font-size: 12px;
+    padding: 0 10px;
   }
 `;
 
@@ -96,7 +97,7 @@ export const SortContainer = styled.div`
 
   @media (max-width: 576px) {
     flex: 0.2;
-    margin: 0 20px;
+    margin: 0 10px;
   }
 `;
 
@@ -148,7 +149,7 @@ export const Button = styled.button<{ $bgColor: string }>`
   border: none;
   background-color: ${(props) => props?.$bgColor};
   border-radius: 5px;
-  gap: 12px;
+  gap: 10px;
   color: white;
 
   @media (max-width: 576px) {
@@ -181,30 +182,18 @@ export const PlusButtonContainer = styled(FiPlus)<{ $bgColor: string }>`
   }
 `;
 
-export const FabButton = styled.div<{ $bgColor: string }>`
+export const FabDivider = styled.div`
+  width: 120%;
   display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  color: white;
-  font-size: 10px;
-  padding: 7px 12px;
-  background-color: ${(props) => props?.$bgColor};
-  border-radius: 5px;
-  position: fixed;
-  bottom: 40px;
-  right: 100px;
-  cursor: pointer;
-  z-index: 1000;
+  justify-content: center;
+  border: solid 0.5px white;
 
   @media (max-width: 576px) {
-    right: 70px;
+    width: 95%;
+    margin-left: 5px;
+    margin-top: -7px;
+    margin-bottom: 6px;
   }
-`;
-
-export const FabDivider = styled.div`
-  width: 125%;
-  margin-left: -12px;
-  border: solid 0.5px white;
 `;
 
 export const CustomToggle = styled(Dropdown.Toggle)<{ $bgColor: string }>`
@@ -284,23 +273,78 @@ export const NameDivider = styled.div`
 `;
 
 export const ActionItem = styled.div`
+  display: flex;
   flex: 1;
-  display: flex;
-`;
-
-export const FabDropDownMenu = styled(Dropdown.Menu)`
-  position: fixed;
-  bottom: 40px; /* Align with FabButton */
-  right: 100px; /* Align with FabButton */
-  background: white;
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-  border-radius: 8px;
-  padding: 10px;
-  z-index: 1100;
-  display: flex;
-  flex-direction: column;
 
   @media (max-width: 576px) {
-    right: 70px;
+    flex: 0;
+    justify-content: center;
   }
+`;
+
+export const FixedMenu = styled(Menu)<{ $bgColor: string }>`
+  & .MuiPaper-root {
+    left: auto !important;
+    right: 100px !important;
+    bottom: 30px !important;
+    top: 85% !important;
+    border-radius: 10px;
+    transform: none !important;
+    overflow: visible;
+    height: 90px;
+    filter: drop-shadow(0px 2px 8px rgba(0, 0, 0, 0.32));
+    padding: 0 5px;
+    background-color: ${(props) => props?.$bgColor};
+    color: white;
+
+    &::before {
+      content: '""';
+      position: absolute;
+      left: 100%;
+    }
+  }
+
+  @media (max-width: 576px) {
+    & .MuiPaper-root {
+      right: 70px !important;
+      bottom: 40px !important;
+      height: 75px !important;
+      width: 150px !important;
+      padding: 5px !important;
+    }
+  }
+`;
+
+export const StyledMenuItem = styled(MenuItem)`
+  display: flex;
+  align-items: center;
+  padding: 0 15px;
+  font-size: 14px;
+  gap: 10px;
+
+  @media (max-width: 576px) {
+    margin-top: -15px !important;
+    font-size: 13px !important;
+  }
+`;
+
+export const StyledPageBox = styled(Box)`
+  flex-grow: 1;
+  align-items: center;
+  padding: 16px;
+  margin-top: 80px;
+
+  @media (max-width: 768px) {
+    padding: 24px;
+    margin-top: 80px;
+  }
+
+  @media (max-width: 576px) {
+    padding: 8px;
+    margin-top: 64px;
+  }
+`;
+
+export const MainContainer = styled(Box)`
+  padding: 20px;
 `;

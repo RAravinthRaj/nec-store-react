@@ -8,6 +8,7 @@ import { useTheme, useIsNotDesktop } from "../../hooks";
 import * as S from "./styles";
 import { NAVBAR_CONFIG } from "./config";
 import { Link } from "react-router-dom";
+import { AppBar } from "@mui/material";
 
 export interface INavbar {
   menu: boolean;
@@ -33,7 +34,7 @@ export const Navbar = ({ menu, onToggleMenu }: INavbar) => {
       );
     }
 
-    return <S.Icon onClick={_toggleMenu}></S.Icon>;
+    return <S.Icon onClick={_toggleMenu} $bgColor={theme.colors.primary} />;
   };
 
   const _renderUserName = () => {
@@ -55,7 +56,7 @@ export const Navbar = ({ menu, onToggleMenu }: INavbar) => {
           <S.UserName $bgColor={theme.colors.primary}>
             Hii Aravinth !!
           </S.UserName>
-          <S.NameDivider></S.NameDivider>
+          <S.NameDivider />
         </S.MobileNameContainer>
       );
     }
@@ -72,9 +73,9 @@ export const Navbar = ({ menu, onToggleMenu }: INavbar) => {
   };
 
   const _renderDropDownItem = () => {
-    return NAVBAR_CONFIG.navBarOptions.map((item, index) => {
+    return NAVBAR_CONFIG.navBarOptions.map((item, id) => {
       return (
-        <>
+        <div key={id}>
           <S.DropdownItem
             as={Link}
             to={item.link}
@@ -83,15 +84,15 @@ export const Navbar = ({ menu, onToggleMenu }: INavbar) => {
             <S.ItemIcon src={item?.imageSrc}></S.ItemIcon>
             <S.IconText>{item?.title}</S.IconText>
           </S.DropdownItem>
-          {index != NAVBAR_CONFIG.navBarOptions.length - 1 && <S.NameDivider />}
-        </>
+          {id != NAVBAR_CONFIG.navBarOptions.length - 1 && <S.NameDivider />}
+        </div>
       );
     });
   };
 
   const _renderDropDownMenu = () => {
     return (
-      <S.DropdownMenu $bgColor={theme.colors.backGround}>
+      <S.DropdownMenu $bgColor={theme.colors.secondaryBackGround}>
         {_renderUserNameSM()}
         {_renderDropDownItem()}
       </S.DropdownMenu>
@@ -110,12 +111,14 @@ export const Navbar = ({ menu, onToggleMenu }: INavbar) => {
   };
 
   return (
-    <S.NavbarContainer $bgColor={theme.colors.secondaryOptional}>
-      <S.TitleContainer>{_renderTitle()}</S.TitleContainer>
-      <S.UserContainer>
-        {_renderDropDown()}
-        {_renderUserName()}
-      </S.UserContainer>
-    </S.NavbarContainer>
+    <AppBar position="fixed" sx={{ zIndex: 30 }}>
+      <S.NavbarContainer $bgColor={theme.colors.secondaryOptional}>
+        <S.TitleContainer>{_renderTitle()}</S.TitleContainer>
+        <S.UserContainer>
+          {_renderDropDown()}
+          {_renderUserName()}
+        </S.UserContainer>
+      </S.NavbarContainer>
+    </AppBar>
   );
 };
