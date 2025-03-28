@@ -19,6 +19,16 @@ export const DrawerBox = styled(Box)`
 export const Icon = styled.img<{ $bgColor: string }>`
   height: 14.5%;
   width: 14.5%;
+
+  @media (max-width: 768px) {
+    height: 12%;
+    width: 12%;
+  }
+
+  @media (max-width: 576px) {
+    height: 14%;
+    width: 14%;
+  }
 `;
 
 export const Divider = styled.div`

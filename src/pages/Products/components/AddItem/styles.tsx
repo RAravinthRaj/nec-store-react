@@ -15,7 +15,7 @@ export const ModalContainer = styled(Modal)`
   display: flex;
   align-items: center;
   padding: 20px;
-  postion: absolute;
+  position: fixed;
   top: 3%;
   left: 28%;
 
@@ -60,7 +60,7 @@ export const CloseButton = styled(RxCross2)`
   @media (max-width: 576px) {
     transform: translateY(-190%);
     font-size: 25px;
-    postion: fixed;
+    position: fixed;
   }
 `;
 
@@ -169,20 +169,18 @@ export const CustomDropdown = styled(Dropdown)`
   margin-right: 17px;
 `;
 
-export const DropDownIcon = styled(SlArrowDown)<{
-  $bgColor: string;
-}>`
-  color: #ffffff;
-  postion: fixed;
-  font-size: 13px;
-  margin-left: 500px;
-`;
-
 export const IconText = styled.div<{ $bgColor: string }>`
   color: ${(props) => props.$bgColor};
+  padding-right: 700%;
+
+  @media (max-width: 768px) {
+    font-size: 14px;
+    padding-right: 500%;
+  }
 
   @media (max-width: 576px) {
     font-size: 14px;
+    padding-right: 250%;
   }
 `;
 

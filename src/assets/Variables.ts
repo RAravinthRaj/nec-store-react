@@ -29,6 +29,7 @@ export const theme = {
     textSecondary: "#707070",
     secondaryBackGround: "#D9D9D9",
     secondaryOptional: "#9AC4E6",
+    white: "#ffffff",
   },
   fonts: {
     sourceSerifPro: "Source Serif Pro",

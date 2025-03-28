@@ -11,6 +11,8 @@ import { FiPlus } from "react-icons/fi";
 import { SlArrowDown } from "react-icons/sl";
 import { Dropdown } from "react-bootstrap";
 import { Box, Menu, MenuItem } from "@mui/material";
+import { Link } from "react-router-dom";
+import { PiShoppingCartBold } from "react-icons/pi";
 
 export const ActionContainer = styled.div`
   display: flex;
@@ -279,6 +281,7 @@ export const ActionItem = styled.div`
   @media (max-width: 576px) {
     flex: 0;
     justify-content: center;
+    padding: 0;
   }
 `;
 
@@ -329,10 +332,13 @@ export const StyledMenuItem = styled(MenuItem)`
 `;
 
 export const StyledPageBox = styled(Box)`
-  flex-grow: 1;
-  align-items: center;
   padding: 16px;
   margin-top: 80px;
+  overflow-x: auto;
+
+  @media (min-width: 1300px) {
+    min-width: 81vw;
+  }
 
   @media (max-width: 768px) {
     padding: 24px;
@@ -346,5 +352,67 @@ export const StyledPageBox = styled(Box)`
 `;
 
 export const MainContainer = styled(Box)`
+  display: flex;
+  align-items: center;
   padding: 20px;
+
+  @media (max-width: 576px) {
+    padding: 0;
+    margin-top: 15px;
+    justify-content: center;
+  }
+`;
+
+export const CartContainer = styled(Link)<{ $bgColor: string }>`
+  padding: 10px;
+  border-radius: 50%;
+  background-color: ${(props) => props?.$bgColor};
+  border: solid 2px black;
+`;
+
+export const CartIcon = styled(PiShoppingCartBold)`
+  flex: 1;
+  color: black;
+  font-size: 25px;
+
+  @media (max-width: 576px) {
+    flex: 1;
+  }
+`;
+
+export const CartItemsCount = styled.div<{
+  $bgColor: string;
+  $isMobile: boolean;
+}>`
+  background-color: ${(props) => props?.$bgColor};
+  position: relative;
+  border: solid 1px white;
+  top: ${(props) => (!props.$isMobile ? "-23px" : "-45px")};
+  left: ${(props) => (!props.$isMobile ? "-20px" : "28px")};
+  padding: 5px;
+  border-radius: 50%;
+  display: flex;
+  flex-wrap: wrap;
+  width: fit-content;
+  align-items: center;
+  justify-content: center;
+
+  @media (max-width: 576px) {
+    padding: 1px 3px;
+  }
+`;
+
+export const Count = styled.div<{ $bgColor: string }>`
+  color: ${(props) => props?.$bgColor};
+  font-size: 14px;
+  margin: 0 2px;
+
+  @media (max-width: 768px) {
+    font-size: 13px;
+  }
+
+  @media (max-width: 576px) {
+    font-size: 13px;
+    margin: 2px;
+  }
 `;

@@ -31,6 +31,7 @@ export const ContainerComp = ({}: IContainerComp) => {
   const [selectedCategory, setSelectedCategory] = useState(PRODUCTS_CONFIG.All);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
+  const isRetailer = true;
 
   const category = ["All", "Stationary", "cosmetics", "household"];
 
@@ -76,26 +77,39 @@ export const ContainerComp = ({}: IContainerComp) => {
 
   const _renderTopButton = () => {
     if (!isTab) {
+      if (isRetailer) {
+        return (
+          <S.ButtonContainer>
+            <S.Button
+              $bgColor={theme.colors.primary}
+              onClick={() => {
+                setOpenItem(true);
+              }}
+            >
+              <S.AddIcon />
+              {PRODUCTS_CONFIG.AddItemTitle}
+            </S.Button>
+            <S.Button
+              $bgColor={theme.colors.primary}
+              onClick={() => {
+                setOpenCategory(true);
+              }}
+            >
+              <S.AddIcon /> {PRODUCTS_CONFIG.AddCategoryTitle}
+            </S.Button>
+          </S.ButtonContainer>
+        );
+      }
+
       return (
-        <S.ButtonContainer>
-          <S.Button
-            $bgColor={theme.colors.primary}
-            onClick={() => {
-              setOpenItem(true);
-            }}
-          >
-            <S.AddIcon />
-            {PRODUCTS_CONFIG.AddItemTitle}
-          </S.Button>
-          <S.Button
-            $bgColor={theme.colors.primary}
-            onClick={() => {
-              setOpenCategory(true);
-            }}
-          >
-            <S.AddIcon /> {PRODUCTS_CONFIG.AddCategoryTitle}
-          </S.Button>
-        </S.ButtonContainer>
+        <>
+          <S.CartContainer $bgColor={theme.colors.backGround} to="/carts">
+            <S.CartIcon />
+          </S.CartContainer>
+          <S.CartItemsCount $bgColor={theme.colors.primary} $isMobile={false}>
+            <S.Count $bgColor={theme.colors.white}>20</S.Count>
+          </S.CartItemsCount>
+        </>
       );
     }
   };
@@ -129,48 +143,61 @@ export const ContainerComp = ({}: IContainerComp) => {
 
   const _renderFabButton = () => {
     if (isTab) {
-      return (
-        <div>
-          <Box sx={{ position: "fixed", bottom: 20, right: 20 }}>
-            <IconButton
-              onClick={(event) => {
-                setAnchorEl(event.currentTarget);
-              }}
-            >
-              <S.PlusButtonContainer $bgColor={theme.colors.primary} />
-            </IconButton>
-          </Box>
+      if (isRetailer) {
+        return (
+          <div>
+            <Box sx={{ position: "fixed", bottom: 20, right: 20 }}>
+              <IconButton
+                onClick={(event) => {
+                  setAnchorEl(event.currentTarget);
+                }}
+              >
+                <S.PlusButtonContainer $bgColor={theme.colors.primary} />
+              </IconButton>
+            </Box>
 
-          <S.FixedMenu
-            open={open}
-            onClose={() => {
-              setAnchorEl(null);
-            }}
-            onClick={() => {
-              setAnchorEl(null);
-            }}
-            $bgColor={theme.colors.primary}
-            disableScrollLock={true}
-          >
-            <S.StyledMenuItem
-              onClick={() => {
-                setOpenItem(true);
+            <S.FixedMenu
+              open={open}
+              onClose={() => {
+                setAnchorEl(null);
               }}
-            >
-              <S.AddIcon />
-              {PRODUCTS_CONFIG.AddItemTitle}
-            </S.StyledMenuItem>
-            <S.FabDivider />
-            <S.StyledMenuItem
               onClick={() => {
-                setOpenCategory(true);
+                setAnchorEl(null);
               }}
+              $bgColor={theme.colors.primary}
+              disableScrollLock={true}
             >
-              <S.AddIcon />
-              {PRODUCTS_CONFIG.AddCategoryTitle}
-            </S.StyledMenuItem>
-          </S.FixedMenu>
-        </div>
+              <S.StyledMenuItem
+                onClick={() => {
+                  setOpenItem(true);
+                }}
+              >
+                <S.AddIcon />
+                {PRODUCTS_CONFIG.AddItemTitle}
+              </S.StyledMenuItem>
+              <S.FabDivider />
+              <S.StyledMenuItem
+                onClick={() => {
+                  setOpenCategory(true);
+                }}
+              >
+                <S.AddIcon />
+                {PRODUCTS_CONFIG.AddCategoryTitle}
+              </S.StyledMenuItem>
+            </S.FixedMenu>
+          </div>
+        );
+      }
+
+      return (
+        <Box sx={{ position: "fixed", bottom: 15, right: 30 }}>
+          <S.CartContainer $bgColor={theme.colors.backGround} to="/carts">
+            <S.CartIcon />
+          </S.CartContainer>
+          <S.CartItemsCount $bgColor={theme.colors.primary} $isMobile={true}>
+            <S.Count $bgColor={theme.colors.white}>20</S.Count>
+          </S.CartItemsCount>
+        </Box>
       );
     }
   };
@@ -250,10 +277,10 @@ export const ContainerComp = ({}: IContainerComp) => {
   };
 
   return (
-    <Box sx={{ display: "flex", pt: 2, zIndex: 0 }}>
+    <S.MainContainer>
       <Navbar menu={menu} onToggleMenu={() => setMenu(!menu)} />
       <SideDrawer menu={menu} toggleMenu={() => setMenu(!menu)} />
       <S.StyledPageBox>{_mainContainerItems()}</S.StyledPageBox>
-    </Box>
+    </S.MainContainer>
   );
 };

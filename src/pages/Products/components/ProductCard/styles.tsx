@@ -113,12 +113,13 @@ export const Button = styled.button<{ $bgColor: string }>`
   flex: 1;
   display: flex;
   align-items: center;
-  padding: 8px 0;
+  padding: 5px;
   justify-content: center;
   border: none;
+  font-size: 14px;
   background-color: ${(props) => props?.$bgColor};
   border-radius: 5px;
-  gap: 5px;
+  gap: 3px;
   color: white;
   margin-top: 10px;
 
@@ -131,7 +132,7 @@ export const Button = styled.button<{ $bgColor: string }>`
 
 export const EditIcon = styled(FaPencilAlt)`
   color: white;
-  font-size: 16px;
+  font-size: 14px;
 
   @media (max-width: 576px) {
     font-size: 13px;
@@ -140,7 +141,7 @@ export const EditIcon = styled(FaPencilAlt)`
 
 export const DeleteIcon = styled(ImBin)`
   color: white;
-  font-size: 18px;
+  font-size: 14px;
 
   @media (max-width: 576px) {
     font-size: 15px;

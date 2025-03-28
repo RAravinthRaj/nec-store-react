@@ -49,17 +49,13 @@ export const SignUpForm = ({}: ISignUpForm) => {
     );
   };
 
-  const handleSelect = (dept: string) => {
-    setSelectedDepartment(dept);
-  };
-
   const _renderDropdownToggle = () => {
     return (
       <S.CustomToggle $bgColor={theme.colors.backGround}>
         <S.IconText $bgColor={theme.colors.textSecondary}>
           {selectedDepartment}
         </S.IconText>
-        <S.DropDownIcon $bgColor={theme.colors.primary}></S.DropDownIcon>
+        <S.DropDownIcon $bgColor={theme.colors.primary} />
       </S.CustomToggle>
     );
   };
@@ -67,10 +63,15 @@ export const SignUpForm = ({}: ISignUpForm) => {
   const _renderDropdownMenu = () => {
     return (
       <S.DropDownMenu>
-        {SIGNUP_CONFIG.departments.map((dept, index) => {
+        {SIGNUP_CONFIG.departments.map((dept, id) => {
           return (
-            <div key={dept}>
-              <Dropdown.Item key={dept} onClick={() => handleSelect(dept)}>
+            <div key={id}>
+              <Dropdown.Item
+                key={dept}
+                onClick={() => {
+                  setSelectedDepartment(dept);
+                }}
+              >
                 {dept}
               </Dropdown.Item>
             </div>

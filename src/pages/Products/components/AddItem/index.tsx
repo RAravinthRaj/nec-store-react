@@ -38,7 +38,6 @@ export const AddItemModal = ({ modalShow: modalShow, onClose }: IAddItem) => {
         <S.IconText $bgColor={theme.colors.textSecondary}>
           {selectedCategory}
         </S.IconText>
-        <S.DropDownIcon $bgColor={theme.colors.backGround}></S.DropDownIcon>
       </S.CustomToggle>
     );
   };
@@ -49,9 +48,7 @@ export const AddItemModal = ({ modalShow: modalShow, onClose }: IAddItem) => {
         {category.map((cat, id) => {
           return (
             <div key={id}>
-              <Dropdown.Item key={cat} eventKey={cat}>
-                {cat}
-              </Dropdown.Item>
+              <Dropdown.Item eventKey={cat}>{cat}</Dropdown.Item>
             </div>
           );
         })}
@@ -75,7 +72,7 @@ export const AddItemModal = ({ modalShow: modalShow, onClose }: IAddItem) => {
   const _renderModalHeader = () => {
     return (
       <S.Header>
-        <S.CloseButton onClick={onClose}></S.CloseButton>
+        <S.CloseButton onClick={onClose} />
         <S.Title id="contained-modal-title-vcenter">
           {PRODUCTS_CONFIG.AddItemTitle}
         </S.Title>

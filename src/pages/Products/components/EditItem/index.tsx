@@ -40,7 +40,6 @@ export const EditItemModal = ({
   const [title, setTitle] = useState(individualProduct.Title);
   const [Quantity, setQuantity] = useState(individualProduct.Quantity);
   const [MRP, setMRP] = useState(individualProduct.MRP);
-
   const [selectedCategory, setSelectedCategory] = useState<string | null>(
     individualProduct.Category
   );
@@ -49,8 +48,6 @@ export const EditItemModal = ({
     return (
       <S.CustomToggle $bgColor={theme.colors.backGround}>
         <S.IconText>{selectedCategory}</S.IconText>
-        {}
-        <S.DropDownIcon $bgColor={theme.colors.backGround}></S.DropDownIcon>
       </S.CustomToggle>
     );
   };
@@ -109,9 +106,7 @@ export const EditItemModal = ({
           </Form.Group>
           <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
             <Form.Label>{PRODUCTS_CONFIG.Category}</Form.Label>
-            <S.InputWrapper>
-              <S.Icon>{_showDropDown()}</S.Icon>
-            </S.InputWrapper>
+            <S.InputWrapper>{_showDropDown()}</S.InputWrapper>
           </Form.Group>
           <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
             <Form.Label>{PRODUCTS_CONFIG.Quantity}</Form.Label>
@@ -161,7 +156,7 @@ export const EditItemModal = ({
       aria-labelledby="contained-modal-title-vcenter"
       centered
       show={modalShow}
-      onHide={() => onClose()}
+      onHide={onClose}
     >
       {_renderModalHeader()}
       {_renderModalBody()}

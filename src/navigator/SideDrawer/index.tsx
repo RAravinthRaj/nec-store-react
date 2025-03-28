@@ -86,7 +86,7 @@ export const SideDrawer = ({ menu, toggleMenu }: ISideDrawer) => {
           slotProps={{
             paper: {
               style: {
-                width: "65%",
+                width: "60%",
                 backgroundColor: theme.colors.secondaryBackGround,
               },
             },

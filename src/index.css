@@ -12,14 +12,22 @@ Written by Aravinth Raj R <aravinthr235@gmail.com>, 2025.
   padding: 0;
 }
 
+html {
+  overflow-y: scroll; 
+}
+
+body {
+  overflow: hidden;
+}
+
 .modal-backdrop {
-  --bs-backdrop-zindex: 1050;
+  --bs-backdrop-zIndex: 1050;
   --bs-backdrop-bg: #000;
   --bs-backdrop-opacity: 0.5;
   position: fixed;
   top: 0;
   left: 0;
-  z-index: var(--bs-backdrop-zindex);
+  z-index: var(--bs-backdrop-zIndex);
   width: 100%;
   height: 100%;
   background-color: var(--bs-backdrop-bg);
@@ -37,11 +45,6 @@ Written by Aravinth Raj R <aravinthr235@gmail.com>, 2025.
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-body {
-  font-family: var(--main-font);
-  min-width: 320px;
-  min-height: 100vh;
-}
 
 .custom-nav-dropdown .dropdown-toggle::after {
   display: none !important; 
@@ -50,4 +53,9 @@ body {
 .custom-nav-dropdown .dropdown-menu {
   margin: 0 !important;
   padding: 0 !important;
+}
+
+body.modal-open {
+  overflow: hidden;
+  padding-right: calc(100vw - 100%);
 }

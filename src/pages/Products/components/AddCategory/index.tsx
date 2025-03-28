@@ -18,7 +18,7 @@ export interface IAddCategory {
 }
 
 export const AddCategoryModal = ({
-  modalShow: modalshow,
+  modalShow: modalShow,
   onClose,
 }: IAddCategory) => {
   const theme = useTheme();
@@ -33,7 +33,7 @@ export const AddCategoryModal = ({
   const _renderModalHeader = () => {
     return (
       <S.Header>
-        <S.CloseButton onClick={onClose}></S.CloseButton>
+        <S.CloseButton onClick={onClose} />
         <S.Title id="contained-modal-title-vcenter">
           {PRODUCTS_CONFIG.AddCategoryTitle}
         </S.Title>
@@ -74,7 +74,7 @@ export const AddCategoryModal = ({
       size="lg"
       aria-labelledby="contained-modal-title-vcenter"
       centered
-      show={modalshow}
+      show={modalShow}
       onHide={() => onClose()}
       disableScrollLock
     >
