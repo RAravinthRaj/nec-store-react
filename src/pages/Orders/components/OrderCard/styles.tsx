@@ -16,16 +16,13 @@ export const CardContainer = styled.div`
   box-shadow : 0px 2px 4px rgba(0,0,0,0.2);
   border-radius:10px;
   transition : transform ease-in-out 0.2s;
-  width:300px;
-
+  width:265px;
+  margin-right:10px;
+  margin:15px;
+  
   &:hover{
     transform : scale(1.10);
   }
-
-   @media (max-width: 1280px) {
-    width : 280px;
-  }
-  
 
   @media (max-width: 768px) {
     width : 280px;

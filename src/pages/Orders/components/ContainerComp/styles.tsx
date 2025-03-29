@@ -4,78 +4,29 @@ Unauthorized copying of this file, via any medium, is strictly prohibited.
 Proprietary and confidential.  
 Written by Aravinth Raj R <aravinthr235@gmail.com>, 2025.
 */
-import { Container } from "react-bootstrap";
 import styled from "styled-components";
 import { BsSearch } from "react-icons/bs";
 import { LiaSortAmountDownAltSolid } from "react-icons/lia";
 import { FiPlus } from "react-icons/fi";
 import { SlArrowDown } from "react-icons/sl";
 import { Dropdown } from "react-bootstrap";
-
-export const MainContainer = styled(Container)`
-  max-width: 100% !important;
-  display: flex;
-  flex-direction: column;
-  left: 0;
-  width: 100% !important;
-  padding: 0 !important;
-
-  @media (max-width: 768px) {
-    width: 100%;
-  }
-
-  @media (max-width: 576px) {
-    width: 100%;
-    padding: 20px 10px;
-  }
-`;
-
-export const NavbarContainer = styled.div`
-  flex: 1;
-`;
-
-export const PageContainer = styled.div`
-  top: 10%;
-  position: absolute;
-  margin-top: 20px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  @media (min-width: 1024px) {
-    margin-left: auto;
-    margin-right: auto;
-    right: 0;
-    padding: 20px;
-  }
-
-  @media (min-width: 1280px) {
-    left: 19.5%;
-  }
-
-  @media (max-width: 576px) {
-    position: absolute;
-    left: 42%;
-    transform: translate(-50%, 0%);
-  }
-
-  @media (max-width: 768px) {
-    position: absolute;
-    margin-left: 8%;
-  }
-`;
+import { Box, Menu, MenuItem } from "@mui/material";
+import { Link } from "react-router-dom";
+import { PiShoppingCartBold } from "react-icons/pi";
 
 export const ActionContainer = styled.div`
   display: flex;
   align-items: center;
+  padding: 0 20px;
 
-  @media (min-width: 1280px) {
-    margin-left: 50px;
+  @media (max-width: 768px) {
+    gap: 10px;
   }
 
   @media (max-width: 576px) {
-    margin-left: 5%;
+    justify-content: center;
     font-size: 12px;
+    padding: 0 10px;
   }
 `;
 
@@ -84,6 +35,10 @@ export const SearchIcon = styled(BsSearch)<{
 }>`
   color: black;
   font-size: 16px;
+
+  @media (max-width: 576px) {
+    margin-left: -60px;
+  }
 `;
 
 export const Input = styled.input`
@@ -100,7 +55,7 @@ export const Input = styled.input`
 `;
 
 export const InputWrapper = styled.div<{ $bgColor: string }>`
-  flex: 1;
+  flex: 4;
   height: 50px;
   border-radius: 7px;
   padding: 10px 20px;
@@ -123,13 +78,59 @@ export const InputWrapper = styled.div<{ $bgColor: string }>`
 export const SortIcon = styled(LiaSortAmountDownAltSolid)<{
   $bgColor: string;
 }>`
-  flex: 0.5;
+  flex: 1;
   color: black;
-  font-size: 35px;
-  align-self: row-reverse;
+  font-size: 40px;
 
   @media (max-width: 576px) {
     flex: 1;
+  }
+`;
+export const SortContainer = styled.div`
+  flex: 0.2;
+  display: flex;
+  align-items: flex-end;
+  margin-top: 5px;
+  margin-left: 200px;
+
+  @media (max-width: 768px) {
+    flex: 0.2;
+    margin: 0 20px;
+  }
+
+  @media (max-width: 576px) {
+    flex: 0.2;
+    margin: 0 10px;
+  }
+`;
+
+export const SortedDropdownMenu = styled(Dropdown.Menu)<{ $bgColor: string }>`
+  background-color: ${(props) => props?.$bgColor};
+  top: calc(35% + 5px) !important;
+  margin-right: 10px;
+`;
+
+export const SortedIconText = styled.div`
+  font-size: 16px;
+  color: #000000;
+
+  @media (max-width: 576px) {
+    font-size: 15px;
+  }
+`;
+
+export const SortedDropdownItem = styled(Dropdown.Item)<{ $bgColor: string }>`
+  font-size: 17px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+
+  &:hover {
+    background: none;
+    ${SortedIconText} {
+      color: ${(props) => props?.$bgColor};
+    }
   }
 `;
 
@@ -139,6 +140,7 @@ export const ButtonContainer = styled.div`
   align-items: center;
   justify-content: center;
   gap: 30px;
+  margin-left: 10px;
 `;
 
 export const Button = styled.button<{ $bgColor: string }>`
@@ -150,7 +152,7 @@ export const Button = styled.button<{ $bgColor: string }>`
   border: none;
   background-color: ${(props) => props?.$bgColor};
   border-radius: 5px;
-  gap: 12px;
+  gap: 10px;
   color: white;
 
   @media (max-width: 576px) {
@@ -162,93 +164,6 @@ export const Button = styled.button<{ $bgColor: string }>`
 export const AddIcon = styled(FiPlus)`
   color: white;
   font-size: 18px;
-`;
-
-export const Title = styled.div`
-  font-size: 16px;
-  font-weight: 500;
-
-  @media (max-width: 576px) {
-    font-weight: 550;
-    font-size: 12px;
-  }
-`;
-
-export const Divider = styled.div`
-  border: solid 0.5px black;
-  width: 87%;
-  margin: 8px 10px;
-  transform: scaleY(0.1);
-
-  @media (max-width: 768px) {
-    margin: 10px 15px;
-  }
-
-  @media (max-width: 576px) {
-    margin: 7px 10px;
-  }
-`;
-
-export const SortedSingleOption = styled.div<{
-  $hoverbgColor: string;
-  $isActive: boolean;
-}>`
-  text-decoration: none;
-  color: #000000;
-
-  &:hover {
-    ${Title} {
-      color: ${(props) => props.$hoverbgColor};
-    }
-  }
-
-  ${({ $isActive, $hoverbgColor }) =>
-    $isActive &&
-    `
-        ${Title} {
-          color: ${$hoverbgColor};
-        }
- `};
-`;
-
-export const SortedNavigation = styled.div<{ $bgColor: string }>`
-  position: absolute;
-  top: 12%;
-  right: 20%;
-  background-color: ${(props) => props.$bgColor};
-  padding: 10px;
-  gap: 10px;
-  border-radius: 10px;
-  z-index:1500;
-
-  &::before {
-    content: "";
-    top: -13px;
-    position: absolute;
-    right: 10px;
-    border-width: 0 10px 10px 10px;
-    border-style: solid;
-    border-color: transparent transparent  ${(props) =>
-      props.$bgColor}; transparent;
-  }
-
-  @media (max-width: 768px) {
-    top: 7%;
-    right: 13%;
-  }
-
-  @media (max-width: 576px) {
-    top: 4%;
-    right: 5%;
-  }
-`;
-
-export const UserOption = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin: 0 10px;
-  cursor: pointer;
 `;
 
 export const PlusButtonContainer = styled(FiPlus)<{ $bgColor: string }>`
@@ -270,30 +185,18 @@ export const PlusButtonContainer = styled(FiPlus)<{ $bgColor: string }>`
   }
 `;
 
-export const FabButton = styled.div<{ $bgColor: string }>`
+export const FabDivider = styled.div`
+  width: 120%;
   display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  color: white;
-  font-size: 10px;
-  padding: 7px 12px;
-  background-color: ${(props) => props?.$bgColor};
-  border-radius: 5px;
-  position: fixed;
-  bottom: 40px;
-  right: 100px;
-  cursor: pointer;
-  z-index: 1000;
+  justify-content: center;
+  border: solid 0.5px white;
 
   @media (max-width: 576px) {
-    right: 70px;
+    width: 95%;
+    margin-left: 5px;
+    margin-top: -7px;
+    margin-bottom: 6px;
   }
-`;
-
-export const FabDivider = styled.div`
-  width: 125%;
-  margin-left: -12px;
-  border: solid 0.5px white;
 `;
 
 export const CustomToggle = styled(Dropdown.Toggle)<{ $bgColor: string }>`
@@ -324,30 +227,100 @@ export const DropDownIcon = styled(SlArrowDown)<{
 
 export const IconText = styled.div<{ $bgColor: string }>`
   color: ${(props) => props.$bgColor};
-
-  @media (max-width: 576px) {
-    font-size: 13px;
-  }
 `;
 
-export const DropDownMenu = styled(Dropdown.Menu)`
+export const CategoryDropDownMenu = styled(Dropdown.Menu)`
   margin-top: 10px;
 `;
 
 export const ProductContainer = styled.div`
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 40px;
-  padding: 30px;
+  grid-template-columns: repeat(4, 1fr);
   place-items: center;
-  margin: 0 auto;
-  margin-top: 20px;
+  margin-top: 40px;
+
+  @media (max-width: 1300px) {
+    grid-template-columns: repeat(3, 1.5fr);
+    gap: 40px;
+  }
 
   @media (max-width: 768px) {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(2, 1fr);
   }
 
   @media (max-width: 576px) {
-    grid-template-columns: repeat(1, minmax(0, 1fr));
+    grid-template-columns: repeat(1, 1fr);
+  }
+`;
+
+export const DropdownMenu = styled(Dropdown.Menu)<{ $bgColor: string }>`
+  background-color: ${(props) => props?.$bgColor};
+  width: 200px;
+
+  @media (max-width: 768px) {
+    width: 180px;
+  }
+`;
+
+export const MobileNameContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+
+export const NameDivider = styled.div`
+  border: solid 0.5px black;
+  margin: 3px;
+  transform: scaleY(0.1);
+  width: 95%;
+  left: 5%;
+`;
+
+export const ActionItem = styled.div`
+  display: flex;
+  flex: 1;
+  justify-content: space-between;
+
+  @media (max-width: 576px) {
+    flex: 0;
+    justify-content: center;
+    padding: 0;
+  }
+`;
+
+export const StyledPageBox = styled(Box)`
+  padding: 16px;
+  margin-top: 80px;
+  overflow-x: auto;
+
+  @media (min-width: 1300px) {
+    min-width: 81vw;
+  }
+
+  @media (max-width: 768px) {
+    padding: 24px;
+    margin-top: 80px;
+  }
+
+  @media (max-width: 576px) {
+    padding: 8px;
+    margin-top: 64px;
+  }
+`;
+
+export const MainContainer = styled(Box)`
+  display: flex;
+  align-items: center;
+  padding: 20px;
+  justify-content: center;
+
+  @media (max-width: 768px) {
+    justify-content: center;
+  }
+
+  @media (max-width: 576px) {
+    padding: 0;
+    margin-top: 15px;
+    justify-content: center;
   }
 `;
