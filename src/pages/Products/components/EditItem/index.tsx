@@ -14,7 +14,7 @@ import { Dropdown } from "react-bootstrap";
 import { PRODUCTS_CONFIG } from "../../config";
 
 export interface IEditItem {
-  modalshow: boolean;
+  modalShow: boolean;
   onClose: () => void;
   individualProduct: {
     Title: string;
@@ -25,7 +25,7 @@ export interface IEditItem {
 }
 
 export const EditItemModal = ({
-  modalshow,
+  modalShow,
   onClose,
   individualProduct,
 }: IEditItem) => {
@@ -36,110 +36,131 @@ export const EditItemModal = ({
     onClose();
   };
 
-  const category = ["Stationary", "dshf", "dsfhdgs"];
-
-  const [selectedCategory, setSelectedCategory] = useState(
+  const category = ["Stationary", "Cosmetics", "Soap"];
+  const [title, setTitle] = useState(individualProduct.Title);
+  const [Quantity, setQuantity] = useState(individualProduct.Quantity);
+  const [MRP, setMRP] = useState(individualProduct.MRP);
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(
     individualProduct.Category
   );
 
-  const handleSelect = (eventKey: string | null) => {
-    if (eventKey !== null) {
-      setSelectedCategory(eventKey);
-    }
+  const _renderDropDownToggle = () => {
+    return (
+      <S.CustomToggle $bgColor={theme.colors.backGround}>
+        <S.IconText>{selectedCategory}</S.IconText>
+      </S.CustomToggle>
+    );
+  };
+
+  const _renderDropDownMenu = () => {
+    return (
+      <S.DropDownMenu>
+        {category.map((cat, id) => {
+          return (
+            <div key={id}>
+              <Dropdown.Item key={cat} eventKey={cat}>
+                {cat}
+              </Dropdown.Item>
+            </div>
+          );
+        })}
+      </S.DropDownMenu>
+    );
   };
 
   const _showDropDown = () => {
     return (
-      <S.CustomDropdown onSelect={handleSelect}>
-        <S.CustomToggle $bgColor={theme.colors.backGround}>
-          <S.IconText $bgColor={theme.colors.textSecondary}>
-            {selectedCategory}
-          </S.IconText>
-          {}
-          <S.DropDownIcon $bgColor={theme.colors.backGround}></S.DropDownIcon>
-        </S.CustomToggle>
-        <S.DropDownMenu>
-          {category.map((cat, index) => {
-            return (
-              <div>
-                <Dropdown.Item key={cat} eventKey={cat}>
-                  {cat}
-                </Dropdown.Item>
-              </div>
-            );
-          })}
-        </S.DropDownMenu>
+      <S.CustomDropdown
+        onSelect={(eventKey) => {
+          setSelectedCategory(eventKey);
+        }}
+      >
+        {_renderDropDownToggle()}
+        {_renderDropDownMenu()}
       </S.CustomDropdown>
     );
   };
 
-  const _modalContainer = () => {
+  const _renderModalHeader = () => {
     return (
-      <S.ModalContainer
-        size="lg"
-        aria-labelledby="contained-modal-title-vcenter"
-        centered
-        show={modalshow}
-        onHide={() => onClose()}
-      >
-        <S.Header>
-          <S.CloseButton onClick={onClose}></S.CloseButton>
-          <S.Title id="contained-modal-title-vcenter">Edit Item</S.Title>
-        </S.Header>
-        <Modal.Body>
-          <Form>
-            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-              <Form.Label>{PRODUCTS_CONFIG.Title}</Form.Label>
-              <S.InputWrapper>
-                <S.Input type="input" placeholder={individualProduct.Title} />
-              </S.InputWrapper>
-            </Form.Group>
-            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-              <Form.Label>{PRODUCTS_CONFIG.Category}</Form.Label>
-              <S.InputWrapper>
-                <S.Icon>{_showDropDown()}</S.Icon>
-              </S.InputWrapper>
-            </Form.Group>
-            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-              <Form.Label>{PRODUCTS_CONFIG.Quantity}</Form.Label>
-              <S.InputWrapper>
-                <S.Input
-                  type="input"
-                  placeholder={individualProduct.Quantity.toString()}
-                />
-              </S.InputWrapper>
-            </Form.Group>
-            <Form.Group
-              className="mb-3"
-              controlId="exampleForm.ControlTextarea1"
-            >
-              <Form.Label>{PRODUCTS_CONFIG.MRP}</Form.Label>
-              <S.InputWrapper>
-                <S.Input
-                  type="input"
-                  placeholder={individualProduct.MRP.toString()}
-                />
-              </S.InputWrapper>
-            </Form.Group>
-            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-              <Form.Label>{PRODUCTS_CONFIG.Image}</Form.Label>
-              <div>
-                <S.InputRounder type="file" placeholder="Full Name" />
-              </div>
-            </Form.Group>
-          </Form>
-        </Modal.Body>
-        <S.Footer>
-          <S.Button
-            $bgColor={theme.colors.primary}
-            onClick={() => productAdded()}
-          >
-            {PRODUCTS_CONFIG.SubmitButton}
-          </S.Button>
-        </S.Footer>
-      </S.ModalContainer>
+      <S.Header>
+        <S.CloseButton onClick={onClose}></S.CloseButton>
+        <S.Title id="contained-modal-title-vcenter">Edit Item</S.Title>
+      </S.Header>
     );
   };
 
-  return _modalContainer();
+  const _renderModalBody = () => {
+    return (
+      <Modal.Body>
+        <Form>
+          <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+            <Form.Label>{PRODUCTS_CONFIG.Title}</Form.Label>
+            <S.InputWrapper>
+              <S.Input
+                type="input"
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
+              />
+            </S.InputWrapper>
+          </Form.Group>
+          <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+            <Form.Label>{PRODUCTS_CONFIG.Category}</Form.Label>
+            <S.InputWrapper>{_showDropDown()}</S.InputWrapper>
+          </Form.Group>
+          <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+            <Form.Label>{PRODUCTS_CONFIG.Quantity}</Form.Label>
+            <S.InputWrapper>
+              <S.Input
+                type="input"
+                value={Quantity}
+                onChange={(e) => setQuantity(Number(e.target.value))}
+              />
+            </S.InputWrapper>
+          </Form.Group>
+          <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
+            <Form.Label>{PRODUCTS_CONFIG.MRP}</Form.Label>
+            <S.InputWrapper>
+              <S.Input
+                type="input"
+                value={MRP}
+                onChange={(e) => setMRP(Number(e.target.value))}
+              />
+            </S.InputWrapper>
+          </Form.Group>
+          <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+            <Form.Label>{PRODUCTS_CONFIG.Image}</Form.Label>
+            <S.InputRounder type="file" />
+          </Form.Group>
+        </Form>
+      </Modal.Body>
+    );
+  };
+
+  const _renderModalFooter = () => {
+    return (
+      <S.Footer>
+        <S.Button
+          $bgColor={theme.colors.primary}
+          onClick={() => productAdded()}
+        >
+          {PRODUCTS_CONFIG.SubmitButton}
+        </S.Button>
+      </S.Footer>
+    );
+  };
+
+  return (
+    <S.ModalContainer
+      size="lg"
+      aria-labelledby="contained-modal-title-vcenter"
+      centered
+      show={modalShow}
+      onHide={onClose}
+    >
+      {_renderModalHeader()}
+      {_renderModalBody()}
+      {_renderModalFooter()}
+    </S.ModalContainer>
+  );
 };

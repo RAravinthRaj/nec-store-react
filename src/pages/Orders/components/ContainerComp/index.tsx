@@ -9,131 +9,119 @@ import * as S from "./styles";
 import { Navbar } from "../../../../components";
 import Dropdown from "react-bootstrap/Dropdown";
 import { useState } from "react";
-import { ViewItemModal } from "../ViewItem";
 import { OrderCard } from "../OrderCard";
 import { ORDERS_CONFIG } from "../../config";
-
+import { SideDrawer } from "../../../../navigator/SideDrawer";
 export interface IContainerComp {}
 
 export const ContainerComp = ({}: IContainerComp) => {
   const theme = useTheme();
 
-  const [openItem, setOpenItem] = useState(false);
-  const [openSortedOptions, setOpenSortedOptions] = useState(false);
-  const [selectedSortedOptions, setSelectedSortedOptions] = useState("");
-
-  const sortedOptions = ORDERS_CONFIG.sortedOptions;
-
-  const setAddModalShow = ($prop: boolean) => {
-    setOpenItem($prop);
-  };
-
-  const openSortedOption = () => {
-    setOpenSortedOptions(!openSortedOptions);
-  };
-
-  const handleClick = ($prop: string) => {
-    setSelectedSortedOptions($prop);
-    setOpenSortedOptions(!openSortedOptions);
-  };
-
-  const category = ["All", "OrderNumber", "OrderBy"];
-
+  const [menu, setMenu] = useState(false);
+  const [searchProductTitle, setSearchProductTitle] = useState("");
   const [selectedCategory, setSelectedCategory] = useState(ORDERS_CONFIG.All);
 
-  const handleSelect = (eventKey: string | null) => {
-    if (eventKey !== null) {
-      setSelectedCategory(eventKey);
-    }
+  const category = ["All", "Stationary", "cosmetics", "household"];
+
+  const _renderCategoryDropDownTitle = () => {
+    return (
+      <S.CustomToggle $bgColor={theme.colors.backGround}>
+        <S.IconText $bgColor={theme.colors.textSecondary}>
+          {selectedCategory.substring(0, 4)}
+        </S.IconText>
+        <S.DropDownIcon $bgColor={theme.colors.backGround} />
+      </S.CustomToggle>
+    );
+  };
+
+  const _renderCategoryDropDownMenu = () => {
+    return (
+      <S.CategoryDropDownMenu>
+        {category.map((cat, id) => {
+          return (
+            <div key={id}>
+              <Dropdown.Item key={cat} eventKey={cat}>
+                {cat}
+              </Dropdown.Item>
+            </div>
+          );
+        })}
+      </S.CategoryDropDownMenu>
+    );
   };
 
   const _showDropDown = () => {
     return (
-      <S.CustomDropdown onSelect={handleSelect}>
-        <S.CustomToggle $bgColor={theme.colors.backGround}>
-          <S.IconText $bgColor={theme.colors.textSecondary}>
-            {selectedCategory.substring(0, 4)}
-          </S.IconText>
-          <S.DropDownIcon $bgColor={theme.colors.backGround}></S.DropDownIcon>
-        </S.CustomToggle>
-        <S.DropDownMenu>
-          {category.map((cat, index) => {
-            return (
-              <div>
-                <Dropdown.Item key={cat} eventKey={cat}>
-                  {cat}
-                </Dropdown.Item>
-              </div>
-            );
-          })}
-        </S.DropDownMenu>
+      <S.CustomDropdown
+        onSelect={(eventKey) => {
+          if (eventKey !== null) setSelectedCategory(eventKey);
+        }}
+      >
+        {_renderCategoryDropDownTitle()}
+        {_renderCategoryDropDownMenu()}
       </S.CustomDropdown>
     );
   };
 
-  const _actionitems = () => {
-    function selectProducts(): void {
-      throw new Error("Function not implemented.");
-    }
-
+  const _renderSearchBar = () => {
     return (
-      <S.ActionContainer>
+      <S.ActionItem>
         <S.InputWrapper $bgColor={theme.colors.backGround}>
           {_showDropDown()}
           <S.Input type="input" placeholder="Search" />
           <S.SearchIcon
             $bgColor={theme.colors.backGround}
-            onClick={() => selectProducts()}
-          ></S.SearchIcon>
+            onChange={(event) => {
+              setSearchProductTitle((event.target as HTMLInputElement).value);
+            }}
+          />
         </S.InputWrapper>
-        <S.SortIcon
-          $bgColor={theme.colors.backGround}
-          onClick={() => openSortedOption()}
-        ></S.SortIcon>
-      </S.ActionContainer>
+        <S.SortContainer>{_renderSortedOptions()}</S.SortContainer>
+      </S.ActionItem>
     );
   };
 
-  const _sortedOptions = () => {
+  const _renderActionItems = () => {
+    return <S.ActionContainer>{_renderSearchBar()}</S.ActionContainer>;
+  };
+
+  const _renderSortedOptionsTitle = () => {
     return (
-      <S.SortedNavigation $bgColor={theme.colors.secondaryBackGround}>
-        {sortedOptions.map((option, index) => {
-          const isActive = selectedSortedOptions === option;
-
-          return (
-            <div>
-              <S.SortedSingleOption
-                $hoverbgColor={theme.colors.primary}
-                $isActive={isActive}
-                key={option}
-                onClick={() => handleClick(option)}
-              >
-                <S.UserOption>
-                  <S.Title>{option}</S.Title>
-                </S.UserOption>
-              </S.SortedSingleOption>
-
-              {index < sortedOptions.length - 1 && <S.Divider />}
-            </div>
-          );
-        })}
-      </S.SortedNavigation>
+      <S.CustomToggle $bgColor={theme.colors.backGround}>
+        <S.SortIcon $bgColor={theme.colors.backGround} />
+      </S.CustomToggle>
     );
   };
 
-  const orders = [
-    { OrderNumber: "2014", OrderBy: "2312070", Date: "23.05.25", Total: 420 },
-    { OrderNumber: "2014", OrderBy: "2312070", Date: "23.05.25", Total: 420 },
-    { OrderNumber: "2014", OrderBy: "2312070", Date: "23.05.25", Total: 420 },
-    { OrderNumber: "2014", OrderBy: "2312070", Date: "23.05.25", Total: 420 },
-    { OrderNumber: "2014", OrderBy: "2312070", Date: "23.05.25", Total: 420 },
-  ];
+  const _renderSortedOptionsMenu = () => {
+    return (
+      <S.SortedDropdownMenu $bgColor={theme.colors.secondaryBackGround}>
+        {ORDERS_CONFIG.sortedOptions.map((dept, id) => (
+          <div key={id}>
+            <S.SortedDropdownItem $bgColor={theme.colors.primary}>
+              <S.SortedIconText>{dept}</S.SortedIconText>
+            </S.SortedDropdownItem>
+            {id !== ORDERS_CONFIG.sortedOptions.length - 1 && <S.NameDivider />}
+          </div>
+        ))}
+      </S.SortedDropdownMenu>
+    );
+  };
 
-  const _order = () => {
+  const _renderSortedOptions = () => {
+    return (
+      <S.CustomDropdown>
+        {_renderSortedOptionsTitle()}
+        {_renderSortedOptionsMenu()}
+      </S.CustomDropdown>
+    );
+  };
+
+  const _products = () => {
     return (
       <S.ProductContainer>
-        {orders.map((order) => (
-          <OrderCard individualOrder={order} />
+        {ORDERS_CONFIG.orders.map((order, id) => (
+          <OrderCard key={id} individualOrder={order} />
         ))}
       </S.ProductContainer>
     );
@@ -142,23 +130,17 @@ export const ContainerComp = ({}: IContainerComp) => {
   const _mainContainerItems = () => {
     return (
       <div>
-        {_actionitems()}
-        <ViewItemModal
-          modalshow={openItem}
-          onClose={() => setAddModalShow(false)}
-        ></ViewItemModal>
-        {openSortedOptions && _sortedOptions()}
-        {_order()}
+        {_renderActionItems()}
+        {_products()}
       </div>
     );
   };
 
   return (
     <S.MainContainer>
-      <S.NavbarContainer>
-        <Navbar />
-      </S.NavbarContainer>
-      <S.PageContainer>{_mainContainerItems()}</S.PageContainer>
+      <Navbar menu={menu} onToggleMenu={() => setMenu(!menu)} />
+      <SideDrawer menu={menu} toggleMenu={() => setMenu(!menu)} />
+      <S.StyledPageBox>{_mainContainerItems()}</S.StyledPageBox>
     </S.MainContainer>
   );
 };

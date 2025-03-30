@@ -13,37 +13,36 @@ import { toast } from "react-toastify";
 import { PRODUCTS_CONFIG } from "../../config";
 
 export interface IAddCategory {
-  modalshow: boolean;
+  modalShow: boolean;
   onClose: () => void;
 }
 
-export const AddCategoryModal = ({ modalshow, onClose }: IAddCategory) => {
+export const AddCategoryModal = ({
+  modalShow: modalShow,
+  onClose,
+}: IAddCategory) => {
   const theme = useTheme();
   const [selectedCategory, setSelectedCategory] = useState("");
 
-  const setSelectCategory = () => {
-    setSelectedCategory(selectedCategory);
-  };
-
   const categoryAdded = () => {
+    setSelectedCategory(selectedCategory);
     toast.success(PRODUCTS_CONFIG.CategoryToastSuccess);
     onClose();
   };
 
-  return (
-    <S.ModalContainer
-      size="lg"
-      aria-labelledby="contained-modal-title-vcenter"
-      centered
-      show={modalshow}
-      onHide={() => onClose()}
-    >
+  const _renderModalHeader = () => {
+    return (
       <S.Header>
-        <S.CloseButton onClick={onClose}></S.CloseButton>
+        <S.CloseButton onClick={onClose} />
         <S.Title id="contained-modal-title-vcenter">
           {PRODUCTS_CONFIG.AddCategoryTitle}
         </S.Title>
       </S.Header>
+    );
+  };
+
+  const _renderModalBody = () => {
+    return (
       <Modal.Body>
         <Form>
           <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
@@ -54,6 +53,11 @@ export const AddCategoryModal = ({ modalshow, onClose }: IAddCategory) => {
           </Form.Group>
         </Form>
       </Modal.Body>
+    );
+  };
+
+  const _renderModalFooter = () => {
+    return (
       <S.Footer>
         <S.Button
           $bgColor={theme.colors.primary}
@@ -62,6 +66,21 @@ export const AddCategoryModal = ({ modalshow, onClose }: IAddCategory) => {
           {PRODUCTS_CONFIG.AddButton}
         </S.Button>
       </S.Footer>
+    );
+  };
+
+  return (
+    <S.ModalContainer
+      size="lg"
+      aria-labelledby="contained-modal-title-vcenter"
+      centered
+      show={modalShow}
+      onHide={() => onClose()}
+      disableScrollLock
+    >
+      {_renderModalHeader()}
+      {_renderModalBody()}
+      {_renderModalFooter()}
     </S.ModalContainer>
   );
 };

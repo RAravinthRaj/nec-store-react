@@ -4,21 +4,21 @@ Unauthorized copying of this file, via any medium, is strictly prohibited.
 Proprietary and confidential.  
 Written by Aravinth Raj R <aravinthr235@gmail.com>, 2025.
 */
-import loader from "../assets/lotties/loader.json";
+import loader from "../assets/lottie/loader.json";
 import signInBgImage from "../assets/images/signIn.png";
-import signUpBgImage from "../assets/images/SignUp.png";
+import signUpBgImage from "../assets/images/signUp.png";
 import admin from "../assets/images/admin.png";
 import logo from "../assets/images/logo.png";
 import retailer from "../assets/images/retailer.png";
 import customer from "../assets/images/customer.png";
-import products from "../assets/images/Products.png";
-import orders from "../assets/images/Order.png";
-import sales from "../assets/images/Sales.png";
+import products from "../assets/images/products.png";
+import orders from "../assets/images/order.png";
+import sales from "../assets/images/sales.png";
 import user from "../assets/images/user.png";
-import switchrole from "../assets/images/Change User.png";
-import viewprofile from "../assets/images/dashboard.png";
-import logout from "../assets/images/Logout.png";
-import tagfile from "../assets/images/TagFile.png";
+import switchRole from "../assets/images/changeUser.png";
+import viewProfile from "../assets/images/dashboard.png";
+import logout from "../assets/images/logout.png";
+import tagFile from "../assets/images/tagFile.png";
 
 export const theme = {
   colors: {
@@ -29,6 +29,7 @@ export const theme = {
     textSecondary: "#707070",
     secondaryBackGround: "#D9D9D9",
     secondaryOptional: "#9AC4E6",
+    white: "#ffffff",
   },
   fonts: {
     sourceSerifPro: "Source Serif Pro",
@@ -44,12 +45,12 @@ export const theme = {
     orders,
     sales,
     user,
-    switchrole,
-    viewprofile,
+    switchRole,
+    viewProfile,
     logout,
-    tagfile,
+    tagFile,
   },
-  lotties: {
+  lottie: {
     loader,
   },
 };

@@ -12,16 +12,20 @@ import ListItemText from "@mui/material/ListItemText";
 import ListItem from "@mui/material/ListItem";
 import { NavLink } from "react-router-dom";
 
-export const DrawerBox = styled(Box)<{ $bgColor: string }>`
+export const DrawerBox = styled(Box)`
   height: 100%;
-  background-color: ${(props) => props?.$bgColor};
 `;
 
 export const Icon = styled.img<{ $bgColor: string }>`
-  height: 14%;
-  width: 14%;
+  height: 14.5%;
+  width: 14.5%;
 
   @media (max-width: 768px) {
+    height: 12%;
+    width: 12%;
+  }
+
+  @media (max-width: 576px) {
     height: 14%;
     width: 14%;
   }
@@ -76,6 +80,8 @@ export const ItemText = styled(ListItemText)`
 export const ItemContainer = styled(ListItem)<{
   $hoverBgColor: string;
 }>`
+  padding: 3px;
+
   &:hover {
     ${Icon} {
       filter: invert(20%) sepia(94%) saturate(1500%) hue-rotate(220deg)
@@ -85,6 +91,14 @@ export const ItemContainer = styled(ListItem)<{
     ${ItemText} {
       color: ${($props) => $props?.$hoverBgColor};
     }
+  }
+
+  @media (max-width: 768px) {
+    padding: 0;
+  }
+
+  @media (max-width: 576px) {
+    padding: 0;
   }
 `;
 

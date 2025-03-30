@@ -10,7 +10,7 @@ import * as S from "./styles";
 import { toast } from "react-toastify";
 import { SIGNUP_CONFIG } from "../../config";
 import { Link, useNavigate } from "react-router-dom";
-import { DropdownDepartment } from "../DropdownDepartment";
+import Dropdown from "react-bootstrap/Dropdown";
 
 export interface ISignUpForm {}
 
@@ -24,7 +24,7 @@ export const SignUpForm = ({}: ISignUpForm) => {
   );
 
   const navigate = useNavigate();
-  const _checkvalidity = () => {
+  const _checkValidity = () => {
     if (
       name !== "" &&
       email !== "" &&
@@ -46,6 +46,47 @@ export const SignUpForm = ({}: ISignUpForm) => {
           {SIGNUP_CONFIG.headerSubTitle}
         </S.HeaderSubtitle>
       </S.HeaderContainer>
+    );
+  };
+
+  const _renderDropdownToggle = () => {
+    return (
+      <S.CustomToggle $bgColor={theme.colors.backGround}>
+        <S.IconText $bgColor={theme.colors.textSecondary}>
+          {selectedDepartment}
+        </S.IconText>
+        <S.DropDownIcon $bgColor={theme.colors.primary} />
+      </S.CustomToggle>
+    );
+  };
+
+  const _renderDropdownMenu = () => {
+    return (
+      <S.DropDownMenu>
+        {SIGNUP_CONFIG.departments.map((dept, id) => {
+          return (
+            <div key={id}>
+              <Dropdown.Item
+                key={dept}
+                onClick={() => {
+                  setSelectedDepartment(dept);
+                }}
+              >
+                {dept}
+              </Dropdown.Item>
+            </div>
+          );
+        })}
+      </S.DropDownMenu>
+    );
+  };
+
+  const _showDropDown = () => {
+    return (
+      <S.CustomDropdown>
+        {_renderDropdownToggle()}
+        {_renderDropdownMenu()}
+      </S.CustomDropdown>
     );
   };
 
@@ -78,10 +119,7 @@ export const SignUpForm = ({}: ISignUpForm) => {
         </S.InputWrapper>
         <S.InputWrapper $bgColor={theme.colors.backGround}>
           <S.DepartmentIcon $bgColor={theme.colors.primary} />
-          <DropdownDepartment
-            selectedDepartment={selectedDepartment}
-            setSelectedDepartment={setSelectedDepartment}
-          />
+          {_showDropDown()}
         </S.InputWrapper>
       </div>
     );
@@ -91,7 +129,7 @@ export const SignUpForm = ({}: ISignUpForm) => {
     return (
       <S.Button
         $bgColor={theme.colors.primary}
-        onClick={() => _checkvalidity()}
+        onClick={() => _checkValidity()}
       >
         {title}
       </S.Button>
@@ -116,11 +154,9 @@ export const SignUpForm = ({}: ISignUpForm) => {
   return (
     <S.FormMainContainer>
       {_renderHeader()}
-      <S.Scroll>
-        {_getDetails()}
-        {_renderButton(SIGNUP_CONFIG.headerTitle)}
-        {_renderFooter()}
-      </S.Scroll>
+      {_getDetails()}
+      {_renderButton(SIGNUP_CONFIG.headerTitle)}
+      {_renderFooter()}
     </S.FormMainContainer>
   );
 };

@@ -12,13 +12,13 @@ export const NAVBAR_CONFIG = {
     {
       id: 1,
       title: "View Profile",
-      imageSrc: theme.images.viewprofile,
+      imageSrc: theme.images.viewProfile,
       link: "/dashboard",
     },
     {
       id: 2,
       title: "Switch Role",
-      imageSrc: theme.images.switchrole,
+      imageSrc: theme.images.switchRole,
       link: "/roles",
     },
     {

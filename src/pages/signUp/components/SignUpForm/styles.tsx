@@ -2,7 +2,8 @@ import styled from "styled-components";
 import { GoMail } from "react-icons/go";
 import { HiOutlineUser } from "react-icons/hi2";
 import { LiaUniversitySolid } from "react-icons/lia";
-import { SlBadge } from "react-icons/sl";
+import { SlArrowDown, SlBadge } from "react-icons/sl";
+import { Dropdown } from "react-bootstrap";
 
 export const FormMainContainer = styled.div`
   width: 40%;
@@ -172,8 +173,71 @@ export const SignInBold = styled.h6<{ $textColor: string }>`
   }
 `;
 
-export const Scroll = styled.div`
+export const ShowDepartment = styled.div<{ $bgColor: string }>`
+  background-color: ${(props) => props?.$bgColor};
+`;
+
+export const CustomToggle = styled(Dropdown.Toggle)<{ $bgColor: string }>`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 100% !important;
+
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+  --bs-btn-active-bg: ${(props) => props.$bgColor};
+  --bs-btn-hover-bg: ${(props) => props.$bgColor};
+
+  &::after {
+    display: none;
+  }
+
+  @media (max-width: 768px) {
+    width: 0px;
+  }
+
   @media (max-width: 576px) {
-    overflow-y: auto;
+  }
+`;
+
+export const CustomDropdown = styled(Dropdown)`
+  width: 100%;
+`;
+
+export const IconText = styled.div<{ $bgColor: string }>`
+  color: ${(props) => props.$bgColor};
+
+  @media (max-width: 576px) {
+    font-size: 14px;
+  }
+`;
+
+export const DropDownMenu = styled(Dropdown.Menu)`
+  left: 0;
+  margin-top: 5%;
+  z-index: 1500;
+
+  @media (max-width: 576px) {
+    margin-left: 80px;
+    width: 10%;
+  }
+`;
+
+export const DropDownIcon = styled(SlArrowDown)<{
+  $bgColor: string;
+}>`
+  color: ${(props) => props?.$bgColor};
+  margin-left: 20%;
+  position: fixed;
+  font-size: 13px;
+
+  @media (max-width: 768px) {
+    margin-left: 450px;
+  }
+
+  @media (max-width: 576px) {
+    margin-left: 65%;
   }
 `;

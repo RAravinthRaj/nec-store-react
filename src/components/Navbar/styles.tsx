@@ -6,9 +6,7 @@ Written by Aravinth Raj R <aravinthr235@gmail.com>, 2025.
 */
 import styled from "styled-components";
 import { GiHamburgerMenu } from "react-icons/gi";
-import { Link } from "react-router-dom";
-import { Dropdown } from "react-bootstrap";
-import { SlArrowDown } from "react-icons/sl";
+import NavDropdown from "react-bootstrap/NavDropdown";
 
 export const NavbarContainer = styled.div<{ $bgColor: string }>`
   display: flex;
@@ -17,13 +15,17 @@ export const NavbarContainer = styled.div<{ $bgColor: string }>`
   width: 100%;
   padding: 2px 15px;
   position: fixed;
+  height: 73px;
+  z-index: 10;
 
   @media (max-width: 768px) {
     padding: 8px 15px;
+    height: 70px;
   }
 
   @media (max-width: 576px) {
     padding: 8px 10px;
+    height: 58px;
   }
 `;
 
@@ -50,6 +52,7 @@ export const Logo = styled.img`
 export const TitleText = styled.div`
   font-size: 25px;
   font-weight: 550;
+  color: black;
 `;
 
 export const UserContainer = styled.div`
@@ -106,9 +109,8 @@ export const UserImage = styled.img`
   }
 `;
 
-export const Icon = styled(GiHamburgerMenu)`
-  filter: invert(20%) sepia(94%) saturate(1500%) hue-rotate(220deg)
-    brightness(80%) contrast(150%);
+export const Icon = styled(GiHamburgerMenu)<{ $bgColor: string }>`
+  color: ${(props) => props?.$bgColor};
   font-size: 160%;
 
   @media (max-width: 768px) {
@@ -135,6 +137,21 @@ export const UserIcon = styled.img`
   }
 `;
 
+export const ItemIcon = styled.img`
+  height: 14%;
+  width: 15%;
+
+  @media (max-width: 768px) {
+    height: 14%;
+    width: 16%;
+  }
+
+  @media (max-width: 576px) {
+    height: 13%;
+    width: 13%;
+  }
+`;
+
 export const IconText = styled.div`
   font-size: 18px;
 
@@ -143,79 +160,39 @@ export const IconText = styled.div`
   }
 `;
 
-export const userNavigation = styled(Link)`
-  text-decoration: none;
-  color: #000000;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  gap: 10px;
-
-  &:hover {
-    ${UserIcon} {
-      filter: invert(100%) sepia(0%) saturate(0%) brightness(100%)
-        contrast(100%);
-    }
-
-    ${IconText} {
-      color: #ffffff;
-    }
-  }
-`;
-
 export const NameDivider = styled.div`
   border: solid 0.5px black;
   margin: 3px;
   transform: scaleY(0.1);
-  width: 95%;
-  left: 5%;
+  width: 100%;
 `;
 
-export const UserOptionsHolder = styled.div``;
-
-export const CustomToggle = styled(Dropdown.Toggle)<{ $bgColor: string }>`
-  background: none;
-  border: none;
-  display: flex;
-  align-items: center;
-  gap: 7px;
-
-  padding: 0;
-  margin: 0;
-  --bs-btn-active-bg: none;
-  --bs-btn-hover-bg: none;
-
-  &::after {
-    display: none;
-  }
-`;
-
-export const CustomDropdown = styled(Dropdown)`
+export const CustomDropdown = styled(NavDropdown)`
   margin: 5px;
 `;
 
-export const DropDownIcon = styled(SlArrowDown)<{
-  $bgColor: string;
-}>`
-  color: black;
-  font-size: 13px;
-`;
-
-export const DropdownMenu = styled(Dropdown.Menu)<{ $bgColor: string }>`
+export const DropdownMenu = styled.div<{ $bgColor: string }>`
   background-color: ${(props) => props?.$bgColor};
-  width: 200px;
+  padding: 5px 12px;
+  border-radius: 10px;
+  filter: drop-shadow(0px 2px 8px rgba(0, 0, 0, 0.2));
+  transition: opacity 0.6s ease-out 0.2s, transform 0.6s ease-out 0.2s;
 
   @media (max-width: 768px) {
     width: 180px;
   }
 `;
 
-export const DropdownItem = styled(Dropdown.Item)<{ $bgColor: string }>`
+export const DropdownItem = styled(NavDropdown.Item)<{ $bgColor: string }>`
   font-size: 17px;
   display: flex;
+  width: 170px;
   flex-direction: row;
   align-items: center;
+  padding: 4px 0;
   gap: 10px;
+  text-decoration: none;
+  color: #000000;
 
   &:hover {
     background: none;
@@ -223,7 +200,7 @@ export const DropdownItem = styled(Dropdown.Item)<{ $bgColor: string }>`
       color: ${(props) => props?.$bgColor};
     }
 
-    ${UserIcon} {
+    ${ItemIcon} {
       filter: invert(20%) sepia(94%) saturate(1500%) hue-rotate(220deg)
         brightness(80%) contrast(150%);
     }

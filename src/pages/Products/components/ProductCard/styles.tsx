@@ -14,6 +14,7 @@ export const CardContainer = styled.div`
   flex-direction : column;
   align-items : center;
   justify-content:center;
+  flex-wrap:wrap;
   padding : 20px 20px;
   box-shadow : 0px 2px 4px rgba(0,0,0,0.2);
   margin:30px 20px;
@@ -25,17 +26,14 @@ export const CardContainer = styled.div`
  
 
   &:hover{
-    transform : scale(1.02);
+    transform : scale(1.05);
     box-shadow : 0px 4px 6px rgba(0,0,0,0.2);
   }
 
-  @media(max-width:1280px){
-    padding:20px 10px;
-  }
 
   @media (max-width: 768px) {
     padding : 20px 10px;
-    margin:30px 15px;
+    margin : 30px 15px;
   }
 
   @media (max-width: 576px) {
@@ -115,12 +113,13 @@ export const Button = styled.button<{ $bgColor: string }>`
   flex: 1;
   display: flex;
   align-items: center;
-  padding: 8px 0;
+  padding: 5px;
   justify-content: center;
   border: none;
+  font-size: 14px;
   background-color: ${(props) => props?.$bgColor};
   border-radius: 5px;
-  gap: 12px;
+  gap: 3px;
   color: white;
   margin-top: 10px;
 
@@ -133,7 +132,7 @@ export const Button = styled.button<{ $bgColor: string }>`
 
 export const EditIcon = styled(FaPencilAlt)`
   color: white;
-  font-size: 16px;
+  font-size: 14px;
 
   @media (max-width: 576px) {
     font-size: 13px;
@@ -142,7 +141,7 @@ export const EditIcon = styled(FaPencilAlt)`
 
 export const DeleteIcon = styled(ImBin)`
   color: white;
-  font-size: 18px;
+  font-size: 14px;
 
   @media (max-width: 576px) {
     font-size: 15px;

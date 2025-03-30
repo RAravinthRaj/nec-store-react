@@ -15,17 +15,20 @@ export const ModalContainer = styled(Modal)`
   display: flex;
   align-items: center;
   padding: 20px;
-  left: 30%;
-  postion: absolute;
+  position: fixed;
+  top: 3%;
+  left: 28%;
 
   @media (max-width: 768px) {
-    width: 50%;
-    left: 25%;
+    left: 15%;
+    width: 70%;
   }
 
   @media (max-width: 576px) {
-    width: 85%;
-    left: 8%;
+    left: 5%;
+    width: 90%;
+    height: 80%;
+    top: 10%;
   }
 `;
 
@@ -57,7 +60,7 @@ export const CloseButton = styled(RxCross2)`
   @media (max-width: 576px) {
     transform: translateY(-190%);
     font-size: 25px;
-    postion: fixed;
+    position: fixed;
   }
 `;
 
@@ -91,6 +94,7 @@ export const Icon = styled.div`
   font-size: 16px;
   display: flex;
   align-items: center;
+  color: #ffffff;
 
   &:hover {
     background: none;
@@ -148,6 +152,7 @@ export const CustomToggle = styled(Dropdown.Toggle)<{ $bgColor: string }>`
   background: none;
   border: none;
   display: flex;
+  flex-direction: row;
   align-items: center;
   gap: 7px;
 
@@ -165,26 +170,24 @@ export const CustomDropdown = styled(Dropdown)`
   margin-right: 17px;
 `;
 
-export const DropDownIcon = styled(SlArrowDown)<{
-  $bgColor: string;
-}>`
-  color: rgb(255, 255, 255);
-  postion: fixed;
-  font-size: 13px;
-  margin-left: 500px;
-`;
+export const IconText = styled.div`
+  color: black;
+  padding-right: 700%;
 
-export const IconText = styled.div<{ $bgColor: string }>`
-  color: ${(props) => props.$bgColor};
+  @media (max-width: 768px) {
+    font-size: 14px;
+    padding-right: 500%;
+  }
 
   @media (max-width: 576px) {
     font-size: 14px;
+    padding-right: 250%;
   }
 `;
 
 export const DropDownMenu = styled(Dropdown.Menu)`
   margin-right: 1%;
-  margin-top: 3%;
+  margin-top: 2%;
   z-index: 1500;
 
   @media (max-width: 576px) {

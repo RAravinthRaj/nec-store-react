@@ -7,6 +7,8 @@ Written by Aravinth Raj R <aravinthr235@gmail.com>, 2025.
 import { useTheme, useIsNotDesktop } from "../../hooks";
 import * as S from "./styles";
 import { NAVBAR_CONFIG } from "./config";
+import { Link } from "react-router-dom";
+import { AppBar } from "@mui/material";
 
 export interface INavbar {
   menu: boolean;
@@ -32,7 +34,7 @@ export const Navbar = ({ menu, onToggleMenu }: INavbar) => {
       );
     }
 
-    return <S.Icon onClick={_toggleMenu}></S.Icon>;
+    return <S.Icon onClick={_toggleMenu} $bgColor={theme.colors.primary} />;
   };
 
   const _renderUserName = () => {
@@ -54,7 +56,7 @@ export const Navbar = ({ menu, onToggleMenu }: INavbar) => {
           <S.UserName $bgColor={theme.colors.primary}>
             Hii Aravinth !!
           </S.UserName>
-          <S.NameDivider></S.NameDivider>
+          <S.NameDivider />
         </S.MobileNameContainer>
       );
     }
@@ -62,47 +64,61 @@ export const Navbar = ({ menu, onToggleMenu }: INavbar) => {
     return null;
   };
 
+  const _renderUserImage = () => {
+    return (
+      <S.ImageBackGround>
+        <S.UserImage src={theme.images.user}></S.UserImage>
+      </S.ImageBackGround>
+    );
+  };
+
+  const _renderDropDownItem = () => {
+    return NAVBAR_CONFIG.navBarOptions.map((item, id) => {
+      return (
+        <div key={id}>
+          <S.DropdownItem
+            as={Link}
+            to={item.link}
+            $bgColor={theme.colors.primary}
+          >
+            <S.ItemIcon src={item?.imageSrc}></S.ItemIcon>
+            <S.IconText>{item?.title}</S.IconText>
+          </S.DropdownItem>
+          {id != NAVBAR_CONFIG.navBarOptions.length - 1 && <S.NameDivider />}
+        </div>
+      );
+    });
+  };
+
+  const _renderDropDownMenu = () => {
+    return (
+      <S.DropdownMenu $bgColor={theme.colors.secondaryBackGround}>
+        {_renderUserNameSM()}
+        {_renderDropDownItem()}
+      </S.DropdownMenu>
+    );
+  };
+
   const _renderDropDown = () => {
     return (
-      <S.UserContainer>
-        <S.CustomDropdown>
-          <S.CustomToggle $bgColor={theme.colors.backGround}>
-            <S.ImageBackGround>
-              <S.UserImage src={theme.images.user}></S.UserImage>
-            </S.ImageBackGround>
-          </S.CustomToggle>
-          <S.DropdownMenu $bgColor={theme.colors.secondaryBackGround}>
-            {_renderUserNameSM()}
-            {NAVBAR_CONFIG.navBarOptions.map((item, index) => {
-              return (
-                <>
-                  <S.DropdownItem
-                    key={item?.id}
-                    eventKey={item?.id}
-                    $bgColor={theme.colors.primary}
-                  >
-                    <S.userNavigation to={item?.link}>
-                      <S.UserIcon src={item?.imageSrc}></S.UserIcon>
-                      <S.IconText>{item?.title}</S.IconText>
-                    </S.userNavigation>
-                  </S.DropdownItem>
-                  {index != NAVBAR_CONFIG.navBarOptions.length - 1 && (
-                    <S.NameDivider />
-                  )}
-                </>
-              );
-            })}
-          </S.DropdownMenu>
-        </S.CustomDropdown>
-        {_renderUserName()}
-      </S.UserContainer>
+      <S.CustomDropdown
+        title={_renderUserImage()}
+        className="custom-nav-dropdown"
+      >
+        {_renderDropDownMenu()}
+      </S.CustomDropdown>
     );
   };
 
   return (
-    <S.NavbarContainer $bgColor={theme.colors.secondaryOptional}>
-      <S.TitleContainer>{_renderTitle()}</S.TitleContainer>
-      {_renderDropDown()}
-    </S.NavbarContainer>
+    <AppBar position="fixed" sx={{ zIndex: 30 }}>
+      <S.NavbarContainer $bgColor={theme.colors.secondaryOptional}>
+        <S.TitleContainer>{_renderTitle()}</S.TitleContainer>
+        <S.UserContainer>
+          {_renderDropDown()}
+          {_renderUserName()}
+        </S.UserContainer>
+      </S.NavbarContainer>
+    </AppBar>
   );
 };

@@ -14,7 +14,7 @@ export const ModalContainer = styled(Modal)`
   align-items: center;
   padding: 20px;
   left: 28%;
-  postion: absolute;
+  position: fixed;
 
   @media (max-width: 768px) {
     width: 50%;
