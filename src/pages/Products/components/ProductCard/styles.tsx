@@ -22,9 +22,8 @@ export const CardContainer = styled.div`
   width:90%;
   transition : transform ease-in-out 0.2s;
   gap:40px;
-   overflow-y: hidden;
+  overflow-y: hidden;
  
-
   &:hover{
     transform : scale(1.05);
     box-shadow : 0px 4px 6px rgba(0,0,0,0.2);

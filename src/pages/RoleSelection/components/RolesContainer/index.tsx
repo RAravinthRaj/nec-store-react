@@ -44,7 +44,7 @@ export const RoleContainer = ({}: IRoleSelection) => {
           return (
             <S.IconHolder
               $bgColor={theme.colors.secondaryBackGround}
-              $hoverbgColor={theme.colors.tertiary}
+              $hoverBgColor={theme.colors.tertiary}
               $textColor={theme.colors.primary}
               onClick={() => handleClick(role)}
               $isActive={isActive}

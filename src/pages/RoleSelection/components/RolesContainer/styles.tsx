@@ -66,7 +66,7 @@ export const RoleText = styled.div<{ $bgColor: string }>`
 
 export const IconHolder = styled.div<{
   $bgColor: string;
-  $hoverbgColor: string;
+  $hoverBgColor: string;
   $textColor: string;
   $isActive: boolean;
 }>`
@@ -80,9 +80,10 @@ export const IconHolder = styled.div<{
   justify-content: center;
   align-items: center;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+  transition: all 0.2s ease-in-out;
 
   &:hover {
-    background-color: ${($props) => $props?.$hoverbgColor};
+    background-color: ${($props) => $props?.$hoverBgColor};
     border: solid 3px ${($props) => $props?.$textColor};
     transform: scale(1.05);
 
@@ -96,10 +97,10 @@ export const IconHolder = styled.div<{
     }
   }
 
-  ${({ $isActive, $hoverbgColor, $textColor }) =>
+  ${({ $isActive, $hoverBgColor: $hoverBgColor, $textColor }) =>
     $isActive &&
     `
-    background-color: ${$hoverbgColor};
+    background-color: ${$hoverBgColor};
     border: solid 3px ${$textColor};
     transform: scale(1.05);
     
