@@ -10,9 +10,7 @@ import { LiaSortAmountDownAltSolid } from "react-icons/lia";
 import { FiPlus } from "react-icons/fi";
 import { SlArrowDown } from "react-icons/sl";
 import { Dropdown } from "react-bootstrap";
-import { Box, Menu, MenuItem } from "@mui/material";
-import { Link } from "react-router-dom";
-import { PiShoppingCartBold } from "react-icons/pi";
+import { Box } from "@mui/material";
 
 export const ActionContainer = styled.div`
   display: flex;

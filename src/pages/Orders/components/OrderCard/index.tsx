@@ -46,7 +46,6 @@ export const OrderCard = ({ individualOrder }: IOrderCard) => {
           {ORDERS_CONFIG.OrderBy}
           {individualOrder.OrderBy}
         </S.OrderNameContainer>
-
         <S.DateContainer>
           {ORDERS_CONFIG.Date}
           {individualOrder.Date}
@@ -59,11 +58,11 @@ export const OrderCard = ({ individualOrder }: IOrderCard) => {
             $bgColor={theme.colors.primary}
             onClick={() => setModal(true)}
           >
-            <S.ViewIcon></S.ViewIcon>
+            <S.ViewIcon />
             {ORDERS_CONFIG.viewButton}
           </S.Button>
           <S.Button $bgColor={theme.colors.primary} onClick={deleteItem}>
-            <S.DeleteIcon></S.DeleteIcon>
+            <S.DeleteIcon />
             {ORDERS_CONFIG.DeleteButton}
           </S.Button>
         </S.ButtonContainer>
@@ -77,10 +76,7 @@ export const OrderCard = ({ individualOrder }: IOrderCard) => {
         {_renderTitle()}
         {_renderBody()}
       </S.CardContainer>
-      <ViewItemModal
-        modalShow={modal}
-        onClose={() => setModal(false)}
-      ></ViewItemModal>
+      <ViewItemModal modalShow={modal} onClose={() => setModal(false)} />
     </div>
   );
 };
