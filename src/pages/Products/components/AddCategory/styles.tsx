@@ -9,21 +9,19 @@ import styled from "styled-components";
 import { RxCross2 } from "react-icons/rx";
 
 export const ModalContainer = styled(Modal)`
-  width: 45%;
   display: flex;
   align-items: center;
-  padding: 20px;
-  left: 28%;
-  position: fixed;
-
-  @media (max-width: 768px) {
-    width: 50%;
-    left: 25%;
-  }
+  justify-content: center;
+  max-height: 92vh;
+  margin-top: 35px !important;
 
   @media (max-width: 576px) {
-    width: 85%;
-    left: 8%;
+    max-height: 92vh;
+    margin-top: 25px !important;
+    .modal-dialog {
+      padding: 13px !important;
+      justify-content: center;
+    }
   }
 `;
 
@@ -51,7 +49,6 @@ export const CloseButton = styled(RxCross2)`
   @media (max-width: 576px) {
     transform: translateY(-190%);
     font-size: 25px;
-    postion: fixed;
   }
 `;
 

@@ -19,7 +19,6 @@ export const CardContainer = styled.div`
   box-shadow : 0px 2px 4px rgba(0,0,0,0.2);
   margin:30px 20px;
   border-radius:10px;
-  width:90%;
   transition : transform ease-in-out 0.2s;
   gap:40px;
   overflow-y: hidden;
@@ -38,9 +37,13 @@ export const CardContainer = styled.div`
   @media (max-width: 576px) {
     padding : 15px 12px;
     margin : 20px 0;
-    width  : 70%;
     justify-self:center;
     align-self:center;
+
+     &:hover{
+      transform : scale(1);
+      box-shadow : 0px 4px 8px rgba(0,0,0,0.5);
+     }
   }
 `;
 
@@ -105,7 +108,7 @@ export const ButtonContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 25px;
+  gap: 12px;
 `;
 
 export const Button = styled.button<{ $bgColor: string }>`
@@ -121,6 +124,12 @@ export const Button = styled.button<{ $bgColor: string }>`
   gap: 3px;
   color: white;
   margin-top: 10px;
+
+  @media (max-width: 768px) {
+    padding: 5px 0;
+    gap: 10px;
+    font-size: 14px;
+  }
 
   @media (max-width: 576px) {
     padding: 5px 0;

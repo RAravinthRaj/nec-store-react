@@ -28,7 +28,9 @@ export const Navbar = ({ menu, onToggleMenu }: INavbar) => {
     if (!isMobile) {
       return (
         <S.TitleContainer>
-          <S.Logo src={theme.images.logo} />
+          <Link to="/products">
+            <S.Logo src={theme.images.logo} />
+          </Link>
           <S.TitleText>{NAVBAR_CONFIG.title}</S.TitleText>
         </S.TitleContainer>
       );
@@ -54,9 +56,9 @@ export const Navbar = ({ menu, onToggleMenu }: INavbar) => {
       return (
         <S.MobileNameContainer>
           <S.UserName $bgColor={theme.colors.primary}>
-            Hii Aravinth !!
+            Hii , Aravinth !!
           </S.UserName>
-          <S.NameDivider />
+          <S.UserNameDivider />
         </S.MobileNameContainer>
       );
     }
@@ -92,7 +94,7 @@ export const Navbar = ({ menu, onToggleMenu }: INavbar) => {
 
   const _renderDropDownMenu = () => {
     return (
-      <S.DropdownMenu $bgColor={theme.colors.secondaryBackGround}>
+      <S.DropdownMenu $bgColor={theme.colors.white}>
         {_renderUserNameSM()}
         {_renderDropDownItem()}
       </S.DropdownMenu>

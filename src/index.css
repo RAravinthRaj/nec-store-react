@@ -12,19 +12,11 @@ Written by Aravinth Raj R <aravinthr235@gmail.com>, 2025.
   padding: 0;
 }
 
-html {
-  overflow-y: scroll; 
-}
-
-body {
-  overflow: hidden;
-}
 
 .modal-backdrop {
   --bs-backdrop-zIndex: 1050;
   --bs-backdrop-bg: #000;
-  --bs-backdrop-opacity: 0.5;
-  position: fixed;
+  --bs-backdrop-opacity: 1.5;
   top: 0;
   left: 0;
   z-index: var(--bs-backdrop-zIndex);
@@ -57,5 +49,5 @@ body {
 
 body.modal-open {
   overflow: hidden;
-  padding-right: calc(100vw - 100%);
+
 }

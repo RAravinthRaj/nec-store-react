@@ -10,6 +10,7 @@ import * as S from "./styles";
 import { EditItemModal } from "../EditItem";
 import { toast } from "react-toastify";
 import { PRODUCTS_CONFIG } from "../../config";
+import Swal from "sweetalert2";
 
 export interface IProductCard {
   individualProduct: {
@@ -30,7 +31,26 @@ export const ProductCard = ({ individualProduct }: IProductCard) => {
   };
 
   const deleteItem = () => {
-    toast.success("Item Deleted Successfully");
+    Swal.fire({
+      title: "Are you sure want to delete ?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#0424C8",
+      cancelButtonColor: "#d33",
+      color: "#000080",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire({
+          title: "Deleted!",
+          text: "Your item has been deleted.",
+          icon: "success",
+          confirmButtonColor: "#0424C8",
+          color: "#000080",
+        });
+      }
+    });
   };
 
   const _renderCardInitialDetails = () => {

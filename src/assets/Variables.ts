@@ -4,7 +4,7 @@ Unauthorized copying of this file, via any medium, is strictly prohibited.
 Proprietary and confidential.  
 Written by Aravinth Raj R <aravinthr235@gmail.com>, 2025.
 */
-import loader from "../assets/lottie/loader.json";
+import loader from "../assets/lotties/loader.json";
 import signInBgImage from "../assets/images/signIn.png";
 import signUpBgImage from "../assets/images/signUp.png";
 import admin from "../assets/images/admin.png";
@@ -50,7 +50,7 @@ export const theme = {
     logout,
     tagFile,
   },
-  lottie: {
+  lotties: {
     loader,
   },
 };

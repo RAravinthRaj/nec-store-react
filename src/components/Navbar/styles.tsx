@@ -24,7 +24,7 @@ export const NavbarContainer = styled.div<{ $bgColor: string }>`
   }
 
   @media (max-width: 576px) {
-    padding: 8px 10px;
+    padding: 5px;
     height: 58px;
   }
 `;
@@ -63,10 +63,6 @@ export const UserContainer = styled.div`
   gap: 20px;
   margin: 3px 10px;
 
-  &:hover {
-    cursor: pointer;
-  }
-
   @media (max-width: 576px) {
     margin: 3px;
   }
@@ -80,16 +76,18 @@ export const UserName = styled.div<{ $bgColor: string }>`
   align-items: center;
   gap: 10px;
   text-align: center;
+  cursor: context-menu;
 
   @media (max-width: 768px) {
     font-size: 18px;
     font-weight: 550;
+    margin: 5px;
   }
 
   @media (max-width: 576px) {
     font-size: 17px;
     font-weight: 550;
-    margin: 5px 0;
+    margin: 5px;
   }
 `;
 
@@ -138,22 +136,22 @@ export const UserIcon = styled.img`
 `;
 
 export const ItemIcon = styled.img`
-  height: 14%;
-  width: 15%;
+  height: 13%;
+  width: 13%;
 
   @media (max-width: 768px) {
-    height: 14%;
-    width: 16%;
+    height: 12%;
+    width: 12%;
   }
 
   @media (max-width: 576px) {
-    height: 13%;
-    width: 13%;
+    height: 12%;
+    width: 12%;
   }
 `;
 
 export const IconText = styled.div`
-  font-size: 18px;
+  font-size: 16px;
 
   @media (max-width: 576px) {
     font-size: 15px;
@@ -161,9 +159,13 @@ export const IconText = styled.div`
 `;
 
 export const NameDivider = styled.div`
-  border: solid 0.5px black;
+  border-top: 0.5px solid rgba(0, 0, 0, 0.2);
+  margin: 4px 10px;
+`;
+
+export const UserNameDivider = styled.div`
+  border: solid 1.5px black;
   margin: 3px;
-  transform: scaleY(0.1);
   width: 100%;
 `;
 
@@ -184,15 +186,15 @@ export const DropdownMenu = styled.div<{ $bgColor: string }>`
 `;
 
 export const DropdownItem = styled(NavDropdown.Item)<{ $bgColor: string }>`
-  font-size: 17px;
   display: flex;
   width: 170px;
   flex-direction: row;
   align-items: center;
-  padding: 4px 0;
+  padding: 5px 0;
   gap: 10px;
   text-decoration: none;
   color: #000000;
+  margin-left: 10px;
 
   &:hover {
     background: none;
@@ -204,6 +206,10 @@ export const DropdownItem = styled(NavDropdown.Item)<{ $bgColor: string }>`
       filter: invert(20%) sepia(94%) saturate(1500%) hue-rotate(220deg)
         brightness(80%) contrast(150%);
     }
+  }
+
+  @media (max-width: 576px) {
+    padding: 4px 0;
   }
 `;
 

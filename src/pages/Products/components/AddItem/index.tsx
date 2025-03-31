@@ -1,71 +1,58 @@
-/* 
-© 2025 Aravinth Raj R. All rights reserved.
-Unauthorized copying of this file, via any medium, is strictly prohibited.
-Proprietary and confidential.  
-Written by Aravinth Raj R <aravinthr235@gmail.com>, 2025.
-*/
 import Form from "react-bootstrap/Form";
 import Modal from "react-bootstrap/Modal";
 import * as S from "./styles";
 import { useTheme } from "../../../../hooks";
 import { useState } from "react";
 import { toast } from "react-toastify";
-import { Dropdown } from "react-bootstrap";
 import { PRODUCTS_CONFIG } from "../../config";
+import MenuItem from "@mui/material/MenuItem";
+import Select, { SelectChangeEvent } from "@mui/material/Select";
 
 export interface IAddItem {
   modalShow: boolean;
   onClose: () => void;
 }
 
-export const AddItemModal = ({ modalShow: modalShow, onClose }: IAddItem) => {
+export const AddItemModal = ({ modalShow, onClose }: IAddItem) => {
   const theme = useTheme();
 
-  const productAdded = () => {
+  const [selectedCategory, setSelectedCategory] = useState("");
+
+  const _handleChange = (event: SelectChangeEvent<unknown>) => {
+    setSelectedCategory(event.target.value as string);
+    if (!modalShow) {
+      setSelectedCategory("");
+    }
+  };
+
+  const _productAdded = () => {
     toast.success(PRODUCTS_CONFIG.AddItemToastSuccess);
+    setSelectedCategory("");
     onClose();
   };
 
   const category = ["Stationary", "cosmetics", "soap"];
 
-  const [selectedCategory, setSelectedCategory] = useState<string | null>(
-    PRODUCTS_CONFIG.Category
-  );
-
-  const _renderDropDownToggle = () => {
+  const _renderMenu = () => {
     return (
-      <S.CustomToggle $bgColor={theme.colors.backGround}>
-        <S.IconText $bgColor={theme.colors.textSecondary}>
-          {selectedCategory}
-        </S.IconText>
-      </S.CustomToggle>
-    );
-  };
-
-  const _renderDropDownMenu = () => {
-    return (
-      <S.DropDownMenu>
-        {category.map((cat, id) => {
-          return (
-            <div key={id}>
-              <Dropdown.Item eventKey={cat}>{cat}</Dropdown.Item>
-            </div>
-          );
-        })}
-      </S.DropDownMenu>
-    );
-  };
-
-  const _showDropDown = () => {
-    return (
-      <S.CustomDropdown
-        onSelect={(eventKey) => {
-          setSelectedCategory(eventKey);
-        }}
-      >
-        {_renderDropDownToggle()}
-        {_renderDropDownMenu()}
-      </S.CustomDropdown>
+      <S.StyledFormControl fullWidth>
+        <Select
+          value={selectedCategory}
+          onChange={(e) => _handleChange(e)}
+          displayEmpty
+          inputProps={{ "aria-label": "Category" }}
+          renderValue={(selected) => (selected ? selected : "Category")}
+        >
+          {category.map((cat, id) => {
+            return (
+              <MenuItem key={id} value={cat}>
+                {cat}
+                <S.Divider />
+              </MenuItem>
+            );
+          })}
+        </Select>
+      </S.StyledFormControl>
     );
   };
 
@@ -87,32 +74,28 @@ export const AddItemModal = ({ modalShow: modalShow, onClose }: IAddItem) => {
           <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
             <Form.Label>{PRODUCTS_CONFIG.Title}</Form.Label>
             <S.InputWrapper>
-              <S.Input type="input" placeholder="Title" />
+              <S.Input type="text" placeholder="Title" />
             </S.InputWrapper>
           </Form.Group>
           <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
             <Form.Label>{PRODUCTS_CONFIG.Category}</Form.Label>
-            <S.InputWrapper>
-              <S.Icon>{_showDropDown()}</S.Icon>
-            </S.InputWrapper>
+            {_renderMenu()}
           </Form.Group>
           <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
             <Form.Label>{PRODUCTS_CONFIG.Quantity}</Form.Label>
             <S.InputWrapper>
-              <S.Input type="input" placeholder="Quantity" />
+              <S.Input type="number" min="0" placeholder="Quantity" />
             </S.InputWrapper>
           </Form.Group>
           <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
             <Form.Label>{PRODUCTS_CONFIG.MRP}</Form.Label>
             <S.InputWrapper>
-              <S.Input type="input" placeholder="MRP(in Rupees)" />
+              <S.Input type="number" min="0" placeholder="MRP(in Rupees)" />
             </S.InputWrapper>
           </Form.Group>
           <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
             <Form.Label>{PRODUCTS_CONFIG.Image}</Form.Label>
-            <div>
-              <S.InputRounder type="file" placeholder="Full Name" />
-            </div>
+            <input type="file" className="form-control" />
           </Form.Group>
         </Form>
       </Modal.Body>
@@ -124,7 +107,7 @@ export const AddItemModal = ({ modalShow: modalShow, onClose }: IAddItem) => {
       <S.Footer>
         <S.Button
           $bgColor={theme.colors.primary}
-          onClick={() => productAdded()}
+          onClick={() => _productAdded()}
         >
           {PRODUCTS_CONFIG.SubmitButton}
         </S.Button>
@@ -133,13 +116,7 @@ export const AddItemModal = ({ modalShow: modalShow, onClose }: IAddItem) => {
   };
 
   return (
-    <S.ModalContainer
-      size="lg"
-      aria-labelledby="contained-modal-title-vcenter"
-      centered
-      show={modalShow}
-      onHide={() => onClose()}
-    >
+    <S.ModalContainer centered show={modalShow} onHide={onClose}>
       {_renderModalHeader()}
       {_renderModalBody()}
       {_renderModalFooter()}
