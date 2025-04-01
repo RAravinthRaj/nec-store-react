@@ -5,9 +5,7 @@ Proprietary and confidential.
 Written by Aravinth Raj R <aravinthr235@gmail.com>, 2025.
 */
 import styled from "styled-components";
-import { BsSearch } from "react-icons/bs";
 import { LiaSortAmountDownAltSolid } from "react-icons/lia";
-import { FiPlus } from "react-icons/fi";
 import { SlArrowDown } from "react-icons/sl";
 import { Dropdown } from "react-bootstrap";
 import { Box } from "@mui/material";
@@ -15,27 +13,19 @@ import { Box } from "@mui/material";
 export const ActionContainer = styled.div`
   display: flex;
   align-items: center;
-  padding: 0 20px;
+  padding: 0 13px;
+  margin-top: 15px;
 
   @media (max-width: 768px) {
+    margin-top: 0;
     gap: 10px;
   }
 
   @media (max-width: 576px) {
+    margin-top: 0;
     justify-content: center;
     font-size: 12px;
-    padding: 0 10px;
-  }
-`;
-
-export const SearchIcon = styled(BsSearch)<{
-  $bgColor: string;
-}>`
-  color: black;
-  font-size: 16px;
-
-  @media (max-width: 576px) {
-    margin-left: -60px;
+    padding: 0 13px;
   }
 `;
 
@@ -53,7 +43,7 @@ export const Input = styled.input`
 `;
 
 export const InputWrapper = styled.div<{ $bgColor: string }>`
-  flex: 4;
+  flex: 3;
   height: 50px;
   border-radius: 7px;
   padding: 10px 20px;
@@ -62,58 +52,63 @@ export const InputWrapper = styled.div<{ $bgColor: string }>`
   box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1);
 
   @media (max-width: 768px) {
+    flex: 1;
     width: 100%;
     height: 45px;
   }
 
   @media (max-width: 576px) {
-    flex: 0.5;
-    width: 82%;
-    padding: 8px 20px;
+    padding: 6px;
+    height: 40px;
+    border-radius: 5px;
+  }
+`;
+
+export const SortContainer = styled.div`
+  display: flex;
+  align-items: center;
+  flex: 1;
+  margin-top: 3px;
+  justify-content: flex-end;
+
+  @media (max-width: 768px) {
+    justify-content: flex-end;
+    flex: 0.2;
+  }
+
+  @media (max-width: 576px) {
+    justify-content: flex-end;
+    margin-left: 20px;
   }
 `;
 
 export const SortIcon = styled(LiaSortAmountDownAltSolid)<{
   $bgColor: string;
 }>`
-  flex: 1;
   color: black;
-  font-size: 40px;
-
-  @media (max-width: 576px) {
-    flex: 1;
-  }
-`;
-export const SortContainer = styled.div`
-  flex: 0.2;
-  display: flex;
-  align-items: flex-end;
-  margin-top: 5px;
-  margin-left: 200px;
+  font-size: 43px;
 
   @media (max-width: 768px) {
-    flex: 0.2;
-    margin: 0 20px;
+    align-self: flex-end;
   }
 
   @media (max-width: 576px) {
-    flex: 0.2;
-    margin: 0 10px;
+    align-self: flex-end;
+    font-size: 35px;
   }
 `;
 
 export const SortedDropdownMenu = styled(Dropdown.Menu)<{ $bgColor: string }>`
   background-color: ${(props) => props?.$bgColor};
-  top: calc(35% + 5px) !important;
+  box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.1);
   margin-right: 10px;
 `;
 
 export const SortedIconText = styled.div`
   font-size: 16px;
-  color: #000000;
 
   @media (max-width: 576px) {
-    font-size: 15px;
+    font-size: 12px;
   }
 `;
 
@@ -129,71 +124,6 @@ export const SortedDropdownItem = styled(Dropdown.Item)<{ $bgColor: string }>`
     ${SortedIconText} {
       color: ${(props) => props?.$bgColor};
     }
-  }
-`;
-
-export const ButtonContainer = styled.div`
-  flex: 0.8;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 30px;
-  margin-left: 10px;
-`;
-
-export const Button = styled.button<{ $bgColor: string }>`
-  flex: 1;
-  display: flex;
-  align-items: center;
-  padding: 10px 0;
-  justify-content: center;
-  border: none;
-  background-color: ${(props) => props?.$bgColor};
-  border-radius: 5px;
-  gap: 10px;
-  color: white;
-
-  @media (max-width: 576px) {
-    padding: 5px 0;
-    gap: 10px;
-  }
-`;
-
-export const AddIcon = styled(FiPlus)`
-  color: white;
-  font-size: 18px;
-`;
-
-export const PlusButtonContainer = styled(FiPlus)<{ $bgColor: string }>`
-  color: white;
-  padding: 5px;
-  font-size: 40px;
-  background-color: ${(props) => props?.$bgColor};
-  border-radius: 5px;
-  position: fixed;
-  bottom: 40px;
-  right: 40px;
-  cursor: pointer;
-  z-index: 1000;
-
-  @media (max-width: 576px) {
-    font-size: 30px;
-    bottom: 30px;
-    right: 30px;
-  }
-`;
-
-export const FabDivider = styled.div`
-  width: 120%;
-  display: flex;
-  justify-content: center;
-  border: solid 0.5px white;
-
-  @media (max-width: 576px) {
-    width: 95%;
-    margin-left: 5px;
-    margin-top: -7px;
-    margin-bottom: 6px;
   }
 `;
 
@@ -225,21 +155,25 @@ export const DropDownIcon = styled(SlArrowDown)<{
 
 export const IconText = styled.div<{ $bgColor: string }>`
   color: ${(props) => props.$bgColor};
+
+  @media (max-width: 576px) {
+    font-size: 14px;
+  }
 `;
 
 export const CategoryDropDownMenu = styled(Dropdown.Menu)`
   margin-top: 10px;
 `;
 
-export const ProductContainer = styled.div`
+export const OrderContainer = styled.div`
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  place-items: center;
-  margin-top: 40px;
+  gap: 40px;
+  margin-top: 30px;
+  padding: 10px;
 
-  @media (max-width: 1300px) {
-    grid-template-columns: repeat(3, 1.5fr);
-    gap: 40px;
+  @media (max-width: 1024px) {
+    grid-template-columns: repeat(3, 1fr);
   }
 
   @media (max-width: 768px) {
@@ -247,6 +181,7 @@ export const ProductContainer = styled.div`
   }
 
   @media (max-width: 576px) {
+    margin-top: 20px;
     grid-template-columns: repeat(1, 1fr);
   }
 `;
@@ -260,18 +195,9 @@ export const DropdownMenu = styled(Dropdown.Menu)<{ $bgColor: string }>`
   }
 `;
 
-export const MobileNameContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-`;
-
-export const NameDivider = styled.div`
-  border: solid 0.5px black;
-  margin: 3px;
-  transform: scaleY(0.1);
-  width: 95%;
-  left: 5%;
+export const Divider = styled.div`
+  border-top: 0.2px solid rgba(0, 0, 0, 0.2);
+  margin: 4px 10px;
 `;
 
 export const ActionItem = styled.div`
@@ -280,14 +206,12 @@ export const ActionItem = styled.div`
   justify-content: space-between;
 
   @media (max-width: 576px) {
-    flex: 0;
+    padding: 0 8px;
     justify-content: center;
-    padding: 0;
   }
 `;
 
 export const StyledPageBox = styled(Box)`
-  padding: 16px;
   margin-top: 80px;
   overflow-x: auto;
 
@@ -296,13 +220,12 @@ export const StyledPageBox = styled(Box)`
   }
 
   @media (max-width: 768px) {
-    padding: 24px;
     margin-top: 80px;
   }
 
   @media (max-width: 576px) {
     padding: 8px;
-    margin-top: 64px;
+    margin-top: 70px;
   }
 `;
 
@@ -310,12 +233,11 @@ export const MainContainer = styled(Box)`
   display: flex;
   align-items: center;
   padding: 20px;
-  justify-content: center;
 
   @media (max-width: 768px) {
-    justify-content: center;
+    display: block;
+    align-items: center;
   }
-
   @media (max-width: 576px) {
     padding: 0;
     margin-top: 15px;

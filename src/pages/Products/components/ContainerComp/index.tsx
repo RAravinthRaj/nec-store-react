@@ -9,7 +9,7 @@ import * as S from "./styles";
 import { Navbar } from "../../../../components";
 import { useMediaQuery } from "@mui/material";
 import Dropdown from "react-bootstrap/Dropdown";
-import { useState } from "react";
+import { ChangeEvent, useState } from "react";
 import { AddItemModal } from "../AddItem";
 import { AddCategoryModal } from "../AddCategory";
 import { ProductCard } from "../ProductCard";
@@ -35,11 +35,15 @@ export const ContainerComp = ({}: IContainerComp) => {
 
   const category = ["All", "Stationary", "cosmetics", "household"];
 
+  const _setSearchDate = (e: ChangeEvent<HTMLInputElement>) => {
+    setSearchProductTitle(e.target.value);
+  };
+
   const _renderCategoryDropDownTitle = () => {
     return (
       <S.CustomToggle $bgColor={theme.colors.backGround}>
         <S.IconText $bgColor={theme.colors.textSecondary}>
-          {selectedCategory.substring(0, 3) + ".."}
+          {selectedCategory.substring(0, 3)}
         </S.IconText>
         <S.DropDownIcon $bgColor={theme.colors.backGround} />
       </S.CustomToggle>
@@ -120,7 +124,13 @@ export const ContainerComp = ({}: IContainerComp) => {
       <S.ActionItem>
         <S.InputWrapper $bgColor={theme.colors.backGround}>
           {_showDropDown()}
-          <S.Input type="input" placeholder="Search" />
+          <S.Input
+            type="input"
+            placeholder="Search"
+            onChange={(e) => {
+              _setSearchDate(e);
+            }}
+          />
         </S.InputWrapper>
         <S.SortContainer>{_renderSortedOptions()}</S.SortContainer>
       </S.ActionItem>

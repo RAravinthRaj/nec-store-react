@@ -4,7 +4,7 @@ Unauthorized copying of this file, via any medium, is strictly prohibited.
 Proprietary and confidential.  
 Written by Aravinth Raj R <aravinthr235@gmail.com>, 2025.
 */
-export const ORDERS_CONFIG = {
+export const SALES_CONFIG = {
   AddCategoryTitle: "Add Category",
   Serial: "Sl No.",
   ProductName: "Product Name",

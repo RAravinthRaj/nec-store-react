@@ -5,12 +5,7 @@ Proprietary and confidential.
 Written by Aravinth Raj R <aravinthr235@gmail.com>, 2025.
 */
 export const ORDERS_CONFIG = {
-  AddCategoryTitle: "Add Category",
-  Serial: "Sl No.",
-  ProductName: "Product Name",
-  Category: "Category",
-  Quantity: "Quantity",
-  MRP: "MRP",
+  Title: ["Sl No.", "Product Name", "Quantity", "MRP"],
   OrderNumber: "Order Number : ",
   OrderBy: "Order By : ",
   Date: "Date : ",
@@ -73,11 +68,19 @@ export const ORDERS_CONFIG = {
       Quantity: 20,
       Price: 20,
     },
+    {
+      No: 1,
+      Pname: "TagFile",
+      Quantity: 20,
+      Price: 20,
+    },
+    { No: 1, Pname: "TagFile", Quantity: 20, Price: 20 },
+    { No: 1, Pname: "TagFile", Quantity: 20, Price: 20 },
+    { No: 1, Pname: "TagFile", Quantity: 20, Price: 20 },
     { No: 1, Pname: "TagFile", Quantity: 20, Price: 20 },
     { No: 1, Pname: "TagFile", Quantity: 20, Price: 20 },
     { No: 1, Pname: "TagFile", Quantity: 20, Price: 20 },
   ],
   amountReceived: "Amount Received",
   productDelivered: "Product Delivered",
-  orderDeleted: "Order Deleted Successfully",
 };

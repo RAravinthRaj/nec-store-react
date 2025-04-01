@@ -43,7 +43,7 @@ export const AddItemModal = ({ modalShow, onClose }: IAddItem) => {
           inputProps={{ "aria-label": "Category" }}
           renderValue={(selected) => (selected ? selected : "Category")}
         >
-          {category.map((cat, id) => {
+          {category?.map((cat, id) => {
             return (
               <MenuItem key={id} value={cat}>
                 {cat}
@@ -116,7 +116,12 @@ export const AddItemModal = ({ modalShow, onClose }: IAddItem) => {
   };
 
   return (
-    <S.ModalContainer centered show={modalShow} onHide={onClose}>
+    <S.ModalContainer
+      centered
+      show={modalShow}
+      onHide={onClose}
+      backdrop="static"
+    >
       {_renderModalHeader()}
       {_renderModalBody()}
       {_renderModalFooter()}

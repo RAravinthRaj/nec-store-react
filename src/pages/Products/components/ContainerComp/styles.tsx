@@ -17,12 +17,15 @@ export const ActionContainer = styled.div`
   display: flex;
   align-items: center;
   padding: 0 13px;
+  margin-top: 15px;
 
   @media (max-width: 768px) {
+    margin-top: 0;
     gap: 10px;
   }
 
   @media (max-width: 576px) {
+    margin-top: 0;
     justify-content: center;
     font-size: 12px;
     padding: 0 13px;
@@ -58,7 +61,7 @@ export const InputWrapper = styled.div<{ $bgColor: string }>`
   }
 
   @media (max-width: 576px) {
-    padding: 10px;
+    padding: 6px;
     height: 40px;
     border-radius: 5px;
   }
@@ -252,10 +255,6 @@ export const ProductContainer = styled.div`
   place-items: center;
   margin-top: 20px;
 
-  @media (max-width: 1300px) {
-    grid-template-columns: repeat(3, 1fr);
-  }
-
   @media (max-width: 768px) {
     grid-template-columns: repeat(2, 1fr);
   }
@@ -273,20 +272,6 @@ export const DropdownMenu = styled(Dropdown.Menu)<{ $bgColor: string }>`
   @media (max-width: 768px) {
     width: 180px;
   }
-`;
-
-export const MobileNameContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-`;
-
-export const NameDivider = styled.div`
-  border: solid 0.5px black;
-  margin: 3px;
-  transform: scaleY(0.1);
-  width: 95%;
-  left: 5%;
 `;
 
 export const Divider = styled.div`
@@ -385,6 +370,10 @@ export const CartContainer = styled(Link)<{ $bgColor: string }>`
   border-radius: 50%;
   background-color: ${(props) => props?.$bgColor};
   border: solid 2px black;
+
+  @media (max-width: 576px) {
+    padding: 10px 8px;
+  }
 `;
 
 export const CartIcon = styled(PiShoppingCartBold)`

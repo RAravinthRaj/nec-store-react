@@ -152,6 +152,7 @@ export const EditItemModal = ({
       centered
       show={modalShow}
       onHide={onClose}
+      backdrop="static"
     >
       {_renderModalHeader()}
       {_renderModalBody()}

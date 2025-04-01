@@ -9,7 +9,7 @@ import { useTheme } from "../../../../hooks";
 import * as S from "./styles";
 import { ViewItemModal } from "../ViewItem";
 import { ORDERS_CONFIG } from "../../config";
-import { toast } from "react-toastify";
+import Swal from "sweetalert2";
 
 export interface IOrderCard {
   individualOrder: {
@@ -24,8 +24,27 @@ export const OrderCard = ({ individualOrder }: IOrderCard) => {
   const theme = useTheme();
   const [modal, setModal] = useState(false);
 
-  const deleteItem = () => {
-    toast.success(ORDERS_CONFIG.orderDeleted);
+  const _deleteItem = () => {
+    Swal.fire({
+      title: "Are you sure want to delete ?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#0424C8",
+      cancelButtonColor: "#d33",
+      color: "#000080",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire({
+          title: "Deleted!",
+          text: "Your item has been deleted.",
+          icon: "success",
+          confirmButtonColor: "#0424C8",
+          color: "#000080",
+        });
+      }
+    });
   };
 
   const _renderTitle = () => {
@@ -36,6 +55,24 @@ export const OrderCard = ({ individualOrder }: IOrderCard) => {
           {individualOrder.OrderNumber}
         </S.Title>
       </S.TitleContainer>
+    );
+  };
+
+  const _renderButton = () => {
+    return (
+      <S.ButtonContainer>
+        <S.Button
+          $bgColor={theme.colors.primary}
+          onClick={() => setModal(true)}
+        >
+          <S.ViewIcon />
+          {ORDERS_CONFIG.viewButton}
+        </S.Button>
+        <S.Button $bgColor={theme.colors.primary} onClick={_deleteItem}>
+          <S.DeleteIcon />
+          {ORDERS_CONFIG.DeleteButton}
+        </S.Button>
+      </S.ButtonContainer>
     );
   };
 
@@ -53,19 +90,7 @@ export const OrderCard = ({ individualOrder }: IOrderCard) => {
         <S.RupeeContainer>
           {ORDERS_CONFIG.PrMRP} {individualOrder.Total}
         </S.RupeeContainer>
-        <S.ButtonContainer>
-          <S.Button
-            $bgColor={theme.colors.primary}
-            onClick={() => setModal(true)}
-          >
-            <S.ViewIcon />
-            {ORDERS_CONFIG.viewButton}
-          </S.Button>
-          <S.Button $bgColor={theme.colors.primary} onClick={deleteItem}>
-            <S.DeleteIcon />
-            {ORDERS_CONFIG.DeleteButton}
-          </S.Button>
-        </S.ButtonContainer>
+        {_renderButton()}
       </S.BodyContainer>
     );
   };

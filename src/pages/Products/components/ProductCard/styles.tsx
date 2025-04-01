@@ -28,7 +28,6 @@ export const CardContainer = styled.div`
     box-shadow : 0px 4px 6px rgba(0,0,0,0.2);
   }
 
-
   @media (max-width: 768px) {
     padding : 20px 10px;
     margin : 30px 15px;
@@ -39,6 +38,7 @@ export const CardContainer = styled.div`
     margin : 20px 0;
     justify-self:center;
     align-self:center;
+
 
      &:hover{
       transform : scale(1);

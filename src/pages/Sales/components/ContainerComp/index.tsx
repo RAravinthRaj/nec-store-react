@@ -7,145 +7,155 @@ Written by Aravinth Raj R <aravinthr235@gmail.com>, 2025.
 import { useTheme } from "../../../../hooks";
 import * as S from "./styles";
 import { Navbar } from "../../../../components";
+import { useMediaQuery } from "@mui/material";
 import Dropdown from "react-bootstrap/Dropdown";
-import { useState } from "react";
-import { ORDERS_CONFIG } from "../../config";
+import { ChangeEvent, useState } from "react";
+import { SideDrawer } from "../../../../navigator/SideDrawer";
+import Box from "@mui/material/Box";
+import IconButton from "@mui/material/IconButton";
+import { SALES_CONFIG } from "../../config";
 
 export interface IContainerComp {}
 
 export const ContainerComp = ({}: IContainerComp) => {
   const theme = useTheme();
 
-  const [openSortedOptions, setOpenSortedOptions] = useState(false);
-  const [selectedSortedOptions, setSelectedSortedOptions] = useState("");
+  const [openItem, setOpenItem] = useState(false);
+  const [openCategory, setOpenCategory] = useState(false);
+  const [menu, setMenu] = useState(false);
+  const [searchProductTitle, setSearchProductTitle] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState(SALES_CONFIG.All);
 
-  const sortedOptions = ORDERS_CONFIG.sortedOptions;
+  const category = ["All", "Stationary", "cosmetics", "household"];
 
-  const openSortedOption = () => {
-    setOpenSortedOptions(!openSortedOptions);
+  const _setSearchDate = (e: ChangeEvent<HTMLInputElement>) => {
+    setSearchProductTitle(e.target.value);
   };
 
-  const handleClick = ($prop: string) => {
-    setSelectedSortedOptions($prop);
-    setOpenSortedOptions(!openSortedOptions);
+  const _renderCategoryDropDownTitle = () => {
+    return (
+      <S.CustomToggle $bgColor={theme.colors.backGround}>
+        <S.IconText $bgColor={theme.colors.textSecondary}>
+          {selectedCategory.substring(0, 3)}
+        </S.IconText>
+        <S.DropDownIcon $bgColor={theme.colors.backGround} />
+      </S.CustomToggle>
+    );
   };
 
-  const category = ["All", "Stationary", "sisfdgh", "dsfhg"];
-
-  const [selectedCategory, setSelectedCategory] = useState(ORDERS_CONFIG.All);
-
-  const handleSelect = (eventKey: string | null) => {
-    if (eventKey !== null) {
-      setSelectedCategory(eventKey);
-    }
+  const _renderCategoryDropDownMenu = () => {
+    return (
+      <S.CategoryDropDownMenu>
+        {category?.map((cat, id) => {
+          return (
+            <div key={id}>
+              <Dropdown.Item key={cat} eventKey={cat}>
+                {cat}
+              </Dropdown.Item>
+              {id != category.length - 1 && <S.Divider />}
+            </div>
+          );
+        })}
+      </S.CategoryDropDownMenu>
+    );
   };
 
   const _showDropDown = () => {
     return (
-      <S.CustomDropdown onSelect={handleSelect}>
-        <S.CustomToggle $bgColor={theme.colors.backGround}>
-          <S.IconText $bgColor={theme.colors.textSecondary}>
-            {selectedCategory.substring(0, 4)}
-          </S.IconText>
-          <S.DropDownIcon $bgColor={theme.colors.backGround}></S.DropDownIcon>
-        </S.CustomToggle>
-        <S.DropDownMenu>
-          {category.map((cat, index) => {
-            return (
-              <div>
-                <Dropdown.Item key={cat} eventKey={cat}>
-                  {cat}
-                </Dropdown.Item>
-              </div>
-            );
-          })}
-        </S.DropDownMenu>
+      <S.CustomDropdown
+        onSelect={(eventKey) => {
+          if (eventKey !== null) setSelectedCategory(eventKey);
+        }}
+      >
+        {_renderCategoryDropDownTitle()}
+        {_renderCategoryDropDownMenu()}
       </S.CustomDropdown>
     );
   };
 
-  const _actionitems = () => {
-    function selectProducts(): void {
-      throw new Error("Function not implemented.");
-    }
+  const _renderSearchBar = () => {
+    return (
+      <S.ActionItem>
+        <S.InputWrapper $bgColor={theme.colors.backGround}>
+          {_showDropDown()}
+          <S.Input
+            type="input"
+            placeholder="Search"
+            onChange={(e) => {
+              _setSearchDate(e);
+            }}
+          />
+        </S.InputWrapper>
+        <S.SortContainer>{_renderSortedOptions()}</S.SortContainer>
+      </S.ActionItem>
+    );
+  };
 
+  const _renderDate = () => {
+    return (
+      <S.Date>
+        <S.DateContainer>
+          <S.DateTitle>From</S.DateTitle>
+          <S.DateInput type="date"></S.DateInput>
+        </S.DateContainer>
+        <S.DateContainer>
+          <S.DateTitle>To</S.DateTitle>
+          <S.DateInput type="date"></S.DateInput>
+        </S.DateContainer>
+      </S.Date>
+    );
+  };
+
+  const _renderActionItems = () => {
     return (
       <S.ActionContainer>
-        <S.Date>
-          <S.DateContainer>
-            <S.DateTitle>From:</S.DateTitle>
-            <S.DateInput type="date"></S.DateInput>
-          </S.DateContainer>
-          <S.DateContainer>
-            <S.DateTitle>To:</S.DateTitle>
-            <S.DateInput type="date"></S.DateInput>
-          </S.DateContainer>
-        </S.Date>
-        <S.ActionBox>
-          <S.InputWrapper $bgColor={theme.colors.backGround}>
-            {_showDropDown()}
-            <S.Input type="input" placeholder="Search" />
-            <S.SearchIcon
-              $bgColor={theme.colors.backGround}
-              onClick={() => selectProducts()}
-            ></S.SearchIcon>
-          </S.InputWrapper>
-          <S.SortIcon
-            $bgColor={theme.colors.backGround}
-            onClick={() => openSortedOption()}
-          ></S.SortIcon>
-        </S.ActionBox>
+        {_renderDate()}
+        {_renderSearchBar()}
       </S.ActionContainer>
     );
   };
 
-  const _sortedOptions = () => {
+  const _renderSortedOptionsTitle = () => {
     return (
-      <S.SortedNavigation $bgColor={theme.colors.secondaryBackGround}>
-        {sortedOptions.map((option, index) => {
-          const isActive = selectedSortedOptions === option;
+      <S.CustomToggle $bgColor={theme.colors.backGround}>
+        <S.SortIcon $bgColor={theme.colors.backGround} />
+      </S.CustomToggle>
+    );
+  };
 
-          return (
-            <div>
-              <S.SortedSingleOption
-                $hoverbgColor={theme.colors.primary}
-                $isActive={isActive}
-                key={option}
-                onClick={() => handleClick(option)}
-              >
-                <S.UserOption>
-                  <S.Title>{option}</S.Title>
-                </S.UserOption>
-              </S.SortedSingleOption>
+  const _renderSortedOptionsMenu = () => {
+    return (
+      <S.SortedDropdownMenu $bgColor={theme.colors.white}>
+        {SALES_CONFIG.sortedOptions.map((item, id) => (
+          <div key={id}>
+            <S.SortedDropdownItem $bgColor={theme.colors.primary}>
+              <S.SortedIconText>{item}</S.SortedIconText>
+            </S.SortedDropdownItem>
+            {id !== SALES_CONFIG.sortedOptions.length - 1 && <S.Divider />}
+          </div>
+        ))}
+      </S.SortedDropdownMenu>
+    );
+  };
 
-              {index < sortedOptions.length - 1 && <S.Divider />}
-            </div>
-          );
-        })}
-      </S.SortedNavigation>
+  const _renderSortedOptions = () => {
+    return (
+      <S.CustomDropdown>
+        {_renderSortedOptionsTitle()}
+        {_renderSortedOptionsMenu()}
+      </S.CustomDropdown>
     );
   };
 
   const _mainContainerItems = () => {
-    return (
-      <div>
-        {_actionitems()}
-        {openSortedOptions && _sortedOptions()}
-      </div>
-    );
+    return <div>{_renderActionItems()}</div>;
   };
 
   return (
     <S.MainContainer>
-      <S.NavbarContainer>
-        <Navbar
-          menu={false}
-          onToggleMenu={function (newMenuState: boolean): void {
-            throw new Error("Function not implemented.");
-          }}
-        />
-      </S.NavbarContainer>
-      <S.PageContainer>{_mainContainerItems()}</S.PageContainer>
+      <Navbar menu={menu} onToggleMenu={() => setMenu(!menu)} />
+      <SideDrawer menu={menu} toggleMenu={() => setMenu(!menu)} />
+      <S.StyledPageBox>{_mainContainerItems()}</S.StyledPageBox>
     </S.MainContainer>
   );
 };
