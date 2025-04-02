@@ -6,22 +6,23 @@ Written by Aravinth Raj R <aravinthr235@gmail.com>, 2025.
 */
 import styled from "styled-components";
 import { LiaSortAmountDownAltSolid } from "react-icons/lia";
-import { FiPlus } from "react-icons/fi";
 import { SlArrowDown } from "react-icons/sl";
 import { Dropdown } from "react-bootstrap";
-import { Box, Menu, MenuItem } from "@mui/material";
-import { Link } from "react-router-dom";
-import { PiShoppingCartBold } from "react-icons/pi";
+import { Box } from "@mui/material";
+import { LiaDownloadSolid } from "react-icons/lia";
 
 export const ActionContainer = styled.div`
   display: flex;
   align-items: center;
-  padding: 0 13px;
-  margin-top: 15px;
 
-  @media (max-width: 768px) {
+  @media (max-width: 1024px) {
+    flex-direction: column;
     margin-top: 0;
     gap: 10px;
+
+    > * {
+      width: 100%;
+    }
   }
 
   @media (max-width: 576px) {
@@ -29,7 +30,11 @@ export const ActionContainer = styled.div`
     margin-top: 0;
     justify-content: center;
     font-size: 12px;
-    padding: 0 13px;
+    padding: 0 3px;
+
+    > * {
+      width: 100%;
+    }
   }
 `;
 
@@ -47,7 +52,7 @@ export const Input = styled.input`
 `;
 
 export const InputWrapper = styled.div<{ $bgColor: string }>`
-  flex: 3;
+  flex: 8;
   height: 50px;
   border-radius: 7px;
   padding: 10px 20px;
@@ -72,8 +77,8 @@ export const SortContainer = styled.div`
   display: flex;
   align-items: center;
   flex: 1;
+  justify-content: flex-end;
   margin-top: 5px;
-  margin-left: 20px;
 
   @media (max-width: 768px) {
     justify-content: flex-end;
@@ -131,15 +136,6 @@ export const SortedDropdownItem = styled(Dropdown.Item)<{ $bgColor: string }>`
   }
 `;
 
-export const ButtonContainer = styled.div`
-  flex: 0.8;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 30px;
-  margin-left: 10px;
-`;
-
 export const Button = styled.button<{ $bgColor: string }>`
   flex: 1;
   display: flex;
@@ -153,62 +149,8 @@ export const Button = styled.button<{ $bgColor: string }>`
   color: white;
 
   @media (max-width: 576px) {
-    padding: 5px 0;
+    padding: 15px;
     gap: 10px;
-  }
-`;
-
-export const AddIcon = styled(FiPlus)`
-  color: white;
-  font-size: 18px;
-`;
-
-export const FabAddIcon = styled(FiPlus)`
-  color: black;
-  font-size: 18px;
-`;
-
-export const PlusButtonContainer = styled(FiPlus)<{ $bgColor: string }>`
-  color: white;
-  padding: 5px;
-  font-size: 50px;
-  height: 40px;
-  width: 40px;
-  background-color: ${(props) => props?.$bgColor};
-  border-radius: 50%;
-  position: fixed;
-  bottom: 40px;
-  right: 40px;
-  cursor: pointer;
-  z-index: 1000;
-
-  @media (max-width: 768px) {
-    height: 60px;
-    width: 60px;
-    padding: 10px;
-    font-size: 40px;
-  }
-
-  @media (max-width: 576px) {
-    font-size: 30px;
-    bottom: 30px;
-    right: 30px;
-    height: 40px;
-    width: 40px;
-    padding: 10px;
-    font-size: 30px;
-  }
-`;
-
-export const FabDivider = styled.div`
-  border-top: 0.2px solid rgba(0, 0, 0, 0.2);
-  margin: 4px 10px;
-
-  @media (max-width: 576px) {
-    width: 95%;
-    margin-left: 5px;
-    margin-top: -7px;
-    margin-bottom: 6px;
   }
 `;
 
@@ -250,22 +192,6 @@ export const CategoryDropDownMenu = styled(Dropdown.Menu)`
   margin-top: 10px;
 `;
 
-export const ProductContainer = styled.div`
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  place-items: center;
-  margin-top: 20px;
-
-  @media (max-width: 768px) {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  @media (max-width: 576px) {
-    padding: 8px;
-    grid-template-columns: repeat(1, 1fr);
-  }
-`;
-
 export const DropdownMenu = styled(Dropdown.Menu)<{ $bgColor: string }>`
   background-color: ${(props) => props?.$bgColor};
   width: 200px;
@@ -282,67 +208,19 @@ export const Divider = styled.div`
 
 export const ActionItem = styled.div`
   display: flex;
-  flex: 1;
-  justify-content: space-between;
+  flex: 1.5;
+  justify-content: center;
 
   @media (max-width: 576px) {
-    padding: 0 8px;
     justify-content: center;
-  }
-`;
-
-export const FixedMenu = styled(Menu)<{ $bgColor: string }>`
-  & .MuiPaper-root {
-    left: auto !important;
-    right: 110px !important;
-    top: 85% !important;
-    border-radius: 10px;
-    transform: none !important;
-    overflow: visible;
-    height: 90px;
-    filter: drop-shadow(0px 2px 8px rgba(0, 0, 0, 0.32));
-    padding: 0 5px;
-    background-color: ${(props) => props?.$bgColor};
-    color: black;
-
-    &::before {
-      content: "";
-      position: absolute;
-      left: 100%;
-    }
-  }
-
-  @media (max-width: 576px) {
-    & .MuiPaper-root {
-      right: 80px !important;
-      bottom: 20% !important;
-      height: 75px !important;
-      width: 150px !important;
-      padding: 5px !important;
-    }
-  }
-`;
-
-export const StyledMenuItem = styled(MenuItem)`
-  display: flex;
-  align-items: center;
-  padding: 0 15px;
-  font-size: 14px;
-  gap: 10px;
-
-  @media (max-width: 576px) {
-    margin-top: -15px !important;
-    font-size: 13px !important;
+    margin-top: 10px;
   }
 `;
 
 export const StyledPageBox = styled(Box)`
   margin-top: 80px;
   overflow-x: auto;
-
-  @media (min-width: 1300px) {
-    min-width: 81vw;
-  }
+  width: 100vw;
 
   @media (max-width: 768px) {
     margin-top: 80px;
@@ -358,6 +236,7 @@ export const MainContainer = styled(Box)`
   display: flex;
   align-items: center;
   padding: 20px;
+  height: 100%;
 
   @media (max-width: 576px) {
     padding: 0;
@@ -366,71 +245,21 @@ export const MainContainer = styled(Box)`
   }
 `;
 
-export const CartContainer = styled(Link)<{ $bgColor: string }>`
-  padding: 10px;
-  border-radius: 50%;
-  background-color: ${(props) => props?.$bgColor};
-  border: solid 2px black;
-
-  @media (max-width: 576px) {
-    padding: 10px 8px;
-  }
-`;
-
-export const CartIcon = styled(PiShoppingCartBold)`
-  flex: 1;
-  color: black;
-  font-size: 25px;
-
-  @media (max-width: 576px) {
-    flex: 1;
-  }
-`;
-
-export const CartItemsCount = styled.div<{
-  $bgColor: string;
-  $isMobile: boolean;
-}>`
-  background-color: ${(props) => props?.$bgColor};
-  position: relative;
-  border: solid 1px white;
-  top: ${(props) => (!props.$isMobile ? "-23px" : "-45px")};
-  left: ${(props) => (!props.$isMobile ? "-20px" : "28px")};
-  padding: 5px;
-  border-radius: 50%;
+export const Date = styled.div`
+  flex: 1.5;
   display: flex;
-  flex-wrap: wrap;
-  width: fit-content;
-  align-items: center;
-  justify-content: center;
-
-  @media (max-width: 576px) {
-    padding: 1px 3px;
-  }
-`;
-
-export const Count = styled.div<{ $bgColor: string }>`
-  color: ${(props) => props?.$bgColor};
-  font-size: 14px;
-  margin: 0 2px;
+  border-radius: 8px;
 
   @media (max-width: 768px) {
-    font-size: 13px;
+    padding: 0px;
+    margin-bottom: 10px;
+    gap: 200px;
   }
 
   @media (max-width: 576px) {
-    font-size: 13px;
-    margin: 2px;
+    margin-bottom: 10px;
+    gap: 20px;
   }
-`;
-
-export const Date = styled.div`
-  display: flex;
-  flex: 1;
-  justify-content: space-between;
-  margin-left: 20px;
-  margin-top: 5px;
-  padding-left: 10x;
 `;
 
 export const DateContainer = styled.div`
@@ -438,20 +267,35 @@ export const DateContainer = styled.div`
   flex-direction: row;
   align-items: center;
   flex: 1;
-  justify-content: center;
-  padding: 0 10px;
   border-radius: 5px;
-  gap: 10px;
+  gap: 18px;
+  margin: 0 15px;
+
+  @media (max-width: 1024px) {
+    margin: 0 15px;
+    justify-content: space-around;
+    gap: -20px;
+  }
+
+  @media (max-width: 768px) {
+    gap: 8px;
+    justify-content: space-around;
+    margin: 0;
+  }
 
   @media (max-width: 576px) {
-    gap: 2px;
-    padding: 0px;
+    flex-direction: row;
   }
 `;
 
 export const DateTitle = styled.div`
   font-size: 16px;
-  color: black;
+  font-weight: 500;
+  white-space: nowrap;
+
+  @media (max-width: 768px) {
+    font-size: 20px;
+  }
 
   @media (max-width: 576px) {
     font-size: 14px;
@@ -461,12 +305,119 @@ export const DateTitle = styled.div`
 export const DateInput = styled.input`
   background: transparent;
   border: none;
+  border-bottom: 1px solid #bdbdbd;
   outline: none;
-  text-decoration: underline;
+  padding: 5px 0;
   font-size: 16px;
+  transition: all 0.3s ease;
+  min-width: 80px;
+  cursor: pointer;
+
+  @media (max-width: 768px) {
+    font-size: 20px;
+  }
 
   @media (max-width: 576px) {
     font-size: 14px;
-    padding: 0 10px;
   }
+`;
+
+export const TitleBox = styled.div<{ $bgColor: string }>`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  background-color: ${(props) => props?.$bgColor};
+  padding: 15px;
+  border-radius: 10px;
+  margin-bottom: 6px;
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.2);
+  min-width: 620px;
+
+  @media (max-width: 576px) {
+    min-width: 640px;
+  }
+`;
+
+export const ItemBox = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  padding: 15px;
+  border-radius: 10px;
+  min-width: 620px;
+
+  @media (max-width: 576px) {
+    min-width: 640px;
+  }
+`;
+
+export const TitleComp = styled.div`
+  flex: 1;
+  text-align: center;
+  white-space: normal;
+  min-width: 100px;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+`;
+
+export const BodyComponent = styled.div``;
+
+export const SalesContainer = styled.div`
+  margin-top: 30px;
+  overflow-x: auto;
+  overflow-y: auto;
+  max-height: 60vh;
+  margin-bottom: 40px;
+
+  @media (max-width: 768px) {
+    max-height: 64vh;
+  }
+
+  @media (max-width: 576px) {
+    margin-bottom: 40px;
+  }
+`;
+
+export const SalesDivider = styled.div`
+  border: solid 0.5px rgba(0, 0, 0, 0.2);
+  transform: scaleY(0.1);
+  min-width: 500px;
+  margin: 5px;
+
+  @media (max-width: 768px) {
+    margin: 10px 20px;
+    min-width: 560px;
+  }
+
+  @media (max-width: 576px) {
+    margin: 7px 1px;
+    min-width: 640px;
+  }
+`;
+
+export const FooterContent = styled.div`
+  flex: 1;
+`;
+
+export const FooterBox = styled.div<{ $bgColor: string }>`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  background-color: ${(props) => props?.$bgColor};
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.2);
+
+  @media (max-width: 576px) {
+    flex-direction: column;
+    gap: 20px;
+    margin-bottom: 10px;
+  }
+`;
+
+export const DownloadIcon = styled(LiaDownloadSolid)`
+  color: white;
+  font-size: 21px;
 `;

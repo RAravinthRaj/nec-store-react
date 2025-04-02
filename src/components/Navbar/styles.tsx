@@ -19,7 +19,7 @@ export const NavbarContainer = styled.div<{ $bgColor: string }>`
   z-index: 10;
 
   @media (max-width: 768px) {
-    padding: 8px 15px;
+    padding: 10px 12px;
     height: 70px;
   }
 

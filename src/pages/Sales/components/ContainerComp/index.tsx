@@ -7,21 +7,15 @@ Written by Aravinth Raj R <aravinthr235@gmail.com>, 2025.
 import { useTheme } from "../../../../hooks";
 import * as S from "./styles";
 import { Navbar } from "../../../../components";
-import { useMediaQuery } from "@mui/material";
 import Dropdown from "react-bootstrap/Dropdown";
 import { ChangeEvent, useState } from "react";
 import { SideDrawer } from "../../../../navigator/SideDrawer";
-import Box from "@mui/material/Box";
-import IconButton from "@mui/material/IconButton";
 import { SALES_CONFIG } from "../../config";
 
 export interface IContainerComp {}
 
 export const ContainerComp = ({}: IContainerComp) => {
   const theme = useTheme();
-
-  const [openItem, setOpenItem] = useState(false);
-  const [openCategory, setOpenCategory] = useState(false);
   const [menu, setMenu] = useState(false);
   const [searchProductTitle, setSearchProductTitle] = useState("");
   const [selectedCategory, setSelectedCategory] = useState(SALES_CONFIG.All);
@@ -95,11 +89,11 @@ export const ContainerComp = ({}: IContainerComp) => {
     return (
       <S.Date>
         <S.DateContainer>
-          <S.DateTitle>From</S.DateTitle>
+          <S.DateTitle>From : </S.DateTitle>
           <S.DateInput type="date"></S.DateInput>
         </S.DateContainer>
         <S.DateContainer>
-          <S.DateTitle>To</S.DateTitle>
+          <S.DateTitle>To : </S.DateTitle>
           <S.DateInput type="date"></S.DateInput>
         </S.DateContainer>
       </S.Date>
@@ -147,8 +141,51 @@ export const ContainerComp = ({}: IContainerComp) => {
     );
   };
 
+  const _renderSalesTab = () => {
+    return (
+      <S.SalesContainer>
+        <S.TitleBox $bgColor={theme.colors.secondaryBackGround}>
+          {SALES_CONFIG.Title?.map((data, index) => (
+            <S.TitleComp key={index}>{data}</S.TitleComp>
+          ))}
+        </S.TitleBox>
+        <S.BodyComponent>
+          {SALES_CONFIG.salesItems.map((d, index) => (
+            <div>
+              <S.ItemBox key={index}>
+                {Object.entries(d)?.map(([key, value], id) => (
+                  <S.TitleComp key={id}>{value}</S.TitleComp>
+                ))}
+              </S.ItemBox>
+              <S.SalesDivider />
+            </div>
+          ))}
+        </S.BodyComponent>
+      </S.SalesContainer>
+    );
+  };
+
+  const _renderSalesFooter = () => {
+    return (
+      <S.FooterBox $bgColor={theme.colors.secondaryBackGround}>
+        <S.FooterContent>Total Items Sold : 45</S.FooterContent>
+        <S.FooterContent>Total Sales : 4500</S.FooterContent>
+        <S.Button $bgColor={theme.colors.primary}>
+          <S.DownloadIcon />
+          Download Report
+        </S.Button>
+      </S.FooterBox>
+    );
+  };
+
   const _mainContainerItems = () => {
-    return <div>{_renderActionItems()}</div>;
+    return (
+      <div>
+        {_renderActionItems()}
+        {_renderSalesTab()}
+        {_renderSalesFooter()}
+      </div>
+    );
   };
 
   return (
