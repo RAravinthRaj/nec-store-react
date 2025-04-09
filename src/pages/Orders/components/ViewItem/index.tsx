@@ -56,7 +56,7 @@ export const ViewItemModal = ({ modalShow: modalShow, onClose }: IAddItem) => {
     return (
       <Modal.Body as={S.ModalBody}>
         <S.TitleBox $bgColor={theme.colors.secondaryBackGround}>
-          {ORDERS_CONFIG.Title?.map((d, index) => (
+          {ORDERS_CONFIG.title?.map((d, index) => (
             <S.TitleComp key={index}>{d}</S.TitleComp>
           ))}
         </S.TitleBox>
@@ -68,7 +68,7 @@ export const ViewItemModal = ({ modalShow: modalShow, onClose }: IAddItem) => {
   const _renderAmount = () => {
     return (
       <S.Amount>
-        {ORDERS_CONFIG.PrMRP}
+        {ORDERS_CONFIG.prMrp}
         {90}
       </S.Amount>
     );
@@ -82,14 +82,14 @@ export const ViewItemModal = ({ modalShow: modalShow, onClose }: IAddItem) => {
           $isActive={true}
           onClick={_activeDeliverStatus}
         >
-          {ORDERS_CONFIG.AmountReceived}
+          {ORDERS_CONFIG.amountReceived}
         </S.Button>
         <S.Button
           $bgColor={theme.colors.primary}
           $isActive={activeDeliver}
           onClick={_productDelivered}
         >
-          {ORDERS_CONFIG.Deliver}
+          {ORDERS_CONFIG.deliver}
         </S.Button>
       </S.Footer>
     );

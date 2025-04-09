@@ -15,7 +15,7 @@ export const CardContainer = styled.div`
   align-items : center;
   justify-content:center;
   flex-wrap:wrap;
-  padding : 20px 20px;
+  padding : 15px ;
   box-shadow : 0px 2px 4px rgba(0,0,0,0.2);
   margin:30px 20px;
   border-radius:10px;

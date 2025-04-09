@@ -10,7 +10,10 @@ import * as S from "./styles";
 import { EditItemModal } from "../EditItem";
 import { toast } from "react-toastify";
 import { PRODUCTS_CONFIG } from "../../config";
-import Swal from "sweetalert2";
+import Swal, { SweetAlertIcon } from "sweetalert2";
+import { RxCross2 } from "react-icons/rx";
+import ReactDOMServer from "react-dom/server";
+import { VscCheck } from "react-icons/vsc";
 
 export interface IProductCard {
   individualProduct: {
@@ -30,24 +33,30 @@ export const ProductCard = ({ individualProduct }: IProductCard) => {
     toast.success("Item Added to Cart");
   };
 
-  const deleteItem = () => {
+  const _deleteItem = () => {
     Swal.fire({
-      title: "Are you sure want to delete ?",
-      text: "You won't be able to revert this!",
-      icon: "warning",
+      title: PRODUCTS_CONFIG.swal.title,
+      text: PRODUCTS_CONFIG.swal.text,
+      icon: PRODUCTS_CONFIG.swal.icon as SweetAlertIcon,
+      confirmButtonColor: theme.colors.primary,
+      cancelButtonColor: theme.colors.cancel,
+      color: theme.colors.swalButton,
+      confirmButtonText: `${ReactDOMServer.renderToString(
+        <VscCheck size={20} style={{ marginTop: "-2px", marginRight: "5px" }} />
+      )} ${PRODUCTS_CONFIG.swal.confirmButtonText} `,
+      cancelButtonText: `${ReactDOMServer.renderToString(
+        <RxCross2 size={19} style={{ marginTop: "-1px" }} />
+      )} ${PRODUCTS_CONFIG.swal.cancelButtonText}`,
       showCancelButton: true,
-      confirmButtonColor: "#0424C8",
-      cancelButtonColor: "#d33",
-      color: "#000080",
-      confirmButtonText: "Yes, delete it!",
+      reverseButtons: true,
     }).then((result) => {
       if (result.isConfirmed) {
         Swal.fire({
-          title: "Deleted!",
-          text: "Your item has been deleted.",
-          icon: "success",
-          confirmButtonColor: "#0424C8",
-          color: "#000080",
+          title: PRODUCTS_CONFIG.swal.successTitle,
+          text: PRODUCTS_CONFIG.swal.successText,
+          icon: PRODUCTS_CONFIG.swal.successIcon as SweetAlertIcon,
+          confirmButtonColor: theme.colors.primary,
+          color: theme.colors.swalButton,
         });
       }
     });
@@ -65,11 +74,11 @@ export const ProductCard = ({ individualProduct }: IProductCard) => {
         </S.CategoryContainer>
         <S.ProductDes>
           <S.QuantityContainer>
-            {PRODUCTS_CONFIG.PrQuantity}
+            {PRODUCTS_CONFIG.prQuantity}
             {individualProduct.Quantity}
           </S.QuantityContainer>
           <S.RupeeContainer>
-            {PRODUCTS_CONFIG.PrMRP} {individualProduct.MRP}
+            {PRODUCTS_CONFIG.prMrp} {individualProduct.MRP}
           </S.RupeeContainer>
         </S.ProductDes>
       </div>
@@ -85,14 +94,14 @@ export const ProductCard = ({ individualProduct }: IProductCard) => {
             onClick={() => setModal(true)}
           >
             <S.EditIcon />
-            {PRODUCTS_CONFIG.EditButton}
+            {PRODUCTS_CONFIG.editButton}
           </S.Button>
           <S.Button
             $bgColor={theme.colors.primary}
-            onClick={() => deleteItem()}
+            onClick={() => _deleteItem()}
           >
             <S.DeleteIcon />
-            {PRODUCTS_CONFIG.DeleteButton}
+            {PRODUCTS_CONFIG.deleteButton}
           </S.Button>
         </S.ButtonContainer>
       );
@@ -107,7 +116,7 @@ export const ProductCard = ({ individualProduct }: IProductCard) => {
           }}
         >
           <S.CartIcon />
-          {PRODUCTS_CONFIG.AddToCartButton}
+          {PRODUCTS_CONFIG.addToCartButton}
         </S.Button>
       </S.ButtonContainer>
     );

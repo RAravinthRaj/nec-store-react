@@ -105,7 +105,7 @@ export const Button = styled.button<{ $bgColor: string }>`
   flex: 1;
   display: flex;
   align-items: center;
-  padding: 8px 7px;
+  padding: 5px 7px;
   justify-content: center;
   border: none;
   background-color: ${(props) => props?.$bgColor};

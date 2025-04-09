@@ -26,7 +26,7 @@ export const AddCategoryModal = ({
 
   const _categoryAdded = () => {
     setSelectedCategory(selectedCategory);
-    toast.success(PRODUCTS_CONFIG.CategoryToastSuccess);
+    toast.success(PRODUCTS_CONFIG.categoryToastSuccess);
     onClose();
   };
 
@@ -35,7 +35,7 @@ export const AddCategoryModal = ({
       <S.Header>
         <S.CloseButton onClick={onClose} />
         <S.Title id="contained-modal-title-vcenter">
-          {PRODUCTS_CONFIG.AddCategoryTitle}
+          {PRODUCTS_CONFIG.addCategoryTitle}
         </S.Title>
       </S.Header>
     );
@@ -46,7 +46,7 @@ export const AddCategoryModal = ({
       <Modal.Body>
         <Form>
           <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-            <Form.Label>{PRODUCTS_CONFIG.Category}</Form.Label>
+            <Form.Label>{PRODUCTS_CONFIG.category}</Form.Label>
             <S.InputWrapper>
               <S.Input type="Name" placeholder="Title" />
             </S.InputWrapper>
@@ -63,7 +63,7 @@ export const AddCategoryModal = ({
           $bgColor={theme.colors.primary}
           onClick={() => _categoryAdded()}
         >
-          {PRODUCTS_CONFIG.AddButton}
+          {PRODUCTS_CONFIG.addButton}
         </S.Button>
       </S.Footer>
     );

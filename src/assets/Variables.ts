@@ -30,6 +30,8 @@ export const theme = {
     secondaryBackGround: "#D9D9D9",
     secondaryOptional: "#9AC4E6",
     white: "#ffffff",
+    cancel: "rgb(237, 67, 67)",
+    swalButton: "#000080",
   },
   fonts: {
     sourceSerifPro: "Source Serif Pro",

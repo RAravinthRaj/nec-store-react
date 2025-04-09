@@ -130,8 +130,8 @@ export const UserIcon = styled.img`
   }
 
   @media (max-width: 576px) {
-    height: 13%;
-    width: 13%;
+    height: 12%;
+    width: 12%;
   }
 `;
 

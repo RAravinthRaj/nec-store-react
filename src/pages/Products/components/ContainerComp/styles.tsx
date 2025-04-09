@@ -252,15 +252,19 @@ export const CategoryDropDownMenu = styled(Dropdown.Menu)`
 export const ProductContainer = styled.div`
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  place-items: center;
-  margin-top: 20px;
+  margin-top: 15px;
+
+  @media (max-width: 1024px) {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0px;
+  }
 
   @media (max-width: 768px) {
     grid-template-columns: repeat(2, 1fr);
   }
 
   @media (max-width: 576px) {
-    padding: 8px;
+    margin-top: 20px;
     grid-template-columns: repeat(1, 1fr);
   }
 `;
@@ -285,7 +289,7 @@ export const ActionItem = styled.div`
   justify-content: space-between;
 
   @media (max-width: 576px) {
-    padding: 0 8px;
+    padding: 0;
     justify-content: center;
   }
 `;
@@ -359,8 +363,8 @@ export const MainContainer = styled(Box)`
   padding: 20px;
 
   @media (max-width: 576px) {
-    padding: 0;
-    margin-top: 15px;
+    padding: 10px;
+    margin-top: 10px;
     justify-content: center;
   }
 `;

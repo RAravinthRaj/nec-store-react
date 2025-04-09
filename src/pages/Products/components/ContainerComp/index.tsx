@@ -28,7 +28,7 @@ export const ContainerComp = ({}: IContainerComp) => {
   const [openCategory, setOpenCategory] = useState(false);
   const [menu, setMenu] = useState(false);
   const [searchProductTitle, setSearchProductTitle] = useState("");
-  const [selectedCategory, setSelectedCategory] = useState(PRODUCTS_CONFIG.All);
+  const [selectedCategory, setSelectedCategory] = useState(PRODUCTS_CONFIG.all);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const isRetailer = true;
@@ -92,7 +92,7 @@ export const ContainerComp = ({}: IContainerComp) => {
               }}
             >
               <S.AddIcon />
-              {PRODUCTS_CONFIG.AddItemTitle}
+              {PRODUCTS_CONFIG.addItemTitle}
             </S.Button>
             <S.Button
               $bgColor={theme.colors.primary}
@@ -100,7 +100,7 @@ export const ContainerComp = ({}: IContainerComp) => {
                 setOpenCategory(true);
               }}
             >
-              <S.AddIcon /> {PRODUCTS_CONFIG.AddCategoryTitle}
+              <S.AddIcon /> {PRODUCTS_CONFIG.addCategoryTitle}
             </S.Button>
           </S.ButtonContainer>
         );
@@ -178,7 +178,7 @@ export const ContainerComp = ({}: IContainerComp) => {
                 }}
               >
                 <S.FabAddIcon />
-                {PRODUCTS_CONFIG.AddItemTitle}
+                {PRODUCTS_CONFIG.addItemTitle}
               </S.StyledMenuItem>
               <S.FabDivider />
               <S.StyledMenuItem
@@ -187,7 +187,7 @@ export const ContainerComp = ({}: IContainerComp) => {
                 }}
               >
                 <S.FabAddIcon />
-                {PRODUCTS_CONFIG.AddCategoryTitle}
+                {PRODUCTS_CONFIG.addCategoryTitle}
               </S.StyledMenuItem>
             </S.FixedMenu>
           </div>

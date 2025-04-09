@@ -14,11 +14,12 @@ import { LiaDownloadSolid } from "react-icons/lia";
 export const ActionContainer = styled.div`
   display: flex;
   align-items: center;
+  margin-top: 5px;
 
   @media (max-width: 1024px) {
     flex-direction: column;
     margin-top: 0;
-    gap: 10px;
+    gap: 20px;
 
     > * {
       width: 100%;
@@ -77,8 +78,8 @@ export const SortContainer = styled.div`
   display: flex;
   align-items: center;
   flex: 1;
+  margin-top: 3px;
   justify-content: flex-end;
-  margin-top: 5px;
 
   @media (max-width: 768px) {
     justify-content: flex-end;
@@ -87,7 +88,7 @@ export const SortContainer = styled.div`
 
   @media (max-width: 576px) {
     justify-content: flex-end;
-    flex: 0.5;
+    margin-left: 20px;
   }
 `;
 
@@ -149,8 +150,9 @@ export const Button = styled.button<{ $bgColor: string }>`
   color: white;
 
   @media (max-width: 576px) {
-    padding: 15px;
+    padding: 12px;
     gap: 10px;
+    font-size: 14px;
   }
 `;
 
@@ -168,6 +170,10 @@ export const CustomToggle = styled(Dropdown.Toggle)<{ $bgColor: string }>`
 
   &::after {
     display: none;
+  }
+
+  @media (max-width: 576px) {
+    margin: 0 5px;
   }
 `;
 
@@ -212,15 +218,17 @@ export const ActionItem = styled.div`
   justify-content: center;
 
   @media (max-width: 576px) {
+    flex: 0;
     justify-content: center;
     margin-top: 10px;
   }
 `;
 
 export const StyledPageBox = styled(Box)`
-  margin-top: 80px;
+  margin-top: 70px;
   overflow-x: auto;
   width: 100vw;
+  padding: 10px;
 
   @media (max-width: 768px) {
     margin-top: 80px;
@@ -236,7 +244,10 @@ export const MainContainer = styled(Box)`
   display: flex;
   align-items: center;
   padding: 20px;
-  height: 100%;
+
+  @media (max-width: 768px) {
+    padding: 12px;
+  }
 
   @media (max-width: 576px) {
     padding: 0;
@@ -258,7 +269,7 @@ export const Date = styled.div`
 
   @media (max-width: 576px) {
     margin-bottom: 10px;
-    gap: 20px;
+    gap: 12px;
   }
 `;
 
@@ -279,7 +290,6 @@ export const DateContainer = styled.div`
 
   @media (max-width: 768px) {
     gap: 8px;
-    justify-content: space-around;
     margin: 0;
   }
 
@@ -327,11 +337,14 @@ export const TitleBox = styled.div<{ $bgColor: string }>`
   flex-direction: row;
   justify-content: space-around;
   background-color: ${(props) => props?.$bgColor};
-  padding: 15px;
+  padding: 18px 15px;
   border-radius: 10px;
-  margin-bottom: 6px;
+  margin-bottom: 10px;
   box-shadow: 0 4px 4px rgba(0, 0, 0, 0.2);
   min-width: 620px;
+  position: sticky;
+  top: 0;
+  z-index: 1;
 
   @media (max-width: 576px) {
     min-width: 640px;
@@ -358,9 +371,16 @@ export const TitleComp = styled.div`
   min-width: 100px;
   word-wrap: break-word;
   overflow-wrap: break-word;
+
+  @media (max-width: 576px) {
+    font-size: 14px;
+    text-align: center;
+  }
 `;
 
-export const BodyComponent = styled.div``;
+export const BodyComponent = styled.div`
+  height: 500px;
+`;
 
 export const SalesContainer = styled.div`
   margin-top: 30px;
@@ -370,7 +390,7 @@ export const SalesContainer = styled.div`
   margin-bottom: 40px;
 
   @media (max-width: 768px) {
-    max-height: 64vh;
+    max-height: 100vh;
   }
 
   @media (max-width: 576px) {
@@ -380,7 +400,7 @@ export const SalesContainer = styled.div`
 
 export const SalesDivider = styled.div`
   border: solid 0.5px rgba(0, 0, 0, 0.2);
-  transform: scaleY(0.1);
+  transform: scaleY(0.9);
   min-width: 500px;
   margin: 5px;
 
@@ -390,13 +410,17 @@ export const SalesDivider = styled.div`
   }
 
   @media (max-width: 576px) {
-    margin: 7px 1px;
-    min-width: 640px;
+    margin: 7px 7px;
+    min-width: 620px;
   }
 `;
 
 export const FooterContent = styled.div`
   flex: 1;
+
+  @media (max-width: 576px) {
+    font-size: 14px;
+  }
 `;
 
 export const FooterBox = styled.div<{ $bgColor: string }>`

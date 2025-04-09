@@ -19,9 +19,9 @@ export const ContainerComp = ({}: IContainerComp) => {
 
   const [menu, setMenu] = useState(false);
   const [searchProductTitle, setSearchProductTitle] = useState("");
-  const [selectedCategory, setSelectedCategory] = useState(ORDERS_CONFIG.All);
+  const [selectedCategory, setSelectedCategory] = useState(ORDERS_CONFIG.all);
 
-  const category = ["All", "Stationary", "cosmetics", "household"];
+  const category = ["All", "Order Number", "Purchaser Number"];
 
   const _setSearchData = (e: ChangeEvent<HTMLInputElement>) => {
     setSearchProductTitle(e.target.value);

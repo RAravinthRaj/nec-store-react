@@ -89,7 +89,7 @@ export const EditItemModal = ({
       <Modal.Body>
         <Form>
           <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-            <Form.Label>{PRODUCTS_CONFIG.Title}</Form.Label>
+            <Form.Label>{PRODUCTS_CONFIG.title}</Form.Label>
             <S.InputWrapper>
               <S.Input
                 type="text"
@@ -99,11 +99,11 @@ export const EditItemModal = ({
             </S.InputWrapper>
           </Form.Group>
           <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-            <Form.Label>{PRODUCTS_CONFIG.Category}</Form.Label>
+            <Form.Label>{PRODUCTS_CONFIG.category}</Form.Label>
             {_renderMenu()}
           </Form.Group>
           <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-            <Form.Label>{PRODUCTS_CONFIG.Quantity}</Form.Label>
+            <Form.Label>{PRODUCTS_CONFIG.quantity}</Form.Label>
             <S.InputWrapper>
               <S.Input
                 type="number"
@@ -114,7 +114,7 @@ export const EditItemModal = ({
             </S.InputWrapper>
           </Form.Group>
           <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
-            <Form.Label>{PRODUCTS_CONFIG.MRP}</Form.Label>
+            <Form.Label>{PRODUCTS_CONFIG.mrp}</Form.Label>
             <S.InputWrapper>
               <S.Input
                 type="number"
@@ -125,7 +125,7 @@ export const EditItemModal = ({
             </S.InputWrapper>
           </Form.Group>
           <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-            <Form.Label>{PRODUCTS_CONFIG.Image}</Form.Label>
+            <Form.Label>{PRODUCTS_CONFIG.image}</Form.Label>
             <input type="file" className="form-control" />
           </Form.Group>
         </Form>
@@ -140,7 +140,7 @@ export const EditItemModal = ({
           $bgColor={theme.colors.primary}
           onClick={() => _productEdited()}
         >
-          {PRODUCTS_CONFIG.SubmitButton}
+          {PRODUCTS_CONFIG.submitButton}
         </S.Button>
       </S.Footer>
     );

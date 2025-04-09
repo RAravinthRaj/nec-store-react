@@ -18,7 +18,7 @@ export const ContainerComp = ({}: IContainerComp) => {
   const theme = useTheme();
   const [menu, setMenu] = useState(false);
   const [searchProductTitle, setSearchProductTitle] = useState("");
-  const [selectedCategory, setSelectedCategory] = useState(SALES_CONFIG.All);
+  const [selectedCategory, setSelectedCategory] = useState(SALES_CONFIG.all);
 
   const category = ["All", "Stationary", "cosmetics", "household"];
 
@@ -89,11 +89,11 @@ export const ContainerComp = ({}: IContainerComp) => {
     return (
       <S.Date>
         <S.DateContainer>
-          <S.DateTitle>From : </S.DateTitle>
+          <S.DateTitle>{SALES_CONFIG.from}</S.DateTitle>
           <S.DateInput type="date"></S.DateInput>
         </S.DateContainer>
         <S.DateContainer>
-          <S.DateTitle>To : </S.DateTitle>
+          <S.DateTitle>{SALES_CONFIG.to}</S.DateTitle>
           <S.DateInput type="date"></S.DateInput>
         </S.DateContainer>
       </S.Date>
@@ -145,7 +145,7 @@ export const ContainerComp = ({}: IContainerComp) => {
     return (
       <S.SalesContainer>
         <S.TitleBox $bgColor={theme.colors.secondaryBackGround}>
-          {SALES_CONFIG.Title?.map((data, index) => (
+          {SALES_CONFIG.title?.map((data, index) => (
             <S.TitleComp key={index}>{data}</S.TitleComp>
           ))}
         </S.TitleBox>
@@ -168,11 +168,11 @@ export const ContainerComp = ({}: IContainerComp) => {
   const _renderSalesFooter = () => {
     return (
       <S.FooterBox $bgColor={theme.colors.secondaryBackGround}>
-        <S.FooterContent>Total Items Sold : 45</S.FooterContent>
-        <S.FooterContent>Total Sales : 4500</S.FooterContent>
+        <S.FooterContent>{SALES_CONFIG.itemsSold}45</S.FooterContent>
+        <S.FooterContent>{SALES_CONFIG.prMRP}4500</S.FooterContent>
         <S.Button $bgColor={theme.colors.primary}>
           <S.DownloadIcon />
-          Download Report
+          {SALES_CONFIG.downloadButton}
         </S.Button>
       </S.FooterBox>
     );
