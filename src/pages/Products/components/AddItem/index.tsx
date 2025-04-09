@@ -42,6 +42,7 @@ export const AddItemModal = ({ modalShow, onClose }: IAddItem) => {
           displayEmpty
           inputProps={{ "aria-label": "Category" }}
           renderValue={(selected) => (selected ? selected : "Category")}
+          style={{ color: theme.colors.textSecondary }}
         >
           {category?.map((cat, id) => {
             return (

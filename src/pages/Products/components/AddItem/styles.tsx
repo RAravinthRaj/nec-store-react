@@ -8,6 +8,7 @@ import Modal from "react-bootstrap/Modal";
 import styled from "styled-components";
 import { RxCross2 } from "react-icons/rx";
 import FormControl from "@mui/material/FormControl";
+import Select from "@mui/material/Select";
 
 export const ModalContainer = styled(Modal)`
   display: flex;
@@ -180,3 +181,5 @@ export const Divider = styled.div`
   border-top: 0.2px solid rgba(0, 0, 0, 0.2);
   margin: 4px 10px;
 `;
+
+export const SelectStyle = styled(Select)``;
