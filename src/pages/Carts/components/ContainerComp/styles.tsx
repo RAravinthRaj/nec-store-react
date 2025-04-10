@@ -6,12 +6,11 @@ Written by Aravinth Raj R <aravinthr235@gmail.com>, 2025.
 */
 import styled from "styled-components";
 import { LiaSortAmountDownAltSolid } from "react-icons/lia";
-import { FiPlus } from "react-icons/fi";
 import { SlArrowDown } from "react-icons/sl";
 import { Dropdown } from "react-bootstrap";
-import { Box, Menu, MenuItem } from "@mui/material";
-import { Link } from "react-router-dom";
-import { PiShoppingCartBold } from "react-icons/pi";
+import { Box } from "@mui/material";
+import { RxCrossCircled } from "react-icons/rx";
+import { GiShoppingCart } from "react-icons/gi";
 
 export const ActionItem = styled.div`
   display: flex;
@@ -77,12 +76,13 @@ export const InputWrapper = styled.div<{ $bgColor: string }>`
     margin: 0;
   }
 `;
+
 export const SortContainer = styled.div`
   display: flex;
   align-items: center;
   flex: 1;
-  margin-top: 5px;
-  margin-left: 20px;
+  margin-top: 3px;
+  justify-content: flex-end;
 
   @media (max-width: 768px) {
     justify-content: flex-end;
@@ -91,6 +91,7 @@ export const SortContainer = styled.div`
 
   @media (max-width: 576px) {
     justify-content: flex-end;
+    margin-left: 20px;
   }
 `;
 
@@ -139,20 +140,11 @@ export const SortedDropdownItem = styled(Dropdown.Item)<{ $bgColor: string }>`
   }
 `;
 
-export const ButtonContainer = styled.div`
-  flex: 0.8;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 30px;
-  margin-left: 10px;
-`;
-
 export const Button = styled.button<{ $bgColor: string }>`
-  flex: 1;
+  flex: 0.3;
   display: flex;
   align-items: center;
-  padding: 10px 0;
+  padding: 10px 30px;
   justify-content: center;
   border: none;
   background-color: ${(props) => props?.$bgColor};
@@ -161,62 +153,9 @@ export const Button = styled.button<{ $bgColor: string }>`
   color: white;
 
   @media (max-width: 576px) {
-    padding: 5px 0;
+    padding: 12px;
     gap: 10px;
-  }
-`;
-
-export const AddIcon = styled(FiPlus)`
-  color: white;
-  font-size: 18px;
-`;
-
-export const FabAddIcon = styled(FiPlus)`
-  color: black;
-  font-size: 18px;
-`;
-
-export const PlusButtonContainer = styled(FiPlus)<{ $bgColor: string }>`
-  color: white;
-  padding: 5px;
-  font-size: 50px;
-  height: 40px;
-  width: 40px;
-  background-color: ${(props) => props?.$bgColor};
-  border-radius: 50%;
-  position: fixed;
-  bottom: 40px;
-  right: 40px;
-  cursor: pointer;
-  z-index: 1000;
-
-  @media (max-width: 768px) {
-    height: 60px;
-    width: 60px;
-    padding: 10px;
-    font-size: 40px;
-  }
-
-  @media (max-width: 576px) {
-    font-size: 30px;
-    bottom: 30px;
-    right: 30px;
-    height: 40px;
-    width: 40px;
-    padding: 10px;
-    font-size: 30px;
-  }
-`;
-
-export const FabDivider = styled.div`
-  border-top: 0.2px solid rgba(0, 0, 0, 0.2);
-  margin: 4px 10px;
-
-  @media (max-width: 576px) {
-    width: 95%;
-    margin-left: 5px;
-    margin-top: -7px;
-    margin-bottom: 6px;
+    font-size: 14px;
   }
 `;
 
@@ -234,6 +173,10 @@ export const CustomToggle = styled(Dropdown.Toggle)<{ $bgColor: string }>`
 
   &::after {
     display: none;
+  }
+
+  @media (max-width: 576px) {
+    margin: 0 5px;
   }
 `;
 
@@ -258,26 +201,6 @@ export const CategoryDropDownMenu = styled(Dropdown.Menu)`
   margin-top: 10px;
 `;
 
-export const ProductContainer = styled.div`
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  margin-top: 15px;
-
-  @media (max-width: 1024px) {
-    grid-template-columns: repeat(3, 1fr);
-    gap: 0px;
-  }
-
-  @media (max-width: 768px) {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  @media (max-width: 576px) {
-    margin-top: 20px;
-    grid-template-columns: repeat(1, 1fr);
-  }
-`;
-
 export const DropdownMenu = styled(Dropdown.Menu)<{ $bgColor: string }>`
   background-color: ${(props) => props?.$bgColor};
   width: 200px;
@@ -289,61 +212,14 @@ export const DropdownMenu = styled(Dropdown.Menu)<{ $bgColor: string }>`
 
 export const Divider = styled.div`
   border-top: 0.2px solid rgba(0, 0, 0, 0.2);
-  margin: 4px 10px;
-`;
-
-export const FixedMenu = styled(Menu)<{ $bgColor: string }>`
-  & .MuiPaper-root {
-    left: auto !important;
-    right: 110px !important;
-    top: 85% !important;
-    border-radius: 10px;
-    transform: none !important;
-    overflow: visible;
-    height: 90px;
-    filter: drop-shadow(0px 2px 8px rgba(0, 0, 0, 0.32));
-    padding: 0 5px;
-    background-color: ${(props) => props?.$bgColor};
-    color: black;
-
-    &::before {
-      content: "";
-      position: absolute;
-      left: 100%;
-    }
-  }
-
-  @media (max-width: 576px) {
-    & .MuiPaper-root {
-      right: 80px !important;
-      bottom: 20% !important;
-      height: 75px !important;
-      width: 150px !important;
-      padding: 5px !important;
-    }
-  }
-`;
-
-export const StyledMenuItem = styled(MenuItem)`
-  display: flex;
-  align-items: center;
-  padding: 0 15px;
-  font-size: 14px;
-  gap: 10px;
-
-  @media (max-width: 576px) {
-    margin-top: -15px !important;
-    font-size: 13px !important;
-  }
+  margin: 2px 10px;
 `;
 
 export const StyledPageBox = styled(Box)`
-  margin-top: 80px;
+  margin-top: 70px;
   overflow-x: auto;
-
-  @media (min-width: 1300px) {
-    min-width: 81vw;
-  }
+  width: 100vw;
+  padding: 10px;
 
   @media (max-width: 768px) {
     margin-top: 80px;
@@ -360,67 +236,193 @@ export const MainContainer = styled(Box)`
   align-items: center;
   padding: 20px;
 
+  @media (max-width: 768px) {
+    padding: 12px;
+  }
+
   @media (max-width: 576px) {
-    padding: 10px;
-    margin-top: 10px;
+    padding: 0;
+    margin-top: 15px;
     justify-content: center;
   }
 `;
 
-export const CartContainer = styled(Link)<{ $bgColor: string }>`
-  padding: 10px;
-  border-radius: 50%;
-  background-color: ${(props) => props?.$bgColor};
-  border: solid 2px black;
-
-  @media (max-width: 576px) {
-    padding: 10px 8px;
-  }
-`;
-
-export const CartIcon = styled(PiShoppingCartBold)`
-  flex: 1;
-  color: black;
-  font-size: 25px;
-
-  @media (max-width: 576px) {
-    flex: 1;
-  }
-`;
-
-export const CartItemsCount = styled.div<{
-  $bgColor: string;
-  $isMobile: boolean;
-}>`
-  background-color: ${(props) => props?.$bgColor};
-  position: relative;
-  border: solid 1px white;
-  top: ${(props) => (!props.$isMobile ? "-23px" : "-45px")};
-  left: ${(props) => (!props.$isMobile ? "-20px" : "28px")};
-  padding: 5px;
-  border-radius: 50%;
+export const TitleBox = styled.div<{ $bgColor: string }>`
   display: flex;
-  flex-wrap: wrap;
-  width: fit-content;
+  flex-direction: row;
+  justify-content: space-around;
+  background-color: ${(props) => props?.$bgColor};
+  padding: 18px 15px;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.2);
+  min-width: 620px;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+
+  @media (max-width: 576px) {
+    min-width: 640px;
+    font-size: 13px;
+    padding: 13px;
+  }
+`;
+
+export const ItemBox = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  padding: 15px;
+  border-radius: 10px;
+  min-width: 620px;
+
+  @media (max-width: 576px) {
+    padding: 8px;
+    min-width: 640px;
+  }
+`;
+
+export const TitleComp = styled.div`
+  flex: 1;
+  text-align: center;
+  white-space: normal;
+  min-width: 100px;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  display: flex;
   align-items: center;
   justify-content: center;
 
   @media (max-width: 576px) {
-    padding: 1px 3px;
+    font-size: 13px;
+    text-align: center;
   }
 `;
 
-export const Count = styled.div<{ $bgColor: string }>`
+export const CancelComp = styled(RxCrossCircled)<{ $bgColor: string }>`
   color: ${(props) => props?.$bgColor};
-  font-size: 14px;
-  margin: 0 2px;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 25px;
+`;
 
-  @media (max-width: 768px) {
-    font-size: 13px;
+export const QuantityWrap = styled.input`
+  &::-webkit-inner-spin-button,
+  &::-webkit-outer-spin-button {
+    -webkit-appearance: inner-spin-button !important;
+    appearance: inner-spin-button !important;
+    opacity: 1 !important;
+    display: block !important;
+    height: 1.3em;
+    width: 1.3em;
+  }
+
+  -moz-appearance: textfield;
+
+  &:focus {
+    -moz-appearance: number-input;
+  }
+
+  width: 45%;
+  flex: 0.5;
+  padding: 4px 8px;
+  border-radius: 5px;
+  border: solid 0.5px rgba(0, 0, 0, 0.2);
+
+  @media (max-width: 576px) {
+    font-size: 14px;
+    &::-webkit-inner-spin-button,
+    &::-webkit-outer-spin-button {
+      -webkit-appearance: inner-spin-button !important;
+      appearance: inner-spin-button !important;
+      opacity: 1 !important;
+      display: block !important;
+      margin-top: 9%;
+      height: 1.1em;
+      width: 1.1em;
+    }
+  }
+`;
+
+export const Icon = styled.div`
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  color: #ffffff;
+
+  &:hover {
+    background: none;
   }
 
   @media (max-width: 576px) {
-    font-size: 13px;
-    margin: 2px;
+    font-size: 14px;
   }
+`;
+
+export const BodyComponent = styled.div`
+  height: 500px;
+`;
+
+export const CartContainer = styled.div`
+  margin-top: 30px;
+  overflow-x: auto;
+  overflow-y: auto;
+  max-height: 60vh;
+  margin-bottom: 40px;
+
+  @media (max-width: 768px) {
+    max-height: 100vh;
+  }
+
+  @media (max-width: 576px) {
+    margin-bottom: 40px;
+  }
+`;
+
+export const CartDivider = styled.div`
+  border: solid 0.5px rgba(0, 0, 0, 0.2);
+  transform: scaleY(0.9);
+  min-width: 500px;
+  margin: 5px;
+
+  @media (max-width: 768px) {
+    margin: 10px 20px;
+    min-width: 560px;
+  }
+
+  @media (max-width: 576px) {
+    margin: 7px 7px;
+    min-width: 620px;
+  }
+`;
+
+export const FooterContent = styled.div`
+  @media (max-width: 576px) {
+    font-size: 14px;
+  }
+`;
+
+export const FooterBox = styled.div<{ $bgColor: string }>`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  text-align: center;
+  background-color: ${(props) => props?.$bgColor};
+  padding: 15px 30px;
+  border-radius: 10px;
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.2);
+
+  @media (max-width: 576px) {
+    flex-direction: column;
+    gap: 20px;
+    margin-bottom: 10px;
+  }
+`;
+
+export const DownloadIcon = styled(GiShoppingCart)`
+  color: white;
+  font-size: 22px;
 `;

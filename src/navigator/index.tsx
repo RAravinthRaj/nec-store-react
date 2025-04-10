@@ -11,6 +11,7 @@ import {
   Products,
   Orders,
   Sales,
+  Carts,
 } from "../pages";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
@@ -24,6 +25,7 @@ export const Navigator = () => {
         <Route path="/products" element={<Products />} />
         <Route path="/orders" element={<Orders />} />
         <Route path="/sales" element={<Sales />} />
+        <Route path="/carts" element={<Carts />} />
       </Routes>
     </BrowserRouter>
   );
