@@ -16,6 +16,7 @@ import Swal, { SweetAlertIcon } from "sweetalert2";
 import ReactDOMServer from "react-dom/server";
 import { VscCheck } from "react-icons/vsc";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 export interface IContainerComp {}
 
@@ -30,6 +31,8 @@ export const ContainerComp = ({}: IContainerComp) => {
   const _setSearchDate = (e: ChangeEvent<HTMLInputElement>) => {
     setSearchProductTitle(e.target.value);
   };
+
+  const navigate = useNavigate();
 
   const _deleteItem = () => {
     Swal.fire({
@@ -62,13 +65,14 @@ export const ContainerComp = ({}: IContainerComp) => {
 
   const _orderPlaced = () => {
     toast.success(CARTS_CONFIG.orderPlaced);
+    navigate("/products");
   };
 
   const _renderCategoryDropDownTitle = () => {
     return (
       <S.CustomToggle $bgColor={theme.colors.backGround}>
         <S.IconText $bgColor={theme.colors.textSecondary}>
-          {selectedCategory.substring(0, 3)}
+          {selectedCategory.substring(0, 4)}
         </S.IconText>
         <S.DropDownIcon $bgColor={theme.colors.backGround} />
       </S.CustomToggle>

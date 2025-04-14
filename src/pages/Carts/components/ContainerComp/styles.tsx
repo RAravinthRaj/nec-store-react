@@ -43,7 +43,8 @@ export const Input = styled.input`
   border: none;
   outline: none;
   font-size: 16px;
-  padding: 0 20px;
+  padding: 0 15px;
+
   flex: 1;
   width: 100%;
 
@@ -217,7 +218,6 @@ export const Divider = styled.div`
 
 export const StyledPageBox = styled(Box)`
   margin-top: 70px;
-  overflow-x: auto;
   width: 100vw;
   padding: 10px;
 
@@ -306,6 +306,7 @@ export const CancelComp = styled(RxCrossCircled)<{ $bgColor: string }>`
   align-items: center;
   justify-content: center;
   font-size: 25px;
+  cursor: pointer;
 `;
 
 export const QuantityWrap = styled.input`
@@ -361,9 +362,7 @@ export const Icon = styled.div`
   }
 `;
 
-export const BodyComponent = styled.div`
-  height: 500px;
-`;
+export const BodyComponent = styled.div``;
 
 export const CartContainer = styled.div`
   margin-top: 30px;
@@ -373,14 +372,13 @@ export const CartContainer = styled.div`
   margin-bottom: 40px;
 
   @media (max-width: 768px) {
-    max-height: 100vh;
+    max-height: 70vh;
   }
 
   @media (max-width: 576px) {
     margin-bottom: 40px;
   }
 `;
-
 export const CartDivider = styled.div`
   border: solid 0.5px rgba(0, 0, 0, 0.2);
   transform: scaleY(0.9);

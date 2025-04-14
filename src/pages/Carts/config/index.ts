@@ -61,6 +61,27 @@ export const CARTS_CONFIG = {
       Quantity: 4,
       Total_Amount: 1000,
     },
+    {
+      Sl_No: 1,
+      Category: "Stationary",
+      Product_Name: "TagFile",
+      Quantity: 4,
+      Total_Amount: 1000,
+    },
+    {
+      Sl_No: 1,
+      Category: "Stationary",
+      Product_Name: "TagFile",
+      Quantity: 4,
+      Total_Amount: 1000,
+    },
+    {
+      Sl_No: 1,
+      Category: "Stationary",
+      Product_Name: "TagFile",
+      Quantity: 4,
+      Total_Amount: 1000,
+    },
   ],
   swal: {
     title: "Are you sure you want to delete?",

@@ -11,29 +11,31 @@ import { Dropdown } from "react-bootstrap";
 import { Box } from "@mui/material";
 import { LiaDownloadSolid } from "react-icons/lia";
 
-export const ActionItem = styled.div`
-  display: flex;
-  flex: 1.5;
-  justify-content: center;
-
-  @media (max-width: 576px) {
-    justify-content: center;
-    flex: 1;
-    margin-top: 10px;
-  }
-`;
-
 export const ActionContainer = styled.div`
   display: flex;
   align-items: center;
   margin-top: 5px;
 
+  @media (max-width: 1024px) {
+    flex-direction: column;
+    margin-top: 0;
+    gap: 20px;
+
+    > * {
+      width: 100%;
+    }
+  }
+
   @media (max-width: 576px) {
     flex-direction: column;
-    margin: 0;
+    margin-top: 0;
     justify-content: center;
     font-size: 12px;
-    gap: 8px;
+    padding: 0 3px;
+
+    > * {
+      width: 100%;
+    }
   }
 `;
 
@@ -44,7 +46,6 @@ export const Input = styled.input`
   font-size: 16px;
   padding: 0 20px;
   flex: 1;
-  width: 100%;
 
   @media (max-width: 576px) {
     font-size: 14px;
@@ -58,23 +59,21 @@ export const InputWrapper = styled.div<{ $bgColor: string }>`
   padding: 10px 20px;
   display: flex;
   align-items: center;
-  border: solid 1px rgba(0, 0, 0, 0.2);
-  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1);
 
   @media (max-width: 768px) {
     flex: 1;
+    width: 100%;
     height: 45px;
   }
 
   @media (max-width: 576px) {
-    flex: 1;
-    padding: 6px 10px;
+    padding: 6px;
     height: 40px;
     border-radius: 5px;
-    width: 100%;
-    margin: 0;
   }
 `;
+
 export const SortContainer = styled.div`
   display: flex;
   align-items: center;
@@ -213,6 +212,18 @@ export const Divider = styled.div`
   margin: 4px 10px;
 `;
 
+export const ActionItem = styled.div`
+  display: flex;
+  flex: 1.5;
+  justify-content: center;
+
+  @media (max-width: 576px) {
+    flex: 0;
+    justify-content: center;
+    margin-top: 10px;
+  }
+`;
+
 export const StyledPageBox = styled(Box)`
   margin-top: 70px;
   overflow-x: auto;
@@ -258,7 +269,7 @@ export const Date = styled.div`
 
   @media (max-width: 576px) {
     margin-bottom: 10px;
-    gap: 16px;
+    gap: 12px;
   }
 `;
 
@@ -337,8 +348,6 @@ export const TitleBox = styled.div<{ $bgColor: string }>`
 
   @media (max-width: 576px) {
     min-width: 640px;
-    font-size: 13px;
-    padding: 13px;
   }
 `;
 
@@ -351,7 +360,6 @@ export const ItemBox = styled.div`
   min-width: 620px;
 
   @media (max-width: 576px) {
-    padding: 8px;
     min-width: 640px;
   }
 `;
@@ -363,12 +371,9 @@ export const TitleComp = styled.div`
   min-width: 100px;
   word-wrap: break-word;
   overflow-wrap: break-word;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 
   @media (max-width: 576px) {
-    font-size: 13px;
+    font-size: 14px;
     text-align: center;
   }
 `;
