@@ -31,7 +31,7 @@ export const ContainerComp = ({}: IContainerComp) => {
   const [selectedCategory, setSelectedCategory] = useState(PRODUCTS_CONFIG.all);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
-  const isRetailer = true;
+  const isRetailer = false;
 
   const category = ["All", "Stationary", "cosmetics", "household"];
 

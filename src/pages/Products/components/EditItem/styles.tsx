@@ -56,6 +56,7 @@ export const CloseButton = styled(RxCross2)`
     font-size: 25px;
   }
 `;
+
 export const InputWrapper = styled.div`
   width: 100%;
   margin-bottom: 25px;

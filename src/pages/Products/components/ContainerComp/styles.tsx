@@ -28,10 +28,9 @@ export const ActionItem = styled.div`
 export const ActionContainer = styled.div`
   display: flex;
   align-items: center;
-  margin-top: 5px;
+  margin-top: 15px;
 
   @media (max-width: 576px) {
-    flex-direction: column;
     margin: 0;
     justify-content: center;
     font-size: 12px;
@@ -82,7 +81,7 @@ export const SortContainer = styled.div`
   display: flex;
   align-items: center;
   flex: 1;
-  margin-top: 5px;
+
   margin-left: 20px;
 
   @media (max-width: 768px) {
@@ -266,7 +265,6 @@ export const ProductContainer = styled.div`
 
   @media (max-width: 1024px) {
     grid-template-columns: repeat(3, 1fr);
-    gap: 0px;
   }
 
   @media (max-width: 768px) {
@@ -375,7 +373,7 @@ export const CartContainer = styled(Link)<{ $bgColor: string }>`
   border: solid 2px black;
 
   @media (max-width: 576px) {
-    padding: 10px 8px;
+    padding: 12px 8px;
   }
 `;
 

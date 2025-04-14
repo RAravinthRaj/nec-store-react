@@ -30,7 +30,6 @@ export const ActionContainer = styled.div`
   margin-top: 5px;
 
   @media (max-width: 576px) {
-    flex-direction: column;
     margin: 0;
     justify-content: center;
     font-size: 12px;

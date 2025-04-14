@@ -19,7 +19,7 @@ export const ActionContainer = styled.div`
   @media (max-width: 1024px) {
     flex-direction: column;
     margin-top: 0;
-    gap: 20px;
+    gap: 15px;
 
     > * {
       width: 100%;
