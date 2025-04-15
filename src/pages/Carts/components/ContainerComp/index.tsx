@@ -10,7 +10,13 @@ import { Navbar } from "../../../../components";
 import Dropdown from "react-bootstrap/Dropdown";
 import { ChangeEvent, useState } from "react";
 import { SideDrawer } from "../../../../navigator/SideDrawer";
-import { SALES_CONFIG } from "../../config";
+import { CARTS_CONFIG } from "../../config";
+import { RxCross2 } from "react-icons/rx";
+import Swal, { SweetAlertIcon } from "sweetalert2";
+import ReactDOMServer from "react-dom/server";
+import { VscCheck } from "react-icons/vsc";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 export interface IContainerComp {}
 
@@ -18,12 +24,48 @@ export const ContainerComp = ({}: IContainerComp) => {
   const theme = useTheme();
   const [menu, setMenu] = useState(false);
   const [searchProductTitle, setSearchProductTitle] = useState("");
-  const [selectedCategory, setSelectedCategory] = useState(SALES_CONFIG.all);
+  const [selectedCategory, setSelectedCategory] = useState(CARTS_CONFIG.all);
 
   const category = ["All", "Stationary", "cosmetics", "household"];
 
   const _setSearchDate = (e: ChangeEvent<HTMLInputElement>) => {
     setSearchProductTitle(e.target.value);
+  };
+
+  const navigate = useNavigate();
+
+  const _deleteItem = () => {
+    Swal.fire({
+      title: CARTS_CONFIG.swal.title,
+      text: CARTS_CONFIG.swal.text,
+      icon: CARTS_CONFIG.swal.icon as SweetAlertIcon,
+      confirmButtonColor: theme.colors.primary,
+      cancelButtonColor: theme.colors.cancel,
+      color: theme.colors.swalButton,
+      confirmButtonText: `${ReactDOMServer.renderToString(
+        <VscCheck size={20} style={{ marginTop: "-2px", marginRight: "5px" }} />
+      )} ${CARTS_CONFIG.swal.confirmButtonText} `,
+      cancelButtonText: `${ReactDOMServer.renderToString(
+        <RxCross2 size={19} style={{ marginTop: "-1px" }} />
+      )} ${CARTS_CONFIG.swal.cancelButtonText}`,
+      showCancelButton: true,
+      reverseButtons: true,
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire({
+          title: CARTS_CONFIG.swal.successTitle,
+          text: CARTS_CONFIG.swal.successText,
+          icon: CARTS_CONFIG.swal.successIcon as SweetAlertIcon,
+          confirmButtonColor: theme.colors.primary,
+          color: theme.colors.swalButton,
+        });
+      }
+    });
+  };
+
+  const _orderPlaced = () => {
+    toast.success(CARTS_CONFIG.orderPlaced);
+    navigate("/products");
   };
 
   const _renderCategoryDropDownTitle = () => {
@@ -85,28 +127,8 @@ export const ContainerComp = ({}: IContainerComp) => {
     );
   };
 
-  const _renderDate = () => {
-    return (
-      <S.Date>
-        <S.DateContainer>
-          <S.DateTitle>{SALES_CONFIG.from}</S.DateTitle>
-          <S.DateInput type="date"></S.DateInput>
-        </S.DateContainer>
-        <S.DateContainer>
-          <S.DateTitle>{SALES_CONFIG.to}</S.DateTitle>
-          <S.DateInput type="date"></S.DateInput>
-        </S.DateContainer>
-      </S.Date>
-    );
-  };
-
   const _renderActionItems = () => {
-    return (
-      <S.ActionContainer>
-        {_renderDate()}
-        {_renderSearchBar()}
-      </S.ActionContainer>
-    );
+    return <S.ActionContainer>{_renderSearchBar()}</S.ActionContainer>;
   };
 
   const _renderSortedOptionsTitle = () => {
@@ -120,12 +142,12 @@ export const ContainerComp = ({}: IContainerComp) => {
   const _renderSortedOptionsMenu = () => {
     return (
       <S.SortedDropdownMenu $bgColor={theme.colors.white}>
-        {SALES_CONFIG.sortedOptions.map((item, id) => (
+        {CARTS_CONFIG.sortedOptions.map((item, id) => (
           <div key={id}>
             <S.SortedDropdownItem $bgColor={theme.colors.primary}>
               <S.SortedIconText>{item}</S.SortedIconText>
             </S.SortedDropdownItem>
-            {id !== SALES_CONFIG.sortedOptions.length - 1 && <S.Divider />}
+            {id !== CARTS_CONFIG.sortedOptions.length - 1 && <S.Divider />}
           </div>
         ))}
       </S.SortedDropdownMenu>
@@ -141,38 +163,58 @@ export const ContainerComp = ({}: IContainerComp) => {
     );
   };
 
+  const _renderSalesData = () => {
+    return (
+      <>
+        {CARTS_CONFIG.salesItems.map((d, index) => (
+          <div>
+            <S.ItemBox key={index}>
+              {Object.entries(d)?.map(([key, value], id) => {
+                if (key === "Quantity") {
+                  return (
+                    <S.TitleComp key={id}>
+                      <S.QuantityWrap
+                        min="0"
+                        defaultValue={value}
+                        type="number"
+                      />
+                    </S.TitleComp>
+                  );
+                }
+                return <S.TitleComp key={id}>{value}</S.TitleComp>;
+              })}
+              <S.CancelComp
+                $bgColor={theme.colors.primary}
+                onClick={_deleteItem}
+              />
+            </S.ItemBox>
+            <S.CartDivider />
+          </div>
+        ))}
+      </>
+    );
+  };
+
   const _renderSalesTab = () => {
     return (
-      <S.SalesContainer>
+      <S.CartContainer>
         <S.TitleBox $bgColor={theme.colors.secondaryBackGround}>
-          {SALES_CONFIG.title?.map((data, index) => (
+          {CARTS_CONFIG.title?.map((data, index) => (
             <S.TitleComp key={index}>{data}</S.TitleComp>
           ))}
         </S.TitleBox>
-        <S.BodyComponent>
-          {SALES_CONFIG.salesItems.map((d, index) => (
-            <div>
-              <S.ItemBox key={index}>
-                {Object.entries(d)?.map(([key, value], id) => (
-                  <S.TitleComp key={id}>{value}</S.TitleComp>
-                ))}
-              </S.ItemBox>
-              <S.SalesDivider />
-            </div>
-          ))}
-        </S.BodyComponent>
-      </S.SalesContainer>
+        <S.BodyComponent>{_renderSalesData()}</S.BodyComponent>
+      </S.CartContainer>
     );
   };
 
   const _renderSalesFooter = () => {
     return (
       <S.FooterBox $bgColor={theme.colors.secondaryBackGround}>
-        <S.FooterContent>{SALES_CONFIG.itemsSold}45</S.FooterContent>
-        <S.FooterContent>{SALES_CONFIG.prMRP}4500</S.FooterContent>
-        <S.Button $bgColor={theme.colors.primary}>
+        <S.FooterContent>{CARTS_CONFIG.prMRP}4500</S.FooterContent>
+        <S.Button $bgColor={theme.colors.primary} onClick={_orderPlaced}>
           <S.DownloadIcon />
-          {SALES_CONFIG.downloadButton}
+          {CARTS_CONFIG.placeButton}
         </S.Button>
       </S.FooterBox>
     );

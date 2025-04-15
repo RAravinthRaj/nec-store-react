@@ -9,33 +9,31 @@ import { LiaSortAmountDownAltSolid } from "react-icons/lia";
 import { SlArrowDown } from "react-icons/sl";
 import { Dropdown } from "react-bootstrap";
 import { Box } from "@mui/material";
-import { LiaDownloadSolid } from "react-icons/lia";
+import { RxCrossCircled } from "react-icons/rx";
+import { GiShoppingCart } from "react-icons/gi";
+
+export const ActionItem = styled.div`
+  display: flex;
+  flex: 1.5;
+  justify-content: center;
+
+  @media (max-width: 576px) {
+    justify-content: center;
+    flex: 1;
+    margin-top: 10px;
+  }
+`;
 
 export const ActionContainer = styled.div`
   display: flex;
   align-items: center;
   margin-top: 5px;
 
-  @media (max-width: 1024px) {
-    flex-direction: column;
-    margin-top: 0;
-    gap: 15px;
-
-    > * {
-      width: 100%;
-    }
-  }
-
   @media (max-width: 576px) {
-    flex-direction: column;
-    margin-top: 0;
+    margin: 0;
     justify-content: center;
     font-size: 12px;
-    padding: 0 3px;
-
-    > * {
-      width: 100%;
-    }
+    gap: 8px;
   }
 `;
 
@@ -44,8 +42,10 @@ export const Input = styled.input`
   border: none;
   outline: none;
   font-size: 16px;
-  padding: 0 20px;
+  padding: 0 15px;
+
   flex: 1;
+  width: 100%;
 
   @media (max-width: 576px) {
     font-size: 14px;
@@ -59,18 +59,21 @@ export const InputWrapper = styled.div<{ $bgColor: string }>`
   padding: 10px 20px;
   display: flex;
   align-items: center;
-  box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1);
+  border: solid 1px rgba(0, 0, 0, 0.2);
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
 
   @media (max-width: 768px) {
     flex: 1;
-    width: 100%;
     height: 45px;
   }
 
   @media (max-width: 576px) {
-    padding: 6px;
+    flex: 1;
+    padding: 6px 10px;
     height: 40px;
     border-radius: 5px;
+    width: 100%;
+    margin: 0;
   }
 `;
 
@@ -138,10 +141,10 @@ export const SortedDropdownItem = styled(Dropdown.Item)<{ $bgColor: string }>`
 `;
 
 export const Button = styled.button<{ $bgColor: string }>`
-  flex: 1;
+  flex: 0.3;
   display: flex;
   align-items: center;
-  padding: 10px 0;
+  padding: 10px 30px;
   justify-content: center;
   border: none;
   background-color: ${(props) => props?.$bgColor};
@@ -209,24 +212,11 @@ export const DropdownMenu = styled(Dropdown.Menu)<{ $bgColor: string }>`
 
 export const Divider = styled.div`
   border-top: 0.2px solid rgba(0, 0, 0, 0.2);
-  margin: 4px 10px;
-`;
-
-export const ActionItem = styled.div`
-  display: flex;
-  flex: 1.5;
-  justify-content: center;
-
-  @media (max-width: 576px) {
-    flex: 0;
-    justify-content: center;
-    margin-top: 10px;
-  }
+  margin: 2px 10px;
 `;
 
 export const StyledPageBox = styled(Box)`
   margin-top: 70px;
-  overflow-x: auto;
   width: 100vw;
   padding: 10px;
 
@@ -236,7 +226,7 @@ export const StyledPageBox = styled(Box)`
 
   @media (max-width: 576px) {
     padding: 8px;
-    margin-top: 64px;
+    margin-top: 50px;
   }
 `;
 
@@ -256,82 +246,6 @@ export const MainContainer = styled(Box)`
   }
 `;
 
-export const Date = styled.div`
-  flex: 1.5;
-  display: flex;
-  border-radius: 8px;
-
-  @media (max-width: 768px) {
-    padding: 0px;
-    margin-bottom: 10px;
-    gap: 200px;
-  }
-
-  @media (max-width: 576px) {
-    margin-bottom: 10px;
-    gap: 12px;
-  }
-`;
-
-export const DateContainer = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  flex: 1;
-  border-radius: 5px;
-  gap: 18px;
-  margin: 0 15px;
-
-  @media (max-width: 1024px) {
-    margin: 0 15px;
-    justify-content: space-around;
-    gap: -20px;
-  }
-
-  @media (max-width: 768px) {
-    gap: 8px;
-    margin: 0;
-  }
-
-  @media (max-width: 576px) {
-    flex-direction: row;
-  }
-`;
-
-export const DateTitle = styled.div`
-  font-size: 16px;
-  font-weight: 500;
-  white-space: nowrap;
-
-  @media (max-width: 768px) {
-    font-size: 20px;
-  }
-
-  @media (max-width: 576px) {
-    font-size: 14px;
-  }
-`;
-
-export const DateInput = styled.input`
-  background: transparent;
-  border: none;
-  border-bottom: 1px solid #bdbdbd;
-  outline: none;
-  padding: 5px 0;
-  font-size: 16px;
-  transition: all 0.3s ease;
-  min-width: 80px;
-  cursor: pointer;
-
-  @media (max-width: 768px) {
-    font-size: 20px;
-  }
-
-  @media (max-width: 576px) {
-    font-size: 14px;
-  }
-`;
-
 export const TitleBox = styled.div<{ $bgColor: string }>`
   display: flex;
   flex-direction: row;
@@ -348,6 +262,8 @@ export const TitleBox = styled.div<{ $bgColor: string }>`
 
   @media (max-width: 576px) {
     min-width: 640px;
+    font-size: 13px;
+    padding: 13px;
   }
 `;
 
@@ -360,6 +276,7 @@ export const ItemBox = styled.div`
   min-width: 620px;
 
   @media (max-width: 576px) {
+    padding: 8px;
     min-width: 640px;
   }
 `;
@@ -371,18 +288,82 @@ export const TitleComp = styled.div`
   min-width: 100px;
   word-wrap: break-word;
   overflow-wrap: break-word;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
   @media (max-width: 576px) {
-    font-size: 14px;
+    font-size: 13px;
     text-align: center;
   }
 `;
 
-export const BodyComponent = styled.div`
-  height: 500px;
+export const CancelComp = styled(RxCrossCircled)<{ $bgColor: string }>`
+  color: ${(props) => props?.$bgColor};
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 25px;
+  cursor: pointer;
 `;
 
-export const SalesContainer = styled.div`
+export const QuantityWrap = styled.input`
+  &::-webkit-inner-spin-button,
+  &::-webkit-outer-spin-button {
+    -webkit-appearance: inner-spin-button !important;
+    appearance: inner-spin-button !important;
+    opacity: 1 !important;
+    display: block !important;
+    height: 1.3em;
+    width: 1.3em;
+  }
+
+  -moz-appearance: textfield;
+
+  &:focus {
+    -moz-appearance: number-input;
+  }
+
+  width: 45%;
+  flex: 0.5;
+  padding: 4px 8px;
+  border-radius: 5px;
+  border: solid 0.5px rgba(0, 0, 0, 0.2);
+
+  @media (max-width: 576px) {
+    font-size: 14px;
+    &::-webkit-inner-spin-button,
+    &::-webkit-outer-spin-button {
+      -webkit-appearance: inner-spin-button !important;
+      appearance: inner-spin-button !important;
+      opacity: 1 !important;
+      display: block !important;
+      margin-top: 9%;
+      height: 1.1em;
+      width: 1.1em;
+    }
+  }
+`;
+
+export const Icon = styled.div`
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  color: #ffffff;
+
+  &:hover {
+    background: none;
+  }
+
+  @media (max-width: 576px) {
+    font-size: 14px;
+  }
+`;
+
+export const BodyComponent = styled.div``;
+
+export const CartContainer = styled.div`
   margin-top: 30px;
   overflow-x: auto;
   overflow-y: auto;
@@ -390,15 +371,14 @@ export const SalesContainer = styled.div`
   margin-bottom: 40px;
 
   @media (max-width: 768px) {
-    max-height: 100vh;
+    max-height: 70vh;
   }
 
   @media (max-width: 576px) {
     margin-bottom: 40px;
   }
 `;
-
-export const SalesDivider = styled.div`
+export const CartDivider = styled.div`
   border: solid 0.5px rgba(0, 0, 0, 0.2);
   transform: scaleY(0.9);
   min-width: 500px;
@@ -416,8 +396,6 @@ export const SalesDivider = styled.div`
 `;
 
 export const FooterContent = styled.div`
-  flex: 1;
-
   @media (max-width: 576px) {
     font-size: 14px;
   }
@@ -427,10 +405,10 @@ export const FooterBox = styled.div<{ $bgColor: string }>`
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
   text-align: center;
   background-color: ${(props) => props?.$bgColor};
-  padding: 15px;
+  padding: 15px 30px;
   border-radius: 10px;
   box-shadow: 0 4px 4px rgba(0, 0, 0, 0.2);
 
@@ -441,7 +419,7 @@ export const FooterBox = styled.div<{ $bgColor: string }>`
   }
 `;
 
-export const DownloadIcon = styled(LiaDownloadSolid)`
+export const DownloadIcon = styled(GiShoppingCart)`
   color: white;
-  font-size: 21px;
+  font-size: 22px;
 `;

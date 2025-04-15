@@ -71,12 +71,21 @@ export const TitleBox = styled.div<{ $bgColor: string }>`
   display: flex;
   flex-direction: row;
   justify-content: space-around;
-  background-color: ${(props) => props?.$bgColor};
-  padding: 15px;
+  background-color: ${(props) => props.$bgColor || "#fff"};
+  padding: 18px 15px;
   border-radius: 10px;
+  margin-bottom: 10px;
   margin: 0 10px;
   box-shadow: 0 4px 4px rgba(0, 0, 0, 0.2);
-  min-width: 600px;
+  min-width: 620px;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  isolation: isolate;
+
+  @media (max-width: 576px) {
+    min-width: 640px;
+  }
 `;
 
 export const ItemBox = styled.div`
@@ -99,8 +108,9 @@ export const TitleComp = styled.div`
   overflow-wrap: break-word;
 `;
 
-export const Button = styled.button<{ $bgColor: string; $isActive: boolean }>`
+export const Button = styled.button<{ $bgColor: string }>`
   flex: 0.7;
+  opacity: 0.5;
   background-color: ${(props) => props?.$bgColor};
   color: white;
   border: none;
@@ -116,6 +126,7 @@ export const Button = styled.button<{ $bgColor: string; $isActive: boolean }>`
   cursor: pointer;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   transition: box-shadow 0.3s ease, transform 0.2s ease;
+  cursor: no-drop !important;
 
   &:hover {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
@@ -127,12 +138,6 @@ export const Button = styled.button<{ $bgColor: string; $isActive: boolean }>`
     height: 45px;
     margin: 10px;
   }
-
-  ${({ $isActive }) =>
-    !$isActive &&
-    `   opacity:0.4;
-        cursor:no-drop !important;
-    `};
 `;
 
 export const Footer = styled.div`

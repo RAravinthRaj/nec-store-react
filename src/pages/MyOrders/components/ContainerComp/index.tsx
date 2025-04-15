@@ -9,20 +9,23 @@ import * as S from "./styles";
 import { Navbar } from "../../../../components";
 import Dropdown from "react-bootstrap/Dropdown";
 import { ChangeEvent, useState } from "react";
+import { OrderCard } from "../OrderCard";
+import { ORDERS_CONFIG } from "../../config";
 import { SideDrawer } from "../../../../navigator/SideDrawer";
-import { SALES_CONFIG } from "../../config";
-
+import { Box, useMediaQuery } from "@mui/material";
 export interface IContainerComp {}
 
 export const ContainerComp = ({}: IContainerComp) => {
   const theme = useTheme();
+  const isTab = useMediaQuery("(max-width:768px)");
+
   const [menu, setMenu] = useState(false);
   const [searchProductTitle, setSearchProductTitle] = useState("");
-  const [selectedCategory, setSelectedCategory] = useState(SALES_CONFIG.all);
+  const [selectedCategory, setSelectedCategory] = useState(ORDERS_CONFIG.all);
 
-  const category = ["All", "Stationary", "cosmetics", "household"];
+  const category = ["All", "Order Number", "Purchaser Number"];
 
-  const _setSearchDate = (e: ChangeEvent<HTMLInputElement>) => {
+  const _setSearchData = (e: ChangeEvent<HTMLInputElement>) => {
     setSearchProductTitle(e.target.value);
   };
 
@@ -67,6 +70,32 @@ export const ContainerComp = ({}: IContainerComp) => {
     );
   };
 
+  const _renderFabButton = () => {
+    if (isTab) {
+      return (
+        <Box sx={{ position: "fixed", bottom: 15, right: 50 }}>
+          <S.CartContainer $bgColor={theme.colors.backGround} to="/carts">
+            <S.CartIcon />
+          </S.CartContainer>
+          <S.CartItemsCount $bgColor={theme.colors.primary} $isMobile={true}>
+            <S.Count $bgColor={theme.colors.white}>20</S.Count>
+          </S.CartItemsCount>
+        </Box>
+      );
+    }
+
+    return (
+      <>
+        <S.CartContainer $bgColor={theme.colors.backGround} to="/carts">
+          <S.CartIcon />
+        </S.CartContainer>
+        <S.CartItemsCount $bgColor={theme.colors.primary} $isMobile={false}>
+          <S.Count $bgColor={theme.colors.white}>20</S.Count>
+        </S.CartItemsCount>
+      </>
+    );
+  };
+
   const _renderSearchBar = () => {
     return (
       <S.ActionItem>
@@ -76,7 +105,7 @@ export const ContainerComp = ({}: IContainerComp) => {
             type="input"
             placeholder="Search"
             onChange={(e) => {
-              _setSearchDate(e);
+              _setSearchData(e);
             }}
           />
         </S.InputWrapper>
@@ -85,26 +114,11 @@ export const ContainerComp = ({}: IContainerComp) => {
     );
   };
 
-  const _renderDate = () => {
-    return (
-      <S.Date>
-        <S.DateContainer>
-          <S.DateTitle>{SALES_CONFIG.from}</S.DateTitle>
-          <S.DateInput type="date"></S.DateInput>
-        </S.DateContainer>
-        <S.DateContainer>
-          <S.DateTitle>{SALES_CONFIG.to}</S.DateTitle>
-          <S.DateInput type="date"></S.DateInput>
-        </S.DateContainer>
-      </S.Date>
-    );
-  };
-
   const _renderActionItems = () => {
     return (
       <S.ActionContainer>
-        {_renderDate()}
         {_renderSearchBar()}
+        {_renderFabButton()}
       </S.ActionContainer>
     );
   };
@@ -120,12 +134,12 @@ export const ContainerComp = ({}: IContainerComp) => {
   const _renderSortedOptionsMenu = () => {
     return (
       <S.SortedDropdownMenu $bgColor={theme.colors.white}>
-        {SALES_CONFIG.sortedOptions.map((item, id) => (
+        {ORDERS_CONFIG.sortedOptions.map((item, id) => (
           <div key={id}>
             <S.SortedDropdownItem $bgColor={theme.colors.primary}>
               <S.SortedIconText>{item}</S.SortedIconText>
             </S.SortedDropdownItem>
-            {id !== SALES_CONFIG.sortedOptions.length - 1 && <S.Divider />}
+            {id !== ORDERS_CONFIG.sortedOptions.length - 1 && <S.Divider />}
           </div>
         ))}
       </S.SortedDropdownMenu>
@@ -141,40 +155,23 @@ export const ContainerComp = ({}: IContainerComp) => {
     );
   };
 
-  const _renderSalesTab = () => {
+  const _orders = () => {
     return (
-      <S.SalesContainer>
-        <S.TitleBox $bgColor={theme.colors.secondaryBackGround}>
-          {SALES_CONFIG.title?.map((data, index) => (
-            <S.TitleComp key={index}>{data}</S.TitleComp>
-          ))}
-        </S.TitleBox>
-        <S.BodyComponent>
-          {SALES_CONFIG.salesItems.map((d, index) => (
-            <div>
-              <S.ItemBox key={index}>
-                {Object.entries(d)?.map(([key, value], id) => (
-                  <S.TitleComp key={id}>{value}</S.TitleComp>
-                ))}
-              </S.ItemBox>
-              <S.SalesDivider />
-            </div>
-          ))}
-        </S.BodyComponent>
-      </S.SalesContainer>
-    );
-  };
-
-  const _renderSalesFooter = () => {
-    return (
-      <S.FooterBox $bgColor={theme.colors.secondaryBackGround}>
-        <S.FooterContent>{SALES_CONFIG.itemsSold}45</S.FooterContent>
-        <S.FooterContent>{SALES_CONFIG.prMRP}4500</S.FooterContent>
-        <S.Button $bgColor={theme.colors.primary}>
-          <S.DownloadIcon />
-          {SALES_CONFIG.downloadButton}
-        </S.Button>
-      </S.FooterBox>
+      <S.SeparateOrder>
+        {Object.entries(ORDERS_CONFIG.orders).map(([date, orderList]) => (
+          <div key={date}>
+            <S.OrderTitle>
+              <S.DateContainer>{date}</S.DateContainer>
+              <S.Line />
+            </S.OrderTitle>
+            <S.OrderContainer>
+              {orderList.map((order, index) => (
+                <OrderCard key={index} individualOrder={order} />
+              ))}
+            </S.OrderContainer>
+          </div>
+        ))}
+      </S.SeparateOrder>
     );
   };
 
@@ -182,8 +179,7 @@ export const ContainerComp = ({}: IContainerComp) => {
     return (
       <div>
         {_renderActionItems()}
-        {_renderSalesTab()}
-        {_renderSalesFooter()}
+        {_orders()}
       </div>
     );
   };

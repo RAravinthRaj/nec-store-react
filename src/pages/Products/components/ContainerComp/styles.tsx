@@ -13,22 +13,28 @@ import { Box, Menu, MenuItem } from "@mui/material";
 import { Link } from "react-router-dom";
 import { PiShoppingCartBold } from "react-icons/pi";
 
+export const ActionItem = styled.div`
+  display: flex;
+  flex: 1.5;
+  justify-content: center;
+
+  @media (max-width: 576px) {
+    justify-content: center;
+    flex: 1;
+    margin-top: 10px;
+  }
+`;
+
 export const ActionContainer = styled.div`
   display: flex;
   align-items: center;
-  padding: 0 13px;
   margin-top: 15px;
 
-  @media (max-width: 768px) {
-    margin-top: 0;
-    gap: 10px;
-  }
-
   @media (max-width: 576px) {
-    margin-top: 0;
+    margin: 0;
     justify-content: center;
     font-size: 12px;
-    padding: 0 13px;
+    gap: 8px;
   }
 `;
 
@@ -37,8 +43,10 @@ export const Input = styled.input`
   border: none;
   outline: none;
   font-size: 16px;
-  padding: 0 20px;
+  padding: 0 15px;
+
   flex: 1;
+  width: 100%;
 
   @media (max-width: 576px) {
     font-size: 14px;
@@ -46,32 +54,34 @@ export const Input = styled.input`
 `;
 
 export const InputWrapper = styled.div<{ $bgColor: string }>`
-  flex: 3;
+  flex: 8;
   height: 50px;
   border-radius: 7px;
   padding: 10px 20px;
   display: flex;
   align-items: center;
-  box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1);
+  border: solid 1px rgba(0, 0, 0, 0.2);
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
 
   @media (max-width: 768px) {
     flex: 1;
-    width: 100%;
     height: 45px;
   }
 
   @media (max-width: 576px) {
-    padding: 6px;
+    flex: 1;
+    padding: 6px 10px;
     height: 40px;
     border-radius: 5px;
+    width: 100%;
+    margin: 0;
   }
 `;
-
 export const SortContainer = styled.div`
   display: flex;
   align-items: center;
   flex: 1;
-  margin-top: 5px;
+
   margin-left: 20px;
 
   @media (max-width: 768px) {
@@ -81,7 +91,6 @@ export const SortContainer = styled.div`
 
   @media (max-width: 576px) {
     justify-content: flex-end;
-    flex: 0.5;
   }
 `;
 
@@ -256,7 +265,6 @@ export const ProductContainer = styled.div`
 
   @media (max-width: 1024px) {
     grid-template-columns: repeat(3, 1fr);
-    gap: 0px;
   }
 
   @media (max-width: 768px) {
@@ -281,17 +289,6 @@ export const DropdownMenu = styled(Dropdown.Menu)<{ $bgColor: string }>`
 export const Divider = styled.div`
   border-top: 0.2px solid rgba(0, 0, 0, 0.2);
   margin: 4px 10px;
-`;
-
-export const ActionItem = styled.div`
-  display: flex;
-  flex: 1;
-  justify-content: space-between;
-
-  @media (max-width: 576px) {
-    padding: 0;
-    justify-content: center;
-  }
 `;
 
 export const FixedMenu = styled(Menu)<{ $bgColor: string }>`
@@ -353,7 +350,7 @@ export const StyledPageBox = styled(Box)`
 
   @media (max-width: 576px) {
     padding: 8px;
-    margin-top: 64px;
+    margin-top: 50px;
   }
 `;
 
@@ -376,7 +373,7 @@ export const CartContainer = styled(Link)<{ $bgColor: string }>`
   border: solid 2px black;
 
   @media (max-width: 576px) {
-    padding: 10px 8px;
+    padding: 12px 8px;
   }
 `;
 

@@ -31,7 +31,7 @@ export const ContainerComp = ({}: IContainerComp) => {
   const [selectedCategory, setSelectedCategory] = useState(PRODUCTS_CONFIG.all);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
-  const isRetailer = true;
+  const isRetailer = false;
 
   const category = ["All", "Stationary", "cosmetics", "household"];
 
@@ -43,7 +43,7 @@ export const ContainerComp = ({}: IContainerComp) => {
     return (
       <S.CustomToggle $bgColor={theme.colors.backGround}>
         <S.IconText $bgColor={theme.colors.textSecondary}>
-          {selectedCategory.substring(0, 3)}
+          {selectedCategory.substring(0, 4)}
         </S.IconText>
         <S.DropDownIcon $bgColor={theme.colors.backGround} />
       </S.CustomToggle>

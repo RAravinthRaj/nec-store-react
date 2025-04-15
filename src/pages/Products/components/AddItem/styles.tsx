@@ -98,6 +98,16 @@ export const Input = styled.input`
 
   @media (max-width: 576px) {
     font-size: 14px;
+    &::-webkit-inner-spin-button,
+    &::-webkit-outer-spin-button {
+      -webkit-appearance: inner-spin-button !important;
+      appearance: inner-spin-button !important;
+      opacity: 1 !important;
+      display: block !important;
+      margin-top: 9%;
+      height: 1.1em;
+      width: 1.1em;
+    }
   }
 `;
 
