@@ -141,10 +141,10 @@ export const SortedDropdownItem = styled(Dropdown.Item)<{ $bgColor: string }>`
 `;
 
 export const Button = styled.button<{ $bgColor: string }>`
-  flex: 0.3;
+  flex: 0.7;
   display: flex;
   align-items: center;
-  padding: 10px 30px;
+  padding: 10px 10px;
   justify-content: center;
   border: none;
   background-color: ${(props) => props?.$bgColor};
@@ -250,20 +250,18 @@ export const TitleBox = styled.div<{ $bgColor: string }>`
   display: flex;
   flex-direction: row;
   justify-content: space-around;
-  background-color: ${(props) => props?.$bgColor};
+  background-color: ${(props) => props.$bgColor};
   padding: 18px 15px;
   border-radius: 10px;
   margin-bottom: 10px;
   box-shadow: 0 4px 4px rgba(0, 0, 0, 0.2);
-  min-width: 620px;
+  min-width: 640px;
   position: sticky;
-
+  top: 0;
   z-index: 1;
 
   @media (max-width: 576px) {
     min-width: 640px;
-    font-size: 13px;
-    padding: 13px;
   }
 `;
 
@@ -271,12 +269,12 @@ export const ItemBox = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-around;
-  padding: 15px;
+  padding: 10px;
   border-radius: 10px;
-  min-width: 620px;
+  margin: 5px 0px;
+  min-width: 600px;
 
   @media (max-width: 576px) {
-    padding: 8px;
     min-width: 640px;
   }
 `;
@@ -366,8 +364,7 @@ export const BodyComponent = styled.div``;
 export const CartContainer = styled.div`
   margin-top: 30px;
   overflow-x: auto;
-  overflow-y: auto;
-  max-height: 60vh;
+  max-height: 69vh;
   margin-bottom: 40px;
 
   @media (max-width: 768px) {
@@ -382,7 +379,7 @@ export const CartDivider = styled.div`
   border: solid 0.5px rgba(0, 0, 0, 0.2);
   transform: scaleY(0.9);
   min-width: 500px;
-  margin: 5px;
+  margin: 0px 7px;
 
   @media (max-width: 768px) {
     margin: 10px 20px;
@@ -422,4 +419,12 @@ export const FooterBox = styled.div<{ $bgColor: string }>`
 export const DownloadIcon = styled(GiShoppingCart)`
   color: white;
   font-size: 22px;
+`;
+
+export const Circle = styled.div<{ $bgColor: string; $isNotFirst: boolean }>`
+  height: 40px;
+  width: 40px;
+  background-color: ${(props) => props?.$bgColor};
+  border-radius: 50%;
+  margin-left: ${(props) => (props.$isNotFirst ? "-15px" : "0px")};
 `;

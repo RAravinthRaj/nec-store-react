@@ -370,16 +370,16 @@ export const TitleComp = styled.div`
   flex: 1;
   text-align: center;
   white-space: normal;
-  min-width: 100px;
-  word-wrap: break-word;
   overflow-wrap: break-word;
+  word-break: break-word;
   display: flex;
   align-items: center;
   justify-content: center;
+  text-align: center;
+  padding: 0 8px;
 
   @media (max-width: 576px) {
     font-size: 13px;
-    text-align: center;
   }
 `;
 

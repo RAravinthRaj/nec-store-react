@@ -12,3 +12,4 @@ export { default as Orders } from "./Orders/Order";
 export { default as Sales } from "./Sales/Sales";
 export { default as Carts } from "./Carts/Carts";
 export { default as MyOrders } from "./MyOrders/MyOrders";
+export { default as Users } from "./Users/Carts";

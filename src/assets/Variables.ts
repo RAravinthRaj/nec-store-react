@@ -32,6 +32,9 @@ export const theme = {
     white: "#ffffff",
     cancel: "rgb(237, 67, 67)",
     swalButton: "#000080",
+    red: "#E60023",
+    orange: "#FF6F00",
+    green: "#39FF14",
   },
   fonts: {
     sourceSerifPro: "Source Serif Pro",
