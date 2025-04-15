@@ -10,8 +10,9 @@ import * as S from "./styles";
 import { useTheme } from "../../../../hooks";
 import { useState } from "react";
 import { toast } from "react-toastify";
-import { Dropdown } from "react-bootstrap";
 import { PRODUCTS_CONFIG } from "../../config";
+import MenuItem from "@mui/material/MenuItem";
+import Select, { SelectChangeEvent } from "@mui/material/Select";
 
 export interface IEditItem {
   modalShow: boolean;
@@ -31,11 +32,6 @@ export const EditItemModal = ({
 }: IEditItem) => {
   const theme = useTheme();
 
-  const productAdded = () => {
-    toast.success("Product Edited Successfully");
-    onClose();
-  };
-
   const category = ["Stationary", "Cosmetics", "Soap"];
   const [title, setTitle] = useState(individualProduct.Title);
   const [Quantity, setQuantity] = useState(individualProduct.Quantity);
@@ -44,40 +40,38 @@ export const EditItemModal = ({
     individualProduct.Category
   );
 
-  const _renderDropDownToggle = () => {
-    return (
-      <S.CustomToggle $bgColor={theme.colors.backGround}>
-        <S.IconText>{selectedCategory}</S.IconText>
-      </S.CustomToggle>
-    );
+  const _productEdited = () => {
+    toast.success("Product Edited Successfully");
+    onClose();
   };
 
-  const _renderDropDownMenu = () => {
+  const _handleChange = (event: SelectChangeEvent<unknown>) => {
+    setSelectedCategory(event.target.value as string);
+    if (!modalShow) {
+      setSelectedCategory("");
+    }
+  };
+
+  const _renderMenu = () => {
     return (
-      <S.DropDownMenu>
-        {category.map((cat, id) => {
-          return (
-            <div key={id}>
-              <Dropdown.Item key={cat} eventKey={cat}>
+      <S.StyledFormControl fullWidth>
+        <Select
+          value={selectedCategory}
+          onChange={(e) => _handleChange(e)}
+          displayEmpty
+          inputProps={{ "aria-label": "Category" }}
+          renderValue={(selected) => (selected ? selected : "Category")}
+        >
+          {category.map((cat, id) => {
+            return (
+              <MenuItem key={id} value={cat}>
                 {cat}
-              </Dropdown.Item>
-            </div>
-          );
-        })}
-      </S.DropDownMenu>
-    );
-  };
-
-  const _showDropDown = () => {
-    return (
-      <S.CustomDropdown
-        onSelect={(eventKey) => {
-          setSelectedCategory(eventKey);
-        }}
-      >
-        {_renderDropDownToggle()}
-        {_renderDropDownMenu()}
-      </S.CustomDropdown>
+                <S.Divider />
+              </MenuItem>
+            );
+          })}
+        </Select>
+      </S.StyledFormControl>
     );
   };
 
@@ -95,42 +89,44 @@ export const EditItemModal = ({
       <Modal.Body>
         <Form>
           <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-            <Form.Label>{PRODUCTS_CONFIG.Title}</Form.Label>
+            <Form.Label>{PRODUCTS_CONFIG.title}</Form.Label>
             <S.InputWrapper>
               <S.Input
-                type="input"
+                type="text"
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
               />
             </S.InputWrapper>
           </Form.Group>
           <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-            <Form.Label>{PRODUCTS_CONFIG.Category}</Form.Label>
-            <S.InputWrapper>{_showDropDown()}</S.InputWrapper>
+            <Form.Label>{PRODUCTS_CONFIG.category}</Form.Label>
+            {_renderMenu()}
           </Form.Group>
           <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-            <Form.Label>{PRODUCTS_CONFIG.Quantity}</Form.Label>
+            <Form.Label>{PRODUCTS_CONFIG.quantity}</Form.Label>
             <S.InputWrapper>
               <S.Input
-                type="input"
+                type="number"
+                min="0"
                 value={Quantity}
                 onChange={(e) => setQuantity(Number(e.target.value))}
               />
             </S.InputWrapper>
           </Form.Group>
           <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
-            <Form.Label>{PRODUCTS_CONFIG.MRP}</Form.Label>
+            <Form.Label>{PRODUCTS_CONFIG.mrp}</Form.Label>
             <S.InputWrapper>
               <S.Input
-                type="input"
+                type="number"
+                min="0"
                 value={MRP}
                 onChange={(e) => setMRP(Number(e.target.value))}
               />
             </S.InputWrapper>
           </Form.Group>
           <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-            <Form.Label>{PRODUCTS_CONFIG.Image}</Form.Label>
-            <S.InputRounder type="file" />
+            <Form.Label>{PRODUCTS_CONFIG.image}</Form.Label>
+            <input type="file" className="form-control" />
           </Form.Group>
         </Form>
       </Modal.Body>
@@ -142,9 +138,9 @@ export const EditItemModal = ({
       <S.Footer>
         <S.Button
           $bgColor={theme.colors.primary}
-          onClick={() => productAdded()}
+          onClick={() => _productEdited()}
         >
-          {PRODUCTS_CONFIG.SubmitButton}
+          {PRODUCTS_CONFIG.submitButton}
         </S.Button>
       </S.Footer>
     );
@@ -152,11 +148,11 @@ export const EditItemModal = ({
 
   return (
     <S.ModalContainer
-      size="lg"
       aria-labelledby="contained-modal-title-vcenter"
       centered
       show={modalShow}
       onHide={onClose}
+      backdrop="static"
     >
       {_renderModalHeader()}
       {_renderModalBody()}

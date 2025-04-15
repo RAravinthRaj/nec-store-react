@@ -17,17 +17,17 @@ export const DrawerBox = styled(Box)`
 `;
 
 export const Icon = styled.img<{ $bgColor: string }>`
-  height: 14.5%;
-  width: 14.5%;
+  height: 14%;
+  width: 14%;
 
   @media (max-width: 768px) {
-    height: 12%;
-    width: 12%;
+    height: 10%;
+    width: 10%;
   }
 
   @media (max-width: 576px) {
-    height: 14%;
-    width: 14%;
+    height: 13%;
+    width: 13%;
   }
 `;
 
@@ -105,7 +105,18 @@ export const ItemContainer = styled(ListItem)<{
 export const Logo = styled.img`
   height: 22%;
   width: 22%;
-  margin-left: -6px;
+
+  @media (max-width: 768px) {
+    height: 15%;
+    width: 15%;
+    margin-left: -6px;
+  }
+
+  @media (max-width: 576px) {
+    height: 20%;
+    width: 20%;
+    margin-left: -6px;
+  }
 `;
 
 export const Title = styled.div`

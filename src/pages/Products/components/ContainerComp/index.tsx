@@ -9,7 +9,7 @@ import * as S from "./styles";
 import { Navbar } from "../../../../components";
 import { useMediaQuery } from "@mui/material";
 import Dropdown from "react-bootstrap/Dropdown";
-import { useState } from "react";
+import { ChangeEvent, useState } from "react";
 import { AddItemModal } from "../AddItem";
 import { AddCategoryModal } from "../AddCategory";
 import { ProductCard } from "../ProductCard";
@@ -28,18 +28,22 @@ export const ContainerComp = ({}: IContainerComp) => {
   const [openCategory, setOpenCategory] = useState(false);
   const [menu, setMenu] = useState(false);
   const [searchProductTitle, setSearchProductTitle] = useState("");
-  const [selectedCategory, setSelectedCategory] = useState(PRODUCTS_CONFIG.All);
+  const [selectedCategory, setSelectedCategory] = useState(PRODUCTS_CONFIG.all);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const isRetailer = true;
 
   const category = ["All", "Stationary", "cosmetics", "household"];
 
+  const _setSearchDate = (e: ChangeEvent<HTMLInputElement>) => {
+    setSearchProductTitle(e.target.value);
+  };
+
   const _renderCategoryDropDownTitle = () => {
     return (
       <S.CustomToggle $bgColor={theme.colors.backGround}>
         <S.IconText $bgColor={theme.colors.textSecondary}>
-          {selectedCategory.substring(0, 4)}
+          {selectedCategory.substring(0, 3)}
         </S.IconText>
         <S.DropDownIcon $bgColor={theme.colors.backGround} />
       </S.CustomToggle>
@@ -49,12 +53,13 @@ export const ContainerComp = ({}: IContainerComp) => {
   const _renderCategoryDropDownMenu = () => {
     return (
       <S.CategoryDropDownMenu>
-        {category.map((cat, id) => {
+        {category?.map((cat, id) => {
           return (
             <div key={id}>
               <Dropdown.Item key={cat} eventKey={cat}>
                 {cat}
               </Dropdown.Item>
+              {id != category.length - 1 && <S.Divider />}
             </div>
           );
         })}
@@ -87,7 +92,7 @@ export const ContainerComp = ({}: IContainerComp) => {
               }}
             >
               <S.AddIcon />
-              {PRODUCTS_CONFIG.AddItemTitle}
+              {PRODUCTS_CONFIG.addItemTitle}
             </S.Button>
             <S.Button
               $bgColor={theme.colors.primary}
@@ -95,7 +100,7 @@ export const ContainerComp = ({}: IContainerComp) => {
                 setOpenCategory(true);
               }}
             >
-              <S.AddIcon /> {PRODUCTS_CONFIG.AddCategoryTitle}
+              <S.AddIcon /> {PRODUCTS_CONFIG.addCategoryTitle}
             </S.Button>
           </S.ButtonContainer>
         );
@@ -119,11 +124,11 @@ export const ContainerComp = ({}: IContainerComp) => {
       <S.ActionItem>
         <S.InputWrapper $bgColor={theme.colors.backGround}>
           {_showDropDown()}
-          <S.Input type="input" placeholder="Search" />
-          <S.SearchIcon
-            $bgColor={theme.colors.backGround}
-            onChange={(event) => {
-              setSearchProductTitle((event.target as HTMLInputElement).value);
+          <S.Input
+            type="input"
+            placeholder="Search"
+            onChange={(e) => {
+              _setSearchDate(e);
             }}
           />
         </S.InputWrapper>
@@ -164,7 +169,7 @@ export const ContainerComp = ({}: IContainerComp) => {
               onClick={() => {
                 setAnchorEl(null);
               }}
-              $bgColor={theme.colors.primary}
+              $bgColor={theme.colors.white}
               disableScrollLock={true}
             >
               <S.StyledMenuItem
@@ -172,8 +177,8 @@ export const ContainerComp = ({}: IContainerComp) => {
                   setOpenItem(true);
                 }}
               >
-                <S.AddIcon />
-                {PRODUCTS_CONFIG.AddItemTitle}
+                <S.FabAddIcon />
+                {PRODUCTS_CONFIG.addItemTitle}
               </S.StyledMenuItem>
               <S.FabDivider />
               <S.StyledMenuItem
@@ -181,8 +186,8 @@ export const ContainerComp = ({}: IContainerComp) => {
                   setOpenCategory(true);
                 }}
               >
-                <S.AddIcon />
-                {PRODUCTS_CONFIG.AddCategoryTitle}
+                <S.FabAddIcon />
+                {PRODUCTS_CONFIG.addCategoryTitle}
               </S.StyledMenuItem>
             </S.FixedMenu>
           </div>
@@ -212,15 +217,13 @@ export const ContainerComp = ({}: IContainerComp) => {
 
   const _renderSortedOptionsMenu = () => {
     return (
-      <S.SortedDropdownMenu $bgColor={theme.colors.secondaryBackGround}>
+      <S.SortedDropdownMenu $bgColor={theme.colors.white}>
         {PRODUCTS_CONFIG.sortedOptions.map((dept, id) => (
           <div key={id}>
             <S.SortedDropdownItem $bgColor={theme.colors.primary}>
               <S.SortedIconText>{dept}</S.SortedIconText>
             </S.SortedDropdownItem>
-            {id !== PRODUCTS_CONFIG.sortedOptions.length - 1 && (
-              <S.NameDivider />
-            )}
+            {id !== PRODUCTS_CONFIG.sortedOptions.length - 1 && <S.Divider />}
           </div>
         ))}
       </S.SortedDropdownMenu>

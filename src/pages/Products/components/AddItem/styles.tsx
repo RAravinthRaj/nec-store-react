@@ -7,28 +7,23 @@ Written by Aravinth Raj R <aravinthr235@gmail.com>, 2025.
 import Modal from "react-bootstrap/Modal";
 import styled from "styled-components";
 import { RxCross2 } from "react-icons/rx";
-import { SlArrowDown } from "react-icons/sl";
-import { Dropdown } from "react-bootstrap";
+import FormControl from "@mui/material/FormControl";
+import Select from "@mui/material/Select";
 
 export const ModalContainer = styled(Modal)`
-  width: 45%;
   display: flex;
   align-items: center;
-  padding: 20px;
-  position: fixed;
-  top: 3%;
-  left: 28%;
-
-  @media (max-width: 768px) {
-    left: 15%;
-    width: 70%;
-  }
+  justify-content: center;
+  max-height: 92vh;
+  margin-top: 35px !important;
 
   @media (max-width: 576px) {
-    left: 5%;
-    width: 90%;
-    height: 80%;
-    top: 10%;
+    max-height: 92vh;
+    margin-top: 25px !important;
+    .modal-dialog {
+      padding: 13px !important;
+      justify-content: center;
+    }
   }
 `;
 
@@ -45,10 +40,10 @@ export const Header = styled(Modal.Header)``;
 export const CloseButton = styled(RxCross2)`
   position: absolute;
   right: 0.2%;
-  transform: translateY(-160%);
+  transform: translateY(-155%);
   background: none;
   border: none;
-  font-size: 38px;
+  font-size: 34px;
   cursor: pointer;
   color: white;
   z-index: 2000;
@@ -60,7 +55,6 @@ export const CloseButton = styled(RxCross2)`
   @media (max-width: 576px) {
     transform: translateY(-190%);
     font-size: 25px;
-    position: fixed;
   }
 `;
 
@@ -79,6 +73,23 @@ export const InputWrapper = styled.div`
 `;
 
 export const Input = styled.input`
+  &::-webkit-inner-spin-button,
+  &::-webkit-outer-spin-button {
+    -webkit-appearance: inner-spin-button !important;
+    appearance: inner-spin-button !important;
+    opacity: 1 !important;
+    display: block !important;
+    height: 1.3em;
+    width: 1.3em;
+  }
+  margin-right: -5px;
+
+  -moz-appearance: textfield;
+
+  &:focus {
+    -moz-appearance: number-input;
+  }
+
   background: transparent;
   border: none;
   outline: none;
@@ -103,15 +114,6 @@ export const Icon = styled.div`
   @media (max-width: 576px) {
     font-size: 14px;
   }
-`;
-
-export const InputRounder = styled.input`
-  background: transparent;
-  border: none;
-  outline: none;
-  font-size: 13px;
-  flex: 1;
-  gap: 10%;
 `;
 
 export const Button = styled.button<{ $bgColor: string }>`
@@ -148,49 +150,36 @@ export const Footer = styled(Modal.Footer)`
   justify-content: center;
 `;
 
-export const CustomToggle = styled(Dropdown.Toggle)<{ $bgColor: string }>`
-  background: none;
+export const StyledFormControl = styled(FormControl)`
+  border-radius: 7px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
   border: none;
-  display: flex;
-  align-items: center;
-  gap: 7px;
+  height: 45px;
+  max-height: 45px;
 
-  padding: 0;
-  margin: 0;
-  --bs-btn-active-bg: none;
-  --bs-btn-hover-bg: none;
+  .MuiOutlinedInput-root {
+    border-radius: 7px;
+    height: 100%;
+    border: none !important;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0);
 
-  &::after {
-    display: none;
+    &:hover {
+      border: none !important;
+    }
+
+    &.Mui-focused {
+      border: none !important;
+    }
+
+    fieldset {
+      border: none !important;
+    }
   }
 `;
 
-export const CustomDropdown = styled(Dropdown)`
-  margin-right: 17px;
+export const Divider = styled.div`
+  border-top: 0.2px solid rgba(0, 0, 0, 0.2);
+  margin: 4px 10px;
 `;
 
-export const IconText = styled.div<{ $bgColor: string }>`
-  color: ${(props) => props.$bgColor};
-  padding-right: 700%;
-
-  @media (max-width: 768px) {
-    font-size: 14px;
-    padding-right: 500%;
-  }
-
-  @media (max-width: 576px) {
-    font-size: 14px;
-    padding-right: 250%;
-  }
-`;
-
-export const DropDownMenu = styled(Dropdown.Menu)`
-  margin-right: 1%;
-  margin-top: 2%;
-  z-index: 1500;
-
-  @media (max-width: 576px) {
-    margin-left: 80px;
-    width: 10%;
-  }
-`;
+export const SelectStyle = styled(Select)``;

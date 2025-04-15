@@ -12,30 +12,26 @@ export const ModalContainer = styled(Modal)`
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 50px;
-  position: absolute;
-  top: 3%;
-  width: 70%;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  max-height: 92vh;
+  margin-top: 35px !important;
 
   @media (max-width: 768px) {
-    width: 85%;
-    transform: translate(-50%, -50%);
+    size: 180%;
   }
 
   @media (max-width: 576px) {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 100%;
-    transform: translate(-50%, -50%);
+    max-height: 92vh;
+    margin-top: 25px !important;
+    .modal-dialog {
+      padding: 13px !important;
+      justify-content: center;
+    }
   }
 `;
 
 export const ModalBody = styled.div`
   padding: 10px 5px;
+  max-height: 50vh;
   white-space: nowrap;
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
@@ -55,13 +51,14 @@ export const CloseButton = styled(RxCross2)`
   right: 1%;
   background: none;
   border: none;
-  font-size: 38px;
+  font-size: 36px;
   cursor: pointer;
   color: white;
   z-index: 2000;
 
   @media (max-width: 768px) {
     font-size: 32px;
+    top: -7%;
   }
 
   @media (max-width: 576px) {
@@ -98,6 +95,8 @@ export const TitleComp = styled.div`
   white-space: normal;
   min-width: 100px;
   padding: 0 5px;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
 `;
 
 export const Button = styled.button<{ $bgColor: string; $isActive: boolean }>`
@@ -106,7 +105,7 @@ export const Button = styled.button<{ $bgColor: string; $isActive: boolean }>`
   color: white;
   border: none;
   height: 45px;
-  margin: 30px;
+  margin: 20px 30px;
   padding: 10px;
   outline: none;
   font-size: 16px;
@@ -170,5 +169,5 @@ export const BodyComponent = styled.div`
 
 export const Amount = styled.h4`
   text-align: center;
-  margin-top: 40px;
+  margin-top: 20px;
 `;

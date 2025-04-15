@@ -8,7 +8,7 @@ import { useTheme } from "../../../../hooks";
 import * as S from "./styles";
 import { Navbar } from "../../../../components";
 import Dropdown from "react-bootstrap/Dropdown";
-import { useState } from "react";
+import { ChangeEvent, useState } from "react";
 import { OrderCard } from "../OrderCard";
 import { ORDERS_CONFIG } from "../../config";
 import { SideDrawer } from "../../../../navigator/SideDrawer";
@@ -19,15 +19,19 @@ export const ContainerComp = ({}: IContainerComp) => {
 
   const [menu, setMenu] = useState(false);
   const [searchProductTitle, setSearchProductTitle] = useState("");
-  const [selectedCategory, setSelectedCategory] = useState(ORDERS_CONFIG.All);
+  const [selectedCategory, setSelectedCategory] = useState(ORDERS_CONFIG.all);
 
-  const category = ["All", "Stationary", "cosmetics", "household"];
+  const category = ["All", "Order Number", "Purchaser Number"];
+
+  const _setSearchData = (e: ChangeEvent<HTMLInputElement>) => {
+    setSearchProductTitle(e.target.value);
+  };
 
   const _renderCategoryDropDownTitle = () => {
     return (
       <S.CustomToggle $bgColor={theme.colors.backGround}>
         <S.IconText $bgColor={theme.colors.textSecondary}>
-          {selectedCategory.substring(0, 4)}
+          {selectedCategory.substring(0, 3)}
         </S.IconText>
         <S.DropDownIcon $bgColor={theme.colors.backGround} />
       </S.CustomToggle>
@@ -37,12 +41,13 @@ export const ContainerComp = ({}: IContainerComp) => {
   const _renderCategoryDropDownMenu = () => {
     return (
       <S.CategoryDropDownMenu>
-        {category.map((cat, id) => {
+        {category?.map((cat, id) => {
           return (
             <div key={id}>
               <Dropdown.Item key={cat} eventKey={cat}>
                 {cat}
               </Dropdown.Item>
+              {id != category.length - 1 && <S.Divider />}
             </div>
           );
         })}
@@ -68,11 +73,11 @@ export const ContainerComp = ({}: IContainerComp) => {
       <S.ActionItem>
         <S.InputWrapper $bgColor={theme.colors.backGround}>
           {_showDropDown()}
-          <S.Input type="input" placeholder="Search" />
-          <S.SearchIcon
-            $bgColor={theme.colors.backGround}
-            onChange={(event) => {
-              setSearchProductTitle((event.target as HTMLInputElement).value);
+          <S.Input
+            type="input"
+            placeholder="Search"
+            onChange={(e) => {
+              _setSearchData(e);
             }}
           />
         </S.InputWrapper>
@@ -95,13 +100,13 @@ export const ContainerComp = ({}: IContainerComp) => {
 
   const _renderSortedOptionsMenu = () => {
     return (
-      <S.SortedDropdownMenu $bgColor={theme.colors.secondaryBackGround}>
-        {ORDERS_CONFIG.sortedOptions.map((dept, id) => (
+      <S.SortedDropdownMenu $bgColor={theme.colors.white}>
+        {ORDERS_CONFIG.sortedOptions.map((item, id) => (
           <div key={id}>
             <S.SortedDropdownItem $bgColor={theme.colors.primary}>
-              <S.SortedIconText>{dept}</S.SortedIconText>
+              <S.SortedIconText>{item}</S.SortedIconText>
             </S.SortedDropdownItem>
-            {id !== ORDERS_CONFIG.sortedOptions.length - 1 && <S.NameDivider />}
+            {id !== ORDERS_CONFIG.sortedOptions.length - 1 && <S.Divider />}
           </div>
         ))}
       </S.SortedDropdownMenu>
@@ -117,13 +122,13 @@ export const ContainerComp = ({}: IContainerComp) => {
     );
   };
 
-  const _products = () => {
+  const _orders = () => {
     return (
-      <S.ProductContainer>
+      <S.OrderContainer>
         {ORDERS_CONFIG.orders.map((order, id) => (
           <OrderCard key={id} individualOrder={order} />
         ))}
-      </S.ProductContainer>
+      </S.OrderContainer>
     );
   };
 
@@ -131,7 +136,7 @@ export const ContainerComp = ({}: IContainerComp) => {
     return (
       <div>
         {_renderActionItems()}
-        {_products()}
+        {_orders()}
       </div>
     );
   };

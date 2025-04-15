@@ -9,6 +9,7 @@ import * as S from "./styles";
 import { useTheme, useIsNotDesktop } from "../../hooks";
 import { SIDE_DRAWER_CONFIG } from "./config";
 import { Box } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 export interface ISideDrawer {
   menu: boolean;
@@ -18,13 +19,19 @@ export interface ISideDrawer {
 export const SideDrawer = ({ menu, toggleMenu }: ISideDrawer) => {
   const theme = useTheme();
   const isMobile = useIsNotDesktop();
+  const navigate = useNavigate();
 
   const _renderHeaderSM = () => {
     if (isMobile) {
       return (
         <div>
           <S.Item>
-            <S.Logo src={theme.images.logo} />
+            <S.Logo
+              src={theme.images.logo}
+              onClick={() => {
+                navigate("/products");
+              }}
+            />
             <S.Title>{SIDE_DRAWER_CONFIG.title}</S.Title>
           </S.Item>
           <S.Divider />

@@ -24,9 +24,9 @@ export const AddCategoryModal = ({
   const theme = useTheme();
   const [selectedCategory, setSelectedCategory] = useState("");
 
-  const categoryAdded = () => {
+  const _categoryAdded = () => {
     setSelectedCategory(selectedCategory);
-    toast.success(PRODUCTS_CONFIG.CategoryToastSuccess);
+    toast.success(PRODUCTS_CONFIG.categoryToastSuccess);
     onClose();
   };
 
@@ -35,7 +35,7 @@ export const AddCategoryModal = ({
       <S.Header>
         <S.CloseButton onClick={onClose} />
         <S.Title id="contained-modal-title-vcenter">
-          {PRODUCTS_CONFIG.AddCategoryTitle}
+          {PRODUCTS_CONFIG.addCategoryTitle}
         </S.Title>
       </S.Header>
     );
@@ -46,7 +46,7 @@ export const AddCategoryModal = ({
       <Modal.Body>
         <Form>
           <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-            <Form.Label>{PRODUCTS_CONFIG.Category}</Form.Label>
+            <Form.Label>{PRODUCTS_CONFIG.category}</Form.Label>
             <S.InputWrapper>
               <S.Input type="Name" placeholder="Title" />
             </S.InputWrapper>
@@ -61,9 +61,9 @@ export const AddCategoryModal = ({
       <S.Footer>
         <S.Button
           $bgColor={theme.colors.primary}
-          onClick={() => categoryAdded()}
+          onClick={() => _categoryAdded()}
         >
-          {PRODUCTS_CONFIG.AddButton}
+          {PRODUCTS_CONFIG.addButton}
         </S.Button>
       </S.Footer>
     );
@@ -71,12 +71,11 @@ export const AddCategoryModal = ({
 
   return (
     <S.ModalContainer
-      size="lg"
       aria-labelledby="contained-modal-title-vcenter"
       centered
       show={modalShow}
+      backdrop="static"
       onHide={() => onClose()}
-      disableScrollLock
     >
       {_renderModalHeader()}
       {_renderModalBody()}

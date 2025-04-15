@@ -10,7 +10,8 @@ import * as S from "./styles";
 import { toast } from "react-toastify";
 import { SIGNUP_CONFIG } from "../../config";
 import { Link, useNavigate } from "react-router-dom";
-import Dropdown from "react-bootstrap/Dropdown";
+import MenuItem from "@mui/material/MenuItem";
+import { SelectChangeEvent } from "@mui/material/Select";
 
 export interface ISignUpForm {}
 
@@ -24,6 +25,7 @@ export const SignUpForm = ({}: ISignUpForm) => {
   );
 
   const navigate = useNavigate();
+
   const _checkValidity = () => {
     if (
       name !== "" &&
@@ -38,6 +40,10 @@ export const SignUpForm = ({}: ISignUpForm) => {
     }
   };
 
+  const _handleChange = (event: SelectChangeEvent<unknown>) => {
+    setSelectedDepartment(event.target.value as string);
+  };
+
   const _renderHeader = () => {
     return (
       <S.HeaderContainer>
@@ -49,44 +55,26 @@ export const SignUpForm = ({}: ISignUpForm) => {
     );
   };
 
-  const _renderDropdownToggle = () => {
+  const _renderMenu = () => {
     return (
-      <S.CustomToggle $bgColor={theme.colors.backGround}>
-        <S.IconText $bgColor={theme.colors.textSecondary}>
-          {selectedDepartment}
-        </S.IconText>
-        <S.DropDownIcon $bgColor={theme.colors.primary} />
-      </S.CustomToggle>
-    );
-  };
-
-  const _renderDropdownMenu = () => {
-    return (
-      <S.DropDownMenu>
-        {SIGNUP_CONFIG.departments.map((dept, id) => {
-          return (
-            <div key={id}>
-              <Dropdown.Item
-                key={dept}
-                onClick={() => {
-                  setSelectedDepartment(dept);
-                }}
-              >
-                {dept}
-              </Dropdown.Item>
-            </div>
-          );
-        })}
-      </S.DropDownMenu>
-    );
-  };
-
-  const _showDropDown = () => {
-    return (
-      <S.CustomDropdown>
-        {_renderDropdownToggle()}
-        {_renderDropdownMenu()}
-      </S.CustomDropdown>
+      <S.StyledFormControl fullWidth>
+        <S.StyledSelect
+          value={selectedDepartment}
+          onChange={(e) => _handleChange(e)}
+          displayEmpty
+          inputProps={{ "aria-label": "Category" }}
+          renderValue={(selected) => <>{selected ? selected : "Department"}</>}
+          style={{ padding: "0", color: theme.colors.textSecondary }}
+        >
+          {SIGNUP_CONFIG.departments?.map((item, id) => {
+            return (
+              <MenuItem key={id} value={item}>
+                {item}
+              </MenuItem>
+            );
+          })}
+        </S.StyledSelect>
+      </S.StyledFormControl>
     );
   };
 
@@ -119,7 +107,7 @@ export const SignUpForm = ({}: ISignUpForm) => {
         </S.InputWrapper>
         <S.InputWrapper $bgColor={theme.colors.backGround}>
           <S.DepartmentIcon $bgColor={theme.colors.primary} />
-          {_showDropDown()}
+          {_renderMenu()}
         </S.InputWrapper>
       </div>
     );

@@ -21,42 +21,46 @@ export const ViewItemModal = ({ modalShow: modalShow, onClose }: IAddItem) => {
 
   const [activeDeliver, setActiveDeliver] = useState(false);
 
-  const activeDeliverStatus = () => {
+  const _activeDeliverStatus = () => {
     if (activeDeliver === false) {
       toast.success(ORDERS_CONFIG.amountReceived);
     }
     setActiveDeliver(true);
   };
 
-  const productDelivered = () => {
+  const _productDelivered = () => {
     if (activeDeliver === true) {
       toast.success(ORDERS_CONFIG.productDelivered);
     }
     setActiveDeliver(false);
   };
 
+  const _renderBodyData = () => {
+    return (
+      <S.BodyComponent>
+        {ORDERS_CONFIG.orderItems.map((d, index) => (
+          <div>
+            <S.ItemBox key={index}>
+              {Object.entries(d)?.map(([key, value], id) => (
+                <S.TitleComp key={id}>{value}</S.TitleComp>
+              ))}
+            </S.ItemBox>
+            <S.Divider />
+          </div>
+        ))}
+      </S.BodyComponent>
+    );
+  };
+
   const _renderBody = () => {
     return (
       <Modal.Body as={S.ModalBody}>
         <S.TitleBox $bgColor={theme.colors.secondaryBackGround}>
-          <S.TitleComp>{ORDERS_CONFIG.Serial}</S.TitleComp>
-          <S.TitleComp>{ORDERS_CONFIG.ProductName}</S.TitleComp>
-          <S.TitleComp>{ORDERS_CONFIG.Quantity}</S.TitleComp>
-          <S.TitleComp>{ORDERS_CONFIG.MRP}</S.TitleComp>
-        </S.TitleBox>
-        <S.BodyComponent>
-          {ORDERS_CONFIG.orderItems.map((d, index) => (
-            <div>
-              <S.ItemBox key={index}>
-                <S.TitleComp>{d.No}</S.TitleComp>
-                <S.TitleComp>{d.Pname}</S.TitleComp>
-                <S.TitleComp>{d.Quantity}</S.TitleComp>
-                <S.TitleComp>{d.Price}</S.TitleComp>
-              </S.ItemBox>
-              <S.Divider />
-            </div>
+          {ORDERS_CONFIG.title?.map((d, index) => (
+            <S.TitleComp key={index}>{d}</S.TitleComp>
           ))}
-        </S.BodyComponent>
+        </S.TitleBox>
+        {_renderBodyData()}
       </Modal.Body>
     );
   };
@@ -64,7 +68,7 @@ export const ViewItemModal = ({ modalShow: modalShow, onClose }: IAddItem) => {
   const _renderAmount = () => {
     return (
       <S.Amount>
-        {ORDERS_CONFIG.PrMRP}
+        {ORDERS_CONFIG.prMrp}
         {90}
       </S.Amount>
     );
@@ -76,16 +80,16 @@ export const ViewItemModal = ({ modalShow: modalShow, onClose }: IAddItem) => {
         <S.Button
           $bgColor={theme.colors.primary}
           $isActive={true}
-          onClick={activeDeliverStatus}
+          onClick={_activeDeliverStatus}
         >
-          {ORDERS_CONFIG.AmountReceived}
+          {ORDERS_CONFIG.amountReceived}
         </S.Button>
         <S.Button
           $bgColor={theme.colors.primary}
           $isActive={activeDeliver}
-          onClick={productDelivered}
+          onClick={_productDelivered}
         >
-          {ORDERS_CONFIG.Deliver}
+          {ORDERS_CONFIG.deliver}
         </S.Button>
       </S.Footer>
     );
@@ -93,10 +97,11 @@ export const ViewItemModal = ({ modalShow: modalShow, onClose }: IAddItem) => {
 
   return (
     <S.ModalContainer
-      size="lg"
       aria-labelledby="contained-modal-title-vcenter"
+      size="lg"
       centered
       show={modalShow}
+      backdrop="static"
       onHide={() => onClose()}
     >
       <S.CloseButton onClick={onClose}></S.CloseButton>

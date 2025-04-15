@@ -9,7 +9,10 @@ import { useTheme } from "../../../../hooks";
 import * as S from "./styles";
 import { ViewItemModal } from "../ViewItem";
 import { ORDERS_CONFIG } from "../../config";
-import { toast } from "react-toastify";
+import Swal, { SweetAlertIcon } from "sweetalert2";
+import { RxCross2 } from "react-icons/rx";
+import ReactDOMServer from "react-dom/server";
+import { VscCheck } from "react-icons/vsc";
 
 export interface IOrderCard {
   individualOrder: {
@@ -24,18 +27,61 @@ export const OrderCard = ({ individualOrder }: IOrderCard) => {
   const theme = useTheme();
   const [modal, setModal] = useState(false);
 
-  const deleteItem = () => {
-    toast.success(ORDERS_CONFIG.orderDeleted);
+  const _deleteItem = () => {
+    Swal.fire({
+      title: ORDERS_CONFIG.swal.title,
+      text: ORDERS_CONFIG.swal.text,
+      icon: ORDERS_CONFIG.swal.icon as SweetAlertIcon,
+      confirmButtonColor: theme.colors.primary,
+      cancelButtonColor: theme.colors.cancel,
+      color: theme.colors.swalButton,
+      confirmButtonText: `${ReactDOMServer.renderToString(
+        <VscCheck size={20} style={{ marginTop: "-2px", marginRight: "5px" }} />
+      )} ${ORDERS_CONFIG.swal.confirmButtonText} `,
+      cancelButtonText: `${ReactDOMServer.renderToString(
+        <RxCross2 size={19} style={{ marginTop: "-1px" }} />
+      )} ${ORDERS_CONFIG.swal.cancelButtonText}`,
+      showCancelButton: true,
+      reverseButtons: true,
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire({
+          title: ORDERS_CONFIG.swal.successTitle,
+          text: ORDERS_CONFIG.swal.successText,
+          icon: ORDERS_CONFIG.swal.successIcon as SweetAlertIcon,
+          confirmButtonColor: theme.colors.primary,
+          color: theme.colors.swalButton,
+        });
+      }
+    });
   };
 
   const _renderTitle = () => {
     return (
       <S.TitleContainer $bgColor={theme.colors.primary}>
         <S.Title>
-          {ORDERS_CONFIG.OrderNumber}
+          {ORDERS_CONFIG.orderNumber}
           {individualOrder.OrderNumber}
         </S.Title>
       </S.TitleContainer>
+    );
+  };
+
+  const _renderButton = () => {
+    return (
+      <S.ButtonContainer>
+        <S.Button
+          $bgColor={theme.colors.primary}
+          onClick={() => setModal(true)}
+        >
+          <S.ViewIcon />
+          {ORDERS_CONFIG.viewButton}
+        </S.Button>
+        <S.Button $bgColor={theme.colors.primary} onClick={_deleteItem}>
+          <S.DeleteIcon />
+          {ORDERS_CONFIG.deleteButton}
+        </S.Button>
+      </S.ButtonContainer>
     );
   };
 
@@ -43,29 +89,17 @@ export const OrderCard = ({ individualOrder }: IOrderCard) => {
     return (
       <S.BodyContainer>
         <S.OrderNameContainer>
-          {ORDERS_CONFIG.OrderBy}
+          {ORDERS_CONFIG.orderBy}
           {individualOrder.OrderBy}
         </S.OrderNameContainer>
         <S.DateContainer>
-          {ORDERS_CONFIG.Date}
+          {ORDERS_CONFIG.date}
           {individualOrder.Date}
         </S.DateContainer>
         <S.RupeeContainer>
-          {ORDERS_CONFIG.PrMRP} {individualOrder.Total}
+          {ORDERS_CONFIG.prMrp} {individualOrder.Total}
         </S.RupeeContainer>
-        <S.ButtonContainer>
-          <S.Button
-            $bgColor={theme.colors.primary}
-            onClick={() => setModal(true)}
-          >
-            <S.ViewIcon />
-            {ORDERS_CONFIG.viewButton}
-          </S.Button>
-          <S.Button $bgColor={theme.colors.primary} onClick={deleteItem}>
-            <S.DeleteIcon />
-            {ORDERS_CONFIG.DeleteButton}
-          </S.Button>
-        </S.ButtonContainer>
+        {_renderButton()}
       </S.BodyContainer>
     );
   };

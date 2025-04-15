@@ -13,23 +13,23 @@ export const CardContainer = styled.div`
   flex-direction : column;
   align-items : center;
   justify-content:center;
+  flex-wrap:wrap;
   box-shadow : 0px 2px 4px rgba(0,0,0,0.2);
   border-radius:10px;
   transition : transform ease-in-out 0.2s;
-  width:265px;
-  margin-right:10px;
-  margin:15px;
-  
+  overflow-y: hidden;
+  width:100%;
+ 
   &:hover{
-    transform : scale(1.10);
-  }
-
-  @media (max-width: 768px) {
-    width : 280px;
+    transform : scale(1.05);
+    box-shadow : 0px 4px 6px rgba(0,0,0,0.2);
   }
 
   @media (max-width: 576px) {
-     width : 260px;
+     &:hover{
+      transform : scale(1);
+      box-shadow : 0px 4px 8px rgba(0,0,0,0.5);
+     }
   }
 `;
 
@@ -44,7 +44,6 @@ export const TitleContainer = styled.div<{ $bgColor: string }>`
   color: white;
   padding: 5px 5px;
   border-radius: 10px 10px 0 0;
-  width: 100%;
 
   @media (max-width: 576px) {
     font-size: 25px;
@@ -99,19 +98,19 @@ export const ButtonContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 25px;
+  gap: 10px;
 `;
 
 export const Button = styled.button<{ $bgColor: string }>`
   flex: 1;
   display: flex;
   align-items: center;
-  padding: 8px 0;
+  padding: 5px 7px;
   justify-content: center;
   border: none;
   background-color: ${(props) => props?.$bgColor};
   border-radius: 5px;
-  gap: 12px;
+  gap: 6px;
   color: white;
   margin-top: 10px;
 
@@ -127,7 +126,7 @@ export const ViewIcon = styled(MdOutlineRemoveRedEye)`
   font-size: 20px;
 
   @media (max-width: 576px) {
-    font-size: 13px;
+    font-size: 16px;
   }
 `;
 
@@ -136,6 +135,6 @@ export const DeleteIcon = styled(RxCross2)`
   font-size: 20px;
 
   @media (max-width: 576px) {
-    font-size: 15px;
+    font-size: 16px;
   }
 `;
