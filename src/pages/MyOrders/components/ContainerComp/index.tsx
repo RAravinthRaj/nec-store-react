@@ -23,8 +23,6 @@ export const ContainerComp = ({}: IContainerComp) => {
   const [searchProductTitle, setSearchProductTitle] = useState("");
   const [selectedCategory, setSelectedCategory] = useState(ORDERS_CONFIG.all);
 
-  const category = ["All", "Order Number", "Purchaser Number"];
-
   const _setSearchData = (e: ChangeEvent<HTMLInputElement>) => {
     setSearchProductTitle(e.target.value);
   };
@@ -43,13 +41,13 @@ export const ContainerComp = ({}: IContainerComp) => {
   const _renderCategoryDropDownMenu = () => {
     return (
       <S.CategoryDropDownMenu>
-        {category?.map((cat, id) => {
+        {ORDERS_CONFIG.category?.map((cat, id) => {
           return (
             <div key={id}>
               <Dropdown.Item key={cat} eventKey={cat}>
                 {cat}
               </Dropdown.Item>
-              {id != category.length - 1 && <S.Divider />}
+              {id != ORDERS_CONFIG.category.length - 1 && <S.Divider />}
             </div>
           );
         })}
@@ -73,7 +71,7 @@ export const ContainerComp = ({}: IContainerComp) => {
   const _renderFabButton = () => {
     if (isTab) {
       return (
-        <Box sx={{ position: "fixed", bottom: 15, right: 50 }}>
+        <Box sx={{ position: "fixed", bottom: 8, right: 20 }}>
           <S.CartContainer $bgColor={theme.colors.backGround} to="/carts">
             <S.CartIcon />
           </S.CartContainer>

@@ -27,7 +27,7 @@ export const ActionItem = styled.div`
 export const ActionContainer = styled.div`
   display: flex;
   align-items: center;
-  margin-top: 15px;
+  margin-top: 10px;
   justify-content: space-between;
 
   @media (max-width: 576px) {
@@ -248,7 +248,6 @@ export const MainContainer = styled(Box)`
 
 export const CartContainer = styled(Link)<{ $bgColor: string }>`
   padding: 10px;
-  margin-right: -10px;
   border-radius: 50%;
   background-color: ${(props) => props?.$bgColor};
   border: solid 2px black;
@@ -280,7 +279,7 @@ export const CartItemsCount = styled.div<{
   position: relative;
   border: solid 1px white;
   top: ${(props) => (!props.$isMobile ? "-21px" : "-43px")};
-  left: ${(props) => (!props.$isMobile ? "-10px" : "28px")};
+  left: ${(props) => (!props.$isMobile ? "-20px" : "28px")};
   padding: 4px;
   border-radius: 50%;
   display: flex;
@@ -296,7 +295,7 @@ export const CartItemsCount = styled.div<{
 
 export const Count = styled.div<{ $bgColor: string }>`
   color: ${(props) => props?.$bgColor};
-  font-size: 12px;
+  font-size: 11px;
   margin: 0 2px;
 
   @media (max-width: 768px) {

@@ -31,7 +31,7 @@ export const ContainerComp = ({}: IContainerComp) => {
   const [selectedCategory, setSelectedCategory] = useState(PRODUCTS_CONFIG.all);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
-  const isRetailer = false;
+  const isRetailer = true;
 
   const category = ["All", "Stationary", "cosmetics", "household"];
 
@@ -151,7 +151,7 @@ export const ContainerComp = ({}: IContainerComp) => {
       if (isRetailer) {
         return (
           <div>
-            <Box sx={{ position: "fixed", bottom: 20, right: 20 }}>
+            <Box sx={{ position: "fixed", bottom: 25, right: 20 }}>
               <IconButton
                 onClick={(event) => {
                   setAnchorEl(event.currentTarget);
@@ -195,7 +195,7 @@ export const ContainerComp = ({}: IContainerComp) => {
       }
 
       return (
-        <Box sx={{ position: "fixed", bottom: 15, right: 30 }}>
+        <Box sx={{ position: "fixed", bottom: 25, right: 20 }}>
           <S.CartContainer $bgColor={theme.colors.backGround} to="/carts">
             <S.CartIcon />
           </S.CartContainer>

@@ -17,6 +17,7 @@ export const ORDERS_CONFIG = {
   delete: "Delete",
   sortedOptions: ["Sort By OrderNo. Asc", "Sort By OrderNo. Desc"],
   all: "All",
+  category: ["All", "Order Number"],
   orders: {
     "28.05.2025": [
       {

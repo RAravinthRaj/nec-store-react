@@ -348,6 +348,8 @@ export const TitleBox = styled.div<{ $bgColor: string }>`
 
   @media (max-width: 576px) {
     min-width: 640px;
+    font-size: 13px;
+    padding: 13px;
   }
 `;
 
@@ -371,9 +373,12 @@ export const TitleComp = styled.div`
   min-width: 100px;
   word-wrap: break-word;
   overflow-wrap: break-word;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
   @media (max-width: 576px) {
-    font-size: 14px;
+    font-size: 13px;
     text-align: center;
   }
 `;

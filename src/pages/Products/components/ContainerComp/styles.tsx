@@ -372,8 +372,12 @@ export const CartContainer = styled(Link)<{ $bgColor: string }>`
   background-color: ${(props) => props?.$bgColor};
   border: solid 2px black;
 
+  @media (max-width: 768px) {
+    padding: 13px 9px;
+  }
+
   @media (max-width: 576px) {
-    padding: 12px 8px;
+    padding: 13px 9px;
   }
 `;
 
@@ -394,9 +398,9 @@ export const CartItemsCount = styled.div<{
   background-color: ${(props) => props?.$bgColor};
   position: relative;
   border: solid 1px white;
-  top: ${(props) => (!props.$isMobile ? "-23px" : "-45px")};
-  left: ${(props) => (!props.$isMobile ? "-20px" : "28px")};
-  padding: 5px;
+  top: ${(props) => (!props.$isMobile ? "-21px" : "-43px")};
+  left: ${(props) => (!props.$isMobile ? "-10px" : "28px")};
+  padding: 4px;
   border-radius: 50%;
   display: flex;
   flex-wrap: wrap;
@@ -411,15 +415,15 @@ export const CartItemsCount = styled.div<{
 
 export const Count = styled.div<{ $bgColor: string }>`
   color: ${(props) => props?.$bgColor};
-  font-size: 14px;
+  font-size: 12px;
   margin: 0 2px;
 
   @media (max-width: 768px) {
-    font-size: 13px;
+    font-size: 10px;
   }
 
   @media (max-width: 576px) {
-    font-size: 13px;
+    font-size: 10px;
     margin: 2px;
   }
 `;
