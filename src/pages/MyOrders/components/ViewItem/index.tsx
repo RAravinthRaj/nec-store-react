@@ -8,8 +8,6 @@ import Modal from "react-bootstrap/Modal";
 import * as S from "./styles";
 import { useTheme } from "../../../../hooks";
 import { ORDERS_CONFIG } from "../../config";
-import { toast } from "react-toastify";
-import { useState } from "react";
 
 export interface IAddItem {
   modalShow: boolean;
@@ -18,22 +16,6 @@ export interface IAddItem {
 
 export const ViewItemModal = ({ modalShow: modalShow, onClose }: IAddItem) => {
   const theme = useTheme();
-
-  const [activeDeliver, setActiveDeliver] = useState(false);
-
-  const _activeDeliverStatus = () => {
-    if (activeDeliver === false) {
-      toast.success(ORDERS_CONFIG.amountReceived);
-    }
-    setActiveDeliver(true);
-  };
-
-  const _productDelivered = () => {
-    if (activeDeliver === true) {
-      toast.success(ORDERS_CONFIG.productDelivered);
-    }
-    setActiveDeliver(false);
-  };
 
   const _renderBodyData = () => {
     return (
@@ -60,7 +42,6 @@ export const ViewItemModal = ({ modalShow: modalShow, onClose }: IAddItem) => {
             <S.TitleComp key={index}>{d}</S.TitleComp>
           ))}
         </S.TitleBox>
-
         {_renderBodyData()}
       </Modal.Body>
     );
@@ -81,7 +62,7 @@ export const ViewItemModal = ({ modalShow: modalShow, onClose }: IAddItem) => {
         <S.Button $bgColor={theme.colors.primary}>
           {ORDERS_CONFIG.amountReceived}
         </S.Button>
-        <S.Button $bgColor={theme.colors.primary} onClick={_productDelivered}>
+        <S.Button $bgColor={theme.colors.primary}>
           {ORDERS_CONFIG.deliver}
         </S.Button>
       </S.Footer>
@@ -91,7 +72,7 @@ export const ViewItemModal = ({ modalShow: modalShow, onClose }: IAddItem) => {
   return (
     <S.ModalContainer
       aria-labelledby="contained-modal-title-vcenter"
-      size="lg"
+      size="xl"
       centered
       show={modalShow}
       backdrop="static"

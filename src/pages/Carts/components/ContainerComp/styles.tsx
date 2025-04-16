@@ -257,7 +257,7 @@ export const TitleBox = styled.div<{ $bgColor: string }>`
   box-shadow: 0 4px 4px rgba(0, 0, 0, 0.2);
   min-width: 620px;
   position: sticky;
-  top: 0;
+
   z-index: 1;
 
   @media (max-width: 576px) {
