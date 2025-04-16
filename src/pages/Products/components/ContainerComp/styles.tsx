@@ -358,6 +358,7 @@ export const MainContainer = styled(Box)`
   display: flex;
   align-items: center;
   padding: 20px;
+  padding-bottom: 0;
 
   @media (max-width: 576px) {
     padding: 10px;
@@ -426,4 +427,11 @@ export const Count = styled.div<{ $bgColor: string }>`
     font-size: 10px;
     margin: 2px;
   }
+`;
+
+export const PaginationContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 19px 0;
 `;

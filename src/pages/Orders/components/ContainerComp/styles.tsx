@@ -233,6 +233,7 @@ export const MainContainer = styled(Box)`
   display: flex;
   align-items: center;
   padding: 20px;
+  padding-bottom: 0;
 
   @media (max-width: 768px) {
     display: block;
@@ -243,4 +244,11 @@ export const MainContainer = styled(Box)`
     margin-top: 15px;
     justify-content: center;
   }
+`;
+
+export const PaginationContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 19px 0;
 `;

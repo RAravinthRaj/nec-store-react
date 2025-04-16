@@ -11,6 +11,7 @@ import Dropdown from "react-bootstrap/Dropdown";
 import { ChangeEvent, useState } from "react";
 import { SideDrawer } from "../../../../navigator/sideDrawer";
 import { SALES_CONFIG } from "../../config";
+import { CustomPagination } from "../../../../components/Pagination";
 
 export interface IContainerComp {}
 
@@ -183,6 +184,9 @@ export const ContainerComp = ({}: IContainerComp) => {
       <div>
         {_renderActionItems()}
         {_renderSalesTab()}
+        <S.PaginationContainer>
+          <CustomPagination />
+        </S.PaginationContainer>
         {_renderSalesFooter()}
       </div>
     );

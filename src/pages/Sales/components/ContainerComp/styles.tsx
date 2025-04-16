@@ -450,3 +450,10 @@ export const DownloadIcon = styled(LiaDownloadSolid)`
   color: white;
   font-size: 21px;
 `;
+
+export const PaginationContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 19px 0;
+`;

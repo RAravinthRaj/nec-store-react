@@ -28,7 +28,7 @@ export const Navigator = () => {
         <Route path="/orders" element={<Orders />} />
         <Route path="/sales" element={<Sales />} />
         <Route path="/carts" element={<Carts />} />
-        <Route path="/myOrders" element={<MyOrders />} />
+        <Route path="/history" element={<MyOrders />} />
         <Route path="/users" element={<Users />} />
       </Routes>
     </BrowserRouter>

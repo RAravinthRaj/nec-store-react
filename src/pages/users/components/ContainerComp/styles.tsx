@@ -190,6 +190,7 @@ export const DropDownIcon = styled(SlArrowDown)<{
 
 export const IconText = styled.div<{ $bgColor: string }>`
   color: ${(props) => props.$bgColor};
+  z-index: -1;
 
   @media (max-width: 576px) {
     font-size: 14px;
@@ -215,10 +216,10 @@ export const Divider = styled.div`
 `;
 
 export const StyledPageBox = styled(Box)`
-  height: 100vh;
   margin-top: 70px;
   width: 100vw;
   padding: 10px;
+  padding-bottom: 0;
 
   @media (max-width: 768px) {
     margin-top: 80px;
@@ -233,7 +234,8 @@ export const StyledPageBox = styled(Box)`
 export const MainContainer = styled(Box)`
   display: flex;
   align-items: center;
-  padding: 20px;
+  padding: 15px;
+  padding-bottom: 0;
 
   @media (max-width: 768px) {
     padding: 12px;
@@ -244,6 +246,10 @@ export const MainContainer = styled(Box)`
     margin-top: 15px;
     justify-content: center;
   }
+`;
+
+export const Wrapper = styled.div`
+  overflow: hidden;
 `;
 
 export const TitleBox = styled.div<{ $bgColor: string }>`
@@ -321,15 +327,12 @@ export const Icon = styled.div`
   }
 `;
 
-export const BodyComponent = styled.div`
-  height
-`;
+export const BodyComponent = styled.div``;
 
 export const CartContainer = styled.div`
   margin-top: 30px;
   overflow-x: auto;
-  max-height: 50%;
-  margin-bottom: 40px;
+  max-height: 68vh;
 
   @media (max-width: 768px) {
     max-height: 77vh;
@@ -357,30 +360,6 @@ export const CartDivider = styled.div`
   }
 `;
 
-export const FooterContent = styled.div`
-  @media (max-width: 576px) {
-    font-size: 14px;
-  }
-`;
-
-export const FooterBox = styled.div<{ $bgColor: string }>`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-  text-align: center;
-  background-color: ${(props) => props?.$bgColor};
-  padding: 15px 30px;
-  border-radius: 10px;
-  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.2);
-
-  @media (max-width: 576px) {
-    flex-direction: column;
-    gap: 20px;
-    margin-bottom: 10px;
-  }
-`;
-
 export const DownloadIcon = styled(GiShoppingCart)`
   color: white;
   font-size: 22px;
@@ -397,4 +376,11 @@ export const Circle = styled.div<{ $bgColor: string; $isNotFirst: boolean }>`
     height: 30px;
     width: 30px;
   }
+`;
+
+export const PaginationContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 19px 0;
 `;

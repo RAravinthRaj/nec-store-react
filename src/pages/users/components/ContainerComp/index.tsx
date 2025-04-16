@@ -12,6 +12,7 @@ import { ChangeEvent, useState } from "react";
 import { SideDrawer } from "../../../../navigator/sideDrawer";
 import { USERS_CONFIG } from "../../config";
 import { useNavigate } from "react-router-dom";
+import { CustomPagination } from "../../../../components/Pagination";
 
 export interface IContainerComp {}
 
@@ -126,7 +127,7 @@ export const ContainerComp = ({}: IContainerComp) => {
     return (
       <>
         {USERS_CONFIG.salesItems.map((d, index) => (
-          <div>
+          <S.Wrapper>
             <S.ItemBox key={index}>
               {Object.entries(d)?.map(([key, value], id) => {
                 if (key === "roles") {
@@ -161,7 +162,7 @@ export const ContainerComp = ({}: IContainerComp) => {
               </S.TitleComp>
             </S.ItemBox>
             <S.CartDivider />
-          </div>
+          </S.Wrapper>
         ))}
       </>
     );
@@ -193,7 +194,12 @@ export const ContainerComp = ({}: IContainerComp) => {
     <S.MainContainer>
       <Navbar menu={menu} onToggleMenu={() => setMenu(!menu)} />
       <SideDrawer menu={menu} toggleMenu={() => setMenu(!menu)} />
-      <S.StyledPageBox>{_mainContainerItems()}</S.StyledPageBox>
+      <S.StyledPageBox>
+        {_mainContainerItems()}
+        <S.PaginationContainer>
+          <CustomPagination />
+        </S.PaginationContainer>
+      </S.StyledPageBox>
     </S.MainContainer>
   );
 };

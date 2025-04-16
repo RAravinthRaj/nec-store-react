@@ -13,6 +13,7 @@ import { OrderCard } from "../OrderCard";
 import { ORDERS_CONFIG } from "../../config";
 import { SideDrawer } from "../../../../navigator/sideDrawer";
 import { Box, useMediaQuery } from "@mui/material";
+import { CustomPagination } from "../../../../components/Pagination";
 export interface IContainerComp {}
 
 export const ContainerComp = ({}: IContainerComp) => {
@@ -186,7 +187,12 @@ export const ContainerComp = ({}: IContainerComp) => {
     <S.MainContainer>
       <Navbar menu={menu} onToggleMenu={() => setMenu(!menu)} />
       <SideDrawer menu={menu} toggleMenu={() => setMenu(!menu)} />
-      <S.StyledPageBox>{_mainContainerItems()}</S.StyledPageBox>
+      <S.StyledPageBox>
+        {_mainContainerItems()}
+        <S.PaginationContainer>
+          <CustomPagination />
+        </S.PaginationContainer>
+      </S.StyledPageBox>
     </S.MainContainer>
   );
 };

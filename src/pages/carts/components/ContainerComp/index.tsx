@@ -17,6 +17,7 @@ import ReactDOMServer from "react-dom/server";
 import { VscCheck } from "react-icons/vsc";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import { CustomPagination } from "../../../../components/Pagination";
 
 export interface IContainerComp {}
 
@@ -167,7 +168,7 @@ export const ContainerComp = ({}: IContainerComp) => {
     return (
       <>
         {CARTS_CONFIG.salesItems.map((d, index) => (
-          <div>
+          <div key={index}>
             <S.ItemBox key={index}>
               {Object.entries(d)?.map(([key, value], id) => {
                 if (key === "Quantity") {
@@ -225,6 +226,9 @@ export const ContainerComp = ({}: IContainerComp) => {
       <div>
         {_renderActionItems()}
         {_renderSalesTab()}
+        <S.PaginationContainer>
+          <CustomPagination />
+        </S.PaginationContainer>
         {_renderSalesFooter()}
       </div>
     );
