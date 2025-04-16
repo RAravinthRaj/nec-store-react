@@ -141,10 +141,10 @@ export const SortedDropdownItem = styled(Dropdown.Item)<{ $bgColor: string }>`
 `;
 
 export const Button = styled.button<{ $bgColor: string }>`
-  flex: 0.7;
+  flex: 0.3;
   display: flex;
   align-items: center;
-  padding: 10px 10px;
+  padding: 10px 30px;
   justify-content: center;
   border: none;
   background-color: ${(props) => props?.$bgColor};
@@ -153,8 +153,9 @@ export const Button = styled.button<{ $bgColor: string }>`
   color: white;
 
   @media (max-width: 576px) {
-    padding: 10px 8px;
-    font-size: 12px;
+    padding: 12px;
+    gap: 10px;
+    font-size: 14px;
   }
 `;
 
@@ -215,7 +216,6 @@ export const Divider = styled.div`
 `;
 
 export const StyledPageBox = styled(Box)`
-  height: 100vh;
   margin-top: 70px;
   width: 100vw;
   padding: 10px;
@@ -250,18 +250,20 @@ export const TitleBox = styled.div<{ $bgColor: string }>`
   display: flex;
   flex-direction: row;
   justify-content: space-around;
-  background-color: ${(props) => props.$bgColor};
+  background-color: ${(props) => props?.$bgColor};
   padding: 18px 15px;
   border-radius: 10px;
   margin-bottom: 10px;
   box-shadow: 0 4px 4px rgba(0, 0, 0, 0.2);
-  min-width: 640px;
+  min-width: 620px;
   position: sticky;
-  top: 0;
+
   z-index: 1;
 
   @media (max-width: 576px) {
     min-width: 640px;
+    font-size: 13px;
+    padding: 13px;
   }
 `;
 
@@ -269,12 +271,12 @@ export const ItemBox = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-around;
-  padding: 5px 10px;
+  padding: 15px;
   border-radius: 10px;
-  margin: 5px 0px;
-  min-width: 600px;
+  min-width: 620px;
 
   @media (max-width: 576px) {
+    padding: 8px;
     min-width: 640px;
   }
 `;
@@ -306,6 +308,44 @@ export const CancelComp = styled(RxCrossCircled)<{ $bgColor: string }>`
   cursor: pointer;
 `;
 
+export const QuantityWrap = styled.input`
+  &::-webkit-inner-spin-button,
+  &::-webkit-outer-spin-button {
+    -webkit-appearance: inner-spin-button !important;
+    appearance: inner-spin-button !important;
+    opacity: 1 !important;
+    display: block !important;
+    height: 1.3em;
+    width: 1.3em;
+  }
+
+  -moz-appearance: textfield;
+
+  &:focus {
+    -moz-appearance: number-input;
+  }
+
+  width: 45%;
+  flex: 0.5;
+  padding: 4px 8px;
+  border-radius: 5px;
+  border: solid 0.5px rgba(0, 0, 0, 0.2);
+
+  @media (max-width: 576px) {
+    font-size: 14px;
+    &::-webkit-inner-spin-button,
+    &::-webkit-outer-spin-button {
+      -webkit-appearance: inner-spin-button !important;
+      appearance: inner-spin-button !important;
+      opacity: 1 !important;
+      display: block !important;
+      margin-top: 9%;
+      height: 1.1em;
+      width: 1.1em;
+    }
+  }
+`;
+
 export const Icon = styled.div`
   font-size: 16px;
   display: flex;
@@ -321,30 +361,28 @@ export const Icon = styled.div`
   }
 `;
 
-export const BodyComponent = styled.div`
-  height
-`;
+export const BodyComponent = styled.div``;
 
 export const CartContainer = styled.div`
   margin-top: 30px;
   overflow-x: auto;
-  max-height: 50%;
+  overflow-y: auto;
+  max-height: 60vh;
   margin-bottom: 40px;
 
   @media (max-width: 768px) {
-    max-height: 77vh;
+    max-height: 70vh;
   }
 
   @media (max-width: 576px) {
     margin-bottom: 40px;
   }
 `;
-
 export const CartDivider = styled.div`
   border: solid 0.5px rgba(0, 0, 0, 0.2);
   transform: scaleY(0.9);
   min-width: 500px;
-  margin: 0px 7px;
+  margin: 5px;
 
   @media (max-width: 768px) {
     margin: 10px 20px;
@@ -384,17 +422,4 @@ export const FooterBox = styled.div<{ $bgColor: string }>`
 export const DownloadIcon = styled(GiShoppingCart)`
   color: white;
   font-size: 22px;
-`;
-
-export const Circle = styled.div<{ $bgColor: string; $isNotFirst: boolean }>`
-  height: 40px;
-  width: 40px;
-  background-color: ${(props) => props?.$bgColor};
-  border-radius: 50%;
-  margin-left: ${(props) => (props.$isNotFirst ? "-15px" : "0px")};
-
-  @media (max-width: 576px) {
-    height: 30px;
-    width: 30px;
-  }
 `;

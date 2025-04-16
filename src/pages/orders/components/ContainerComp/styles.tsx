@@ -9,8 +9,6 @@ import { LiaSortAmountDownAltSolid } from "react-icons/lia";
 import { SlArrowDown } from "react-icons/sl";
 import { Dropdown } from "react-bootstrap";
 import { Box } from "@mui/material";
-import { RxCrossCircled } from "react-icons/rx";
-import { GiShoppingCart } from "react-icons/gi";
 
 export const ActionItem = styled.div`
   display: flex;
@@ -81,7 +79,6 @@ export const SortContainer = styled.div`
   display: flex;
   align-items: center;
   flex: 1;
-  margin-top: 3px;
   justify-content: flex-end;
 
   @media (max-width: 768px) {
@@ -99,7 +96,7 @@ export const SortIcon = styled(LiaSortAmountDownAltSolid)<{
   $bgColor: string;
 }>`
   color: black;
-  font-size: 40px;
+  font-size: 43px;
 
   @media (max-width: 768px) {
     align-self: flex-end;
@@ -140,24 +137,6 @@ export const SortedDropdownItem = styled(Dropdown.Item)<{ $bgColor: string }>`
   }
 `;
 
-export const Button = styled.button<{ $bgColor: string }>`
-  flex: 0.7;
-  display: flex;
-  align-items: center;
-  padding: 10px 10px;
-  justify-content: center;
-  border: none;
-  background-color: ${(props) => props?.$bgColor};
-  border-radius: 5px;
-  gap: 10px;
-  color: white;
-
-  @media (max-width: 576px) {
-    padding: 10px 8px;
-    font-size: 12px;
-  }
-`;
-
 export const CustomToggle = styled(Dropdown.Toggle)<{ $bgColor: string }>`
   background: none;
   border: none;
@@ -172,10 +151,6 @@ export const CustomToggle = styled(Dropdown.Toggle)<{ $bgColor: string }>`
 
   &::after {
     display: none;
-  }
-
-  @media (max-width: 576px) {
-    margin: 0 5px;
   }
 `;
 
@@ -200,6 +175,28 @@ export const CategoryDropDownMenu = styled(Dropdown.Menu)`
   margin-top: 10px;
 `;
 
+export const OrderContainer = styled.div`
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 40px;
+  margin-top: 30px;
+  padding: 10px;
+
+  @media (max-width: 1024px) {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 35px;
+  }
+
+  @media (max-width: 768px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media (max-width: 576px) {
+    margin-top: 20px;
+    grid-template-columns: repeat(1, 1fr);
+  }
+`;
+
 export const DropdownMenu = styled(Dropdown.Menu)<{ $bgColor: string }>`
   background-color: ${(props) => props?.$bgColor};
   width: 200px;
@@ -211,14 +208,16 @@ export const DropdownMenu = styled(Dropdown.Menu)<{ $bgColor: string }>`
 
 export const Divider = styled.div`
   border-top: 0.2px solid rgba(0, 0, 0, 0.2);
-  margin: 2px 10px;
+  margin: 4px 10px;
 `;
 
 export const StyledPageBox = styled(Box)`
-  height: 100vh;
-  margin-top: 70px;
-  width: 100vw;
-  padding: 10px;
+  margin-top: 80px;
+  overflow-x: auto;
+
+  @media (min-width: 1300px) {
+    min-width: 81vw;
+  }
 
   @media (max-width: 768px) {
     margin-top: 80px;
@@ -226,7 +225,7 @@ export const StyledPageBox = styled(Box)`
 
   @media (max-width: 576px) {
     padding: 8px;
-    margin-top: 50px;
+    margin-top: 70px;
   }
 `;
 
@@ -236,165 +235,12 @@ export const MainContainer = styled(Box)`
   padding: 20px;
 
   @media (max-width: 768px) {
-    padding: 12px;
+    display: block;
+    align-items: center;
   }
-
   @media (max-width: 576px) {
     padding: 0;
     margin-top: 15px;
     justify-content: center;
-  }
-`;
-
-export const TitleBox = styled.div<{ $bgColor: string }>`
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
-  background-color: ${(props) => props.$bgColor};
-  padding: 18px 15px;
-  border-radius: 10px;
-  margin-bottom: 10px;
-  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.2);
-  min-width: 640px;
-  position: sticky;
-  top: 0;
-  z-index: 1;
-
-  @media (max-width: 576px) {
-    min-width: 640px;
-  }
-`;
-
-export const ItemBox = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
-  padding: 5px 10px;
-  border-radius: 10px;
-  margin: 5px 0px;
-  min-width: 600px;
-
-  @media (max-width: 576px) {
-    min-width: 640px;
-  }
-`;
-
-export const TitleComp = styled.div`
-  flex: 1;
-  text-align: center;
-  white-space: normal;
-  overflow-wrap: break-word;
-  word-break: break-word;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  padding: 0 8px;
-
-  @media (max-width: 576px) {
-    font-size: 13px;
-  }
-`;
-
-export const CancelComp = styled(RxCrossCircled)<{ $bgColor: string }>`
-  color: ${(props) => props?.$bgColor};
-  flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 25px;
-  cursor: pointer;
-`;
-
-export const Icon = styled.div`
-  font-size: 16px;
-  display: flex;
-  align-items: center;
-  color: #ffffff;
-
-  &:hover {
-    background: none;
-  }
-
-  @media (max-width: 576px) {
-    font-size: 14px;
-  }
-`;
-
-export const BodyComponent = styled.div`
-  height
-`;
-
-export const CartContainer = styled.div`
-  margin-top: 30px;
-  overflow-x: auto;
-  max-height: 50%;
-  margin-bottom: 40px;
-
-  @media (max-width: 768px) {
-    max-height: 77vh;
-  }
-
-  @media (max-width: 576px) {
-    margin-bottom: 40px;
-  }
-`;
-
-export const CartDivider = styled.div`
-  border: solid 0.5px rgba(0, 0, 0, 0.2);
-  transform: scaleY(0.9);
-  min-width: 500px;
-  margin: 0px 7px;
-
-  @media (max-width: 768px) {
-    margin: 10px 20px;
-    min-width: 560px;
-  }
-
-  @media (max-width: 576px) {
-    margin: 7px 7px;
-    min-width: 620px;
-  }
-`;
-
-export const FooterContent = styled.div`
-  @media (max-width: 576px) {
-    font-size: 14px;
-  }
-`;
-
-export const FooterBox = styled.div<{ $bgColor: string }>`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-  text-align: center;
-  background-color: ${(props) => props?.$bgColor};
-  padding: 15px 30px;
-  border-radius: 10px;
-  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.2);
-
-  @media (max-width: 576px) {
-    flex-direction: column;
-    gap: 20px;
-    margin-bottom: 10px;
-  }
-`;
-
-export const DownloadIcon = styled(GiShoppingCart)`
-  color: white;
-  font-size: 22px;
-`;
-
-export const Circle = styled.div<{ $bgColor: string; $isNotFirst: boolean }>`
-  height: 40px;
-  width: 40px;
-  background-color: ${(props) => props?.$bgColor};
-  border-radius: 50%;
-  margin-left: ${(props) => (props.$isNotFirst ? "-15px" : "0px")};
-
-  @media (max-width: 576px) {
-    height: 30px;
-    width: 30px;
   }
 `;
