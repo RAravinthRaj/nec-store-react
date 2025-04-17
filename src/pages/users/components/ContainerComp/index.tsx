@@ -11,7 +11,7 @@ import Dropdown from "react-bootstrap/Dropdown";
 import { ChangeEvent, useState } from "react";
 import { SideDrawer } from "../../../../navigator/sideDrawer";
 import { USERS_CONFIG } from "../../config";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { CustomPagination } from "../../../../components/Pagination";
 
 export interface IContainerComp {}
@@ -123,61 +123,58 @@ export const ContainerComp = ({}: IContainerComp) => {
     );
   };
 
+  const _renderRoles = (roles_params: string[]) => {
+    return (
+      <S.TitleComp>
+        {roles_params.map((role, index) => {
+          const color = theme.colors[USERS_CONFIG[role]];
+          return (
+            <S.Circle key={index} $bgColor={color} $isNotFirst={index !== 0} />
+          );
+        })}
+      </S.TitleComp>
+    );
+  };
+
   const _renderSalesData = () => {
     return (
-      <>
+      <div>
         {USERS_CONFIG.salesItems.map((d, index) => (
-          <S.Wrapper>
+          <div>
             <S.ItemBox key={index}>
               {Object.entries(d)?.map(([key, value], id) => {
                 if (key === "roles") {
-                  return (
-                    <S.TitleComp key={id}>
-                      <S.Circle
-                        $bgColor={theme.colors.red}
-                        $isNotFirst={false}
-                      />
-                      <S.Circle
-                        $bgColor={theme.colors.orange}
-                        $isNotFirst={true}
-                      />
-                      <S.Circle
-                        $bgColor={theme.colors.green}
-                        $isNotFirst={true}
-                      />
-                    </S.TitleComp>
-                  );
+                  return <>{_renderRoles(value as string[])}</>;
                 }
                 return <S.TitleComp key={id}>{value}</S.TitleComp>;
               })}
               <S.TitleComp>
                 <S.Button
+                  as={Link}
+                  to="/profile"
                   $bgColor={theme.colors.primary}
-                  onClick={() => {
-                    navigate("/profile");
-                  }}
                 >
-                  View / Edit
+                  {USERS_CONFIG.button}
                 </S.Button>
               </S.TitleComp>
             </S.ItemBox>
-            <S.CartDivider />
-          </S.Wrapper>
+            <S.UserDivider />
+          </div>
         ))}
-      </>
+      </div>
     );
   };
 
   const _renderSalesTab = () => {
     return (
-      <S.CartContainer>
+      <S.UserContainer>
         <S.TitleBox $bgColor={theme.colors.secondaryBackGround}>
           {USERS_CONFIG.title?.map((data, index) => (
             <S.TitleComp key={index}>{data}</S.TitleComp>
           ))}
         </S.TitleBox>
-        <S.BodyComponent>{_renderSalesData()}</S.BodyComponent>
-      </S.CartContainer>
+        <S.Wrapper>{_renderSalesData()}</S.Wrapper>
+      </S.UserContainer>
     );
   };
 
@@ -196,9 +193,7 @@ export const ContainerComp = ({}: IContainerComp) => {
       <SideDrawer menu={menu} toggleMenu={() => setMenu(!menu)} />
       <S.StyledPageBox>
         {_mainContainerItems()}
-        <S.PaginationContainer>
-          <CustomPagination />
-        </S.PaginationContainer>
+        <CustomPagination />
       </S.StyledPageBox>
     </S.MainContainer>
   );

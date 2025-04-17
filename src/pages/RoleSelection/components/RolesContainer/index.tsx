@@ -28,7 +28,11 @@ export const RoleContainer = ({}: IRoleSelection) => {
     if (activeRole !== null) {
       const data = ROLESELECTION_CONFIG.loginToast + activeRole;
       toast.success(data);
-      navigate("/products");
+      if (activeRole === "Admin") {
+        navigate("/users");
+      } else {
+        navigate("/products");
+      }
     } else {
       toast.info(ROLESELECTION_CONFIG.warnToast);
     }
@@ -37,21 +41,22 @@ export const RoleContainer = ({}: IRoleSelection) => {
   const _rolesContainer = () => {
     return (
       <S.RoleContainer $bgColor={theme.colors.backGround}>
-        {roles.map((role) => {
-          const currRole: any = role.toLowerCase();
-          const isActive = activeRole === role;
+        {ROLESELECTION_CONFIG.roles.map((role) => {
+          const isActive = activeRole === role.title;
 
           return (
             <S.IconHolder
               $bgColor={theme.colors.secondaryBackGround}
               $hoverBgColor={theme.colors.tertiary}
               $textColor={theme.colors.primary}
-              onClick={() => handleClick(role)}
+              onClick={() => handleClick(role.title)}
               $isActive={isActive}
-              key={currRole}
+              key={role.title}
             >
-              <S.Icon src={theme.images[currRole]} />
-              <S.RoleText $bgColor={theme.colors.primary}>{role}</S.RoleText>
+              <S.Icon src={theme.images[role.link]} />
+              <S.RoleText $bgColor={theme.colors.primary}>
+                {role.title}
+              </S.RoleText>
             </S.IconHolder>
           );
         })}

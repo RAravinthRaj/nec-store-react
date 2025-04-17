@@ -10,4 +10,9 @@ export const ROLESELECTION_CONFIG = {
   continueButton: "Continue",
   loginToast: "Logged in as ",
   warnToast: "Choose any one of the role",
+  roles: [
+    { title: "Admin", link: "admin" },
+    { title: "Retailer", link: "retailer" },
+    { title: "customer", link: "customer" },
+  ],
 };

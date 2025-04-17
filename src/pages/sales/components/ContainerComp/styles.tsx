@@ -392,7 +392,7 @@ export const SalesContainer = styled.div`
   overflow-x: auto;
   overflow-y: auto;
   max-height: 60vh;
-  margin-bottom: 40px;
+  margin-bottom: 20px;
 
   @media (max-width: 768px) {
     max-height: 100vh;
@@ -449,11 +449,4 @@ export const FooterBox = styled.div<{ $bgColor: string }>`
 export const DownloadIcon = styled(LiaDownloadSolid)`
   color: white;
   font-size: 21px;
-`;
-
-export const PaginationContainer = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 19px 0;
 `;

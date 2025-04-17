@@ -11,6 +11,7 @@ import { Dropdown } from "react-bootstrap";
 import { Box } from "@mui/material";
 import { RxCrossCircled } from "react-icons/rx";
 import { GiShoppingCart } from "react-icons/gi";
+import { Link } from "react-router-dom";
 
 export const ActionItem = styled.div`
   display: flex;
@@ -141,7 +142,7 @@ export const SortedDropdownItem = styled(Dropdown.Item)<{ $bgColor: string }>`
 `;
 
 export const Button = styled.button<{ $bgColor: string }>`
-  flex: 0.7;
+  flex: 1;
   display: flex;
   align-items: center;
   padding: 10px 10px;
@@ -151,6 +152,7 @@ export const Button = styled.button<{ $bgColor: string }>`
   border-radius: 5px;
   gap: 10px;
   color: white;
+  text-decoration: none;
 
   @media (max-width: 576px) {
     padding: 10px 8px;
@@ -219,7 +221,6 @@ export const StyledPageBox = styled(Box)`
   margin-top: 70px;
   width: 100vw;
   padding: 10px;
-  padding-bottom: 0;
 
   @media (max-width: 768px) {
     margin-top: 80px;
@@ -249,7 +250,14 @@ export const MainContainer = styled(Box)`
 `;
 
 export const Wrapper = styled.div`
-  overflow: hidden;
+  width: 100%;
+
+  @media (max-width: 768px) {
+    max-height: 67vh;
+  }
+
+  @media (max-width: 576px) {
+  }
 `;
 
 export const TitleBox = styled.div<{ $bgColor: string }>`
@@ -329,21 +337,24 @@ export const Icon = styled.div`
 
 export const BodyComponent = styled.div``;
 
-export const CartContainer = styled.div`
-  margin-top: 30px;
-  overflow-x: auto;
+export const UserContainer = styled.div`
+  margin-top: 28px;
   max-height: 68vh;
+  margin-bottom: 20px;
+  overflow-x: auto;
+  overflow-y: auto;
 
   @media (max-width: 768px) {
-    max-height: 77vh;
+    max-height: 100vh;
+    margin-top: 35px;
   }
 
   @media (max-width: 576px) {
-    margin-bottom: 40px;
+    margin-bottom: 20px;
   }
 `;
 
-export const CartDivider = styled.div`
+export const UserDivider = styled.div`
   border: solid 0.5px rgba(0, 0, 0, 0.2);
   transform: scaleY(0.9);
   min-width: 500px;
@@ -376,11 +387,4 @@ export const Circle = styled.div<{ $bgColor: string; $isNotFirst: boolean }>`
     height: 30px;
     width: 30px;
   }
-`;
-
-export const PaginationContainer = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 19px 0;
 `;

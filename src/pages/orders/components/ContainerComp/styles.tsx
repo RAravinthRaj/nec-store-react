@@ -245,10 +245,3 @@ export const MainContainer = styled(Box)`
     justify-content: center;
   }
 `;
-
-export const PaginationContainer = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 19px 0;
-`;

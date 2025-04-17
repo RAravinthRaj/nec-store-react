@@ -286,9 +286,7 @@ export const ContainerComp = ({}: IContainerComp) => {
       <SideDrawer menu={menu} toggleMenu={() => setMenu(!menu)} />
       <S.StyledPageBox>
         {_mainContainerItems()}
-        <S.PaginationContainer>
-          <CustomPagination />
-        </S.PaginationContainer>
+        <CustomPagination />
       </S.StyledPageBox>
     </S.MainContainer>
   );

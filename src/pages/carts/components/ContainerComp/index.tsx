@@ -226,9 +226,7 @@ export const ContainerComp = ({}: IContainerComp) => {
       <div>
         {_renderActionItems()}
         {_renderSalesTab()}
-        <S.PaginationContainer>
-          <CustomPagination />
-        </S.PaginationContainer>
+        <CustomPagination />
         {_renderSalesFooter()}
       </div>
     );

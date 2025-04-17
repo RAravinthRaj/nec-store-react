@@ -335,10 +335,3 @@ export const SeparateOrder = styled.div`
   margin-top: 30px;
   padding: 10px;
 `;
-
-export const PaginationContainer = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 19px 0;
-`;

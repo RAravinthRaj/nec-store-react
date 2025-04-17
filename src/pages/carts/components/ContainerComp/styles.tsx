@@ -424,10 +424,3 @@ export const DownloadIcon = styled(GiShoppingCart)`
   color: white;
   font-size: 22px;
 `;
-
-export const PaginationContainer = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 19px 0;
-`;
