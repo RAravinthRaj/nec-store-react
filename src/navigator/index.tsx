@@ -14,6 +14,7 @@ import {
   Carts,
   MyOrders,
   Users,
+  Profile,
 } from "../pages";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
@@ -30,6 +31,7 @@ export const Navigator = () => {
         <Route path="/carts" element={<Carts />} />
         <Route path="/history" element={<MyOrders />} />
         <Route path="/users" element={<Users />} />
+        <Route path="/profile" element={<Profile />} />
       </Routes>
     </BrowserRouter>
   );

@@ -13,7 +13,7 @@ export const NAVBAR_CONFIG = {
       id: 1,
       title: "View Profile",
       imageSrc: theme.images.viewProfile,
-      link: "/dashboard",
+      link: "/profile",
     },
     {
       id: 2,

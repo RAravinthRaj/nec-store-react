@@ -1,0 +1,106 @@
+/* 
+© 2025 Aravinth Raj R. All rights reserved.
+Unauthorized copying of this file, via any medium, is strictly prohibited.
+Proprietary and confidential.  
+Written by Aravinth Raj R <aravinthr235@gmail.com>, 2025.
+*/
+export const PROFILE_CONFIG = {
+  prMRP: "Total Cost : ₹ ",
+  placeButton: "Place Order",
+  sortedOptions: ["Sort By Title Asc", "Sort By Title Desc"],
+  all: "All",
+  orderPlaced: "Order Placed Successfully",
+  name: "Name",
+  email: "Email",
+  rollNumber: "Roll Number",
+  department: "Department",
+  departments: ["CSE", "IT", "MECH", "AI&DS", "Civil", "EEE", "ECE"],
+  salesItems: [
+    {
+      Sl_No: 1,
+      Category: "Stationary",
+      Product_Name: "TagFile",
+      Quantity: 4,
+      Total_Amount: 1000,
+    },
+    {
+      Sl_No: 1,
+      Category: "Stationary",
+      Product_Name: "TagFile",
+      Quantity: 4,
+      Total_Amount: 1000,
+    },
+    {
+      Sl_No: 1,
+      Category: "Stationary",
+      Product_Name: "TagFile",
+      Quantity: 4,
+      Total_Amount: 1000,
+    },
+    {
+      Sl_No: 1,
+      Category: "Stationary",
+      Product_Name: "TagFile",
+      Quantity: 4,
+      Total_Amount: 1000,
+    },
+    {
+      Sl_No: 1,
+      Category: "Stationary",
+      Product_Name: "TagFile",
+      Quantity: 4,
+      Total_Amount: 1000,
+    },
+    {
+      Sl_No: 1,
+      Category: "Stationary",
+      Product_Name: "TagFile",
+      Quantity: 4,
+      Total_Amount: 1000,
+    },
+    {
+      Sl_No: 1,
+      Category: "Stationary",
+      Product_Name: "TagFile",
+      Quantity: 4,
+      Total_Amount: 1000,
+    },
+    {
+      Sl_No: 1,
+      Category: "Stationary",
+      Product_Name: "TagFile",
+      Quantity: 4,
+      Total_Amount: 1000,
+    },
+    {
+      Sl_No: 1,
+      Category: "Stationary",
+      Product_Name: "TagFile",
+      Quantity: 4,
+      Total_Amount: 1000,
+    },
+  ],
+  data: {
+    Name: "Aravinth Raj R",
+    Department: "CSE",
+    RollNumber: "2312070",
+    Email: "2312070@nec.edu.in",
+  },
+  swal: {
+    title: "Are you sure you want to block?",
+    text: "You won't be able to revert this!",
+    icon: "warning",
+    buttons: true,
+    dangerMode: true,
+    confirmButtonText: "Yes, Block it!",
+    cancelButtonText: "No, cancel!",
+    successTitle: "Blocked!",
+    successText: "The profile has been blocked.",
+    successIcon: "success",
+  },
+  addCategoryTitle: "Add Category",
+  addItemTitle: "Add Role",
+  role: "Roles",
+  submitButton: "Submit",
+  addItemToastSuccess: "Role Added Successfully",
+};

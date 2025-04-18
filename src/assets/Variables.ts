@@ -19,6 +19,7 @@ import switchRole from "../assets/images/changeUser.png";
 import viewProfile from "../assets/images/dashboard.png";
 import logout from "../assets/images/logout.png";
 import tagFile from "../assets/images/tagFile.png";
+import banner from "../assets/images/banner.png";
 
 export const theme = {
   colors: {
@@ -35,6 +36,7 @@ export const theme = {
     red: "#E60023",
     orange: "#FF6F00",
     green: "#39FF14",
+    sandal: "#FFECCC",
   },
   fonts: {
     sourceSerifPro: "Source Serif Pro",
@@ -54,6 +56,7 @@ export const theme = {
     viewProfile,
     logout,
     tagFile,
+    banner,
   },
   lotties: {
     loader,
