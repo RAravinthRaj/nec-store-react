@@ -28,6 +28,10 @@ export const ContainerComp = ({}: IContainerComp) => {
     setSearchProductTitle(e.target.value);
   };
 
+  const _editProfile = (item: Object) => {
+    navigate("/profile");
+  };
+
   const _renderCategoryDropDownTitle = () => {
     return (
       <S.CustomToggle $bgColor={theme.colors.backGround}>
@@ -139,10 +143,10 @@ export const ContainerComp = ({}: IContainerComp) => {
   const _renderSalesData = () => {
     return (
       <div>
-        {USERS_CONFIG.salesItems.map((d, index) => (
+        {USERS_CONFIG.salesItems.map((item, index) => (
           <div>
             <S.ItemBox key={index}>
-              {Object.entries(d)?.map(([key, value], id) => {
+              {Object.entries(item)?.map(([key, value], id) => {
                 if (key === "roles") {
                   return <>{_renderRoles(value as string[])}</>;
                 }
@@ -150,8 +154,7 @@ export const ContainerComp = ({}: IContainerComp) => {
               })}
               <S.TitleComp>
                 <S.Button
-                  as={Link}
-                  to="/profile"
+                  onClick={() => _editProfile(item)}
                   $bgColor={theme.colors.primary}
                 >
                   {USERS_CONFIG.button}
