@@ -1,3 +1,9 @@
+/* 
+© 2025 Aravinth Raj R. All rights reserved.
+Unauthorized copying of this file, via any medium, is strictly prohibited.
+Proprietary and confidential.  
+Written by Aravinth Raj R <aravinthr235@gmail.com>, 2025.
+*/
 import Form from "react-bootstrap/Form";
 import Modal from "react-bootstrap/Modal";
 import * as S from "./styles";
@@ -32,8 +38,6 @@ export const AddRoleModal = ({ modalShow, onClose, email }: IAddItem) => {
     onClose();
   };
 
-  const category = ["Admin", "Retailer"];
-
   const _renderMenu = () => {
     return (
       <S.StyledFormControl fullWidth>
@@ -43,7 +47,7 @@ export const AddRoleModal = ({ modalShow, onClose, email }: IAddItem) => {
           displayEmpty
           renderValue={(selected) => (selected ? selected : "Role")}
         >
-          {category?.map((cat, id) => {
+          {PROFILE_CONFIG.roles?.map((cat, id) => {
             return (
               <MenuItem key={id} value={cat}>
                 {cat}

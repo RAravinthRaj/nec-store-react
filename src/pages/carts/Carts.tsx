@@ -6,7 +6,7 @@ Written by Aravinth Raj R <aravinthr235@gmail.com>, 2025.
 */
 import { ContainerComp } from "./components";
 
-const Sales = () => {
+const Carts = () => {
   return (
     <>
       <ContainerComp />
@@ -14,4 +14,4 @@ const Sales = () => {
   );
 };
 
-export default Sales;
+export default Carts;

@@ -22,8 +22,6 @@ export const ContainerComp = ({}: IContainerComp) => {
   const [searchProductTitle, setSearchProductTitle] = useState("");
   const [selectedCategory, setSelectedCategory] = useState(ORDERS_CONFIG.all);
 
-  const category = ["All", "Order Number", "Purchaser Number"];
-
   const _setSearchData = (e: ChangeEvent<HTMLInputElement>) => {
     setSearchProductTitle(e.target.value);
   };
@@ -42,13 +40,13 @@ export const ContainerComp = ({}: IContainerComp) => {
   const _renderCategoryDropDownMenu = () => {
     return (
       <S.CategoryDropDownMenu>
-        {category?.map((cat, id) => {
+        {ORDERS_CONFIG.category?.map((cat, id) => {
           return (
             <div key={id}>
               <Dropdown.Item key={cat} eventKey={cat}>
                 {cat}
               </Dropdown.Item>
-              {id != category.length - 1 && <S.Divider />}
+              {id != ORDERS_CONFIG.category.length - 1 && <S.Divider />}
             </div>
           );
         })}

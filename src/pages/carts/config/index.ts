@@ -95,4 +95,5 @@ export const CARTS_CONFIG = {
     successText: "Your item has been deleted.",
     successIcon: "success",
   },
+  search: "Search",
 };

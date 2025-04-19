@@ -48,7 +48,7 @@ export const AddCategoryModal = ({
           <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
             <Form.Label>{PRODUCTS_CONFIG.category}</Form.Label>
             <S.InputWrapper>
-              <S.Input type="Name" placeholder="Title" />
+              <S.Input type="Name" placeholder={PRODUCTS_CONFIG.title} />
             </S.InputWrapper>
           </Form.Group>
         </Form>

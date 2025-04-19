@@ -117,7 +117,7 @@ export const ContainerComp = ({}: IContainerComp) => {
           {_showDropDown()}
           <S.Input
             type="input"
-            placeholder="Search"
+            placeholder={CARTS_CONFIG.search}
             onChange={(e) => {
               _setSearchDate(e);
             }}

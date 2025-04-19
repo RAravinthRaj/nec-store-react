@@ -23,7 +23,6 @@ export const SignInForm = ({}: ISignInForm) => {
   const [otp, SetOtp] = useState("");
 
   const navigate = useNavigate();
-  const roles = ["Admin", "Retailer", "Customer"];
 
   useEffect(() => {
     if (seconds <= 0) {
@@ -46,7 +45,11 @@ export const SignInForm = ({}: ISignInForm) => {
       setRead(true);
       setSeconds(30);
       toast.success(`${SIGNIN_CONFIG.OTPSentText}${email}`);
-    } else if (OTPVisible && otp === "111111" && roles.length > 1) {
+    } else if (
+      OTPVisible &&
+      otp === "111111" &&
+      SIGNIN_CONFIG.roles.length > 1
+    ) {
       return navigate("/roles");
     } else {
       toast.warn("You have Entered wrong OTP");
@@ -75,7 +78,7 @@ export const SignInForm = ({}: ISignInForm) => {
         <S.MailIcon $bgColor={theme.colors.primary} />
         <S.EmailInput
           type="email"
-          placeholder="Email ID"
+          placeholder={SIGNIN_CONFIG.email}
           onChange={(e) => setEmail(e.target.value)}
           readOnly={read}
         />

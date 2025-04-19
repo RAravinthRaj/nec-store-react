@@ -77,7 +77,9 @@ export const EditProfileModal = ({
     return (
       <S.Header>
         <S.CloseButton onClick={onClose}></S.CloseButton>
-        <S.Title id="contained-modal-title-vcenter">Edit Profile</S.Title>
+        <S.Title id="contained-modal-title-vcenter">
+          {PROFILE_CONFIG.edit}
+        </S.Title>
       </S.Header>
     );
   };

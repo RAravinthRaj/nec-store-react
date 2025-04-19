@@ -13,6 +13,8 @@ export const SIGNIN_CONFIG = {
   signUpDirect: "   Sign Up",
   signInText: "Sign In",
   getOTPText: "Get OTP",
+  email: "Email ID",
   checkEmailToast: "Please enter your Email.",
   OTPSentText: "A OTP has been sent to the email ",
+  roles: ["Admin", "Retailer", "Customer"],
 };

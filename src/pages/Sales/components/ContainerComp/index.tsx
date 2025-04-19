@@ -75,7 +75,7 @@ export const ContainerComp = ({}: IContainerComp) => {
           {_showDropDown()}
           <S.Input
             type="input"
-            placeholder="Search"
+            placeholder={SALES_CONFIG.search}
             onChange={(e) => {
               _setSearchDate(e);
             }}

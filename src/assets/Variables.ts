@@ -20,6 +20,7 @@ import viewProfile from "../assets/images/dashboard.png";
 import logout from "../assets/images/logout.png";
 import tagFile from "../assets/images/tagFile.png";
 import banner from "../assets/images/banner.png";
+import history from "../assets/images/History.png";
 
 export const theme = {
   colors: {
@@ -57,6 +58,7 @@ export const theme = {
     logout,
     tagFile,
     banner,
+    history,
   },
   lotties: {
     loader,

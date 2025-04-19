@@ -29,7 +29,7 @@ export const ContainerComp = ({}: IContainerComp) => {
   const [imageSrc, setImageSrc] = useState(theme.images.user);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  const isAdmin = false;
+  const isAdmin = true;
 
   const _deleteItem = () => {
     Swal.fire({
@@ -113,14 +113,21 @@ export const ContainerComp = ({}: IContainerComp) => {
     return (
       <S.DetailsContainer>
         <S.EmailContainer>
-          <S.Title $color={theme.colors.textSecondary}>Email Id</S.Title>
+          <S.Title $color={theme.colors.textSecondary}>
+            {PROFILE_CONFIG.email}
+          </S.Title>
           2312070@nec.edu.in
         </S.EmailContainer>
         <S.DeptContainer>
-          <S.Title $color={theme.colors.textSecondary}>Department</S.Title>CSE
+          <S.Title $color={theme.colors.textSecondary}>
+            {PROFILE_CONFIG.department}
+          </S.Title>
+          CSE
         </S.DeptContainer>
         <S.RollContainer>
-          <S.Title $color={theme.colors.textSecondary}>Roll Number</S.Title>
+          <S.Title $color={theme.colors.textSecondary}>
+            {PROFILE_CONFIG.rollNumber}
+          </S.Title>
           2312070
         </S.RollContainer>
       </S.DetailsContainer>
@@ -148,7 +155,7 @@ export const ContainerComp = ({}: IContainerComp) => {
             }}
           >
             <S.BlockIcon />
-            Block
+            {PROFILE_CONFIG.block}
           </S.Button>
           <S.Button
             $bgColor={theme.colors.primary}
@@ -157,7 +164,7 @@ export const ContainerComp = ({}: IContainerComp) => {
               _setBlock();
             }}
           >
-            <S.PermitIcon /> Permit
+            <S.PermitIcon /> {PROFILE_CONFIG.permit}
           </S.Button>
         </S.ButtonContainer>
       );
@@ -171,7 +178,7 @@ export const ContainerComp = ({}: IContainerComp) => {
       <>
         <AddRoleModal
           modalShow={openRole}
-          email={"2312070@nec.edu.in"}
+          email={PROFILE_CONFIG.email}
           onClose={() => {
             setOpenRole(false);
           }}

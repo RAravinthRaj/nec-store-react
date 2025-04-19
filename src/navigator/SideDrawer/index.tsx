@@ -44,7 +44,7 @@ export const SideDrawer = ({ menu, toggleMenu }: ISideDrawer) => {
     return (
       <S.CustomList>
         {_renderHeaderSM()}
-        {SIDE_DRAWER_CONFIG.retailerActions.map((item) => {
+        {SIDE_DRAWER_CONFIG.customerActions.map((item) => {
           return (
             <div key={item?.id}>
               <S.ItemContainer

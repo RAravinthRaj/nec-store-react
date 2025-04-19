@@ -29,4 +29,26 @@ export const SIDE_DRAWER_CONFIG = {
       link: "/sales",
     },
   ],
+  customerActions: [
+    {
+      id: 1,
+      title: "Products",
+      imageSrc: theme.images.products,
+      link: "/products",
+    },
+    {
+      id: 2,
+      title: "History",
+      imageSrc: theme.images.history,
+      link: "/history",
+    },
+  ],
+  userActions: [
+    {
+      id: 1,
+      title: "Users",
+      imageSrc: theme.images.customer,
+      link: "/users",
+    },
+  ],
 };

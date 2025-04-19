@@ -11,5 +11,11 @@ export const SIGNUP_CONFIG = {
   resendTimer: "Resend OTP in 00 : ",
   signInText: "Already a Customer ?  ",
   signInDirect: "  Sign In",
+  fullName: "Full Name",
+  email: "Email ID",
+  rollNumber: "Roll Number",
+  department: "Department",
   departments: ["CSE", "IT", "MECH", "AI&DS", "Civil", "EEE", "ECE"],
+  signedUpSuccess: "Signed Up Successfully !!!",
+  requiredData: "Please Fill the required data",
 };

@@ -21,7 +21,7 @@ export const SignUpForm = ({}: ISignUpForm) => {
   const [email, setEmail] = useState("");
   const [rollNumber, setRollNumber] = useState("");
   const [selectedDepartment, setSelectedDepartment] = useState<string | null>(
-    "Department"
+    SIGNUP_CONFIG.department
   );
 
   const navigate = useNavigate();
@@ -31,12 +31,12 @@ export const SignUpForm = ({}: ISignUpForm) => {
       name !== "" &&
       email !== "" &&
       rollNumber !== "" &&
-      selectedDepartment !== "Department"
+      selectedDepartment !== SIGNUP_CONFIG.department
     ) {
-      toast.success("Signed Up Successfully !!!");
+      toast.success(SIGNUP_CONFIG.signedUpSuccess);
       navigate("/");
     } else {
-      toast.info("Please Fill the required data");
+      toast.info(SIGNUP_CONFIG.requiredData);
     }
   };
 
@@ -62,8 +62,9 @@ export const SignUpForm = ({}: ISignUpForm) => {
           value={selectedDepartment}
           onChange={(e) => _handleChange(e)}
           displayEmpty
-          inputProps={{ "aria-label": "Category" }}
-          renderValue={(selected) => <>{selected ? selected : "Department"}</>}
+          renderValue={(selected) => (
+            <>{selected ? selected : SIGNUP_CONFIG.department}</>
+          )}
           style={{ padding: "0", color: theme.colors.textSecondary }}
         >
           {SIGNUP_CONFIG.departments?.map((item, id) => {
@@ -85,7 +86,7 @@ export const SignUpForm = ({}: ISignUpForm) => {
           <S.UserIcon $bgColor={theme.colors.primary} />
           <S.Input
             type="input"
-            placeholder="Full Name"
+            placeholder={SIGNUP_CONFIG.fullName}
             onChange={(e) => setName(e.target.value)}
           />
         </S.InputWrapper>
@@ -93,7 +94,7 @@ export const SignUpForm = ({}: ISignUpForm) => {
           <S.MailIcon $bgColor={theme.colors.primary} />
           <S.Input
             type="email"
-            placeholder="Email ID"
+            placeholder={SIGNUP_CONFIG.email}
             onChange={(e) => setEmail(e.target.value)}
           />
         </S.InputWrapper>
@@ -101,7 +102,7 @@ export const SignUpForm = ({}: ISignUpForm) => {
           <S.RollNumberIcon $bgColor={theme.colors.primary} />
           <S.Input
             type="input"
-            placeholder="Roll Number"
+            placeholder={SIGNUP_CONFIG.rollNumber}
             onChange={(e) => setRollNumber(e.target.value)}
           />
         </S.InputWrapper>
