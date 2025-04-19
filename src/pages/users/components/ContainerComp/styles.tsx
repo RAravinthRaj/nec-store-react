@@ -11,7 +11,6 @@ import { Dropdown } from "react-bootstrap";
 import { Box } from "@mui/material";
 import { RxCrossCircled } from "react-icons/rx";
 import { GiShoppingCart } from "react-icons/gi";
-import { Link } from "react-router-dom";
 
 export const ActionItem = styled.div`
   display: flex;
@@ -221,6 +220,7 @@ export const StyledPageBox = styled(Box)`
   margin-top: 70px;
   width: 100vw;
   padding: 10px;
+  padding-bottom: 0;
 
   @media (max-width: 768px) {
     margin-top: 80px;

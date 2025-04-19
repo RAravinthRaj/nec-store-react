@@ -10,6 +10,7 @@ import { useTheme, useIsNotDesktop } from "../../hooks";
 import { SIDE_DRAWER_CONFIG } from "./config";
 import { Box } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import { SIDEDRAWER_ROLE_MANAGEMENT } from "../../config/roleManagement.config";
 
 export interface ISideDrawer {
   menu: boolean;
@@ -40,38 +41,40 @@ export const SideDrawer = ({ menu, toggleMenu }: ISideDrawer) => {
     }
   };
 
+  const roleName = "admin";
+
+  const role = SIDEDRAWER_ROLE_MANAGEMENT.roles[roleName];
+  const actions = SIDE_DRAWER_CONFIG.Actions.filter((action) =>
+    role.includes(action.id)
+  );
+
   const _renderNavigationList = () => {
     return (
       <S.CustomList>
         {_renderHeaderSM()}
-        {SIDE_DRAWER_CONFIG.customerActions.map((item) => {
-          return (
-            <div key={item?.id}>
-              <S.ItemContainer
-                $hoverBgColor={theme.colors.primary}
-                disablePadding
+        {actions.map((item) => (
+          <div key={item.id}>
+            <S.ItemContainer
+              $hoverBgColor={theme.colors.primary}
+              disablePadding
+            >
+              <S.SideDrawerLink
+                to={item.link}
+                style={({ isActive }) => ({
+                  color: isActive ? theme.colors.primary : "inherit",
+                  display: "block",
+                  width: "100%",
+                })}
               >
-                <S.SideDrawerLink
-                  to={item?.link}
-                  style={({ isActive }) => ({
-                    color: isActive ? theme.colors.primary : "inherit",
-                    display: "block",
-                    width: "100%",
-                  })}
-                >
-                  <S.Item>
-                    <S.Icon
-                      $bgColor={theme.colors.primary}
-                      src={item?.imageSrc}
-                    />
-                    <S.ItemText primary={item?.title} />
-                  </S.Item>
-                </S.SideDrawerLink>
-              </S.ItemContainer>
-              <S.Divider />
-            </div>
-          );
-        })}
+                <S.Item>
+                  <S.Icon $bgColor={theme.colors.primary} src={item.imageSrc} />
+                  <S.ItemText primary={item.title} />
+                </S.Item>
+              </S.SideDrawerLink>
+            </S.ItemContainer>
+            <S.Divider />
+          </div>
+        ))}
       </S.CustomList>
     );
   };
@@ -93,7 +96,7 @@ export const SideDrawer = ({ menu, toggleMenu }: ISideDrawer) => {
           slotProps={{
             paper: {
               style: {
-                width: "60%",
+                width: "62%",
                 backgroundColor: theme.colors.secondaryBackGround,
               },
             },
@@ -112,6 +115,7 @@ export const SideDrawer = ({ menu, toggleMenu }: ISideDrawer) => {
       slotProps={{
         paper: {
           style: {
+            width: "240px",
             marginTop: "73px",
             zIndex: 0,
             backgroundColor: theme.colors.secondaryBackGround,

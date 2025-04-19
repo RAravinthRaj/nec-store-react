@@ -17,8 +17,8 @@ export const DrawerBox = styled(Box)`
 `;
 
 export const Icon = styled.img<{ $bgColor: string }>`
-  height: 14%;
-  width: 14%;
+  height: 30px;
+  width: 30px;
 
   @media (max-width: 768px) {
     height: 10%;

@@ -10,19 +10,19 @@ export const NAVBAR_CONFIG = {
   title: "NEC STORE",
   navBarOptions: [
     {
-      id: 1,
-      title: "View Profile",
+      id: "profile",
+      title: "Profile",
       imageSrc: theme.images.viewProfile,
       link: "/profile",
     },
     {
-      id: 2,
+      id: "switchRole",
       title: "Switch Role",
       imageSrc: theme.images.switchRole,
       link: "/roles",
     },
     {
-      id: 3,
+      id: "logOut",
       title: "LogOut",
       imageSrc: theme.images.logout,
       link: "/",
