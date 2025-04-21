@@ -9,22 +9,27 @@ import * as S from "./styles";
 import { Navbar } from "../../../../components";
 import Dropdown from "react-bootstrap/Dropdown";
 import { ChangeEvent, useState } from "react";
-import { OrderCard } from "../OrderCard";
-import { ORDERS_CONFIG } from "../../config";
-import { SideDrawer } from "../../../../navigator/SideDrawer";
-import { Box, useMediaQuery } from "@mui/material";
+import { SideDrawer } from "../../../../navigator/sideDrawer";
+import { USERS_CONFIG } from "../../config";
+import { Link, useNavigate } from "react-router-dom";
+import { CustomPagination } from "../../../../components/Pagination";
+
 export interface IContainerComp {}
 
 export const ContainerComp = ({}: IContainerComp) => {
   const theme = useTheme();
-  const isTab = useMediaQuery("(max-width:768px)");
-
   const [menu, setMenu] = useState(false);
   const [searchProductTitle, setSearchProductTitle] = useState("");
-  const [selectedCategory, setSelectedCategory] = useState(ORDERS_CONFIG.all);
+  const [selectedCategory, setSelectedCategory] = useState(USERS_CONFIG.all);
+
+  const navigate = useNavigate();
 
   const _setSearchData = (e: ChangeEvent<HTMLInputElement>) => {
     setSearchProductTitle(e.target.value);
+  };
+
+  const _editProfile = (item: Object) => {
+    navigate("/profile");
   };
 
   const _renderCategoryDropDownTitle = () => {
@@ -41,13 +46,13 @@ export const ContainerComp = ({}: IContainerComp) => {
   const _renderCategoryDropDownMenu = () => {
     return (
       <S.CategoryDropDownMenu>
-        {ORDERS_CONFIG.category?.map((cat, id) => {
+        {USERS_CONFIG.category?.map((cat, id) => {
           return (
             <div key={id}>
               <Dropdown.Item key={cat} eventKey={cat}>
                 {cat}
               </Dropdown.Item>
-              {id != ORDERS_CONFIG.category.length - 1 && <S.Divider />}
+              {id != USERS_CONFIG.category.length - 1 && <S.Divider />}
             </div>
           );
         })}
@@ -65,32 +70,6 @@ export const ContainerComp = ({}: IContainerComp) => {
         {_renderCategoryDropDownTitle()}
         {_renderCategoryDropDownMenu()}
       </S.CustomDropdown>
-    );
-  };
-
-  const _renderFabButton = () => {
-    if (isTab) {
-      return (
-        <Box sx={{ position: "fixed", bottom: 8, right: 20 }}>
-          <S.CartContainer $bgColor={theme.colors.backGround} to="/carts">
-            <S.CartIcon />
-          </S.CartContainer>
-          <S.CartItemsCount $bgColor={theme.colors.primary} $isMobile={true}>
-            <S.Count $bgColor={theme.colors.white}>20</S.Count>
-          </S.CartItemsCount>
-        </Box>
-      );
-    }
-
-    return (
-      <>
-        <S.CartContainer $bgColor={theme.colors.backGround} to="/carts">
-          <S.CartIcon />
-        </S.CartContainer>
-        <S.CartItemsCount $bgColor={theme.colors.primary} $isMobile={false}>
-          <S.Count $bgColor={theme.colors.white}>20</S.Count>
-        </S.CartItemsCount>
-      </>
     );
   };
 
@@ -113,12 +92,7 @@ export const ContainerComp = ({}: IContainerComp) => {
   };
 
   const _renderActionItems = () => {
-    return (
-      <S.ActionContainer>
-        {_renderSearchBar()}
-        {_renderFabButton()}
-      </S.ActionContainer>
-    );
+    return <S.ActionContainer>{_renderSearchBar()}</S.ActionContainer>;
   };
 
   const _renderSortedOptionsTitle = () => {
@@ -132,12 +106,12 @@ export const ContainerComp = ({}: IContainerComp) => {
   const _renderSortedOptionsMenu = () => {
     return (
       <S.SortedDropdownMenu $bgColor={theme.colors.white}>
-        {ORDERS_CONFIG.sortedOptions.map((item, id) => (
+        {USERS_CONFIG.sortedOptions.map((item, id) => (
           <div key={id}>
             <S.SortedDropdownItem $bgColor={theme.colors.primary}>
               <S.SortedIconText>{item}</S.SortedIconText>
             </S.SortedDropdownItem>
-            {id !== ORDERS_CONFIG.sortedOptions.length - 1 && <S.Divider />}
+            {id !== USERS_CONFIG.sortedOptions.length - 1 && <S.Divider />}
           </div>
         ))}
       </S.SortedDropdownMenu>
@@ -153,23 +127,57 @@ export const ContainerComp = ({}: IContainerComp) => {
     );
   };
 
-  const _orders = () => {
+  const _renderRoles = (roles_params: string[]) => {
     return (
-      <S.SeparateOrder>
-        {Object.entries(ORDERS_CONFIG.orders).map(([date, orderList]) => (
-          <div key={date}>
-            <S.OrderTitle>
-              <S.DateContainer>{date}</S.DateContainer>
-              <S.Line />
-            </S.OrderTitle>
-            <S.OrderContainer>
-              {orderList.map((order, index) => (
-                <OrderCard key={index} individualOrder={order} />
-              ))}
-            </S.OrderContainer>
+      <S.TitleComp>
+        {roles_params.map((role, index) => {
+          const color = theme.colors[USERS_CONFIG[role]];
+          return (
+            <S.Circle key={index} $bgColor={color} $isNotFirst={index !== 0} />
+          );
+        })}
+      </S.TitleComp>
+    );
+  };
+
+  const _renderSalesData = () => {
+    return (
+      <div>
+        {USERS_CONFIG.salesItems.map((item, index) => (
+          <div>
+            <S.ItemBox key={index}>
+              {Object.entries(item)?.map(([key, value], id) => {
+                if (key === "roles") {
+                  return <>{_renderRoles(value as string[])}</>;
+                }
+                return <S.TitleComp key={id}>{value}</S.TitleComp>;
+              })}
+              <S.TitleComp>
+                <S.Button
+                  onClick={() => _editProfile(item)}
+                  $bgColor={theme.colors.primary}
+                >
+                  {USERS_CONFIG.button}
+                </S.Button>
+              </S.TitleComp>
+            </S.ItemBox>
+            <S.UserDivider />
           </div>
         ))}
-      </S.SeparateOrder>
+      </div>
+    );
+  };
+
+  const _renderSalesTab = () => {
+    return (
+      <S.UserContainer>
+        <S.TitleBox $bgColor={theme.colors.secondaryBackGround}>
+          {USERS_CONFIG.title?.map((data, index) => (
+            <S.TitleComp key={index}>{data}</S.TitleComp>
+          ))}
+        </S.TitleBox>
+        <S.Wrapper>{_renderSalesData()}</S.Wrapper>
+      </S.UserContainer>
     );
   };
 
@@ -177,7 +185,7 @@ export const ContainerComp = ({}: IContainerComp) => {
     return (
       <div>
         {_renderActionItems()}
-        {_orders()}
+        {_renderSalesTab()}
       </div>
     );
   };
@@ -186,7 +194,10 @@ export const ContainerComp = ({}: IContainerComp) => {
     <S.MainContainer>
       <Navbar menu={menu} onToggleMenu={() => setMenu(!menu)} />
       <SideDrawer menu={menu} toggleMenu={() => setMenu(!menu)} />
-      <S.StyledPageBox>{_mainContainerItems()}</S.StyledPageBox>
+      <S.StyledPageBox>
+        {_mainContainerItems()}
+        <CustomPagination />
+      </S.StyledPageBox>
     </S.MainContainer>
   );
 };

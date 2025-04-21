@@ -234,6 +234,7 @@ export const MainContainer = styled(Box)`
   display: flex;
   align-items: center;
   padding: 20px;
+  padding-bottom: 0;
 
   @media (max-width: 768px) {
     display: block;
