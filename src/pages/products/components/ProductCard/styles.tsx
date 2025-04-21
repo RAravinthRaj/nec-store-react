@@ -17,7 +17,7 @@ export const CardContainer = styled.div`
   flex-wrap:wrap;
   padding : 15px ;
   box-shadow : 0px 2px 4px rgba(0,0,0,0.2);
-  margin:30px 20px;
+  margin:30px 15px;
   border-radius:10px;
   transition : transform ease-in-out 0.2s;
   gap:40px;
@@ -28,7 +28,7 @@ export const CardContainer = styled.div`
     box-shadow : 0px 4px 6px rgba(0,0,0,0.2);
   }
 
-  @media (max-width: 768px) {
+  @media (max-width: 1024px) {
     padding : 20px 10px;
     margin : 30px 15px;
   }

@@ -17,7 +17,6 @@ export const RoleContainer = ({}: IRoleSelection) => {
   const theme = useTheme();
   const navigate = useNavigate();
 
-  const roles = ["Admin", "Retailer", "Customer"];
   const [activeRole, setActiveRole] = useState<string | null>(null);
 
   const handleClick = (role: string) => {

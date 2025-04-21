@@ -30,7 +30,7 @@ export const ProductCard = ({ individualProduct }: IProductCard) => {
   const isRetailer = true;
 
   const itemAdded = () => {
-    toast.success("Item Added to Cart");
+    toast.success(PRODUCTS_CONFIG.addItem);
   };
 
   const _deleteItem = () => {

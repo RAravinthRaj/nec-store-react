@@ -9,24 +9,36 @@ import { theme } from "../../../assets/Variables";
 
 export const SIDE_DRAWER_CONFIG = {
   title: "NEC STORE",
-  retailerActions: [
+  Actions: [
     {
-      id: 1,
+      id: "products",
       title: "Products",
       imageSrc: theme.images.products,
       link: "/products",
     },
     {
-      id: 2,
+      id: "orders",
       title: "Orders",
       imageSrc: theme.images.orders,
       link: "/orders",
     },
     {
-      id: 3,
+      id: "sales",
       title: "Sales",
       imageSrc: theme.images.sales,
       link: "/sales",
+    },
+    {
+      id: "history",
+      title: "History",
+      imageSrc: theme.images.history,
+      link: "/history",
+    },
+    {
+      id: "users",
+      title: "Users",
+      imageSrc: theme.images.customer,
+      link: "/users",
     },
   ],
 };

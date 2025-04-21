@@ -45,4 +45,5 @@ export const PRODUCTS_CONFIG = {
     successText: "Your item has been deleted.",
     successIcon: "success",
   },
+  addItem: "Item Added to Cart",
 };

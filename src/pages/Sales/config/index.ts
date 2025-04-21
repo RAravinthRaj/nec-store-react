@@ -1,5 +1,3 @@
-import { SlActionRedo } from "react-icons/sl";
-
 /* 
 © 2025 Aravinth Raj R. All rights reserved.
 Unauthorized copying of this file, via any medium, is strictly prohibited.
@@ -7,6 +5,7 @@ Proprietary and confidential.
 Written by Aravinth Raj R <aravinthr235@gmail.com>, 2025.
 */
 export const SALES_CONFIG = {
+  search: "Search",
   serial: "Sl No.",
   productName: "Product Name",
   category: "Category",

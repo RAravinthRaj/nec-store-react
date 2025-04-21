@@ -94,4 +94,5 @@ export const ORDERS_CONFIG = {
     successText: "Your item has been deleted.",
     successIcon: "success",
   },
+  category: ["All", "Order Number", "Purchaser Number"],
 };

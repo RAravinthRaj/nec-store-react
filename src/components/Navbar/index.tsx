@@ -9,6 +9,7 @@ import * as S from "./styles";
 import { NAVBAR_CONFIG } from "./config";
 import { Link } from "react-router-dom";
 import { AppBar } from "@mui/material";
+import { NAVBAR_ROLE_MANAGEMENT } from "../../config/roleManagement.config";
 
 export interface INavbar {
   menu: boolean;
@@ -74,8 +75,15 @@ export const Navbar = ({ menu, onToggleMenu }: INavbar) => {
     );
   };
 
+  const roleName = "admin";
+
+  const role = NAVBAR_ROLE_MANAGEMENT.roles[roleName];
+  const actions = NAVBAR_CONFIG.navBarOptions.filter((action) =>
+    role.includes(action.id)
+  );
+
   const _renderDropDownItem = () => {
-    return NAVBAR_CONFIG.navBarOptions.map((item, id) => {
+    return actions.map((item, id) => {
       return (
         <div key={id}>
           <S.DropdownItem
@@ -86,7 +94,7 @@ export const Navbar = ({ menu, onToggleMenu }: INavbar) => {
             <S.ItemIcon src={item?.imageSrc}></S.ItemIcon>
             <S.IconText>{item?.title}</S.IconText>
           </S.DropdownItem>
-          {id != NAVBAR_CONFIG.navBarOptions.length - 1 && <S.NameDivider />}
+          {id != actions.length - 1 && <S.NameDivider />}
         </div>
       );
     });

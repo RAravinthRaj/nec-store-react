@@ -11,7 +11,7 @@ import Dropdown from "react-bootstrap/Dropdown";
 import { ChangeEvent, useState } from "react";
 import { SideDrawer } from "../../../../navigator/sideDrawer";
 import { USERS_CONFIG } from "../../config";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { CustomPagination } from "../../../../components/Pagination";
 
 export interface IContainerComp {}

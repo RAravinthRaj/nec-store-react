@@ -15,10 +15,12 @@ import products from "../assets/images/products.png";
 import orders from "../assets/images/order.png";
 import sales from "../assets/images/sales.png";
 import user from "../assets/images/user.png";
-import switchRole from "../assets/images/changeUser.png";
+import switchRole from "../assets/images/switchRole.png";
 import viewProfile from "../assets/images/dashboard.png";
 import logout from "../assets/images/logout.png";
 import tagFile from "../assets/images/tagFile.png";
+import banner from "../assets/images/banner.png";
+import history from "../assets/images/history.png";
 
 export const theme = {
   colors: {
@@ -30,11 +32,12 @@ export const theme = {
     secondaryBackGround: "#D9D9D9",
     secondaryOptional: "#9AC4E6",
     white: "#ffffff",
-    cancel: "rgb(237, 67, 67)",
+    cancel: "#ED4343",
     swalButton: "#000080",
     red: "#E60023",
     orange: "#FF6F00",
     green: "#39FF14",
+    sandal: "#FFECCC",
   },
   fonts: {
     sourceSerifPro: "Source Serif Pro",
@@ -54,6 +57,8 @@ export const theme = {
     viewProfile,
     logout,
     tagFile,
+    banner,
+    history,
   },
   lotties: {
     loader,
