@@ -5,13 +5,24 @@ Proprietary and confidential.
 Written by Aravinth Raj R <aravinthr235@gmail.com>, 2025.
 */
 import { ContainerComp } from "./components";
+import { useGetUserStore } from "./stores";
 
 const SignUp = () => {
-  return (
-    <>
-      <ContainerComp />
-    </>
-  );
+  const { response, error, fetchGetUser } = useGetUserStore();
+
+  if (response) {
+    return (
+      <>
+        <ContainerComp onSignUpPress={fetchGetUser} />
+      </>
+    );
+  }
+
+  if (error) {
+    return <div>Error: {error}</div>;
+  }
+
+  return <div>Loading...</div>;
 };
 
 export default SignUp;

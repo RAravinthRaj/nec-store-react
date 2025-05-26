@@ -8,9 +8,11 @@ import { useTheme } from "../../../../hooks";
 import { SignUpForm } from "../SignUpForm";
 import * as S from "./styles";
 
-export interface IContainerComp {}
+export interface IContainerComp {
+  onSignUpPress?: () => void;
+}
 
-export const ContainerComp = ({}: IContainerComp) => {
+export const ContainerComp = ({ onSignUpPress }: IContainerComp) => {
   const theme = useTheme();
 
   const _renderImageComp = () => {
@@ -25,7 +27,7 @@ export const ContainerComp = ({}: IContainerComp) => {
   return (
     <S.MainContainer>
       {_renderImageComp()}
-      <SignUpForm />
+      <SignUpForm onSignUpPress={onSignUpPress} />
     </S.MainContainer>
   );
 };

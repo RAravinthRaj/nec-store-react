@@ -13,9 +13,11 @@ import { Link, useNavigate } from "react-router-dom";
 import MenuItem from "@mui/material/MenuItem";
 import { SelectChangeEvent } from "@mui/material/Select";
 
-export interface ISignUpForm {}
+export interface ISignUpForm {
+  onSignUpPress?: () => void;
+}
 
-export const SignUpForm = ({}: ISignUpForm) => {
+export const SignUpForm = ({ onSignUpPress }: ISignUpForm) => {
   const theme = useTheme();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -33,8 +35,7 @@ export const SignUpForm = ({}: ISignUpForm) => {
       rollNumber !== "" &&
       selectedDepartment !== SIGNUP_CONFIG.department
     ) {
-      toast.success(SIGNUP_CONFIG.signedUpSuccess);
-      navigate("/");
+      onSignUpPress();
     } else {
       toast.info(SIGNUP_CONFIG.requiredData);
     }
