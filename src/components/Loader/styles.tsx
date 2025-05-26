@@ -14,7 +14,7 @@ export const LoaderMainContainer = styled.div`
   align-items: center;
   justify-content: center;
   width: 100%;
-  height: 100%;
+  height: 100vh;
   padding: 20px;
 `;
 
@@ -29,7 +29,6 @@ export const ModalInnerContainer = styled.div<{ $bgColor: string }>`
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  padding: 10px;
 `;
 
 export const LottieLoader = styled(Lottie)<{ $useModalLoader: boolean }>`
@@ -44,21 +43,18 @@ export const LottieLoader = styled(Lottie)<{ $useModalLoader: boolean }>`
 
 export const LoadingText = styled.div<{
   $useModalLoader: boolean;
-  $fontFamily: string;
 }>`
-  margin: ${(props) => (props?.$useModalLoader ? "0 0 0 10px" : "-50px 0 0 0")};
+  margin: ${(props) => (props?.$useModalLoader ? "0 0 0 10px" : "0")};
   display: flex;
   justify-content: center;
   align-items: center;
   font-weight: 500;
-  font-family: ${(props) => props?.$fontFamily};
   font-size: ${(props) => (props?.$useModalLoader ? "16px" : "18px")};
   letter-spacing: 0.2px;
   white-space: pre-line;
   text-align: center;
 
   @media (max-width: 576px) {
-    margin: ${(props) =>
-      props?.$useModalLoader ? "0 0 0 10px" : "-30px 0 0 0"};
+    margin: ${(props) => (props?.$useModalLoader ? "0 0 0 10px" : "0")};
   }
 `;

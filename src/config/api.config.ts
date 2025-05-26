@@ -12,7 +12,9 @@ export interface Config {
 }
 
 export const config: Config = {
-  nodeEnv: import.meta.env.NODE_ENV || "development",
-  restBaseURL: import.meta.env.REST_API_URL || "",
-  graphqlBaseURL: import.meta.env.GRAPHQL_API_URL || "",
+  nodeEnv: import.meta.env.VITE_NODE_ENV || "development",
+  restBaseURL: import.meta.env.VITE_REST_API_URL || "",
+  graphqlBaseURL: import.meta.env.VITE_GRAPHQL_API_URL || "",
 };
+
+console.log("API Config Loaded:", config);

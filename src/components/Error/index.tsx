@@ -6,20 +6,19 @@ Written by Aravinth Raj R <aravinthr235@gmail.com>, 2025.
 */
 import * as S from "./styles";
 import { useTheme } from "../../hooks/useTheme.hook";
-
-interface ErrorPageProps {
-  title: string;
-  subtitle: string;
-  buttonTitle: string;
-  onPress: () => void;
+interface IError {
+  title?: string;
+  subtitle?: string;
+  buttonTitle?: string;
+  onPress?: () => void;
 }
 
-export const ErrorPage = ({
-  title,
-  subtitle,
-  buttonTitle,
-  onPress,
-}: ErrorPageProps) => {
+export const Error = ({
+  title = "Uh Oh !!!",
+  subtitle = "Something went wrong.",
+  buttonTitle = "Go To Home",
+  onPress = () => {},
+}: IError) => {
   const theme = useTheme();
 
   return (
@@ -36,4 +35,4 @@ export const ErrorPage = ({
   );
 };
 
-export default ErrorPage;
+export default Error;

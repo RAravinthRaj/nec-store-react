@@ -13,6 +13,7 @@ type State = {
   response: string | null;
   error: string | null;
   createUser: (params: CreateUserParams) => Promise<void>;
+  resetCreateUser: () => void;
 };
 
 export const useCreateUserStore = create<State>((set) => ({
@@ -20,15 +21,21 @@ export const useCreateUserStore = create<State>((set) => ({
   response: null,
   error: null,
 
-  createUser: async (params) => {
+  createUser: async (params: CreateUserParams) => {
     try {
       set({ loading: true, error: null });
       const res = await SignUpService.createUserAPI(params);
       set({ response: res });
     } catch (err: any) {
-      set({ error: err?.message || "Something went wrong" });
+      set({
+        error: err?.message,
+      });
     } finally {
       set({ loading: false });
     }
+  },
+
+  resetCreateUser: () => {
+    set({ loading: false, response: null, error: null });
   },
 }));

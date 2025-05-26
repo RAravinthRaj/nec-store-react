@@ -25,17 +25,18 @@ export const createUser = async (params: CreateUserParams): Promise<string> => {
   }
 
   try {
-    const res = await axios.post(`http://localhost:8000/rest/signup`, params, {
+    const res = await axios.post(`${config.restBaseURL}/signup`, params, {
       headers: {
         "Content-Type": "application/json",
       },
     });
 
-    console.log("Response ", res);
-
-    return res?.data?.message || "Signed Up Successfully.";
+    return res?.data;
   } catch (err: any) {
-    console.error("Error in createUser:", err);
-    throw err;
+    const msg =
+      err?.response?.data?.error || "An error occurred while creating user.";
+
+    console.error("Error in createUser:", msg);
+    throw new Error(msg);
   }
 };
