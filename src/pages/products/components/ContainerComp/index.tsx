@@ -14,7 +14,7 @@ import { AddItemModal } from "../AddItem";
 import { AddCategoryModal } from "../AddCategory";
 import { ProductCard } from "../ProductCard";
 import { PRODUCTS_CONFIG } from "../../config";
-import { SideDrawer } from "../../../../navigator/sideDrawer";
+import { SideDrawer } from "../../../../navigator/SideDrawer_temp";
 import Box from "@mui/material/Box";
 import IconButton from "@mui/material/IconButton";
 import { CustomPagination } from "../../../../components/Pagination";

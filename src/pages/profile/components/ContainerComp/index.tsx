@@ -8,7 +8,7 @@ import { useTheme } from "../../../../hooks";
 import * as S from "./styles";
 import { Navbar } from "../../../../components";
 import { useRef, useState } from "react";
-import { SideDrawer } from "../../../../navigator/sideDrawer";
+import { SideDrawer } from "../../../../navigator/SideDrawer_temp";
 import { AddRoleModal } from "../AddRole";
 import { EditProfileModal } from "../EditProfile";
 import { PROFILE_CONFIG } from "../../config";
