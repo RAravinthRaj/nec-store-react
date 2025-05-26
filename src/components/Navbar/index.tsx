@@ -9,7 +9,7 @@ import * as S from "./styles";
 import { NAVBAR_CONFIG } from "./config";
 import { Link } from "react-router-dom";
 import { AppBar } from "@mui/material";
-import { NAVBAR_ROLE_MANAGEMENT } from "../../config/roleManagement.config";
+import { NAVBAR_ROLE_MANAGEMENT } from "../../config";
 
 export interface INavbar {
   menu: boolean;

@@ -10,7 +10,7 @@ import { useTheme, useIsNotDesktop } from "../../hooks";
 import { SIDE_DRAWER_CONFIG } from "./config";
 import { Box } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import { SIDEDRAWER_ROLE_MANAGEMENT } from "../../config/roleManagement.config";
+import { SIDE_DRAWER_ROLE_MANAGEMENT } from "../../config";
 
 export interface ISideDrawer {
   menu: boolean;
@@ -43,7 +43,7 @@ export const SideDrawer = ({ menu, toggleMenu }: ISideDrawer) => {
 
   const roleName = "admin";
 
-  const role = SIDEDRAWER_ROLE_MANAGEMENT.roles[roleName];
+  const role = SIDE_DRAWER_ROLE_MANAGEMENT.roles[roleName];
   const actions = SIDE_DRAWER_CONFIG.Actions.filter((action) =>
     role.includes(action.id)
   );
