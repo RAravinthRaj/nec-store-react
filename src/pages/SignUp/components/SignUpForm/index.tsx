@@ -9,12 +9,13 @@ import { useState } from "react";
 import * as S from "./styles";
 import { toast } from "react-toastify";
 import { SIGNUP_CONFIG } from "../../config";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import MenuItem from "@mui/material/MenuItem";
 import { SelectChangeEvent } from "@mui/material/Select";
+import { CreateUserParams } from "../../services/rest/createUser.rest";
 
 export interface ISignUpForm {
-  onSignUpPress?: () => void;
+  onSignUpPress: (data: CreateUserParams) => void;
 }
 
 export const SignUpForm = ({ onSignUpPress }: ISignUpForm) => {
@@ -22,20 +23,25 @@ export const SignUpForm = ({ onSignUpPress }: ISignUpForm) => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [rollNumber, setRollNumber] = useState("");
-  const [selectedDepartment, setSelectedDepartment] = useState<string | null>(
+  const [selectedDepartment, setSelectedDepartment] = useState<string>(
     SIGNUP_CONFIG.department
   );
 
-  const navigate = useNavigate();
-
   const _checkValidity = () => {
     if (
-      name !== "" &&
-      email !== "" &&
-      rollNumber !== "" &&
+      name.trim() !== "" &&
+      email.trim() !== "" &&
+      rollNumber.trim() !== "" &&
       selectedDepartment !== SIGNUP_CONFIG.department
     ) {
-      onSignUpPress();
+      const userData: CreateUserParams = {
+        name: name.trim(),
+        email: email.trim(),
+        rollNumber: rollNumber.trim(),
+        department: selectedDepartment,
+      };
+
+      onSignUpPress(userData);
     } else {
       toast.info(SIGNUP_CONFIG.requiredData);
     }

@@ -15,7 +15,7 @@ export const SIGNUP_CONFIG = {
   email: "Email ID",
   rollNumber: "Roll Number",
   department: "Department",
-  departments: ["CSE", "IT", "MECH", "AI&DS", "Civil", "EEE", "ECE"],
+  departments: ["CSE", "IT", "MECH", "AIDS", "CIVIL", "EEE", "ECE"],
   signedUpSuccess: "Signed Up Successfully !!!",
   requiredData: "Please Fill the required data",
 };

@@ -7,9 +7,10 @@ Written by Aravinth Raj R <aravinthr235@gmail.com>, 2025.
 import { useTheme } from "../../../../hooks";
 import { SignUpForm } from "../SignUpForm";
 import * as S from "./styles";
+import { CreateUserParams } from "../../services/rest";
 
 export interface IContainerComp {
-  onSignUpPress?: () => void;
+  onSignUpPress: (data: CreateUserParams) => void;
 }
 
 export const ContainerComp = ({ onSignUpPress }: IContainerComp) => {

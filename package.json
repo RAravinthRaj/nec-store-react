@@ -16,7 +16,6 @@
     "@mui/material": "^6.4.6",
     "axios": "^1.9.0",
     "bootstrap": "^5.3.3",
-    "dotenv": "^16.5.0",
     "react": "^19.0.0",
     "react-bootstrap": "^2.10.9",
     "react-dom": "^19.0.0",
@@ -26,11 +25,11 @@
     "react-toastify": "^11.0.3",
     "styled-components": "^6.1.15",
     "sweetalert2": "^11.17.2",
+    "winston": "^3.17.0",
     "zustand": "^5.0.5"
   },
   "devDependencies": {
     "@eslint/js": "^9.19.0",
-    "@types/node": "^22.15.21",
     "@types/react": "^19.0.8",
     "@types/react-dom": "^19.0.3",
     "@vitejs/plugin-react": "^4.3.4",
