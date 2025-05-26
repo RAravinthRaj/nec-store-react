@@ -9,7 +9,7 @@ import * as S from "./styles";
 import { Navbar } from "../../../../components";
 import Dropdown from "react-bootstrap/Dropdown";
 import { ChangeEvent, useState } from "react";
-import { SideDrawer } from "../../../../navigator/SideDrawer_temp";
+import { SideDrawer } from "../../../../navigator/SideDrawer";
 import { CARTS_CONFIG } from "../../config";
 import { RxCross2 } from "react-icons/rx";
 import Swal, { SweetAlertIcon } from "sweetalert2";

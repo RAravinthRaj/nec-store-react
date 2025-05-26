@@ -9,7 +9,7 @@ import * as S from "./styles";
 import { Navbar } from "../../../../components";
 import Dropdown from "react-bootstrap/Dropdown";
 import { ChangeEvent, useState } from "react";
-import { SideDrawer } from "../../../../navigator/sideDrawer";
+import { SideDrawer } from "../../../../navigator/SideDrawer";
 import { SALES_CONFIG } from "../../config";
 import { CustomPagination } from "../../../../components/Pagination";
 
