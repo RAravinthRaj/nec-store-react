@@ -12,10 +12,8 @@ export const SIDE_DRAWER_ROLE_MANAGEMENT = {
   },
 };
 
-export const NAVBAR_ROLE_MANAGEMENT = {
-  roles: {
-    customer: ["profile", "logOut"],
-    retailer: ["profile", "switchRole", "logOut"],
-    admin: ["profile", "switchRole", "logOut"],
-  },
+export const ROLES = {
+  admin: "admin",
+  retailer: "retailer",
+  customer: "customer",
 };

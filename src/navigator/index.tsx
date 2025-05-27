@@ -15,24 +15,24 @@ import {
   MyOrders,
   Users,
   Profile,
+  Landing,
 } from "../pages";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 
 export const Navigator = () => {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<SignIn />} />
-        <Route path="/signup" element={<SignUp />} />
-        <Route path="/roles" element={<RoleSelection />} />
-        <Route path="/products" element={<Products />} />
-        <Route path="/orders" element={<Orders />} />
-        <Route path="/sales" element={<Sales />} />
-        <Route path="/carts" element={<Carts />} />
-        <Route path="/history" element={<MyOrders />} />
-        <Route path="/users" element={<Users />} />
-        <Route path="/profile" element={<Profile />} />
-      </Routes>
-    </BrowserRouter>
+    <Routes>
+      <Route path="/" element={<Landing />} />
+      <Route path="/signin" element={<SignIn />} />
+      <Route path="/signup" element={<SignUp />} />
+      <Route path="/roles" element={<RoleSelection />} />
+      <Route path="/products" element={<Products />} />
+      <Route path="/orders" element={<Orders />} />
+      <Route path="/sales" element={<Sales />} />
+      <Route path="/carts" element={<Carts />} />
+      <Route path="/history" element={<MyOrders />} />
+      <Route path="/users" element={<Users />} />
+      <Route path="/profile" element={<Profile />} />
+    </Routes>
   );
 };

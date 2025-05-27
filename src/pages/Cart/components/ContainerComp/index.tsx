@@ -164,7 +164,7 @@ export const ContainerComp = ({}: IContainerComp) => {
     );
   };
 
-  const _renderSalesData = () => {
+  const _renderCartsData = () => {
     return (
       <>
         {CARTS_CONFIG.salesItems.map((d, index) => (
@@ -204,7 +204,7 @@ export const ContainerComp = ({}: IContainerComp) => {
             <S.TitleComp key={index}>{data}</S.TitleComp>
           ))}
         </S.TitleBox>
-        <S.BodyComponent>{_renderSalesData()}</S.BodyComponent>
+        <S.BodyComponent>{_renderCartsData()}</S.BodyComponent>
       </S.CartContainer>
     );
   };

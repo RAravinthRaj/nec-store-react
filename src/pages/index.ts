@@ -14,3 +14,4 @@ export { default as Carts } from "./Cart/Carts";
 export { default as MyOrders } from "./History/History";
 export { default as Users } from "./Users/Users";
 export { default as Profile } from "./Profile/Profile";
+export { default as Landing } from "./Landing/Landing";

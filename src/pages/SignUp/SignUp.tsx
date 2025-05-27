@@ -24,7 +24,7 @@ const SignUp = () => {
 
   useEffect(() => {
     if (createUserResponse && Object.keys(createUserResponse).length > 0) {
-      navigate("/");
+      navigate("/signin");
       resetCreateUser();
       setTimeout(() => {
         toast.success("Sign up successful !!!");
@@ -51,10 +51,6 @@ const SignUp = () => {
     return null;
   };
 
-  const _renderError = () => {
-    return null;
-  };
-
   const _renderPage = () => {
     return <ContainerComp onSignUpPress={_handleSignUp} />;
   };
@@ -62,7 +58,6 @@ const SignUp = () => {
   return (
     <>
       {_renderLoader()}
-      {_renderError()}
       {_renderPage()}
     </>
   );

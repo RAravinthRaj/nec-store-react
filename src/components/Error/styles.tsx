@@ -7,19 +7,18 @@ Written by Aravinth Raj R <aravinthr235@gmail.com>, 2025.
 import styled from "styled-components";
 
 export const Container = styled.div<{ $bgColor: string }>`
-  height: 100vh;
+  height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   padding: 2rem;
   text-align: center;
-  background-color: ${(props) => props.$bgColor};
 `;
 
 export const Image = styled.img`
-  height: 47%;
-  width: 25%;
+  height: 48%;
+  width: 26%;
   margin-bottom: 2rem;
 
   @media (max-width: 768px) {

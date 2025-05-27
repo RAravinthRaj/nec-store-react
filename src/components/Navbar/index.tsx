@@ -7,9 +7,10 @@ Written by Aravinth Raj R <aravinthr235@gmail.com>, 2025.
 import { useTheme, useIsNotDesktop } from "../../hooks";
 import * as S from "./styles";
 import { NAVBAR_CONFIG } from "./config";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { AppBar } from "@mui/material";
-import { NAVBAR_ROLE_MANAGEMENT } from "../../config";
+import { useEffect, useState } from "react";
+import { getUserDetails } from "../../utils";
 
 export interface INavbar {
   menu: boolean;
@@ -18,7 +19,14 @@ export interface INavbar {
 
 export const Navbar = ({ menu, onToggleMenu }: INavbar) => {
   const theme = useTheme();
+  const [userData, setUserData] = useState<any>({ name: "" });
   const isMobile = useIsNotDesktop();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const currentUserData = getUserDetails();
+    setUserData(currentUserData);
+  }, []);
 
   const _toggleMenu = () => {
     const updatedMenuState = !menu;
@@ -29,7 +37,7 @@ export const Navbar = ({ menu, onToggleMenu }: INavbar) => {
     if (!isMobile) {
       return (
         <S.TitleContainer>
-          <Link to="/products">
+          <Link to="/">
             <S.Logo src={theme.images.logo} />
           </Link>
           <S.TitleText>{NAVBAR_CONFIG.title}</S.TitleText>
@@ -41,10 +49,11 @@ export const Navbar = ({ menu, onToggleMenu }: INavbar) => {
   };
 
   const _renderUserName = () => {
+    const firstName = userData?.name?.split(" ")[0] ?? "";
     if (!isMobile) {
       return (
         <S.UserName $bgColor={theme.colors.primary}>
-          Hii , Aravinth !!
+          {`Hii, ${firstName} !!`}
         </S.UserName>
       );
     }
@@ -53,11 +62,12 @@ export const Navbar = ({ menu, onToggleMenu }: INavbar) => {
   };
 
   const _renderUserNameSM = () => {
+    const firstName = userData?.name?.split(" ")[0] ?? "";
     if (isMobile) {
       return (
         <S.MobileNameContainer>
           <S.UserName $bgColor={theme.colors.primary}>
-            Hii , Aravinth !!
+            {`Hii, ${firstName} !!`}
           </S.UserName>
           <S.UserNameDivider />
         </S.MobileNameContainer>
@@ -75,26 +85,28 @@ export const Navbar = ({ menu, onToggleMenu }: INavbar) => {
     );
   };
 
-  const roleName = "admin";
+  const _onDropDownItemClick = (id: string, link: string) => {
+    if (id === "logOut") {
+      localStorage.removeItem("token");
+    }
 
-  const role = NAVBAR_ROLE_MANAGEMENT.roles[roleName];
-  const actions = NAVBAR_CONFIG.navBarOptions.filter((action) =>
-    role.includes(action.id)
-  );
+    navigate(link);
+  };
 
   const _renderDropDownItem = () => {
-    return actions.map((item, id) => {
+    return NAVBAR_CONFIG.navBarOptions.map((item: any, index: number) => {
       return (
-        <div key={id}>
+        <div key={item.id}>
           <S.DropdownItem
-            as={Link}
-            to={item.link}
+            onClick={() => _onDropDownItemClick(item.id, item.link)}
             $bgColor={theme.colors.primary}
           >
-            <S.ItemIcon src={item?.imageSrc}></S.ItemIcon>
-            <S.IconText>{item?.title}</S.IconText>
+            <S.ItemIcon src={item.imageSrc} />
+            <S.IconText>{item.title}</S.IconText>
           </S.DropdownItem>
-          {id != actions.length - 1 && <S.NameDivider />}
+          {index !== NAVBAR_CONFIG.navBarOptions.length - 1 && (
+            <S.NameDivider />
+          )}
         </div>
       );
     });

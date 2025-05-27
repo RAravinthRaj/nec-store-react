@@ -11,9 +11,10 @@ import { ROLE_SELECTION_CONFIG } from "../../config";
 
 export interface IContainerComp {
   Roles: any;
+  onRoleSelection(role: string): void;
 }
 
-export const ContainerComp = ({ Roles }: IContainerComp) => {
+export const ContainerComp = ({ Roles, onRoleSelection }: IContainerComp) => {
   const theme = useTheme();
 
   return (
@@ -23,7 +24,7 @@ export const ContainerComp = ({ Roles }: IContainerComp) => {
       <S.SelectionSubText $bgColor={theme.colors.textSecondary}>
         {ROLE_SELECTION_CONFIG.subTitle}
       </S.SelectionSubText>
-      <RoleContainer Roles={Roles} />
+      <RoleContainer Roles={Roles} onRoleSelection={onRoleSelection} />
     </S.MainContainer>
   );
 };

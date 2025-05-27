@@ -6,8 +6,11 @@ Written by Aravinth Raj R <aravinthr235@gmail.com>, 2025.
 */
 import { gql } from "@apollo/client";
 
-export const GET_ROLES = gql`
-  query Query {
-    getAccessToken
+export const GET_ACCESS_TOKEN = gql`
+  query GetAccessToken($role: Role!) {
+    getAccessToken(role: $role) {
+      role
+      token
+    }
   }
 `;

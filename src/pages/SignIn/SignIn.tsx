@@ -47,10 +47,9 @@ const SignIn = () => {
       navigate("/roles", {
         state: { token: verifyOtpResponse.signInToken },
       });
-      setTimeout(() => {
-        toast.success("Signed In successfully !!!");
-        resetVerifyOtp();
-      }, 1000);
+
+      resetSignIn();
+      resetVerifyOtp();
     }
   }, [verifyOtpResponse && Object.keys(verifyOtpResponse).length > 0]);
 
@@ -84,10 +83,6 @@ const SignIn = () => {
     return null;
   };
 
-  const _renderError = () => {
-    return null;
-  };
-
   const _renderPage = () => {
     return (
       <ContainerComp
@@ -101,7 +96,6 @@ const SignIn = () => {
   return (
     <>
       {_renderLoader()}
-      {_renderError()}
       {_renderPage()}
     </>
   );

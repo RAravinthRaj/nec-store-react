@@ -4,7 +4,7 @@ Unauthorized copying of this file, via any medium, is strictly prohibited.
 Proprietary and confidential.  
 Written by Aravinth Raj R <aravinthr235@gmail.com>, 2025.
 */
-import { getRoles } from "./graphql";
+import { getAccessToken, getRoles } from "./graphql";
 
 class RoleSelectionService {
   private static instance: RoleSelectionService;
@@ -20,6 +20,11 @@ class RoleSelectionService {
 
   async getRolesAPI(signInToken: string): Promise<any> {
     const res = await getRoles(signInToken);
+    return res;
+  }
+
+  async getAccessTokenAPI(role: string, signInToken: string): Promise<any> {
+    const res = await getAccessToken(role, signInToken);
     return res;
   }
 }

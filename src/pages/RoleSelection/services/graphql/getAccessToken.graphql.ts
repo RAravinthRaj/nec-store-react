@@ -6,12 +6,15 @@ Written by Aravinth Raj R <aravinthr235@gmail.com>, 2025.
 */
 import { apolloClient } from "../../../../clients";
 import { getGraphqlError } from "../../../../utils";
-import { GET_ROLES } from "./queries/getRoles.query";
+import { GET_ACCESS_TOKEN } from "./queries/getAccessToken.query";
 
-export const getAccessToken = async (signInToken: string) => {
+export const getAccessToken = async (role: string, signInToken: string) => {
   try {
     const { data } = await apolloClient.query({
-      query: GET_ROLES,
+      query: GET_ACCESS_TOKEN,
+      variables: {
+        role,
+      },
       context: {
         headers: {
           "Content-Type": "application/json",
@@ -20,11 +23,11 @@ export const getAccessToken = async (signInToken: string) => {
       },
     });
 
-    return { payload: data?.getRoles };
+    return { payload: data?.getAccessToken };
   } catch (err: any) {
     let msg = getGraphqlError(err) || "An error occurred while fetching roles.";
 
-    console.error("Error in getRoles: ", msg);
+    console.error("Error in getAccessToken: ", msg);
     throw new Error(msg);
   }
 };
