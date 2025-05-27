@@ -5,12 +5,21 @@ Proprietary and confidential.
 Written by Aravinth Raj R <aravinthr235@gmail.com>, 2025.
 */
 import { useTheme } from "../../../../hooks";
+import { SignInParams, verifyOTPParams } from "../../services/rest";
 import { SignInForm } from "../SignInForm";
 import * as S from "./styles";
 
-export interface IContainerComp {}
+export interface IContainerComp {
+  OTPVisible: boolean;
+  onSignInPress: (data: SignInParams) => void;
+  onVerifyOTPPress: (data: verifyOTPParams) => void;
+}
 
-export const ContainerComp = ({}: IContainerComp) => {
+export const ContainerComp = ({
+  OTPVisible,
+  onSignInPress,
+  onVerifyOTPPress,
+}: IContainerComp) => {
   const theme = useTheme();
 
   const _renderImageComp = () => {
@@ -25,7 +34,11 @@ export const ContainerComp = ({}: IContainerComp) => {
   return (
     <S.MainContainer>
       {_renderImageComp()}
-      <SignInForm />
+      <SignInForm
+        OTPVisible={OTPVisible}
+        onSignInPress={onSignInPress}
+        onVerifyOTPPress={onVerifyOTPPress}
+      />
     </S.MainContainer>
   );
 };

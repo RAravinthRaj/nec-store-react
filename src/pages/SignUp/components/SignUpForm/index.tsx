@@ -23,16 +23,14 @@ export const SignUpForm = ({ onSignUpPress }: ISignUpForm) => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [rollNumber, setRollNumber] = useState("");
-  const [selectedDepartment, setSelectedDepartment] = useState<string>(
-    SIGNUP_CONFIG.department
-  );
+  const [selectedDepartment, setSelectedDepartment] = useState("");
 
   const _checkValidity = () => {
     if (
       name.trim() !== "" &&
       email.trim() !== "" &&
       rollNumber.trim() !== "" &&
-      selectedDepartment !== SIGNUP_CONFIG.department
+      selectedDepartment !== ""
     ) {
       const userData: CreateUserParams = {
         name: name.trim(),
@@ -74,6 +72,10 @@ export const SignUpForm = ({ onSignUpPress }: ISignUpForm) => {
           )}
           style={{ padding: "0", color: theme.colors.textSecondary }}
         >
+          <MenuItem value="" disabled>
+            {SIGNUP_CONFIG.department}
+          </MenuItem>
+
           {SIGNUP_CONFIG.departments?.map((item, id) => {
             return (
               <MenuItem key={id} value={item}>

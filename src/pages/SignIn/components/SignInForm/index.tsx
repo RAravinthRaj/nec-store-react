@@ -10,19 +10,25 @@ import * as S from "./styles";
 import { OTPInput } from "../Otp";
 import { toast } from "react-toastify";
 import { SIGNIN_CONFIG } from "../../config";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
+import { SignInParams, verifyOTPParams } from "../../services/rest";
 
-export interface ISignInForm {}
+export interface ISignInForm {
+  OTPVisible: boolean;
+  onSignInPress: (data: SignInParams) => void;
+  onVerifyOTPPress: (data: verifyOTPParams) => void;
+}
 
-export const SignInForm = ({}: ISignInForm) => {
+export const SignInForm = ({
+  OTPVisible,
+  onSignInPress,
+  onVerifyOTPPress,
+}: ISignInForm) => {
   const theme = useTheme();
   const [email, setEmail] = useState("");
-  const [OTPVisible, setOTPVisible] = useState(false);
-  const [seconds, setSeconds] = useState(0);
+  const [seconds, setSeconds] = useState(30);
   const [read, setRead] = useState(false);
   const [otp, SetOtp] = useState("");
-
-  const navigate = useNavigate();
 
   useEffect(() => {
     if (seconds <= 0) {
@@ -37,28 +43,26 @@ export const SignInForm = ({}: ISignInForm) => {
     return () => clearInterval(timer);
   }, [seconds]);
 
+  useEffect(() => {
+    if (OTPVisible) {
+      setRead(true);
+    }
+  }, [OTPVisible]);
+
   const _onSubmitEmail = () => {
     if (email === "") {
       toast.info(SIGNIN_CONFIG.checkEmailToast);
+    } else if (OTPVisible) {
+      onVerifyOTPPress({ email, otp });
     } else if (!OTPVisible) {
-      setOTPVisible(true);
-      setRead(true);
+      onSignInPress({ email });
       setSeconds(30);
-      toast.success(`${SIGNIN_CONFIG.OTPSentText}${email}`);
-    } else if (
-      OTPVisible &&
-      otp === "111111" &&
-      SIGNIN_CONFIG.roles.length > 1
-    ) {
-      return navigate("/roles");
-    } else {
-      toast.warn("You have Entered wrong OTP");
     }
   };
 
   const _resetOTP = () => {
+    onSignInPress({ email });
     setSeconds(30);
-    toast.success(`${SIGNIN_CONFIG.OTPSentText}${email}`);
   };
 
   const _renderHeader = () => {

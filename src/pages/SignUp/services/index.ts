@@ -18,9 +18,9 @@ class SignUpService {
     return SignUpService.instance;
   }
 
-  async createUserAPI(args: CreateUserParams): Promise<string> {
-    const message = await createUser(args);
-    return message;
+  async createUserAPI(args: CreateUserParams): Promise<any> {
+    const res = await createUser(args);
+    return res;
   }
 }
 

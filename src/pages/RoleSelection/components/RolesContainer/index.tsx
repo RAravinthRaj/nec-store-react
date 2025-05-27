@@ -8,12 +8,14 @@ import * as S from "./styles";
 import { useTheme } from "../../../../hooks";
 import { useState } from "react";
 import { toast } from "react-toastify";
-import { ROLESELECTION_CONFIG } from "../../config";
+import { ROLE_SELECTION_CONFIG } from "../../config";
 import { useNavigate } from "react-router-dom";
 
-export interface IRoleSelection {}
+export interface IRoleSelection {
+  Roles: any;
+}
 
-export const RoleContainer = ({}: IRoleSelection) => {
+export const RoleContainer = ({ Roles }: IRoleSelection) => {
   const theme = useTheme();
   const navigate = useNavigate();
 
@@ -25,7 +27,7 @@ export const RoleContainer = ({}: IRoleSelection) => {
 
   const login = () => {
     if (activeRole !== null) {
-      const data = ROLESELECTION_CONFIG.loginToast + activeRole;
+      const data = ROLE_SELECTION_CONFIG.loginToast + activeRole;
       toast.success(data);
       if (activeRole === "Admin") {
         navigate("/users");
@@ -33,28 +35,28 @@ export const RoleContainer = ({}: IRoleSelection) => {
         navigate("/products");
       }
     } else {
-      toast.info(ROLESELECTION_CONFIG.warnToast);
+      toast.info(ROLE_SELECTION_CONFIG.warnToast);
     }
   };
 
   const _rolesContainer = () => {
     return (
       <S.RoleContainer $bgColor={theme.colors.backGround}>
-        {ROLESELECTION_CONFIG.roles.map((role) => {
-          const isActive = activeRole === role.title;
+        {Roles.map((role: string) => {
+          const isActive = activeRole === role;
 
           return (
             <S.IconHolder
               $bgColor={theme.colors.secondaryBackGround}
               $hoverBgColor={theme.colors.tertiary}
               $textColor={theme.colors.primary}
-              onClick={() => handleClick(role.title)}
+              onClick={() => handleClick(role)}
               $isActive={isActive}
-              key={role.title}
+              key={role}
             >
-              <S.Icon src={theme.images[role.link]} />
+              <S.Icon src={theme.images[role]} />
               <S.RoleText $bgColor={theme.colors.primary}>
-                {role.title}
+                {role.charAt(0).toUpperCase() + role.slice(1)}
               </S.RoleText>
             </S.IconHolder>
           );
@@ -69,7 +71,7 @@ export const RoleContainer = ({}: IRoleSelection) => {
         $bgColor={theme.colors.primary}
         onClick={() => login()}
       >
-        {ROLESELECTION_CONFIG.continueButton}
+        {ROLE_SELECTION_CONFIG.continueButton}
       </S.SelectionButton>
     );
   };

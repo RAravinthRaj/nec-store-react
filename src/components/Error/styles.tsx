@@ -18,8 +18,8 @@ export const Container = styled.div<{ $bgColor: string }>`
 `;
 
 export const Image = styled.img`
-  height: 50%;
-  width: 27%;
+  height: 47%;
+  width: 25%;
   margin-bottom: 2rem;
 
   @media (max-width: 768px) {

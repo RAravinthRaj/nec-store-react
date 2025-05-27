@@ -13,33 +13,38 @@ import { toast } from "react-toastify";
 import { useEffect } from "react";
 
 const SignUp = () => {
-  const { response, error, loading, createUser, resetCreateUser } =
-    useCreateUserStore();
+  const {
+    createUserResponse,
+    createUserError,
+    createUserLoading,
+    fetchCreateUser,
+    resetCreateUser,
+  } = useCreateUserStore();
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (response && Object.keys(response).length > 0) {
+    if (createUserResponse && Object.keys(createUserResponse).length > 0) {
       navigate("/");
       resetCreateUser();
       setTimeout(() => {
         toast.success("Sign up successful !!!");
       }, 1000);
     }
-  }, [response && Object.keys(response).length > 0]);
+  }, [createUserResponse && Object.keys(createUserResponse).length > 0]);
 
   useEffect(() => {
-    if (error && error.length > 0) {
+    if (createUserError && createUserError.length > 0) {
       resetCreateUser();
-      toast.error(error);
+      toast.error(createUserError);
     }
-  }, [error && error.length > 0]);
+  }, [createUserError && createUserError.length > 0]);
 
   const _handleSignUp = (data: CreateUserParams) => {
-    createUser(data);
+    fetchCreateUser(data);
   };
 
   const _renderLoader = () => {
-    if (loading) {
+    if (createUserLoading) {
       return <Loader useModalLoader />;
     }
 

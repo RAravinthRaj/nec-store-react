@@ -5,4 +5,3 @@ Proprietary and confidential.
 Written by Aravinth Raj R <aravinthr235@gmail.com>, 2025.
 */
 export * from "./createUser.store";
-export * from "./getUser.store";

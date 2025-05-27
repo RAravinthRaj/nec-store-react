@@ -7,21 +7,23 @@ Written by Aravinth Raj R <aravinthr235@gmail.com>, 2025.
 import { useTheme } from "../../../../hooks";
 import { RoleContainer } from "../RolesContainer";
 import * as S from "./styles";
-import { ROLESELECTION_CONFIG } from "../../config";
+import { ROLE_SELECTION_CONFIG } from "../../config";
 
-export interface IContainerComp {}
+export interface IContainerComp {
+  Roles: any;
+}
 
-export const ContainerComp = ({}: IContainerComp) => {
+export const ContainerComp = ({ Roles }: IContainerComp) => {
   const theme = useTheme();
 
   return (
     <S.MainContainer>
       <S.Logo src={theme.images.logo} />
-      <S.SelectionText>{ROLESELECTION_CONFIG.title}</S.SelectionText>
+      <S.SelectionText>{ROLE_SELECTION_CONFIG.title}</S.SelectionText>
       <S.SelectionSubText $bgColor={theme.colors.textSecondary}>
-        {ROLESELECTION_CONFIG.subTitle}
+        {ROLE_SELECTION_CONFIG.subTitle}
       </S.SelectionSubText>
-      <RoleContainer />
+      <RoleContainer Roles={Roles} />
     </S.MainContainer>
   );
 };

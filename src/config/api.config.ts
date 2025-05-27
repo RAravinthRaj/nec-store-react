@@ -16,5 +16,3 @@ export const config: Config = {
   restBaseURL: import.meta.env.VITE_REST_API_URL || "",
   graphqlBaseURL: import.meta.env.VITE_GRAPHQL_API_URL || "",
 };
-
-console.log("API Config Loaded:", config);

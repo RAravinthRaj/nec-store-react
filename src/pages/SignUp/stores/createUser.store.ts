@@ -9,33 +9,37 @@ import SignUpService from "../services";
 import { CreateUserParams } from "../services/rest";
 
 type State = {
-  loading: boolean;
-  response: string | null;
-  error: string | null;
-  createUser: (params: CreateUserParams) => Promise<void>;
+  createUserLoading: boolean;
+  createUserResponse: string | null;
+  createUserError: string | null;
+  fetchCreateUser: (params: CreateUserParams) => Promise<void>;
   resetCreateUser: () => void;
 };
 
 export const useCreateUserStore = create<State>((set) => ({
-  loading: false,
-  response: null,
-  error: null,
+  createUserLoading: false,
+  createUserResponse: null,
+  createUserError: null,
 
-  createUser: async (params: CreateUserParams) => {
+  fetchCreateUser: async (params: CreateUserParams) => {
     try {
-      set({ loading: true, error: null });
+      set({ createUserLoading: true, createUserError: null });
       const res = await SignUpService.createUserAPI(params);
-      set({ response: res });
+      set({ createUserResponse: res });
     } catch (err: any) {
       set({
-        error: err?.message,
+        createUserError: err?.message,
       });
     } finally {
-      set({ loading: false });
+      set({ createUserLoading: false });
     }
   },
 
   resetCreateUser: () => {
-    set({ loading: false, response: null, error: null });
+    set({
+      createUserLoading: false,
+      createUserResponse: null,
+      createUserError: null,
+    });
   },
 }));
