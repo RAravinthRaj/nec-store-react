@@ -6,23 +6,15 @@ Written by Aravinth Raj R <aravinthr235@gmail.com>, 2025.
 */
 import { apolloClient } from "../../../../clients";
 import { getGraphqlError, getItemInLocalStorage } from "../../../../utils";
-import { GET_ALL_USERS } from "./queries/getAllUsers.query";
+import { GET_USERS } from "./queries/getUser.query";
 
-export interface GetAllUsersInput {
-  name?: string;
-  email?: string;
-  skip?: number;
-  limit?: number;
-  orderBy?: string;
-}
-
-export const getAllUsers = async (args: GetAllUsersInput) => {
+export const getUser = async (id: string) => {
   try {
     const token = getItemInLocalStorage("token");
     if (token && token.length > 0) {
       const { data } = await apolloClient.query({
-        query: GET_ALL_USERS,
-        variables: args,
+        query: GET_USERS,
+        variables: { id },
         fetchPolicy: "no-cache",
         context: {
           headers: {
@@ -34,8 +26,7 @@ export const getAllUsers = async (args: GetAllUsersInput) => {
 
       return {
         payload: {
-          users: formatData(data?.getAllUsers),
-          totalCount: data?.getAllUsers?.totalCount,
+          user: data?.getUser,
         },
       };
     }
@@ -45,27 +36,7 @@ export const getAllUsers = async (args: GetAllUsersInput) => {
     let msg =
       getGraphqlError(err) || "An error occurred while fetching all users.";
 
-    console.error("Error in getAllUsers: ", msg);
+    console.error("Error in getUsers: ", msg);
     throw new Error(msg);
   }
-};
-
-const formatData = ({ users }: any) => {
-  let usersList: any = [];
-  let index = 1;
-
-  if (users && users.length > 0) {
-    for (let user of users) {
-      let obj = {
-        id: user?.id,
-        slNo: index++,
-        name: user?.name,
-        email: user?.email,
-        roles: user?.roles,
-      };
-      usersList.push(obj);
-    }
-  }
-
-  return usersList;
 };

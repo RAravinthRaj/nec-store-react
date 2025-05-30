@@ -6,7 +6,7 @@ Written by Aravinth Raj R <aravinthr235@gmail.com>, 2025.
 */
 import { jwtDecode } from "jwt-decode";
 import { ApolloError } from "@apollo/client";
-import { SIDE_DRAWER_ROLE_MANAGEMENT } from "../config";
+import { ACCESS_CONTROL_MANAGEMENT } from "../config";
 
 export const getGraphqlError = (err: any): string => {
   let msg = "";
@@ -68,7 +68,7 @@ export const checkAccessControl = (pageName: string): boolean => {
   return (
     userData?.role &&
     userData?.role.length > 0 &&
-    SIDE_DRAWER_ROLE_MANAGEMENT.roles[userData?.role].includes(pageName)
+    ACCESS_CONTROL_MANAGEMENT.roles[userData?.role].includes(pageName)
   );
 };
 
@@ -86,3 +86,50 @@ export const getUserDetails = (): any => {
     throw err;
   }
 };
+
+export const convertFileToBase64 = (
+  file: File,
+  maxWidth = 150,
+  maxHeight = 150,
+  quality = 0.3
+): Promise<string> =>
+  new Promise((resolve, reject) => {
+    const reader = new FileReader();
+
+    reader.onload = (e) => {
+      const img = new Image();
+      img.onload = () => {
+        let { width, height } = img;
+        if (width > maxWidth || height > maxHeight) {
+          const ratio = width / height;
+          if (width > height) {
+            width = maxWidth;
+            height = Math.round(maxWidth / ratio);
+          } else {
+            height = maxHeight;
+            width = Math.round(maxHeight * ratio);
+          }
+        }
+        const canvas = document.createElement("canvas");
+        canvas.width = width;
+        canvas.height = height;
+        const ctx = canvas.getContext("2d");
+        if (!ctx) return reject(new Error("Canvas context not available"));
+        ctx.drawImage(img, 0, 0, width, height);
+        const mime = ["image/png", "image/gif", "image/webp"].includes(
+          file.type
+        )
+          ? file.type
+          : "image/jpeg";
+        const base64 =
+          mime === "image/jpeg"
+            ? canvas.toDataURL(mime, quality)
+            : canvas.toDataURL(mime);
+        resolve(base64);
+      };
+      if (e.target?.result) img.src = e.target.result as string;
+    };
+
+    reader.onerror = () => reject(new Error("Failed to read file"));
+    reader.readAsDataURL(file);
+  });

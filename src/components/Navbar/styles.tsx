@@ -100,6 +100,7 @@ export const ImageBackGround = styled.div`
 export const UserImage = styled.img`
   width: 50px;
   height: 50px;
+  border-radius: 50%;
 
   @media (max-width: 576px) {
     width: 37px;

@@ -7,19 +7,19 @@ Written by Aravinth Raj R <aravinthr235@gmail.com>, 2025.
 import { useTheme } from "../../../../hooks";
 import * as S from "./styles";
 import { USERS_CONFIG } from "../../config";
-import { useNavigate } from "react-router-dom";
 
 export interface IUserDetails {
   Users: any;
+  onEditProfilePress(id: string): void;
+  tokenId: string;
 }
 
-export const UserDetails = ({ Users }: IUserDetails) => {
+export const UserDetails = ({
+  Users,
+  onEditProfilePress,
+  tokenId,
+}: IUserDetails) => {
   const theme = useTheme();
-  const navigate = useNavigate();
-
-  const _editProfile = () => {
-    navigate("/profile");
-  };
 
   const _renderRoles = (roles_params: any) => {
     return (
@@ -27,7 +27,15 @@ export const UserDetails = ({ Users }: IUserDetails) => {
         {roles_params.map((role: string, index: number) => {
           const color = theme.colors[USERS_CONFIG[role]];
           return (
-            <S.Circle key={index} $bgColor={color} $isNotFirst={index !== 0} />
+            <S.Circle
+              title={role}
+              key={index}
+              $bgColor={color}
+              $textColor={theme.colors.white}
+              $isNotFirst={index !== 0}
+            >
+              {role.charAt(0).toUpperCase()}
+            </S.Circle>
           );
         })}
       </S.TitleComp>
@@ -40,18 +48,22 @@ export const UserDetails = ({ Users }: IUserDetails) => {
         {Users.map((item: any, index: number) => (
           <div key={index}>
             <S.ItemBox>
-              {Object.entries(item)?.map(([key, value], id) => {
-                if (key === "roles") {
+              {Object.entries(item)?.map(([key, value], index) => {
+                if (key === "id") {
+                  return null;
+                } else if (key === "roles") {
                   return (
-                    <S.TitleComp key={id}>{_renderRoles(value)}</S.TitleComp>
+                    <S.TitleComp key={index}>{_renderRoles(value)}</S.TitleComp>
                   );
                 }
-                return <S.TitleComp key={id}>{value}</S.TitleComp>;
+                return <S.TitleComp key={index}>{value}</S.TitleComp>;
               })}
+
               <S.TitleComp>
                 <S.Button
-                  onClick={() => _editProfile()}
+                  onClick={() => onEditProfilePress(item?.id)}
                   $bgColor={theme.colors.primary}
+                  $canEdit={tokenId !== item?.id}
                 >
                   {USERS_CONFIG.button}
                 </S.Button>

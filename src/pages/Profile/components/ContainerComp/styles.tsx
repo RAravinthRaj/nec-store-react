@@ -20,7 +20,6 @@ export const Button = styled.button<{ $bgColor: string; $isBlock: boolean }>`
   background-color: ${(props) => props?.$bgColor};
   opacity: ${(props) => (props.$isBlock ? "0.4" : "1")};
   pointer-events: ${(props) => (props.$isBlock ? "none" : "auto")};
-  cursor: ${(props) => (props.$isBlock ? "no-drop" : "pointer")};
   border-radius: 5px;
   gap: 10px;
   color: white;
@@ -109,29 +108,6 @@ export const UserImage = styled.img`
   @media (max-width: 576px) {
     width: 80px;
     height: 80px;
-  }
-`;
-
-export const PlusIconContainer = styled.div`
-  position: absolute;
-  bottom: 5px;
-  right: 10px;
-  display: flex;
-  justify-content: center;
-  background-color: black;
-  align-items: center;
-  background-color: black;
-  border-radius: 50%;
-  height: 37px;
-  width: 37px;
-  z-index: 1;
-  cursor: pointer;
-
-  @media (max-width: 576px) {
-    height: 25px;
-    width: 25px;
-    bottom: 2px;
-    right: 4px;
   }
 `;
 
@@ -277,6 +253,7 @@ export const RoleContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  gap: -10px;
 `;
 
 export const EditContainer = styled.div`
@@ -289,28 +266,29 @@ export const EditContainer = styled.div`
 export const Circle = styled.div<{
   $bgColor: string;
   $isNotFirst: boolean;
-  $isLast: boolean;
+  $textColor: string;
 }>`
   height: 40px;
   width: 40px;
   background-color: ${(props) => props?.$bgColor};
   border-radius: 50%;
-  margin-left: ${(props) => (props.$isNotFirst ? "-15px" : "0px")};
-  border: ${(props) => (props.$isLast ? "solid 1.5px black" : "none")};
+  margin-left: ${(props) => (props.$isNotFirst ? "-8px" : "0px")};
   display: flex;
   align-items: center;
   justify-content: center;
+  color: ${(props) => props?.$textColor};
+  font-weight: bold;
 
   @media (max-width: 576px) {
     height: 30px;
     width: 30px;
-    margin-left: ${(props) => (props.$isNotFirst ? "-15px" : "0px")};
+    margin-left: ${(props) => (props.$isNotFirst ? "-8px" : "0px")};
   }
 `;
 
 export const RoleAddIcon = styled(FiPlus)`
   color: black;
-  font-size: 25px;
+  font-size: 15px;
   strokewidth: 2;
   cursor: pointer;
 `;
@@ -323,5 +301,23 @@ export const EditIcon = styled(MdOutlineModeEditOutline)`
 
   @media (max-width: 576px) {
     font-size: 25px;
+  }
+`;
+
+export const AddCircle = styled.div<{ $bgColor: string }>`
+  height: 40px;
+  width: 40px;
+  background-color: ${(props) => props?.$bgColor};
+  border-radius: 50%;
+  margin-left: -10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+
+  @media (max-width: 576px) {
+    height: 30px;
+    width: 30px;
+    margin-left: -8px;
   }
 `;

@@ -37,7 +37,7 @@ export const theme = {
     swalButton: "#000080",
     red: "#E60023",
     orange: "#FF6F00",
-    green: "#39FF14",
+    green: "#2fde21",
     sandal: "#FFECCC",
   },
   fonts: {

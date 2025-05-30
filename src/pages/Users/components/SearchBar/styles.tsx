@@ -5,7 +5,7 @@ Proprietary and confidential.
 Written by Aravinth Raj R <aravinthr235@gmail.com>, 2025.
 */
 import styled from "styled-components";
-import { LiaSortAmountDownAltSolid } from "react-icons/lia";
+import { ImSortAlphaAsc } from "react-icons/im";
 import { SlArrowDown } from "react-icons/sl";
 import { Dropdown } from "react-bootstrap";
 import { Box } from "@mui/material";
@@ -78,9 +78,9 @@ export const InputWrapper = styled.div<{ $bgColor: string }>`
 export const SortContainer = styled.div`
   display: flex;
   align-items: center;
-  flex: 1;
   margin-top: 3px;
   justify-content: flex-end;
+  margin-left: 15px;
 
   @media (max-width: 768px) {
     justify-content: flex-end;
@@ -88,16 +88,15 @@ export const SortContainer = styled.div`
   }
 
   @media (max-width: 576px) {
-    justify-content: flex-end;
-    margin-left: 20px;
+    margin-left: 0px;
   }
 `;
 
-export const SortIcon = styled(LiaSortAmountDownAltSolid)<{
+export const SortIcon = styled(ImSortAlphaAsc)<{
   $bgColor: string;
 }>`
   color: black;
-  font-size: 40px;
+  font-size: 28px;
 
   @media (max-width: 768px) {
     align-self: flex-end;
@@ -105,7 +104,7 @@ export const SortIcon = styled(LiaSortAmountDownAltSolid)<{
 
   @media (max-width: 576px) {
     align-self: flex-end;
-    font-size: 35px;
+    font-size: 25px;
   }
 `;
 
@@ -225,21 +224,6 @@ export const MainContainer = styled(Box)`
     padding: 0;
     margin-top: 15px;
     justify-content: center;
-  }
-`;
-
-export const ErrorContainer = styled.div`
-  margin-top: 28px;
-  height: 74vh;
-  margin-bottom: 20px;
-
-  @media (max-width: 768px) {
-    max-height: 100vh;
-    margin-top: 35px;
-  }
-
-  @media (max-width: 576px) {
-    margin-bottom: 20px;
   }
 `;
 

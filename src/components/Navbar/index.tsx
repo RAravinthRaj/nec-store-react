@@ -33,6 +33,20 @@ export const Navbar = ({ menu, onToggleMenu }: INavbar) => {
     onToggleMenu(updatedMenuState);
   };
 
+  const _onDropDownItemClick = (id: string, link: string) => {
+    if (id === "logOut") {
+      localStorage.removeItem("token");
+    }
+    if (id === "profile") {
+      navigate("/profile", {
+        state: { id: userData?.id, prevPage: "navbar" },
+      });
+      return;
+    }
+
+    navigate(link);
+  };
+
   const _renderTitle = () => {
     if (!isMobile) {
       return (
@@ -80,17 +94,11 @@ export const Navbar = ({ menu, onToggleMenu }: INavbar) => {
   const _renderUserImage = () => {
     return (
       <S.ImageBackGround>
-        <S.UserImage src={theme.images.user}></S.UserImage>
+        <S.UserImage
+          src={userData?.profilePicture ?? theme.images.user}
+        ></S.UserImage>
       </S.ImageBackGround>
     );
-  };
-
-  const _onDropDownItemClick = (id: string, link: string) => {
-    if (id === "logOut") {
-      localStorage.removeItem("token");
-    }
-
-    navigate(link);
   };
 
   const _renderDropDownItem = () => {

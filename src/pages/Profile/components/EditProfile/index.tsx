@@ -13,34 +13,37 @@ import { toast } from "react-toastify";
 import { PROFILE_CONFIG } from "../../config";
 import MenuItem from "@mui/material/MenuItem";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
+import { convertFileToBase64 } from "../../../../utils";
 
 export interface IEditItem {
   modalShow: boolean;
   onClose: () => void;
-  individualProfile: {
-    Name: string;
-    Department: string;
-    RollNumber: String;
-    Email: String;
-  };
+  user: any;
+  onEditProfile(
+    name?: string,
+    email?: string,
+    rollNumber?: string,
+    department?: string,
+    profilePicture?: string | null
+  ): void;
 }
 
 export const EditProfileModal = ({
   modalShow,
   onClose,
-  individualProfile,
+  user,
+  onEditProfile,
 }: IEditItem) => {
   const theme = useTheme();
 
-  const [name, setName] = useState(individualProfile.Name);
-  const [email, setEmail] = useState(individualProfile.Email);
-  const [rollNumber, setRollNumber] = useState(individualProfile.RollNumber);
-  const [department, setDepartment] = useState<string | null>(
-    individualProfile.Department
-  );
+  const [name, setName] = useState(user?.name);
+  const [email, setEmail] = useState(user?.email);
+  const [rollNumber, setRollNumber] = useState(user?.rollNumber);
+  const [department, setDepartment] = useState<string>(user?.department);
+  const [profilePicture, setProfilePicture] = useState<string | null>();
 
-  const _productEdited = () => {
-    toast.success("Profile Updated");
+  const _profileEdited = () => {
+    onEditProfile(name, email, rollNumber, department, profilePicture);
     onClose();
   };
 
@@ -51,10 +54,31 @@ export const EditProfileModal = ({
     }
   };
 
+  const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    const validImageTypes = PROFILE_CONFIG.validImageTypes;
+
+    if (!validImageTypes.includes(file.type)) {
+      toast.error("Invalid ProfilePicture");
+      return;
+    }
+
+    try {
+      const base64 = await convertFileToBase64(file, 150, 150, 0.7);
+      setProfilePicture(base64);
+    } catch (err) {
+      console.error(err);
+      toast.error("Invalid ProfilePicture");
+    }
+  };
+
   const _renderMenu = () => {
     return (
       <S.StyledFormControl fullWidth>
         <Select
+          value={department ?? ""}
           onChange={(e) => _handleChange(e)}
           displayEmpty
           inputProps={{ "aria-label": "Category" }}
@@ -122,6 +146,15 @@ export const EditProfileModal = ({
             <Form.Label>{PROFILE_CONFIG.department}</Form.Label>
             {_renderMenu()}
           </Form.Group>
+          <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+            <Form.Label>{PROFILE_CONFIG.image}</Form.Label>
+            <input
+              type="file"
+              className="form-control"
+              accept="image/*"
+              onChange={handleImageChange}
+            />
+          </Form.Group>
         </Form>
       </Modal.Body>
     );
@@ -132,7 +165,7 @@ export const EditProfileModal = ({
       <S.Footer>
         <S.Button
           $bgColor={theme.colors.primary}
-          onClick={() => _productEdited()}
+          onClick={() => _profileEdited()}
         >
           {PROFILE_CONFIG.submitButton}
         </S.Button>

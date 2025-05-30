@@ -8,16 +8,16 @@ Written by Aravinth Raj R <aravinthr235@gmail.com>, 2025.
 import { useEffect, useState } from "react";
 import { CustomPagination, Loader, Navbar, Error } from "../../components";
 import { SideDrawer } from "../../navigator/SideDrawer";
-import {
-  MainContainer,
-  StyledPageBox,
-  ErrorContainer,
-} from "./components/SearchBar/styles";
+import { MainContainer, StyledPageBox } from "./components/SearchBar/styles";
 import { SearchBar, UserDetails } from "./components";
 import { useGetAllUsersStore } from "./stores";
+import { checkAccessControl, getUserDetails } from "../../utils";
+import { useNavigate } from "react-router-dom";
 
 const Users = () => {
   const [menu, setMenu] = useState(false);
+  const [tokenId, setTokenId] = useState("");
+  const navigate = useNavigate();
   const [payload, setPayload] = useState({
     skip: 0,
     limit: 2,
@@ -25,6 +25,11 @@ const Users = () => {
     email: "",
     orderBy: "ASC",
   });
+
+  useEffect(() => {
+    const token = getUserDetails()?.id;
+    if (token) setTokenId(token);
+  }, []);
 
   const {
     getAllUsersResponse,
@@ -78,6 +83,12 @@ const Users = () => {
     });
   };
 
+  const _onEditProfilePress = (id: string) => {
+    navigate("/profile", {
+      state: { id, prevPage: "users" },
+    });
+  };
+
   const _renderLoader = () => {
     return null;
   };
@@ -88,7 +99,11 @@ const Users = () => {
       if (users.length > 0) {
         return (
           <>
-            <UserDetails Users={users} />
+            <UserDetails
+              Users={users}
+              onEditProfilePress={_onEditProfilePress}
+              tokenId={tokenId}
+            />
             <CustomPagination
               perPageCount={2}
               totalPageCount={getAllUsersResponse?.payload?.totalCount}
@@ -100,16 +115,14 @@ const Users = () => {
       }
 
       return (
-        <ErrorContainer>
-          <Error
-            subtitle="No Data Found"
-            buttonTitle="Retry"
-            onPress={() => {
-              resetGetAllUsers();
-              fetchGetAllUsers(payload);
-            }}
-          />
-        </ErrorContainer>
+        <Error
+          subtitle="No Data Found"
+          buttonTitle="Retry"
+          onPress={() => {
+            resetGetAllUsers();
+            fetchGetAllUsers(payload);
+          }}
+        />
       );
     }
 
@@ -129,22 +142,34 @@ const Users = () => {
     return <Loader />;
   };
 
+  if (checkAccessControl("users")) {
+    return (
+      <>
+        <MainContainer>
+          <Navbar menu={menu} onToggleMenu={() => setMenu(!menu)} />
+          <SideDrawer menu={menu} toggleMenu={() => setMenu(!menu)} />
+          <StyledPageBox>
+            <SearchBar
+              setPayload={setPayload}
+              onSearchPress={_onSearchPress}
+              onSortPress={_onSortPress}
+            />
+            {_renderPage()}
+          </StyledPageBox>
+        </MainContainer>
+        {_renderLoader()}
+      </>
+    );
+  }
+
   return (
-    <>
-      <MainContainer>
-        <Navbar menu={menu} onToggleMenu={() => setMenu(!menu)} />
-        <SideDrawer menu={menu} toggleMenu={() => setMenu(!menu)} />
-        <StyledPageBox>
-          <SearchBar
-            setPayload={setPayload}
-            onSearchPress={_onSearchPress}
-            onSortPress={_onSortPress}
-          />
-          {_renderPage()}
-        </StyledPageBox>
-      </MainContainer>
-      {_renderLoader()}
-    </>
+    <Error
+      subtitle="Page Not Found"
+      buttonTitle="Go to Home"
+      onPress={() => {
+        navigate("/");
+      }}
+    />
   );
 };
 

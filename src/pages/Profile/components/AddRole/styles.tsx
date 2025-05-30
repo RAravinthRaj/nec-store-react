@@ -72,7 +72,9 @@ export const InputWrapper = styled.div`
   }
 `;
 
-export const Input = styled.input`
+export const Input = styled.input<{ $textColor: string }>`
+  color: ${(props) => props?.$textColor};
+
   &::-webkit-inner-spin-button,
   &::-webkit-outer-spin-button {
     -webkit-appearance: inner-spin-button !important;

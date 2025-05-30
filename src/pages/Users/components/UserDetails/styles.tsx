@@ -8,7 +8,7 @@ import styled from "styled-components";
 import { RxCrossCircled } from "react-icons/rx";
 import { GiShoppingCart } from "react-icons/gi";
 
-export const Button = styled.button<{ $bgColor: string }>`
+export const Button = styled.button<{ $bgColor: string; $canEdit: boolean }>`
   flex: 1;
   display: flex;
   align-items: center;
@@ -16,6 +16,8 @@ export const Button = styled.button<{ $bgColor: string }>`
   justify-content: center;
   border: none;
   background-color: ${(props) => props?.$bgColor};
+  opacity: ${(props) => (props.$canEdit ? "1" : "0.4")};
+  pointer-events: ${(props) => (props.$canEdit ? "auto" : "none")};
   border-radius: 5px;
   gap: 10px;
   color: white;
@@ -154,15 +156,25 @@ export const DownloadIcon = styled(GiShoppingCart)`
   font-size: 22px;
 `;
 
-export const Circle = styled.div<{ $bgColor: string; $isNotFirst: boolean }>`
+export const Circle = styled.div<{
+  $bgColor: string;
+  $isNotFirst: boolean;
+  $textColor: string;
+}>`
   height: 40px;
   width: 40px;
   background-color: ${(props) => props?.$bgColor};
   border-radius: 50%;
-  margin-left: ${(props) => (props.$isNotFirst ? "-15px" : "0px")};
+  margin-left: ${(props) => (props.$isNotFirst ? "-10px" : "0px")};
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: ${(props) => props?.$textColor};
+  font-weight: bold;
 
   @media (max-width: 576px) {
     height: 30px;
     width: 30px;
+    margin-left: ${(props) => (props.$isNotFirst ? "-8px" : "0px")};
   }
 `;

@@ -25,9 +25,8 @@ export const CustomPagination = ({
   currentPage,
   onPageChange,
 }: IPagination) => {
-  const isMobile = useMediaQuery("(max-width:576px)");
   const [page, setPage] = useState(currentPage);
-  const [count, setCount] = useState(1);
+  const [count, setCount] = useState(10);
 
   useEffect(() => {
     setCount(Math.ceil(totalPageCount / perPageCount));
@@ -40,7 +39,7 @@ export const CustomPagination = ({
 
   const _renderPrev = () => {
     return (
-      <Stack spacing={1} direction="row">
+      <>
         <BsChevronBarLeft
           onClick={() => goToPage(1)}
           color={page === 1 ? "lightgray" : "black"}
@@ -59,13 +58,13 @@ export const CustomPagination = ({
             cursor: "pointer",
           }}
         />
-      </Stack>
+      </>
     );
   };
 
   const _renderNext = () => {
     return (
-      <Stack direction="row" spacing={1}>
+      <>
         <HiOutlineChevronRight
           onClick={() => goToPage(page + 1)}
           color={page === count ? "lightgray" : "black"}
@@ -84,7 +83,7 @@ export const CustomPagination = ({
             cursor: "pointer",
           }}
         />
-      </Stack>
+      </>
     );
   };
 
@@ -104,18 +103,6 @@ export const CustomPagination = ({
       </Stack>
     );
   };
-
-  if (isMobile) {
-    return (
-      <S.PaginationContainer>
-        <Stack spacing={1} alignItems="center">
-          {_renderPrev()}
-          {_renderPages()}
-          {_renderNext()}
-        </Stack>
-      </S.PaginationContainer>
-    );
-  }
 
   return (
     <S.PaginationContainer>
