@@ -46,7 +46,7 @@ export const SideDrawer = ({ menu, toggleMenu }: ISideDrawer) => {
             <S.Logo
               src={theme.images.logo}
               onClick={() => {
-                navigate("/products");
+                navigate("/");
               }}
             />
             <S.Title>{SIDE_DRAWER_CONFIG.title}</S.Title>

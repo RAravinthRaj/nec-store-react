@@ -6,16 +6,13 @@ Written by Aravinth Raj R <aravinthr235@gmail.com>, 2025.
 */
 
 import { useEffect, useState } from "react";
-import { CustomPagination, Loader, Navbar, Error } from "../../components";
-import { SideDrawer } from "../../navigator/SideDrawer";
-import { MainContainer, StyledPageBox } from "./components/SearchBar/styles";
+import { CustomPagination, Loader, Error } from "../../components";
 import { SearchBar, UserDetails } from "./components";
 import { useGetAllUsersStore } from "./stores";
 import { checkAccessControl, getUserDetails } from "../../utils";
 import { useNavigate } from "react-router-dom";
 
 const Users = () => {
-  const [menu, setMenu] = useState(false);
   const [tokenId, setTokenId] = useState("");
   const navigate = useNavigate();
   const [payload, setPayload] = useState({
@@ -145,18 +142,12 @@ const Users = () => {
   if (checkAccessControl("users")) {
     return (
       <>
-        <MainContainer>
-          <Navbar menu={menu} onToggleMenu={() => setMenu(!menu)} />
-          <SideDrawer menu={menu} toggleMenu={() => setMenu(!menu)} />
-          <StyledPageBox>
-            <SearchBar
-              setPayload={setPayload}
-              onSearchPress={_onSearchPress}
-              onSortPress={_onSortPress}
-            />
-            {_renderPage()}
-          </StyledPageBox>
-        </MainContainer>
+        <SearchBar
+          setPayload={setPayload}
+          onSearchPress={_onSearchPress}
+          onSortPress={_onSortPress}
+        />
+        {_renderPage()}
         {_renderLoader()}
       </>
     );

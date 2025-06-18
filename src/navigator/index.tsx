@@ -18,6 +18,7 @@ import {
   Landing,
 } from "../pages";
 import { Routes, Route } from "react-router-dom";
+import { PageContainer } from "../components";
 
 export const Navigator = () => {
   return (
@@ -26,13 +27,34 @@ export const Navigator = () => {
       <Route path="/signin" element={<SignIn />} />
       <Route path="/signup" element={<SignUp />} />
       <Route path="/roles" element={<RoleSelection />} />
-      <Route path="/products" element={<Products />} />
+      <Route
+        path="/products"
+        element={
+          <PageContainer showSideBar={true} showHamburgerIcon={true}>
+            <Products />
+          </PageContainer>
+        }
+      />
       <Route path="/orders" element={<Orders />} />
       <Route path="/sales" element={<Sales />} />
       <Route path="/carts" element={<Carts />} />
       <Route path="/history" element={<MyOrders />} />
-      <Route path="/users" element={<Users />} />
-      <Route path="/profile" element={<Profile />} />
+      <Route
+        path="/users"
+        element={
+          <PageContainer showSideBar={true} showHamburgerIcon={true}>
+            <Users />
+          </PageContainer>
+        }
+      />
+      <Route
+        path="/profile"
+        element={
+          <PageContainer showSideBar={false} showHamburgerIcon={false}>
+            <Profile />
+          </PageContainer>
+        }
+      />
     </Routes>
   );
 };

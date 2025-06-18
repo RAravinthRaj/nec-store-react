@@ -5,10 +5,10 @@ Proprietary and confidential.
 Written by Aravinth Raj R <aravinthr235@gmail.com>, 2025.
 */
 import styled from "styled-components";
-import { Box } from "@mui/material";
 import { FiPlus } from "react-icons/fi";
 import { MdBlockFlipped, MdOutlineModeEditOutline } from "react-icons/md";
 import { SlLockOpen } from "react-icons/sl";
+import { GrFormPreviousLink } from "react-icons/gr";
 
 export const Button = styled.button<{ $bgColor: string; $isBlock: boolean }>`
   flex: 0.3;
@@ -35,7 +35,7 @@ export const Button = styled.button<{ $bgColor: string; $isBlock: boolean }>`
 export const BannerContainer = styled.img`
   width: 101%;
   height: 110px;
-  margin-left: -13px;
+  margin-left: -10px;
 
   @media (max-width: 768px) {
     width: 101%;
@@ -49,26 +49,27 @@ export const BannerContainer = styled.img`
   }
 `;
 
-export const StyledPageBox = styled(Box)`
-  margin-top: 70px;
-  width: 100vw;
+export const PreviousPageLink = styled(GrFormPreviousLink)`
+  position: relative;
+  height: 35px;
+  width: 35px;
+  background-color: white;
+  border-radius: 50%;
+  bottom: -50px;
+  left: 8px;
 
   @media (max-width: 768px) {
-    margin-top: 50px;
+    height: 30px;
+    width: 30px;
+    bottom: -45px;
+    left: 9px;
   }
 
   @media (max-width: 576px) {
-    margin-top: 40px;
-  }
-`;
-
-export const MainContainer = styled(Box)`
-  display: flex;
-  align-items: center;
-
-  @media (max-width: 576px) {
-    padding: 0;
-    margin-top: 15px;
+    height: 25px;
+    width: 25px;
+    bottom: -35px;
+    left: 8px;
   }
 `;
 
@@ -86,6 +87,15 @@ export const UserImageContainer = styled.div`
   position: relative;
   width: fit - content;
   margin-top: -40px;
+  margin-left: 50px;
+
+  @media (max-width: 768px) {
+    margin-left: 30px;
+  }
+
+  @media (max-width: 576px) {
+    margin-left: 15px;
+  }
 `;
 
 export const UserImage = styled.img`
@@ -126,10 +136,14 @@ export const DataContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 40px;
+  margin-left: 30px;
+
+  @media (max-width: 768px) {
+    margin-left: 20px;
+  }
 
   @media (max-width: 576px) {
-    margin-top: 40px;
-    margin: 8px;
+    margin-left: 12px;
     gap: 30px;
   }
 `;
@@ -146,14 +160,13 @@ export const NameContainer = styled.div`
 
 export const DetailsContainer = styled.div`
   display: flex;
-  align-items: center;
   justify-content: center;
   gap: 50px;
 
   @media (max-width: 576px) {
     flex-direction: column;
     align-items: flex-start;
-    gap: 25px;
+    gap: 20px;
   }
 `;
 
@@ -209,18 +222,6 @@ export const RollContainer = styled.div`
   }
 `;
 
-export const MainContainerItems = styled.div`
-  padding: 0 60px;
-
-  @media (max-width: 1024px) {
-    padding: 0 30px;
-  }
-
-  @media (max-width: 576px) {
-    padding: 0 20px;
-  }
-`;
-
 export const Title = styled.div<{ $color: string }>`
   color: ${(props) => props?.$color};
   font-size: 18px;
@@ -261,6 +262,17 @@ export const EditContainer = styled.div`
   align-items: center;
   justify-content: center;
   gap: 30px;
+  margin-right: 50px;
+
+  @media (max-width: 768px) {
+    margin-right: 15px;
+    gap: 20px;
+  }
+
+  @media (max-width: 576px) {
+    margin-right: 10px;
+    gap: 20px;
+  }
 `;
 
 export const Circle = styled.div<{

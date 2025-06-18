@@ -44,9 +44,19 @@ export const TitleContainer = styled.div`
   }
 `;
 
-export const Logo = styled.img`
+export const Logo = styled.img<{ $isProfilePage: boolean }>`
   width: 50px;
   height: 50px;
+
+  @media (max-width: 768px) {
+    width: 45px;
+    height: 45px;
+  }
+
+  @media (max-width: 768px) {
+    width: 40px;
+    height: 40px;
+  }
 `;
 
 export const TitleText = styled.div`

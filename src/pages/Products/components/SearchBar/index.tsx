@@ -6,37 +6,36 @@ Written by Aravinth Raj R <aravinthr235@gmail.com>, 2025.
 */
 import { useTheme } from "../../../../hooks";
 import * as S from "./styles";
-import { Navbar } from "../../../../components";
 import { useMediaQuery } from "@mui/material";
 import Dropdown from "react-bootstrap/Dropdown";
 import { ChangeEvent, useState } from "react";
 import { AddItemModal } from "../AddItem";
 import { AddCategoryModal } from "../AddCategory";
-import { ProductCard } from "../ProductCard";
 import { PRODUCTS_CONFIG } from "../../config";
-import { SideDrawer } from "../../../../navigator/SideDrawer";
 import Box from "@mui/material/Box";
 import IconButton from "@mui/material/IconButton";
-import { CustomPagination } from "../../../../components/Pagination";
+import { IoIosSearch } from "react-icons/io";
+import { getUserDetails } from "../../../../utils";
+import { ROLES } from "../../../../config";
 
-export interface IContainerComp {}
+export interface ISearchBarComp {
+  categories: any[];
+}
 
-export const ContainerComp = ({}: IContainerComp) => {
+export const SearchBar = ({ categories }: ISearchBarComp) => {
   const theme = useTheme();
   const isTab = useMediaQuery("(max-width:768px)");
-
   const [openItem, setOpenItem] = useState(false);
   const [openCategory, setOpenCategory] = useState(false);
-  const [menu, setMenu] = useState(false);
   const [searchProductTitle, setSearchProductTitle] = useState("");
   const [selectedCategory, setSelectedCategory] = useState(PRODUCTS_CONFIG.all);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
-  const isRetailer = true;
+  const isRetailer = getUserDetails()?.role === ROLES.retailer;
 
-  const category = ["All", "Stationary", "cosmetics", "household"];
+  const categoriesWithAll = [{ id: "all", name: "All" }, ...categories];
 
-  const _setSearchDate = (e: ChangeEvent<HTMLInputElement>) => {
+  const _setSearchData = (e: ChangeEvent<HTMLInputElement>) => {
     setSearchProductTitle(e.target.value);
   };
 
@@ -54,13 +53,13 @@ export const ContainerComp = ({}: IContainerComp) => {
   const _renderCategoryDropDownMenu = () => {
     return (
       <S.CategoryDropDownMenu>
-        {category?.map((cat, id) => {
+        {categoriesWithAll?.map((cat, id) => {
           return (
             <div key={id}>
-              <Dropdown.Item key={cat} eventKey={cat}>
-                {cat}
+              <Dropdown.Item key={cat?.id} eventKey={cat?.name}>
+                {cat?.name}
               </Dropdown.Item>
-              {id != category.length - 1 && <S.Divider />}
+              {id != categoriesWithAll.length - 1 && <S.Divider />}
             </div>
           );
         })}
@@ -129,9 +128,12 @@ export const ContainerComp = ({}: IContainerComp) => {
             type="input"
             placeholder="Search"
             onChange={(e) => {
-              _setSearchDate(e);
+              _setSearchData(e);
             }}
           />
+          <S.SearchButton title="press">
+            <IoIosSearch size={25} />
+          </S.SearchButton>
         </S.InputWrapper>
         <S.SortContainer>{_renderSortedOptions()}</S.SortContainer>
       </S.ActionItem>
@@ -240,16 +242,6 @@ export const ContainerComp = ({}: IContainerComp) => {
     );
   };
 
-  const _products = () => {
-    return (
-      <S.ProductContainer>
-        {PRODUCTS_CONFIG.products.map((product, id) => (
-          <ProductCard key={id} individualProduct={product} />
-        ))}
-      </S.ProductContainer>
-    );
-  };
-
   const _renderModals = () => {
     return (
       <div>
@@ -269,25 +261,11 @@ export const ContainerComp = ({}: IContainerComp) => {
     );
   };
 
-  const _mainContainerItems = () => {
-    return (
-      <div>
-        {_renderActionItems()}
-        {_renderModals()}
-        {_renderFabButton()}
-        {_products()}
-      </div>
-    );
-  };
-
   return (
-    <S.MainContainer>
-      <Navbar menu={menu} onToggleMenu={() => setMenu(!menu)} />
-      <SideDrawer menu={menu} toggleMenu={() => setMenu(!menu)} />
-      <S.StyledPageBox>
-        {_mainContainerItems()}
-        <CustomPagination />
-      </S.StyledPageBox>
-    </S.MainContainer>
+    <>
+      {_renderActionItems()}
+      {_renderModals()}
+      {_renderFabButton()}
+    </>
   );
 };

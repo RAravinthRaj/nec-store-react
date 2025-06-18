@@ -9,7 +9,7 @@ import { LiaSortAmountDownAltSolid } from "react-icons/lia";
 import { FiPlus } from "react-icons/fi";
 import { SlArrowDown } from "react-icons/sl";
 import { Dropdown } from "react-bootstrap";
-import { Box, Menu, MenuItem } from "@mui/material";
+import { Menu, MenuItem } from "@mui/material";
 import { Link } from "react-router-dom";
 import { PiShoppingCartBold } from "react-icons/pi";
 
@@ -28,7 +28,7 @@ export const ActionItem = styled.div`
 export const ActionContainer = styled.div`
   display: flex;
   align-items: center;
-  margin-top: 15px;
+  margin-top: 10px;
 
   @media (max-width: 576px) {
     margin: 0;
@@ -81,15 +81,16 @@ export const SortContainer = styled.div`
   display: flex;
   align-items: center;
   flex: 1;
-
   margin-left: 20px;
 
   @media (max-width: 768px) {
+    margin-left: 0;
     justify-content: flex-end;
     flex: 0.2;
   }
 
   @media (max-width: 576px) {
+    margin-left: 0;
     justify-content: flex-end;
   }
 `;
@@ -250,12 +251,16 @@ export const IconText = styled.div<{ $bgColor: string }>`
   color: ${(props) => props.$bgColor};
 
   @media (max-width: 576px) {
-    font-size: 14px;
+    font-size: 13px;
   }
 `;
 
 export const CategoryDropDownMenu = styled(Dropdown.Menu)`
   margin-top: 10px;
+
+  @media (max-width: 576px) {
+    font-size: 14px;
+  }
 `;
 
 export const ProductContainer = styled.div`
@@ -336,37 +341,6 @@ export const StyledMenuItem = styled(MenuItem)`
   }
 `;
 
-export const StyledPageBox = styled(Box)`
-  margin-top: 80px;
-  overflow-x: auto;
-
-  @media (min-width: 1300px) {
-    min-width: 81vw;
-  }
-
-  @media (max-width: 768px) {
-    margin-top: 80px;
-  }
-
-  @media (max-width: 576px) {
-    padding: 8px;
-    margin-top: 50px;
-  }
-`;
-
-export const MainContainer = styled(Box)`
-  display: flex;
-  align-items: center;
-  padding: 20px;
-  padding-bottom: 0;
-
-  @media (max-width: 576px) {
-    padding: 10px;
-    margin-top: 10px;
-    justify-content: center;
-  }
-`;
-
 export const CartContainer = styled(Link)<{ $bgColor: string }>`
   padding: 10px;
   border-radius: 50%;
@@ -400,7 +374,7 @@ export const CartItemsCount = styled.div<{
   position: relative;
   border: solid 1px white;
   top: ${(props) => (!props.$isMobile ? "-21px" : "-43px")};
-  left: ${(props) => (!props.$isMobile ? "-10px" : "28px")};
+  left: ${(props) => (!props.$isMobile ? "-20px" : "28px")};
   padding: 4px;
   border-radius: 50%;
   display: flex;
@@ -427,4 +401,9 @@ export const Count = styled.div<{ $bgColor: string }>`
     font-size: 10px;
     margin: 2px;
   }
+`;
+
+export const SearchButton = styled.button`
+  background-color: white;
+  border: none;
 `;

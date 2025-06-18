@@ -10,11 +10,6 @@ import * as S from "./styles";
 import { EditItemModal } from "../EditItem";
 import { toast } from "react-toastify";
 import { PRODUCTS_CONFIG } from "../../config";
-import Swal, { SweetAlertIcon } from "sweetalert2";
-import { RxCross2 } from "react-icons/rx";
-import ReactDOMServer from "react-dom/server";
-import { VscCheck } from "react-icons/vsc";
-
 export interface IProductCard {
   individualProduct: {
     Title: string;
@@ -31,35 +26,6 @@ export const ProductCard = ({ individualProduct }: IProductCard) => {
 
   const itemAdded = () => {
     toast.success(PRODUCTS_CONFIG.addItem);
-  };
-
-  const _deleteItem = () => {
-    Swal.fire({
-      title: PRODUCTS_CONFIG.swal.title,
-      text: PRODUCTS_CONFIG.swal.text,
-      icon: PRODUCTS_CONFIG.swal.icon as SweetAlertIcon,
-      confirmButtonColor: theme.colors.primary,
-      cancelButtonColor: theme.colors.cancel,
-      color: theme.colors.swalButton,
-      confirmButtonText: `${ReactDOMServer.renderToString(
-        <VscCheck size={20} style={{ marginTop: "-2px", marginRight: "5px" }} />
-      )} ${PRODUCTS_CONFIG.swal.confirmButtonText} `,
-      cancelButtonText: `${ReactDOMServer.renderToString(
-        <RxCross2 size={19} style={{ marginTop: "-1px" }} />
-      )} ${PRODUCTS_CONFIG.swal.cancelButtonText}`,
-      showCancelButton: true,
-      reverseButtons: true,
-    }).then((result) => {
-      if (result.isConfirmed) {
-        Swal.fire({
-          title: PRODUCTS_CONFIG.swal.successTitle,
-          text: PRODUCTS_CONFIG.swal.successText,
-          icon: PRODUCTS_CONFIG.swal.successIcon as SweetAlertIcon,
-          confirmButtonColor: theme.colors.primary,
-          color: theme.colors.swalButton,
-        });
-      }
-    });
   };
 
   const _renderCardInitialDetails = () => {
@@ -95,13 +61,6 @@ export const ProductCard = ({ individualProduct }: IProductCard) => {
           >
             <S.EditIcon />
             {PRODUCTS_CONFIG.editButton}
-          </S.Button>
-          <S.Button
-            $bgColor={theme.colors.primary}
-            onClick={() => _deleteItem()}
-          >
-            <S.DeleteIcon />
-            {PRODUCTS_CONFIG.deleteButton}
           </S.Button>
         </S.ButtonContainer>
       );

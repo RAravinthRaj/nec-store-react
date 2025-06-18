@@ -17,6 +17,7 @@ import { ROLES } from "../../config";
 const RoleSelection = () => {
   const location = useLocation();
   const token = location.state?.token;
+
   const { getRolesResponse, getRolesError, fetchGetRoles, resetGetRoles } =
     useGetRolesStore();
 
@@ -31,7 +32,10 @@ const RoleSelection = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetchGetRoles(token);
+    if (token) {
+      resetGetRoles();
+      fetchGetRoles(token);
+    }
   }, []);
 
   useEffect(() => {

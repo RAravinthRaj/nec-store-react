@@ -9,8 +9,8 @@ import { ChangeEvent, useState } from "react";
 import { USERS_CONFIG } from "../../config";
 import { useTheme } from "../../../../hooks";
 import Dropdown from "react-bootstrap/Dropdown";
-import { FiSearch } from "react-icons/fi";
 import * as S from "./styles";
+import { IoIosSearch } from "react-icons/io";
 
 interface SearchBarI {
   setPayload(payload: any): void;
@@ -140,7 +140,7 @@ export const SearchBar = ({
             }}
           />
           <S.SearchButton title="press" onClick={onSearchPress}>
-            <FiSearch size={20} />
+            <IoIosSearch size={25} />
           </S.SearchButton>
         </S.InputWrapper>
         <S.SortContainer>{_renderSortedOptions()}</S.SortContainer>

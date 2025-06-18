@@ -12,6 +12,7 @@ export const getRoles = async (signInToken: string) => {
   try {
     const { data } = await apolloClient.query({
       query: GET_ROLES,
+      fetchPolicy: "no-cache",
       context: {
         headers: {
           "Content-Type": "application/json",

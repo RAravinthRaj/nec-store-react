@@ -6,13 +6,12 @@ Written by Aravinth Raj R <aravinthr235@gmail.com>, 2025.
 */
 import { useTheme } from "../../../../hooks";
 import * as S from "./styles";
-import { Navbar } from "../../../../components";
 import { useState } from "react";
-import { SideDrawer } from "../../../../navigator/SideDrawer";
 import { AddRoleModal } from "../AddRole";
 import { EditProfileModal } from "../EditProfile";
 import { PROFILE_CONFIG } from "../../config";
 import { useSwalComp } from "../../../../components";
+import { useNavigate } from "react-router-dom";
 
 export interface IContainerComp {
   prevPage: string;
@@ -36,9 +35,10 @@ export const ContainerComp = ({
   onEditProfile,
 }: IContainerComp) => {
   const theme = useTheme();
-  const [menu, setMenu] = useState(false);
   const [openRole, setOpenRole] = useState(false);
   const [openEdit, setOpenEdit] = useState(false);
+
+  const navigate = useNavigate();
 
   const showSwal = useSwalComp();
   const _setUserStatus = () => {
@@ -68,7 +68,16 @@ export const ContainerComp = ({
   };
 
   const _renderBanner = () => {
-    return <S.BannerContainer src={theme.images.banner} />;
+    return (
+      <>
+        <S.PreviousPageLink
+          onClick={() => {
+            navigate(-1);
+          }}
+        />
+        <S.BannerContainer src={theme.images.banner} />
+      </>
+    );
   };
 
   const _renderUserImage = () => {
@@ -240,13 +249,9 @@ export const ContainerComp = ({
   };
 
   return (
-    <S.MainContainer>
-      <Navbar menu={menu} onToggleMenu={() => setMenu(!menu)} />
-      <SideDrawer menu={menu} toggleMenu={() => setMenu(!menu)} />
-      <S.StyledPageBox>
-        {_renderBanner()}
-        <S.MainContainerItems>{_mainContainerItems()}</S.MainContainerItems>
-      </S.StyledPageBox>
-    </S.MainContainer>
+    <>
+      {_renderBanner()}
+      {_mainContainerItems()}
+    </>
   );
 };

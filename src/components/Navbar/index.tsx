@@ -10,14 +10,15 @@ import { NAVBAR_CONFIG } from "./config";
 import { Link, useNavigate } from "react-router-dom";
 import { AppBar } from "@mui/material";
 import { useEffect, useState } from "react";
-import { getUserDetails } from "../../utils";
+import { getItemInLocalStorage, getUserDetails } from "../../utils";
 
 export interface INavbar {
   menu: boolean;
   onToggleMenu: (newMenuState: boolean) => void;
+  showHamburgerIcon: boolean;
 }
 
-export const Navbar = ({ menu, onToggleMenu }: INavbar) => {
+export const Navbar = ({ menu, onToggleMenu, showHamburgerIcon }: INavbar) => {
   const theme = useTheme();
   const [userData, setUserData] = useState<any>({ name: "" });
   const isMobile = useIsNotDesktop();
@@ -34,10 +35,15 @@ export const Navbar = ({ menu, onToggleMenu }: INavbar) => {
   };
 
   const _onDropDownItemClick = (id: string, link: string) => {
-    if (id === "logOut") {
+    if (id === "switchRole") {
+      const token = getItemInLocalStorage("token");
+      navigate("/roles", {
+        state: { token },
+      });
+      return;
+    } else if (id === "logOut") {
       localStorage.removeItem("token");
-    }
-    if (id === "profile") {
+    } else if (id === "profile") {
       navigate("/profile", {
         state: { id: userData?.id, prevPage: "navbar" },
       });
@@ -52,10 +58,21 @@ export const Navbar = ({ menu, onToggleMenu }: INavbar) => {
       return (
         <S.TitleContainer>
           <Link to="/">
-            <S.Logo src={theme.images.logo} />
+            <S.Logo
+              src={theme.images.logo}
+              $isProfilePage={showHamburgerIcon}
+            />
           </Link>
           <S.TitleText>{NAVBAR_CONFIG.title}</S.TitleText>
         </S.TitleContainer>
+      );
+    }
+
+    if (!showHamburgerIcon) {
+      return (
+        <Link to="/">
+          <S.Logo src={theme.images.logo} $isProfilePage={!showHamburgerIcon} />
+        </Link>
       );
     }
 

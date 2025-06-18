@@ -88,7 +88,8 @@ export const SortContainer = styled.div`
   }
 
   @media (max-width: 576px) {
-    margin-left: 0px;
+    margin-left: 5px;
+    flex: 0;
   }
 `;
 
