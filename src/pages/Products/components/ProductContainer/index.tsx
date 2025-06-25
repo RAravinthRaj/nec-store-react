@@ -6,16 +6,34 @@ Written by Aravinth Raj R <aravinthr235@gmail.com>, 2025.
 */
 import * as S from "./styles";
 import { ProductCard } from "../ProductCard";
-import { PRODUCTS_CONFIG } from "../../config";
+import { UpdateProductInput } from "../../services/graphql";
 
-export interface IProductContainer {}
+export interface IProductContainer {
+  categories: any[];
+  products: any[];
+  isRetailer: boolean;
+  updateProduct(args: UpdateProductInput): Promise<boolean>;
+}
 
-export const ProductContainer = ({}: IProductContainer) => {
+export const ProductContainer = ({
+  products,
+  categories,
+  updateProduct,
+  isRetailer,
+}: IProductContainer) => {
   return (
     <S.ProductContainer>
-      {PRODUCTS_CONFIG.products.map((product, id) => (
-        <ProductCard key={id} individualProduct={product} />
-      ))}
+      {products
+        .filter((product) => product?.quantity > 0)
+        .map((product, id) => (
+          <ProductCard
+            key={id}
+            product={product}
+            categories={categories}
+            updateProduct={updateProduct}
+            isRetailer={isRetailer}
+          />
+        ))}
     </S.ProductContainer>
   );
 };

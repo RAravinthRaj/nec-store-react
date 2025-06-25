@@ -9,10 +9,12 @@ import styled from "styled-components";
 export const ProductContainer = styled.div`
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  margin-top: 15px;
+  margin-top: 20px;
+  gap: 25px;
 
-  @media (max-width: 1024px) {
+  @media (max-width: 1300px) {
     grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
   }
 
   @media (max-width: 768px) {
@@ -22,5 +24,6 @@ export const ProductContainer = styled.div`
   @media (max-width: 576px) {
     margin-top: 20px;
     grid-template-columns: repeat(1, 1fr);
+    padding: 0 5px;
   }
 `;

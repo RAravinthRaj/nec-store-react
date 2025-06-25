@@ -53,7 +53,7 @@ export const Logo = styled.img<{ $isProfilePage: boolean }>`
     height: 45px;
   }
 
-  @media (max-width: 768px) {
+  @media (max-width: 576px) {
     width: 40px;
     height: 40px;
   }
@@ -73,8 +73,12 @@ export const UserContainer = styled.div`
   gap: 20px;
   margin: 3px 10px;
 
+  @media (max-width: 768px) {
+    margin: 0;
+  }
+
   @media (max-width: 576px) {
-    margin: 3px;
+    margin: 0;
   }
 `;
 

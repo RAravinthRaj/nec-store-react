@@ -11,6 +11,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { AppBar } from "@mui/material";
 import { useEffect, useState } from "react";
 import { getItemInLocalStorage, getUserDetails } from "../../utils";
+import { Error } from "../Error";
 
 export interface INavbar {
   menu: boolean;

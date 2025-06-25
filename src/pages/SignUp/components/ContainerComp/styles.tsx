@@ -53,11 +53,11 @@ export const Logo = styled.img`
 
   @media (max-width: 768px) {
     height: 70px;
-    width: 80px;
+    width: 70px;
   }
 
   @media (max-width: 576px) {
-    height: 40px;
+    height: 50px;
     width: 50px;
   }
 `;

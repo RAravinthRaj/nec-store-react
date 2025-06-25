@@ -10,19 +10,22 @@ import * as S from "./styles";
 import { EditItemModal } from "../EditItem";
 import { toast } from "react-toastify";
 import { PRODUCTS_CONFIG } from "../../config";
+import { UpdateProductInput } from "../../services/graphql";
 export interface IProductCard {
-  individualProduct: {
-    Title: string;
-    Category: string;
-    Quantity: number;
-    MRP: number;
-  };
+  product: any;
+  categories: any[];
+  updateProduct(args: UpdateProductInput): Promise<boolean>;
+  isRetailer: boolean;
 }
 
-export const ProductCard = ({ individualProduct }: IProductCard) => {
+export const ProductCard = ({
+  product,
+  categories,
+  updateProduct,
+  isRetailer,
+}: IProductCard) => {
   const theme = useTheme();
   const [modal, setModal] = useState(false);
-  const isRetailer = true;
 
   const itemAdded = () => {
     toast.success(PRODUCTS_CONFIG.addItem);
@@ -30,24 +33,28 @@ export const ProductCard = ({ individualProduct }: IProductCard) => {
 
   const _renderCardInitialDetails = () => {
     return (
-      <div>
+      <S.ProductDetailContainer>
         <S.ImageContainer>
-          <S.Image src={theme.images.tagFile} />
+          <S.Image
+            src={product.productImage ?? theme.images.defaultProductImage}
+          />
         </S.ImageContainer>
-        <S.TitleContainer>{individualProduct.Title}</S.TitleContainer>
-        <S.CategoryContainer $bgColor={theme.colors.primary}>
-          {individualProduct.Category}
-        </S.CategoryContainer>
-        <S.ProductDes>
-          <S.QuantityContainer>
-            {PRODUCTS_CONFIG.prQuantity}
-            {individualProduct.Quantity}
-          </S.QuantityContainer>
-          <S.RupeeContainer>
-            {PRODUCTS_CONFIG.prMrp} {individualProduct.MRP}
-          </S.RupeeContainer>
-        </S.ProductDes>
-      </div>
+        <div>
+          <S.TitleContainer>{product?.title}</S.TitleContainer>
+          <S.CategoryContainer $bgColor={theme.colors.primary}>
+            {product?.category}
+          </S.CategoryContainer>
+          <S.ProductDes>
+            <S.QuantityContainer>
+              {PRODUCTS_CONFIG.prQuantity}
+              {product?.quantity}
+            </S.QuantityContainer>
+            <S.RupeeContainer>
+              {PRODUCTS_CONFIG.prMrp} {product?.price}
+            </S.RupeeContainer>
+          </S.ProductDes>
+        </div>
+      </S.ProductDetailContainer>
     );
   };
 
@@ -90,7 +97,9 @@ export const ProductCard = ({ individualProduct }: IProductCard) => {
       <EditItemModal
         modalShow={modal}
         onClose={() => setModal(false)}
-        individualProduct={individualProduct}
+        product={product}
+        categories={categories}
+        updateProduct={updateProduct}
       />
     </div>
   );

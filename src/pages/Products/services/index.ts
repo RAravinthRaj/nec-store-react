@@ -4,7 +4,15 @@ Unauthorized copying of this file, via any medium, is strictly prohibited.
 Proprietary and confidential.  
 Written by Aravinth Raj R <aravinthr235@gmail.com>, 2025.
 */
-import { getAllCategories } from "./graphql";
+import {
+  addCategory,
+  addProduct,
+  AddProductInput,
+  getAllCategories,
+  UpdateProduct,
+  UpdateProductInput,
+} from "./graphql";
+import { GetAllProductsInput, getAllProducts } from "./graphql";
 
 class ProductsService {
   private static instance: ProductsService;
@@ -20,6 +28,26 @@ class ProductsService {
 
   async getAllCategoriesAPI(): Promise<any> {
     const res = await getAllCategories();
+    return res;
+  }
+
+  async addCategoryAPI(name: string): Promise<any> {
+    const res = await addCategory(name);
+    return res;
+  }
+
+  async getAllProductsAPI(args: GetAllProductsInput): Promise<any> {
+    const res = await getAllProducts(args);
+    return res;
+  }
+
+  async addProductAPI(args: AddProductInput): Promise<any> {
+    const res = await addProduct(args);
+    return res;
+  }
+
+  async updateProductAPI(args: UpdateProductInput): Promise<any> {
+    const res = await UpdateProduct(args);
     return res;
   }
 }

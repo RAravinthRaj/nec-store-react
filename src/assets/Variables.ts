@@ -18,10 +18,10 @@ import user from "../assets/images/user.png";
 import switchRole from "../assets/images/switchRole.png";
 import viewProfile from "../assets/images/dashboard.png";
 import logout from "../assets/images/logout.png";
-import tagFile from "../assets/images/tagFile.png";
 import banner from "../assets/images/banner.png";
 import history from "../assets/images/history.png";
 import error from "../assets/images/error.png";
+import defaultProductImage from "../assets/images/defaultProduct.png";
 
 export const theme = {
   colors: {
@@ -57,7 +57,7 @@ export const theme = {
     switchRole,
     viewProfile,
     logout,
-    tagFile,
+    defaultProductImage,
     banner,
     history,
     error,

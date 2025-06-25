@@ -190,3 +190,18 @@ export const Divider = styled.div`
   border-top: 0.2px solid rgba(0, 0, 0, 0.2);
   margin: 4px 10px;
 `;
+
+export const ProductImageContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 1rem;
+`;
+
+export const PreviewProductImage = styled.img`
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+`;

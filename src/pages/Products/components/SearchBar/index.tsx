@@ -15,35 +15,70 @@ import { PRODUCTS_CONFIG } from "../../config";
 import Box from "@mui/material/Box";
 import IconButton from "@mui/material/IconButton";
 import { IoIosSearch } from "react-icons/io";
-import { getUserDetails } from "../../../../utils";
-import { ROLES } from "../../../../config";
+import { AddProductInput } from "../../services/graphql";
 
 export interface ISearchBarComp {
   categories: any[];
+  addCategory(name: string): Promise<boolean>;
+  setPayload(payload: any): void;
+  onSearchPress(): void;
+  onSortPress(type: string): void;
+  isRetailer: boolean;
+  addProduct(args: AddProductInput): Promise<boolean>;
 }
 
-export const SearchBar = ({ categories }: ISearchBarComp) => {
+export const SearchBar = ({
+  categories,
+  addCategory,
+  setPayload,
+  onSearchPress,
+  onSortPress,
+  isRetailer,
+  addProduct,
+}: ISearchBarComp) => {
   const theme = useTheme();
   const isTab = useMediaQuery("(max-width:768px)");
+
   const [openItem, setOpenItem] = useState(false);
   const [openCategory, setOpenCategory] = useState(false);
-  const [searchProductTitle, setSearchProductTitle] = useState("");
-  const [selectedCategory, setSelectedCategory] = useState(PRODUCTS_CONFIG.all);
+  const [selectedCategoryName, setSelectedCategoryName] = useState(
+    PRODUCTS_CONFIG.all
+  );
+
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
-  const isRetailer = getUserDetails()?.role === ROLES.retailer;
 
   const categoriesWithAll = [{ id: "all", name: "All" }, ...categories];
 
   const _setSearchData = (e: ChangeEvent<HTMLInputElement>) => {
-    setSearchProductTitle(e.target.value);
+    setPayload((payload: any) => ({
+      ...payload,
+      title: e.target.value,
+    }));
+  };
+
+  const _setSearchCategory = (e: string | null) => {
+    if (!e) return;
+
+    const selectedCat = categoriesWithAll.find((cat) => cat.id === e);
+    if (!selectedCat) {
+      console.warn("Selected category not found:", e);
+      return;
+    }
+
+    setSelectedCategoryName(selectedCat.name);
+
+    setPayload((prev: any) => ({
+      ...prev,
+      categoryId: e === "all" ? "" : selectedCat.id,
+    }));
   };
 
   const _renderCategoryDropDownTitle = () => {
     return (
       <S.CustomToggle $bgColor={theme.colors.backGround}>
         <S.IconText $bgColor={theme.colors.textSecondary}>
-          {selectedCategory.substring(0, 4)}
+          {selectedCategoryName.substring(0, 4)}
         </S.IconText>
         <S.DropDownIcon $bgColor={theme.colors.backGround} />
       </S.CustomToggle>
@@ -56,7 +91,7 @@ export const SearchBar = ({ categories }: ISearchBarComp) => {
         {categoriesWithAll?.map((cat, id) => {
           return (
             <div key={id}>
-              <Dropdown.Item key={cat?.id} eventKey={cat?.name}>
+              <Dropdown.Item key={cat?.id} eventKey={cat?.id}>
                 {cat?.name}
               </Dropdown.Item>
               {id != categoriesWithAll.length - 1 && <S.Divider />}
@@ -69,11 +104,7 @@ export const SearchBar = ({ categories }: ISearchBarComp) => {
 
   const _showDropDown = () => {
     return (
-      <S.CustomDropdown
-        onSelect={(eventKey) => {
-          if (eventKey !== null) setSelectedCategory(eventKey);
-        }}
-      >
+      <S.CustomDropdown onSelect={_setSearchCategory}>
         {_renderCategoryDropDownTitle()}
         {_renderCategoryDropDownMenu()}
       </S.CustomDropdown>
@@ -127,11 +158,9 @@ export const SearchBar = ({ categories }: ISearchBarComp) => {
           <S.Input
             type="input"
             placeholder="Search"
-            onChange={(e) => {
-              _setSearchData(e);
-            }}
+            onChange={_setSearchData}
           />
-          <S.SearchButton title="press">
+          <S.SearchButton title="press" onClick={onSearchPress}>
             <IoIosSearch size={25} />
           </S.SearchButton>
         </S.InputWrapper>
@@ -221,10 +250,13 @@ export const SearchBar = ({ categories }: ISearchBarComp) => {
   const _renderSortedOptionsMenu = () => {
     return (
       <S.SortedDropdownMenu $bgColor={theme.colors.white}>
-        {PRODUCTS_CONFIG.sortedOptions.map((dept, id) => (
+        {PRODUCTS_CONFIG.sortedOptions.map((item, id) => (
           <div key={id}>
-            <S.SortedDropdownItem $bgColor={theme.colors.primary}>
-              <S.SortedIconText>{dept}</S.SortedIconText>
+            <S.SortedDropdownItem
+              $bgColor={theme.colors.primary}
+              eventKey={item}
+            >
+              <S.SortedIconText>{item}</S.SortedIconText>
             </S.SortedDropdownItem>
             {id !== PRODUCTS_CONFIG.sortedOptions.length - 1 && <S.Divider />}
           </div>
@@ -235,7 +267,13 @@ export const SearchBar = ({ categories }: ISearchBarComp) => {
 
   const _renderSortedOptions = () => {
     return (
-      <S.CustomDropdown>
+      <S.CustomDropdown
+        onSelect={(eventKey) => {
+          if (eventKey !== null) {
+            onSortPress(eventKey.includes("Asc") ? "ASC" : "DESC");
+          }
+        }}
+      >
         {_renderSortedOptionsTitle()}
         {_renderSortedOptionsMenu()}
       </S.CustomDropdown>
@@ -247,12 +285,15 @@ export const SearchBar = ({ categories }: ISearchBarComp) => {
       <div>
         <AddItemModal
           modalShow={openItem}
+          categories={categories}
+          addProduct={addProduct}
           onClose={() => {
             setOpenItem(false);
           }}
         />
         <AddCategoryModal
           modalShow={openCategory}
+          addCategory={addCategory}
           onClose={() => {
             setOpenCategory(false);
           }}

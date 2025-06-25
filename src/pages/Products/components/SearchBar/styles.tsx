@@ -5,13 +5,13 @@ Proprietary and confidential.
 Written by Aravinth Raj R <aravinthr235@gmail.com>, 2025.
 */
 import styled from "styled-components";
-import { LiaSortAmountDownAltSolid } from "react-icons/lia";
 import { FiPlus } from "react-icons/fi";
 import { SlArrowDown } from "react-icons/sl";
 import { Dropdown } from "react-bootstrap";
 import { Menu, MenuItem } from "@mui/material";
 import { Link } from "react-router-dom";
 import { PiShoppingCartBold } from "react-icons/pi";
+import { ImSortAlphaAsc } from "react-icons/im";
 
 export const ActionItem = styled.div`
   display: flex;
@@ -19,6 +19,7 @@ export const ActionItem = styled.div`
   justify-content: center;
 
   @media (max-width: 576px) {
+    margin: 0 7px;
     justify-content: center;
     flex: 1;
     margin-top: 10px;
@@ -84,30 +85,32 @@ export const SortContainer = styled.div`
   margin-left: 20px;
 
   @media (max-width: 768px) {
-    margin-left: 0;
+    margin-right: 10px;
     justify-content: flex-end;
-    flex: 0.2;
+    flex: 0.1;
   }
 
   @media (max-width: 576px) {
-    margin-left: 0;
+    flex: 0.2;
+    margin-right: 5px;
+    margin-left: 0px;
     justify-content: flex-end;
   }
 `;
 
-export const SortIcon = styled(LiaSortAmountDownAltSolid)<{
+export const SortIcon = styled(ImSortAlphaAsc)<{
   $bgColor: string;
 }>`
   color: black;
-  font-size: 40px;
+  font-size: 30px;
 
   @media (max-width: 768px) {
     align-self: flex-end;
   }
 
   @media (max-width: 576px) {
-    align-self: flex-end;
-    font-size: 35px;
+    font-size: 25px;
+    margin-left: 0;
   }
 `;
 
@@ -192,8 +195,8 @@ export const PlusButtonContainer = styled(FiPlus)<{ $bgColor: string }>`
   z-index: 1000;
 
   @media (max-width: 768px) {
-    height: 60px;
-    width: 60px;
+    height: 45px;
+    width: 45px;
     padding: 10px;
     font-size: 40px;
   }
@@ -304,7 +307,6 @@ export const FixedMenu = styled(Menu)<{ $bgColor: string }>`
     border-radius: 10px;
     transform: none !important;
     overflow: visible;
-    height: 90px;
     filter: drop-shadow(0px 2px 8px rgba(0, 0, 0, 0.32));
     padding: 0 5px;
     background-color: ${(props) => props?.$bgColor};

@@ -4,8 +4,15 @@ Unauthorized copying of this file, via any medium, is strictly prohibited.
 Proprietary and confidential.  
 Written by Aravinth Raj R <aravinthr235@gmail.com>, 2025.
 */
-export * from "./getAllCategories.graphql";
-export * from "./addCategory.graphql";
-export * from "./getAllProducts.graphql";
-export * from "./addProduct.graphql";
-export * from "./updateProduct.mutation";
+import { gql } from "@apollo/client";
+
+export const ADD_CATEGORY = gql`
+  mutation Mutation($name: String!) {
+    addCategory(name: $name) {
+      id
+      name
+      updatedAt
+      createdAt
+    }
+  }
+`;

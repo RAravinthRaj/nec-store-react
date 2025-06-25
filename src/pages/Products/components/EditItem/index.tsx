@@ -13,42 +13,96 @@ import { toast } from "react-toastify";
 import { PRODUCTS_CONFIG } from "../../config";
 import MenuItem from "@mui/material/MenuItem";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
+import { UpdateProductInput } from "../../services/graphql";
+import { convertFileToBase64 } from "../../../../utils";
 
 export interface IEditItem {
   modalShow: boolean;
   onClose: () => void;
-  individualProduct: {
-    Title: string;
-    Category: string;
-    Quantity: number;
-    MRP: number;
-  };
+  product: any;
+  categories: any[];
+  updateProduct(args: UpdateProductInput): Promise<boolean>;
 }
 
 export const EditItemModal = ({
   modalShow,
   onClose,
-  individualProduct,
+  product,
+  categories,
+  updateProduct,
 }: IEditItem) => {
   const theme = useTheme();
 
-  const category = ["Stationary", "Cosmetics", "Soap"];
-  const [title, setTitle] = useState(individualProduct.Title);
-  const [Quantity, setQuantity] = useState(individualProduct.Quantity);
-  const [MRP, setMRP] = useState(individualProduct.MRP);
-  const [selectedCategory, setSelectedCategory] = useState<string | null>(
-    individualProduct.Category
+  const [title, setTitle] = useState(product?.title);
+  const [quantity, setQuantity] = useState<number>(product?.quantity);
+  const [price, setPrice] = useState<number>(product?.price);
+  const [categoryId, setCategoryId] = useState<string>("");
+  const [productImage, setProductImage] = useState<string>(
+    product?.productImage
   );
 
-  const _productEdited = () => {
-    toast.success("Product Edited Successfully");
-    onClose();
+  const _handleCategoryChange = (event: SelectChangeEvent<unknown>) => {
+    setCategoryId(event.target.value as string);
+
+    if (!modalShow) {
+      setCategoryId("");
+    }
   };
 
-  const _handleChange = (event: SelectChangeEvent<unknown>) => {
-    setSelectedCategory(event.target.value as string);
-    if (!modalShow) {
-      setSelectedCategory("");
+  const _updateProduct = async () => {
+    if (quantity == 0 || price == 0) {
+      toast.warn(PRODUCTS_CONFIG.nonZeroTerms);
+      return;
+    }
+
+    const updatedFields: UpdateProductInput = {
+      id: product?.id,
+    };
+
+    if (title.trim() !== product?.title) {
+      updatedFields.title = title.trim();
+    }
+
+    if (categoryId.trim() && categoryId.trim() !== product?.categoryId) {
+      updatedFields.categoryId = categoryId.trim();
+    }
+
+    if (Number(quantity) !== product?.quantity) {
+      updatedFields.quantity = Number(quantity);
+    }
+
+    if (Number(price) !== product?.price) {
+      updatedFields.price = Number(price);
+    }
+
+    if (productImage && productImage !== product?.productImage) {
+      updatedFields.productImage = productImage;
+    }
+
+    const success = await updateProduct(updatedFields);
+
+    if (success) {
+      onClose();
+    }
+  };
+
+  const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    const validImageTypes = PRODUCTS_CONFIG.validImageTypes;
+
+    if (!validImageTypes.includes(file.type)) {
+      toast.error("Invalid ProfilePicture");
+      return;
+    }
+
+    try {
+      const base64 = await convertFileToBase64(file, 150, 150, 0.7);
+      setProductImage(base64);
+    } catch (err) {
+      console.error(err);
+      toast.error("Invalid ProfilePicture");
     }
   };
 
@@ -56,17 +110,21 @@ export const EditItemModal = ({
     return (
       <S.StyledFormControl fullWidth>
         <Select
-          value={selectedCategory}
-          onChange={(e) => _handleChange(e)}
+          value={categoryId}
+          onChange={_handleCategoryChange}
           displayEmpty
           inputProps={{ "aria-label": "Category" }}
-          renderValue={(selected) => (selected ? selected : "Category")}
+          renderValue={(selected) => {
+            const selectedCat = categories.find((cat) => cat.id === selected);
+            return selectedCat?.name || product?.category;
+          }}
+          style={{ color: theme.colors.textSecondary }}
         >
-          {category.map((cat, id) => {
+          {categories?.map((cat, index) => {
             return (
-              <MenuItem key={id} value={cat}>
-                {cat}
-                <S.Divider />
+              <MenuItem key={cat?.id} value={cat?.id}>
+                {cat?.name}
+                {index != categories.length && <S.Divider />}
               </MenuItem>
             );
           })}
@@ -108,7 +166,7 @@ export const EditItemModal = ({
               <S.Input
                 type="number"
                 min="0"
-                value={Quantity}
+                value={quantity}
                 onChange={(e) => setQuantity(Number(e.target.value))}
               />
             </S.InputWrapper>
@@ -119,14 +177,24 @@ export const EditItemModal = ({
               <S.Input
                 type="number"
                 min="0"
-                value={MRP}
-                onChange={(e) => setMRP(Number(e.target.value))}
+                value={price}
+                onChange={(e) => setPrice(Number(e.target.value))}
               />
             </S.InputWrapper>
           </Form.Group>
           <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
             <Form.Label>{PRODUCTS_CONFIG.image}</Form.Label>
-            <input type="file" className="form-control" />
+            <S.ProductImageContainer>
+              <input
+                type="file"
+                className="form-control"
+                accept="image/*"
+                onChange={handleImageChange}
+              />
+              {productImage && (
+                <S.PreviewProductImage src={productImage} alt="Preview" />
+              )}
+            </S.ProductImageContainer>
           </Form.Group>
         </Form>
       </Modal.Body>
@@ -138,7 +206,7 @@ export const EditItemModal = ({
       <S.Footer>
         <S.Button
           $bgColor={theme.colors.primary}
-          onClick={() => _productEdited()}
+          onClick={() => _updateProduct()}
         >
           {PRODUCTS_CONFIG.submitButton}
         </S.Button>

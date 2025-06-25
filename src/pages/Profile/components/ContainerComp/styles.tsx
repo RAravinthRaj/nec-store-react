@@ -51,23 +51,25 @@ export const BannerContainer = styled.img`
 
 export const PreviousPageLink = styled(GrFormPreviousLink)`
   position: relative;
-  height: 35px;
-  width: 35px;
+  height: 40px;
+  width: 40px;
   background-color: white;
   border-radius: 50%;
   bottom: -50px;
   left: 8px;
+  cursor: pointer;
+  border: solid 2px black;
 
   @media (max-width: 768px) {
-    height: 30px;
-    width: 30px;
+    height: 35px;
+    width: 35px;
     bottom: -45px;
     left: 9px;
   }
 
   @media (max-width: 576px) {
-    height: 25px;
-    width: 25px;
+    height: 28px;
+    width: 28px;
     bottom: -35px;
     left: 8px;
   }

@@ -15,6 +15,4 @@ export const SIGNIN_CONFIG = {
   getOTPText: "Get OTP",
   email: "Email ID",
   checkEmailToast: "Please enter your Email.",
-  OTPSentText: "A OTP has been sent to the email ",
-  roles: ["Admin", "Retailer", "Customer"],
 };

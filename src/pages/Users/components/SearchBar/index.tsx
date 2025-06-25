@@ -135,9 +135,7 @@ export const SearchBar = ({
           <S.Input
             type="input"
             placeholder="Search"
-            onChange={(e: any) => {
-              _setSearchData(e);
-            }}
+            onChange={_setSearchData}
           />
           <S.SearchButton title="press" onClick={onSearchPress}>
             <IoIosSearch size={25} />

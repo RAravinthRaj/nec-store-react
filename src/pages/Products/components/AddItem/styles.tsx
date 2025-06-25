@@ -9,6 +9,8 @@ import styled from "styled-components";
 import { RxCross2 } from "react-icons/rx";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
+import { Dropdown, Form } from "react-bootstrap";
+import { SlArrowDown } from "react-icons/sl";
 
 export const ModalContainer = styled(Modal)`
   display: flex;
@@ -192,4 +194,32 @@ export const Divider = styled.div`
   margin: 4px 10px;
 `;
 
-export const SelectStyle = styled(Select)``;
+export const ProductImageContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 1rem;
+`;
+
+export const PreviewProductImage = styled.img`
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+`;
+
+export const Label = styled(Form.Label)`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 4px;
+`;
+
+export const SubTitle = styled.div`
+  font-size: 15px;
+`;
+
+export const Required = styled.div`
+  color: red;
+`;
