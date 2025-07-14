@@ -31,9 +31,7 @@ export const PageContainer = ({
           showHamburgerIcon={showHamburgerIcon}
         />
         <SideDrawer menu={menu} toggleMenu={() => setMenu(!menu)} />
-        <S.StyledPageBox $isProfilePage={showHamburgerIcon}>
-          {children}
-        </S.StyledPageBox>
+        <S.StyledPageBox>{children}</S.StyledPageBox>
       </S.MainContainer>
     );
   }
@@ -45,9 +43,7 @@ export const PageContainer = ({
         onToggleMenu={() => setMenu(!menu)}
         showHamburgerIcon={showHamburgerIcon}
       />
-      <S.StyledPageBox $isProfilePage={showHamburgerIcon}>
-        {children}
-      </S.StyledPageBox>
+      <S.StyledPageBox>{children}</S.StyledPageBox>
     </S.MainContainer>
   );
 };

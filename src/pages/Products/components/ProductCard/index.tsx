@@ -11,6 +11,10 @@ import { EditItemModal } from "../EditItem";
 import { toast } from "react-toastify";
 import { PRODUCTS_CONFIG } from "../../config";
 import { UpdateProductInput } from "../../services/graphql";
+import {
+  getItemInLocalStorage,
+  setItemInLocalStorage,
+} from "../../../../utils";
 export interface IProductCard {
   product: any;
   categories: any[];
@@ -28,7 +32,22 @@ export const ProductCard = ({
   const [modal, setModal] = useState(false);
 
   const itemAdded = () => {
-    toast.success(PRODUCTS_CONFIG.addItem);
+    try {
+      const cartProducts = getItemInLocalStorage("cartProducts") || [];
+
+      if (!cartProducts.includes(product?.id)) {
+        cartProducts.push(product?.id);
+        setItemInLocalStorage("cartProducts", cartProducts);
+
+        toast.success(PRODUCTS_CONFIG.addItem);
+
+        window.dispatchEvent(new Event("cartUpdated"));
+      } else {
+        toast.info(PRODUCTS_CONFIG.itemAlreadyInCart);
+      }
+    } catch (error) {
+      toast.error(PRODUCTS_CONFIG.cartErrorMessage);
+    }
   };
 
   const _renderCardInitialDetails = () => {

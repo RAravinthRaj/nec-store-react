@@ -23,17 +23,15 @@ export const ProductContainer = ({
 }: IProductContainer) => {
   return (
     <S.ProductContainer>
-      {products
-        .filter((product) => product?.quantity > 0)
-        .map((product, id) => (
-          <ProductCard
-            key={id}
-            product={product}
-            categories={categories}
-            updateProduct={updateProduct}
-            isRetailer={isRetailer}
-          />
-        ))}
+      {products.map((product, id) => (
+        <ProductCard
+          key={id}
+          product={product}
+          categories={categories}
+          updateProduct={updateProduct}
+          isRetailer={isRetailer}
+        />
+      ))}
     </S.ProductContainer>
   );
 };

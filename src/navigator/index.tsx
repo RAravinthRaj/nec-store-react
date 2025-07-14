@@ -37,7 +37,14 @@ export const Navigator = () => {
       />
       <Route path="/orders" element={<Orders />} />
       <Route path="/sales" element={<Sales />} />
-      <Route path="/carts" element={<Carts />} />
+      <Route
+        path="/carts"
+        element={
+          <PageContainer showSideBar={false} showHamburgerIcon={false}>
+            <Carts />
+          </PageContainer>
+        }
+      />
       <Route path="/history" element={<MyOrders />} />
       <Route
         path="/users"

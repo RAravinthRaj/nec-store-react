@@ -2,7 +2,7 @@ import Form from "react-bootstrap/Form";
 import Modal from "react-bootstrap/Modal";
 import * as S from "./styles";
 import { useTheme } from "../../../../hooks";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { toast } from "react-toastify";
 import { PRODUCTS_CONFIG } from "../../config";
 import MenuItem from "@mui/material/MenuItem";
@@ -30,6 +30,8 @@ export const AddItemModal = ({
   const [quantity, setQuantity] = useState<number>(0);
   const [price, setPrice] = useState<number>(0.0);
   const [productImage, setProductImage] = useState("");
+
+  const fileInputRef = useRef<HTMLInputElement | null>(null);
 
   const _handleCategoryChange = (event: SelectChangeEvent<unknown>) => {
     setCategoryId(event.target.value as string);
@@ -83,6 +85,13 @@ export const AddItemModal = ({
     }
   };
 
+  const _resetImageField = () => {
+    setProductImage("");
+    if (fileInputRef.current) {
+      fileInputRef.current.value = "";
+    }
+  };
+
   const _renderMenu = () => {
     return (
       <S.StyledFormControl fullWidth>
@@ -118,6 +127,38 @@ export const AddItemModal = ({
           {PRODUCTS_CONFIG.addItemTitle}
         </S.Title>
       </S.Header>
+    );
+  };
+
+  const _renderImageField = () => {
+    return (
+      <>
+        <S.Label>
+          <S.SubTitle>
+            {PRODUCTS_CONFIG.image}
+            <S.FileTypesHint>
+              {PRODUCTS_CONFIG.acceptedImageTypes}
+            </S.FileTypesHint>
+          </S.SubTitle>
+        </S.Label>
+        <S.ProductImageContainer>
+          <input
+            ref={fileInputRef}
+            type="file"
+            className="form-control"
+            accept="image/*"
+            onChange={handleImageChange}
+          />
+          {productImage && (
+            <S.ImageWrapper>
+              <S.PreviewProductImage src={productImage} alt="Preview" />
+              <S.CancelButton onClick={_resetImageField}>
+                {PRODUCTS_CONFIG.cancelIcon}
+              </S.CancelButton>
+            </S.ImageWrapper>
+          )}
+        </S.ProductImageContainer>
+      </>
     );
   };
 
@@ -174,20 +215,7 @@ export const AddItemModal = ({
             </S.InputWrapper>
           </Form.Group>
           <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-            <S.Label>
-              <S.SubTitle>{PRODUCTS_CONFIG.image}</S.SubTitle>
-            </S.Label>
-            <S.ProductImageContainer>
-              <input
-                type="file"
-                className="form-control"
-                accept="image/*"
-                onChange={handleImageChange}
-              />
-              {productImage && (
-                <S.PreviewProductImage src={productImage} alt="Preview" />
-              )}
-            </S.ProductImageContainer>
+            {_renderImageField()}
           </Form.Group>
         </Form>
       </Modal.Body>

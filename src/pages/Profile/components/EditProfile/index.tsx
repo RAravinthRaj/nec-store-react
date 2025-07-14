@@ -8,7 +8,7 @@ import Form from "react-bootstrap/Form";
 import Modal from "react-bootstrap/Modal";
 import * as S from "./styles";
 import { useTheme } from "../../../../hooks";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { toast } from "react-toastify";
 import { PROFILE_CONFIG } from "../../config";
 import MenuItem from "@mui/material/MenuItem";
@@ -40,7 +40,11 @@ export const EditProfileModal = ({
   const [email, setEmail] = useState(user?.email);
   const [rollNumber, setRollNumber] = useState(user?.rollNumber);
   const [department, setDepartment] = useState<string>(user?.department);
-  const [profilePicture, setProfilePicture] = useState<string | null>();
+  const [profilePicture, setProfilePicture] = useState<string | null>(
+    user?.profilePicture
+  );
+
+  const fileInputRef = useRef<HTMLInputElement | null>(null);
 
   const _profileEdited = () => {
     onEditProfile(name, email, rollNumber, department, profilePicture);
@@ -51,6 +55,13 @@ export const EditProfileModal = ({
     setDepartment(event.target.value as string);
     if (!modalShow) {
       setDepartment("");
+    }
+  };
+
+  const _resetImageField = () => {
+    setProfilePicture(user?.profilePicture);
+    if (fileInputRef.current) {
+      fileInputRef.current.value = "";
     }
   };
 
@@ -94,6 +105,40 @@ export const EditProfileModal = ({
           })}
         </Select>
       </S.StyledFormControl>
+    );
+  };
+
+  const _renderImageField = () => {
+    return (
+      <>
+        <Form.Label>
+          <S.SubTitle>
+            {PROFILE_CONFIG.image}
+            <S.FileTypesHint>
+              {PROFILE_CONFIG.acceptedImageTypes}
+            </S.FileTypesHint>
+          </S.SubTitle>
+        </Form.Label>
+        <S.ProductImageContainer>
+          <input
+            ref={fileInputRef}
+            type="file"
+            className="form-control"
+            accept="image/*"
+            onChange={handleImageChange}
+          />
+          {profilePicture && (
+            <S.ImageWrapper>
+              <S.PreviewProductImage src={profilePicture} alt="Preview" />
+              {profilePicture !== user?.profilePicture && (
+                <S.CancelButton onClick={_resetImageField}>
+                  {PROFILE_CONFIG.cancelIcon}
+                </S.CancelButton>
+              )}
+            </S.ImageWrapper>
+          )}
+        </S.ProductImageContainer>
+      </>
     );
   };
 
@@ -147,13 +192,7 @@ export const EditProfileModal = ({
             {_renderMenu()}
           </Form.Group>
           <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-            <Form.Label>{PROFILE_CONFIG.image}</Form.Label>
-            <input
-              type="file"
-              className="form-control"
-              accept="image/*"
-              onChange={handleImageChange}
-            />
+            {_renderImageField()}
           </Form.Group>
         </Form>
       </Modal.Body>

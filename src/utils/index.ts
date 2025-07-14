@@ -52,7 +52,7 @@ export const setItemInLocalStorage = (key: string, value: any): void => {
 export const getItemInLocalStorage = (key: string): any => {
   try {
     const item = localStorage.getItem(key);
-    return item ? JSON.parse(item) : {};
+    return item ? JSON.parse(item) : undefined;
   } catch (err) {
     console.error(
       `Error getting or parsing item from localStorage with key "${key}":`,

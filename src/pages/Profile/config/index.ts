@@ -31,4 +31,6 @@ export const PROFILE_CONFIG = {
     "image/webp",
     "image/gif",
   ],
+  acceptedImageTypes: " Accepted : jpeg, png, jpg, webp, gif",
+  cancelIcon: "×",
 };

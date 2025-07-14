@@ -5,20 +5,12 @@ Proprietary and confidential.
 Written by Aravinth Raj R <aravinthr235@gmail.com>, 2025.
 */
 import { apolloClient } from "../../../../clients";
-import {
-  getGraphqlError,
-  getItemInLocalStorage,
-  getUserDetails,
-} from "../../../../utils";
+import { getGraphqlError, getItemInLocalStorage } from "../../../../utils";
 import { GET_ALL_PRODUCTS } from "./queries/getAllProducts.query";
-import { ROLES } from "../../../../config";
 
 export interface GetAllProductsInput {
-  title?: string;
-  categoryId?: string;
   skip?: number;
   limit?: number;
-  orderBy?: string;
   productIDs?: string[];
 }
 
@@ -57,27 +49,24 @@ export const getAllProducts = async (args: GetAllProductsInput) => {
 };
 
 const formatData = (products: any[]) => {
-  const role = getUserDetails()?.role;
+  let index = 0;
 
   let productList: any = [];
 
   if (products && products.length > 0) {
     for (let product of products) {
       let obj = {
-        id: product?.id,
+        slNo: ++index,
         productImage: product?.productImage,
         title: product?.title,
         category: product?.category?.name,
         quantity: product?.quantity,
+        orderQuantity: 1,
         price: product?.price,
+        productId: product?.id,
       };
 
-      if (
-        role === ROLES.retailer ||
-        (role === ROLES.customer && obj?.quantity != 0)
-      ) {
-        productList.push(obj);
-      }
+      productList.push(obj);
     }
   }
 

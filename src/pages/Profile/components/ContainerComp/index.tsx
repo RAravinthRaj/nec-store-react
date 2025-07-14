@@ -249,9 +249,9 @@ export const ContainerComp = ({
   };
 
   return (
-    <>
+    <S.ProfileContainer>
       {_renderBanner()}
       {_mainContainerItems()}
-    </>
+    </S.ProfileContainer>
   );
 };

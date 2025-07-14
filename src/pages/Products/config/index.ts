@@ -33,4 +33,8 @@ export const PRODUCTS_CONFIG = {
     "image/webp",
     "image/gif",
   ],
+  acceptedImageTypes: " Accepted : jpeg, png, jpg, webp, gif",
+  cancelIcon: "×",
+  itemAlreadyInCart: "This item is already in your cart.",
+  cartErrorMessage: "Something went wrong while adding the item.",
 };

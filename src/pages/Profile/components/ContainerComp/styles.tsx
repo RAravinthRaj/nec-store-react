@@ -335,3 +335,18 @@ export const AddCircle = styled.div<{ $bgColor: string }>`
     margin-left: -8px;
   }
 `;
+
+export const ProfileContainer = styled.div`
+  margin-top: -45px;
+  padding: -10px;
+
+  @media (max-width: 768px) {
+    margin-top: -40px;
+    padding: 0;
+  }
+
+  @media (max-width: 576px) {
+    margin-top: -30px;
+    padding: 0;
+  }
+`;

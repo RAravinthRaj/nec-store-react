@@ -8,7 +8,7 @@ import { useTheme } from "../../../../hooks";
 import * as S from "./styles";
 import { useMediaQuery } from "@mui/material";
 import Dropdown from "react-bootstrap/Dropdown";
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import { AddItemModal } from "../AddItem";
 import { AddCategoryModal } from "../AddCategory";
 import { PRODUCTS_CONFIG } from "../../config";
@@ -16,6 +16,8 @@ import Box from "@mui/material/Box";
 import IconButton from "@mui/material/IconButton";
 import { IoIosSearch } from "react-icons/io";
 import { AddProductInput } from "../../services/graphql";
+import { getItemInLocalStorage } from "../../../../utils";
+import { useNavigate } from "react-router-dom";
 
 export interface ISearchBarComp {
   categories: any[];
@@ -45,10 +47,30 @@ export const SearchBar = ({
     PRODUCTS_CONFIG.all
   );
 
+  const [cartItemsCount, setCartItemsCount] = useState(() => {
+    const products = getItemInLocalStorage("cartProducts");
+    return Array.isArray(products) ? products.length : 0;
+  });
+
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
 
   const categoriesWithAll = [{ id: "all", name: "All" }, ...categories];
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const updateCartCount = () => {
+      const products = getItemInLocalStorage("cartProducts");
+      setCartItemsCount(Array.isArray(products) ? products.length : 0);
+    };
+
+    updateCartCount();
+    window.addEventListener("cartUpdated", updateCartCount);
+
+    return () => {
+      window.removeEventListener("cartUpdated", updateCartCount);
+    };
+  }, [navigate]);
 
   const _setSearchData = (e: ChangeEvent<HTMLInputElement>) => {
     setPayload((payload: any) => ({
@@ -143,7 +165,7 @@ export const SearchBar = ({
             <S.CartIcon />
           </S.CartContainer>
           <S.CartItemsCount $bgColor={theme.colors.primary} $isMobile={false}>
-            <S.Count $bgColor={theme.colors.white}>20</S.Count>
+            <S.Count $bgColor={theme.colors.white}>{cartItemsCount}</S.Count>
           </S.CartItemsCount>
         </>
       );
@@ -227,12 +249,18 @@ export const SearchBar = ({
       }
 
       return (
-        <Box sx={{ position: "fixed", bottom: 25, right: 20 }}>
+        <Box
+          sx={
+            isTab
+              ? { position: "fixed", bottom: 10, right: 20 }
+              : { position: "fixed", bottom: 15, right: 45 }
+          }
+        >
           <S.CartContainer $bgColor={theme.colors.backGround} to="/carts">
             <S.CartIcon />
           </S.CartContainer>
           <S.CartItemsCount $bgColor={theme.colors.primary} $isMobile={true}>
-            <S.Count $bgColor={theme.colors.white}>20</S.Count>
+            <S.Count $bgColor={theme.colors.white}>{cartItemsCount}</S.Count>
           </S.CartItemsCount>
         </Box>
       );

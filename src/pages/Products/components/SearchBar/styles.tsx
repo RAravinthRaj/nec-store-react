@@ -393,7 +393,12 @@ export const CartItemsCount = styled.div<{
 export const Count = styled.div<{ $bgColor: string }>`
   color: ${(props) => props?.$bgColor};
   font-size: 12px;
+  height: 15px;
+  width: 12px;
   margin: 0 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
   @media (max-width: 768px) {
     font-size: 10px;

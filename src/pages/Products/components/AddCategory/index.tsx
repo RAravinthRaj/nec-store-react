@@ -49,7 +49,10 @@ export const AddCategoryModal = ({
       <Modal.Body>
         <Form>
           <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-            <Form.Label>{PRODUCTS_CONFIG.category}</Form.Label>
+            <S.Label>
+              <S.SubTitle>{PRODUCTS_CONFIG.category}</S.SubTitle>
+              <S.Required>*</S.Required>
+            </S.Label>
             <S.InputWrapper>
               <S.Input
                 type="Name"

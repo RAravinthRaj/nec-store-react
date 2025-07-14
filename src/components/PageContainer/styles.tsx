@@ -7,19 +7,19 @@ Written by Aravinth Raj R <aravinthr235@gmail.com>, 2025.
 import styled from "styled-components";
 import { Box } from "@mui/material";
 
-export const StyledPageBox = styled(Box)<{ $isProfilePage: boolean }>`
-  margin-top: ${({ $isProfilePage }) => (!$isProfilePage ? "25px" : "70px")};
-  width: 100vw;
-  padding: ${({ $isProfilePage }) => (!$isProfilePage ? "0px" : "10px")};
+export const StyledPageBox = styled(Box)`
+  margin-top: 70px;
+  padding: 10px;
   padding-bottom: 0;
+  width: 100vw;
 
   @media (max-width: 768px) {
-    margin-top: ${({ $isProfilePage }) => (!$isProfilePage ? "40px" : "80px")};
+    margin-top: 80px;
   }
 
   @media (max-width: 576px) {
     padding: 8px;
-    margin-top: ${({ $isProfilePage }) => (!$isProfilePage ? "20px" : "50px")};
+    margin-top: 50px;
   }
 `;
 
@@ -31,8 +31,7 @@ export const MainContainer = styled(Box)`
   padding-bottom: 0;
 
   @media (max-width: 768px) {
-    padding: 12px;
-    padding-top: 0px;
+    padding: 8px;
   }
 
   @media (max-width: 576px) {
