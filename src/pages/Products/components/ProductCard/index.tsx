@@ -35,12 +35,21 @@ export const ProductCard = ({
     try {
       const cartProducts = getItemInLocalStorage("cartProducts") || [];
 
-      if (!cartProducts.includes(product?.id)) {
-        cartProducts.push(product?.id);
+      const existingProduct = cartProducts.find(
+        (item: { id: any }) => item.id === product?.id
+      );
+
+      if (!existingProduct) {
+        const newProduct = {
+          id: product?.id,
+          quantity: 1,
+          price: Number(product?.price),
+        };
+        cartProducts.push(newProduct);
+
         setItemInLocalStorage("cartProducts", cartProducts);
 
         toast.success(PRODUCTS_CONFIG.addItem);
-
         window.dispatchEvent(new Event("cartUpdated"));
       } else {
         toast.info(PRODUCTS_CONFIG.itemAlreadyInCart);

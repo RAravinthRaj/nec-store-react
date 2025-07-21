@@ -11,7 +11,6 @@ import { Link, useNavigate } from "react-router-dom";
 import { AppBar } from "@mui/material";
 import { useEffect, useState } from "react";
 import { getItemInLocalStorage, getUserDetails } from "../../utils";
-import { Error } from "../Error";
 
 export interface INavbar {
   menu: boolean;
@@ -43,7 +42,7 @@ export const Navbar = ({ menu, onToggleMenu, showHamburgerIcon }: INavbar) => {
       });
       return;
     } else if (id === "logOut") {
-      localStorage.removeItem("token");
+      localStorage.clear();
     } else if (id === "profile") {
       navigate("/profile", {
         state: { id: userData?.id, prevPage: "navbar" },

@@ -7,7 +7,7 @@ Written by Aravinth Raj R <aravinthr235@gmail.com>, 2025.
 
 import { useNavigate } from "react-router-dom";
 import { Loader } from "../../components";
-import { getUserDetails } from "../../utils";
+import { getUserDetails, removeItemInLocalStorage } from "../../utils";
 import { ROLES } from "../../config";
 import { useEffect } from "react";
 
@@ -19,7 +19,7 @@ const Landing = () => {
 
     const currentTime = Math.floor(Date.now() / 1000);
     if (userData?.exp && currentTime > userData.exp) {
-      localStorage.removeItem("token");
+      removeItemInLocalStorage("token");
       navigate("/signin");
       return;
     }

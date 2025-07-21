@@ -120,11 +120,16 @@ export const QuantityWrap = styled.div`
   justify-content: center;
   font-weight: 500;
   font-size: 14px;
-  min-width: 35px;
+  min-width: 40px;
 
   @media (max-width: 768px) {
     font-size: 14px;
     min-width: 40px;
+  }
+
+  @media (max-width: 768px) {
+    font-size: 14px;
+    min-width: 50px;
   }
 `;
 

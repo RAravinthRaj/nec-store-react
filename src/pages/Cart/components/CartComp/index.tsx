@@ -11,34 +11,56 @@ import { RxCross2 } from "react-icons/rx";
 import Swal, { SweetAlertIcon } from "sweetalert2";
 import ReactDOMServer from "react-dom/server";
 import { VscCheck } from "react-icons/vsc";
+import { FaPlus, FaMinus } from "react-icons/fa6";
+import { toast } from "react-toastify";
+import { useEffect, useRef, useState } from "react";
 import {
   getItemInLocalStorage,
   setItemInLocalStorage,
 } from "../../../../utils";
-import { useEffect, useState, useRef } from "react";
-import { FaPlus } from "react-icons/fa6";
-import { FaMinus } from "react-icons/fa6";
-import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 export interface IContainerComp {
-  cartProducts: any[];
+  cartProductsDetails: any[];
   setProductIDs: React.Dispatch<React.SetStateAction<string[]>>;
-  setCartProducts: React.Dispatch<React.SetStateAction<any[]>>;
 }
 
 export const CartComp = ({
-  cartProducts,
+  cartProductsDetails,
   setProductIDs,
-  setCartProducts,
 }: IContainerComp) => {
   const theme = useTheme();
-
-  const [updatedCartProducts, setUpdatedCartProducts] = useState(cartProducts);
   const lastToastTimeRef = useRef<number | null>(null);
+  const [cartProducts, setCartProducts] = useState<any[]>(
+    getItemInLocalStorage("cartProducts") || []
+  );
+
+  const navigate = useNavigate();
 
   useEffect(() => {
-    setCartProducts(updatedCartProducts);
-  }, [updatedCartProducts]);
+    const syncCart = () => {
+      const localCart = getItemInLocalStorage("cartProducts") || [];
+      let totalPrice = 0;
+
+      for (let product of localCart) {
+        totalPrice += product.price;
+      }
+
+      // console.log(totalPrice);
+      setItemInLocalStorage("totalPrice", totalPrice);
+      setCartProducts(localCart);
+    };
+
+    syncCart();
+
+    window.addEventListener("cartUpdated", syncCart);
+    window.addEventListener("storage", syncCart);
+
+    return () => {
+      window.removeEventListener("cartUpdated", syncCart);
+      window.removeEventListener("storage", syncCart);
+    };
+  }, [navigate]);
 
   const _deleteItem = (productId: string) => {
     Swal.fire({
@@ -50,44 +72,39 @@ export const CartComp = ({
       color: theme.colors.swalButton,
       confirmButtonText: `${ReactDOMServer.renderToString(
         <VscCheck size={20} style={{ marginTop: "-2px", marginRight: "5px" }} />
-      )} ${CARTS_CONFIG.swal.confirmButtonText} `,
+      )} ${CARTS_CONFIG.swal.confirmButtonText}`,
       cancelButtonText: `${ReactDOMServer.renderToString(
         <RxCross2 size={19} style={{ marginTop: "-1px" }} />
       )} ${CARTS_CONFIG.swal.cancelButtonText}`,
       showCancelButton: true,
       reverseButtons: true,
     }).then((result) => {
-      if (result.isConfirmed) {
-        const cartProductsStr = getItemInLocalStorage("cartProducts");
+      if (!result.isConfirmed) return;
 
-        if (cartProductsStr && cartProductsStr !== undefined) {
-          const updatedCartProductsId = [];
-          for (let currentProductId of cartProductsStr) {
-            if (currentProductId !== productId) {
-              updatedCartProductsId.push(currentProductId);
-            }
-          }
-          setProductIDs(updatedCartProductsId);
-          setCartProducts(updatedCartProducts);
-          setItemInLocalStorage("cartProducts", updatedCartProductsId);
-        }
+      const updatedCart = cartProducts.filter((item) => item.id !== productId);
+      setItemInLocalStorage("cartProducts", updatedCart);
+      setProductIDs(updatedCart.map((item) => item.id));
+      window.dispatchEvent(new Event("cartUpdated"));
 
-        Swal.fire({
-          title: CARTS_CONFIG.swal.successTitle,
-          text: CARTS_CONFIG.swal.successText,
-          icon: CARTS_CONFIG.swal.successIcon as SweetAlertIcon,
-          confirmButtonColor: theme.colors.primary,
-          color: theme.colors.swalButton,
-        });
-      }
+      Swal.fire({
+        title: CARTS_CONFIG.swal.successTitle,
+        text: CARTS_CONFIG.swal.successText,
+        icon: CARTS_CONFIG.swal.successIcon as SweetAlertIcon,
+        confirmButtonColor: theme.colors.primary,
+        color: theme.colors.swalButton,
+      });
     });
   };
 
-  const _updateProduct = (isDecrement: boolean, item: any, index: number) => {
+  const _updateProduct = (
+    isDecrement: boolean,
+    item: any,
+    productInCart: any
+  ) => {
     const now = Date.now();
     const lastShown = lastToastTimeRef.current;
-    const maxQty = item?.quantity || 1;
-    const currentQty = item?.orderQuantity || 1;
+    const maxQty = item?.quantity;
+    const currentQty = productInCart?.quantity || 1;
 
     const showToast = (message: string) => {
       if (!lastShown || now - lastShown > 5100) {
@@ -96,105 +113,92 @@ export const CartComp = ({
       }
     };
 
-    const updatedCart = [...updatedCartProducts];
+    const updatedCart = [...cartProducts];
+    const index = updatedCart.findIndex((p) => p.id === productInCart.id);
+
+    if (index === -1) return showToast("Product not found in cart");
 
     if (isDecrement) {
-      if (currentQty > 1) {
-        updatedCart[index] = {
-          ...updatedCart[index],
-          orderQuantity: currentQty - 1,
-        };
-        setCartProducts(updatedCart);
-        setUpdatedCartProducts(updatedCart);
-      } else {
-        showToast("Quantity must be at least 1");
-      }
+      if (currentQty <= 1) return showToast("Quantity must be at least 1");
+      updatedCart[index].quantity = currentQty - 1;
+      updatedCart[index].price = (currentQty - 1) * item?.price;
     } else {
-      if (currentQty < maxQty) {
-        updatedCart[index] = {
-          ...updatedCart[index],
-          orderQuantity: currentQty + 1,
-        };
-        setCartProducts(updatedCart);
-        setUpdatedCartProducts(updatedCart);
-      } else {
-        showToast("Quantity exceeds limit");
-      }
+      if (currentQty >= maxQty) return showToast("Quantity exceeds limit");
+      updatedCart[index].quantity = currentQty + 1;
+      updatedCart[index].price = (currentQty + 1) * item?.price;
     }
+
+    setItemInLocalStorage("cartProducts", updatedCart);
+    window.dispatchEvent(new Event("cartUpdated"));
   };
 
-  const _renderQuantityControls = (
-    item: any,
-    index: number,
-    quantity: number
-  ) => {
-    return (
-      <S.QuantityContainer $bgColor={theme.colors.secondaryBackGround}>
-        <S.QuantityButton
-          $bgColor={theme.colors.backGround}
-          onClick={() => _updateProduct(true, item, index)}
-        >
-          <FaMinus />
-        </S.QuantityButton>
+  const _renderQuantityControls = (item: any, productInCart: any) => (
+    <S.QuantityContainer $bgColor={theme.colors.secondaryBackGround}>
+      <S.QuantityButton
+        $bgColor={theme.colors.backGround}
+        onClick={() => _updateProduct(true, item, productInCart)}
+      >
+        <FaMinus />
+      </S.QuantityButton>
 
-        <S.QuantityWrap>{quantity}</S.QuantityWrap>
+      <S.QuantityWrap>{productInCart?.quantity}</S.QuantityWrap>
 
-        <S.QuantityButton
-          $bgColor={theme.colors.backGround}
-          onClick={() => _updateProduct(false, item, index)}
-        >
-          <FaPlus />
-        </S.QuantityButton>
-      </S.QuantityContainer>
-    );
-  };
+      <S.QuantityButton
+        $bgColor={theme.colors.backGround}
+        onClick={() => _updateProduct(false, item, productInCart)}
+      >
+        <FaPlus />
+      </S.QuantityButton>
+    </S.QuantityContainer>
+  );
 
-  const _renderItemField = (
-    key: string,
-    value: any,
-    item: any,
-    index: number,
-    id: number
-  ) => {
-    const quantity = item?.orderQuantity || 1;
+  const _renderItemField = (key: string, value: any, item: any) => {
+    const productInCart = cartProducts.find((p) => p.id === item.productId);
+    const orderQuantity = productInCart?.quantity || 1;
+
+    if (key === "productId") return null;
 
     switch (key) {
       case "quantity":
         return (
-          <S.TitleComp key={id}>
-            {_renderQuantityControls(item, index, quantity)}
+          <S.TitleComp key={`${item?.productId}-${key}`}>
+            {_renderQuantityControls(item, productInCart)}
           </S.TitleComp>
         );
 
       case "productImage":
         return (
-          <S.TitleComp key={id}>
+          <S.TitleComp key={`${item?.productId}-${key}`}>
             <S.ImageWrap src={value ?? theme.images.defaultProductImage} />
           </S.TitleComp>
         );
 
       case "price":
-        return <S.TitleComp key={id}>₹{quantity * item?.price}</S.TitleComp>;
+        return (
+          <S.TitleComp key={`${item?.productId}-${key}`}>
+            ₹{orderQuantity * item?.price}
+          </S.TitleComp>
+        );
 
       default:
-        return <S.TitleComp key={id}>{value}</S.TitleComp>;
+        return (
+          <S.TitleComp key={`${item?.productId}-${key}`}>{value}</S.TitleComp>
+        );
     }
   };
 
-  const _renderItemFields = (item: any, index: number) => {
-    return Object.entries(item)
-      .filter(([key]) => key !== "productId" && key !== "orderQuantity")
-      .map(([key, value], id) => _renderItemField(key, value, item, index, id));
-  };
+  const _renderItemFields = (item: any) =>
+    Object.entries(item).map(([key, value]) =>
+      _renderItemField(key, value, item)
+    );
 
-  const _renderCartsData = () => {
-    return updatedCartProducts.map((item, index) => {
+  const _renderCartsData = () =>
+    cartProductsDetails.map((item, index) => {
       const productId = item?.productId || index;
-
       return (
-        <div key={productId}>
+        <div key={index}>
           <S.ItemBox>
-            {_renderItemFields(item, index)}
+            {_renderItemFields(item)}
             <S.CancelComp
               $bgColor={theme.colors.primary}
               onClick={() => _deleteItem(productId)}
@@ -204,7 +208,6 @@ export const CartComp = ({
         </div>
       );
     });
-  };
 
   return (
     <S.CartContainer>

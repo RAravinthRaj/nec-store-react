@@ -8,24 +8,44 @@ Written by Aravinth Raj R <aravinthr235@gmail.com>, 2025.
 import * as S from "./styles";
 import { CARTS_CONFIG } from "../../config";
 import { useTheme } from "../../../../hooks/useTheme.hook";
-import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { getItemInLocalStorage } from "../../../../utils";
 
-export const Footer = () => {
+export interface IFooter {
+  createOrder(): void;
+}
+
+export const Footer = ({ createOrder }: IFooter) => {
   const theme = useTheme();
+  const [totalAmount, setTotalAmount] = useState<number>(
+    getItemInLocalStorage("totalPrice") || 0
+  );
 
-  const navigate = useNavigate();
+  useEffect(() => {
+    const handleCartUpdate = () => {
+      const total = getItemInLocalStorage("totalPrice") || 0;
+      setTotalAmount(total);
+    };
 
-  const _orderPlaced = () => {
-    toast.success(CARTS_CONFIG.orderPlaced);
-    navigate("/products");
-  };
+    window.addEventListener("cartUpdated", handleCartUpdate);
+
+    handleCartUpdate();
+
+    return () => window.removeEventListener("cartUpdated", handleCartUpdate);
+  }, []);
 
   return (
     <S.FooterBox $bgColor={theme.colors.secondaryBackGround}>
-      <S.FooterContent>{CARTS_CONFIG.prMRP}4500</S.FooterContent>
-      <S.Button $bgColor={theme.colors.primary} onClick={_orderPlaced}>
-        <S.DownloadIcon />
+      <S.FooterContent>
+        {CARTS_CONFIG.prMRP} {totalAmount}
+      </S.FooterContent>
+      <S.Button
+        $bgColor={theme.colors.primary}
+        onClick={() => {
+          createOrder();
+        }}
+      >
+        <S.CartIcon />
         {CARTS_CONFIG.placeButton}
       </S.Button>
     </S.FooterBox>

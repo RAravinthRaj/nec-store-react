@@ -6,24 +6,24 @@ Written by Aravinth Raj R <aravinthr235@gmail.com>, 2025.
 */
 import { useEffect, useState } from "react";
 import * as S from "../Cart/components/CartComp/styles";
-import { getItemInLocalStorage } from "../../utils";
+import { getItemInLocalStorage, removeItemInLocalStorage } from "../../utils";
 import { CartComp, Footer } from "./components";
-import { useGetAllProductsStore } from "./stores";
+import { useGetAllProductsStore, useCreateOrdersStore } from "./stores";
 import { CustomPagination, Error, Loader } from "../../components";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const Carts = () => {
-  const [productIDs, setProductIDs] = useState(
-    getItemInLocalStorage("cartProducts") || []
-  );
+  const [productIDs, setProductIDs] = useState(() => {
+    const storedCart = getItemInLocalStorage("cartProducts") || [];
+    return storedCart.map((item: { id: any }) => item.id);
+  });
 
   const [payload, setPayload] = useState({
     skip: 0,
     limit: 2,
     productIds: productIDs,
   });
-
-  const [cartProducts, setCartProducts] = useState<any[]>([]);
 
   const {
     getAllProductsResponse,
@@ -32,6 +32,14 @@ const Carts = () => {
     resetGetAllProducts,
     fetchGetAllProducts,
   } = useGetAllProductsStore();
+
+  const {
+    createOrderResponse,
+    createOrderError,
+    createOrderLoading,
+    resetCreateOrder,
+    fetchCreateOrder,
+  } = useCreateOrdersStore();
 
   const navigate = useNavigate();
 
@@ -48,15 +56,6 @@ const Carts = () => {
     }
   }, [payload.productIds, payload.skip]);
 
-  useEffect(() => {
-    if (
-      getAllProductsResponse &&
-      Object.keys(getAllProductsResponse).length > 0
-    ) {
-      setCartProducts(getAllProductsResponse?.payload?.products);
-    }
-  }, [getAllProductsResponse]);
-
   const _onPageChange = (page: number) => {
     setPayload((payload: any) => ({
       ...payload,
@@ -70,8 +69,19 @@ const Carts = () => {
     });
   };
 
+  useEffect(() => {
+    if (createOrderResponse && Object.keys(createOrderResponse).length > 0) {
+      toast.success("Order Placed Successfully. Check Your History");
+
+      resetCreateOrder();
+      removeItemInLocalStorage("cartProducts");
+      removeItemInLocalStorage("totalPrice");
+      navigate("/products");
+    }
+  }, [createOrderResponse && Object.keys(createOrderResponse).length > 0]);
+
   const _renderLoader = () => {
-    if (getAllProductsLoading) {
+    if (getAllProductsLoading || createOrderLoading) {
       return <Loader />;
     }
   };
@@ -80,6 +90,26 @@ const Carts = () => {
     if (getAllProductsError && Object.keys(getAllProductsError).length > 0) {
       return <Error />;
     }
+
+    if (createOrderError && Object.keys(createOrderError).length > 0) {
+      toast.error("Failed to Place Order");
+    }
+  };
+
+  const _createOrder = () => {
+    const data = getItemInLocalStorage("cartProducts");
+
+    if (!Array.isArray(data) || data.length === 0) {
+      console.warn("Cart is empty or invalid.");
+      return;
+    }
+
+    const transformedData = data.map((item: any) => ({
+      productId: item.id,
+      quantity: item.quantity,
+    }));
+
+    return fetchCreateOrder(transformedData);
   };
 
   const _renderPage = () => {
@@ -92,8 +122,7 @@ const Carts = () => {
         <>
           <CartComp
             setProductIDs={setProductIDs}
-            cartProducts={getAllProductsResponse?.payload?.products}
-            setCartProducts={setCartProducts}
+            cartProductsDetails={getAllProductsResponse?.payload?.products}
           />
           <CustomPagination
             perPageCount={2}
@@ -101,12 +130,15 @@ const Carts = () => {
             currentPage={payload?.skip / 2 + 1}
             onPageChange={_onPageChange}
           />
-          <Footer />
+          <Footer createOrder={_createOrder} />
         </>
       );
     }
 
     if (productIDs.length <= 0) {
+      removeItemInLocalStorage("cartProducts");
+      removeItemInLocalStorage("totalPrice");
+
       return (
         <Error
           title="No Items Found"

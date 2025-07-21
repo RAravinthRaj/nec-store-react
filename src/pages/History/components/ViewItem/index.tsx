@@ -23,7 +23,7 @@ export const ViewItemModal = ({ modalShow: modalShow, onClose }: IAddItem) => {
         {ORDERS_CONFIG.orderItems.map((d, index) => (
           <div>
             <S.ItemBox key={index}>
-              {Object.entries(d)?.map(([key, value], id) => (
+              {Object.entries(d)?.map(([value], id) => (
                 <S.TitleComp key={id}>{value}</S.TitleComp>
               ))}
             </S.ItemBox>

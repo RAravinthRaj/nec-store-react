@@ -50,7 +50,7 @@ export const Button = styled.button<{ $bgColor: string }>`
   }
 `;
 
-export const DownloadIcon = styled(GiShoppingCart)`
+export const CartIcon = styled(GiShoppingCart)`
   color: white;
   font-size: 22px;
 `;

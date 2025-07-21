@@ -62,6 +62,21 @@ export const getItemInLocalStorage = (key: string): any => {
   }
 };
 
+export const removeItemInLocalStorage = (key: string): any => {
+  try {
+    const item = localStorage.getItem(key);
+    if (item) {
+      localStorage.removeItem(key);
+    }
+  } catch (err) {
+    console.error(
+      `Error removing item from localStorage with key "${key}":`,
+      err
+    );
+    throw err;
+  }
+};
+
 export const checkAccessControl = (pageName: string): boolean => {
   const userData = getUserDetails();
 

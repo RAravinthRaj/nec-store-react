@@ -61,7 +61,6 @@ const formatData = (products: any[]) => {
         title: product?.title,
         category: product?.category?.name,
         quantity: product?.quantity,
-        orderQuantity: 1,
         price: product?.price,
         productId: product?.id,
       };

@@ -4,7 +4,12 @@ Unauthorized copying of this file, via any medium, is strictly prohibited.
 Proprietary and confidential.  
 Written by Aravinth Raj R <aravinthr235@gmail.com>, 2025.
 */
-import { GetAllProductsInput, getAllProducts } from "./graphql";
+import {
+  GetAllProductsInput,
+  getAllProducts,
+  createOrderInput,
+  createOrder,
+} from "./graphql";
 
 class CartsService {
   private static instance: CartsService;
@@ -20,6 +25,11 @@ class CartsService {
 
   async getAllProductsAPI(args: GetAllProductsInput): Promise<any> {
     const res = await getAllProducts(args);
+    return res;
+  }
+
+  async createOrdersAPI(args: createOrderInput[]): Promise<any> {
+    const res = await createOrder(args);
     return res;
   }
 }
