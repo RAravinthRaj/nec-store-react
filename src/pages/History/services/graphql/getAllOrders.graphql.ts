@@ -9,7 +9,7 @@ import { getGraphqlError, getItemInLocalStorage } from "../../../../utils";
 import { GET_ALL_ORDERS } from "./queries";
 
 export interface GetAllOrdersInput {
-  skip?: number;
+  skip: number;
   limit?: number;
   orderId?: string;
   userId?: string;
@@ -75,8 +75,9 @@ export const getAllOrders = async (
     };
   } catch (err: any) {
     const msg =
-      getGraphqlError(err) || "An error occurred while fetching all orders.";
-    console.error("Error in getAllOrders:", msg);
+      getGraphqlError(err) ||
+      "An error occurred while fetching all orders in History.";
+    console.error("Error in getAllOrders in History:", msg);
     throw new Error(msg);
   }
 };

@@ -81,7 +81,7 @@ export const Navbar = ({ menu, onToggleMenu, showHamburgerIcon }: INavbar) => {
 
   const _renderUserName = () => {
     const firstName = userData?.name?.split(" ")[0] ?? "";
-    if (!isMobile) {
+    if (!isMobile && firstName) {
       return (
         <S.UserName $bgColor={theme.colors.primary}>
           {`Hii, ${firstName} !!`}
@@ -94,7 +94,7 @@ export const Navbar = ({ menu, onToggleMenu, showHamburgerIcon }: INavbar) => {
 
   const _renderUserNameSM = () => {
     const firstName = userData?.name?.split(" ")[0] ?? "";
-    if (isMobile) {
+    if (isMobile && firstName) {
       return (
         <S.MobileNameContainer>
           <S.UserName $bgColor={theme.colors.primary}>

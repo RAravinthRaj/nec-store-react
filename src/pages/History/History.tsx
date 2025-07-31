@@ -23,7 +23,7 @@ const History = () => {
 
   const [payload, setPayload] = useState<GetAllOrdersInput>({
     skip: 0,
-    limit: 10,
+    limit: 2,
     orderId: "",
     userId: getUserDetails()?.id,
     orderBy: "ASC",
@@ -72,13 +72,13 @@ const History = () => {
   const _onPageChange = (page: number) => {
     setPayload((payload: any) => ({
       ...payload,
-      skip: (page - 1) * 4,
+      skip: (page - 1) * 2,
     }));
 
     resetGetAllOrders();
     fetchGetAllOrders({
       ...payload,
-      skip: (page - 1) * 4,
+      skip: (page - 1) * 2,
     });
   };
 
@@ -88,13 +88,17 @@ const History = () => {
     }
   };
 
-  const _renderError = () => {
-    if (getAllOrdersError && Object.keys(getAllOrdersError).length > 0) {
-      return <Error />;
-    }
-  };
-
   const _renderPage = () => {
+    if (getAllOrdersResponse?.payload?.orders.length == 0) {
+      return (
+        <Error
+          title="No Items Found"
+          subtitle="Make a Order Now"
+          buttonTitle="Explore Products"
+        />
+      );
+    }
+
     if (getAllOrdersResponse && Object.keys(getAllOrdersResponse).length > 0) {
       return (
         <>
@@ -108,11 +112,15 @@ const History = () => {
           <CustomPagination
             perPageCount={2}
             totalPageCount={2}
-            currentPage={2}
+            currentPage={payload?.skip / 2 + 1}
             onPageChange={_onPageChange}
           />
         </>
       );
+    }
+
+    if (getAllOrdersError && Object.keys(getAllOrdersError).length > 0) {
+      return <Error />;
     }
 
     return <Error />;
@@ -122,7 +130,6 @@ const History = () => {
     <>
       {_renderLoader()}
       {_renderPage()}
-      {_renderError()}
     </>
   );
 };

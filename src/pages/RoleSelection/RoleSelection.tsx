@@ -80,6 +80,13 @@ const RoleSelection = () => {
   };
 
   const _renderPage = () => {
+    if (
+      getAccessTokenLoading &&
+      Object.keys(getAccessTokenLoading).length > 0
+    ) {
+      return <Loader />;
+    }
+
     if (getRolesResponse && Object.keys(getRolesResponse).length > 0) {
       return (
         <ContainerComp
@@ -102,7 +109,7 @@ const RoleSelection = () => {
       );
     }
 
-    return <Loader />;
+    return <Error />;
   };
 
   return (

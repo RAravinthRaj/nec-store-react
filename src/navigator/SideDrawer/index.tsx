@@ -38,6 +38,13 @@ export const SideDrawer = ({ menu, toggleMenu }: ISideDrawer) => {
     }
   }, [navigate]);
 
+  const handleCloseMenu = () => {
+    if (document.activeElement instanceof HTMLElement) {
+      document.activeElement.blur();
+    }
+    toggleMenu();
+  };
+
   const _renderHeaderSM = () => {
     if (isMobile) {
       return (
@@ -97,7 +104,7 @@ export const SideDrawer = ({ menu, toggleMenu }: ISideDrawer) => {
 
   const _renderDrawer = () => {
     return (
-      <S.DrawerBox onClick={isMobile ? toggleMenu : () => {}}>
+      <S.DrawerBox onClick={isMobile ? handleCloseMenu : () => {}}>
         {_renderNavigationList()}
       </S.DrawerBox>
     );
