@@ -4,12 +4,125 @@ Unauthorized copying of this file, via any medium, is strictly prohibited.
 Proprietary and confidential.  
 Written by Aravinth Raj R <aravinthr235@gmail.com>, 2025.
 */
-import { ContainerComp } from "./components";
+import { useEffect, useState } from "react";
+import { CustomPagination, Error, Loader } from "../../components";
+import { getUserDetails } from "../../utils";
+import { HistoryComp } from "./components";
+import { useGetAllOrdersStore } from "./stores";
+import { GetAllOrdersInput } from "./services/graphql";
 
 const History = () => {
+  const {
+    getAllOrdersError,
+    getAllOrdersResponse,
+    getAllOrdersLoading,
+    fetchGetAllOrders,
+    resetGetAllOrders,
+  } = useGetAllOrdersStore();
+  const [orders, setOrders] = useState([]);
+
+  const [payload, setPayload] = useState<GetAllOrdersInput>({
+    skip: 0,
+    limit: 10,
+    orderId: "",
+    userId: getUserDetails()?.id,
+    orderBy: "ASC",
+  });
+
+  useEffect(() => {
+    if (payload) {
+      fetchGetAllOrders(payload);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (getAllOrdersResponse && Object.keys(getAllOrdersResponse).length > 0) {
+      setOrders(getAllOrdersResponse?.payload?.orders || []);
+    }
+  }, [getAllOrdersResponse]);
+
+  const _onSearchPress = () => {
+    setPayload((payload: any) => ({
+      ...payload,
+      skip: 0,
+    }));
+
+    resetGetAllOrders();
+    fetchGetAllOrders({
+      ...payload,
+      skip: 0,
+    });
+  };
+
+  const _onSortPress = (type: string) => {
+    setPayload((payload: any) => ({
+      ...payload,
+      orderBy: type,
+      skip: 0,
+    }));
+
+    resetGetAllOrders();
+    fetchGetAllOrders({
+      ...payload,
+      orderBy: type,
+      skip: 0,
+    });
+  };
+
+  const _onPageChange = (page: number) => {
+    setPayload((payload: any) => ({
+      ...payload,
+      skip: (page - 1) * 4,
+    }));
+
+    resetGetAllOrders();
+    fetchGetAllOrders({
+      ...payload,
+      skip: (page - 1) * 4,
+    });
+  };
+
+  const _renderLoader = () => {
+    if (getAllOrdersLoading) {
+      return <Loader />;
+    }
+  };
+
+  const _renderError = () => {
+    if (getAllOrdersError && Object.keys(getAllOrdersError).length > 0) {
+      return <Error />;
+    }
+  };
+
+  const _renderPage = () => {
+    if (getAllOrdersResponse && Object.keys(getAllOrdersResponse).length > 0) {
+      return (
+        <>
+          <HistoryComp
+            orders={orders}
+            payload={payload}
+            setPayload={setPayload}
+            onSortPress={_onSortPress}
+            onSearchPress={_onSearchPress}
+          />
+          <CustomPagination
+            perPageCount={2}
+            totalPageCount={2}
+            currentPage={2}
+            onPageChange={_onPageChange}
+          />
+        </>
+      );
+    }
+
+    return <Error />;
+  };
+
   return (
     <>
-      <ContainerComp />
+      {_renderLoader()}
+      {_renderPage()}
+      {_renderError()}
     </>
   );
 };

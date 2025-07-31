@@ -43,7 +43,7 @@ export const Input = styled.input`
   border: none;
   outline: none;
   font-size: 16px;
-  padding: 0 15px;
+  padding: 0 5px;
 
   flex: 1;
   width: 100%;
@@ -180,21 +180,21 @@ export const CategoryDropDownMenu = styled(Dropdown.Menu)`
 export const OrderContainer = styled.div`
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 40px;
+  gap: 25px;
   margin: 20px 0;
+  padding: 20px 0;
 
-  @media (max-width: 1024px) {
+  @media (max-width: 1280px) {
     grid-template-columns: repeat(3, 1fr);
-    gap: 35px;
   }
 
-  @media (max-width: 768px) {
+  @media (max-width: 834px) {
     grid-template-columns: repeat(2, 1fr);
   }
 
-  @media (max-width: 576px) {
-    margin-top: 20px;
+  @media (max-width: 600px) {
     grid-template-columns: repeat(1, 1fr);
+    padding: 0 5px;
   }
 `;
 
@@ -296,8 +296,13 @@ export const CartItemsCount = styled.div<{
 
 export const Count = styled.div<{ $bgColor: string }>`
   color: ${(props) => props?.$bgColor};
-  font-size: 11px;
+  font-size: 12px;
+  height: 15px;
+  width: 12px;
   margin: 0 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
   @media (max-width: 768px) {
     font-size: 10px;
@@ -334,4 +339,9 @@ export const SeparateOrder = styled.div`
   flex-direction: column;
   margin-top: 30px;
   padding: 10px;
+`;
+
+export const SearchButton = styled.button`
+  background-color: white;
+  border: none;
 `;

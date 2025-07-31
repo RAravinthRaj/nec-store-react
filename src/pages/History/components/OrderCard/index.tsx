@@ -16,10 +16,15 @@ import { VscCheck } from "react-icons/vsc";
 
 export interface IOrderCard {
   individualOrder: {
+    orderID: string;
+    orderBy: string;
+    date: string;
+    totalAmount: string;
     OrderNumber: string;
     OrderBy: string;
     Date: string;
     Total: number;
+    products: any[];
   };
 }
 
@@ -61,7 +66,7 @@ export const OrderCard = ({ individualOrder }: IOrderCard) => {
       <S.TitleContainer $bgColor={theme.colors.primary}>
         <S.Title>
           {ORDERS_CONFIG.orderNumber}
-          {individualOrder.OrderNumber}
+          {individualOrder?.orderID}
         </S.Title>
       </S.TitleContainer>
     );
@@ -77,10 +82,6 @@ export const OrderCard = ({ individualOrder }: IOrderCard) => {
           <S.ViewIcon />
           {ORDERS_CONFIG.viewButton}
         </S.Button>
-        <S.Button $bgColor={theme.colors.primary} onClick={_deleteItem}>
-          <S.DeleteIcon />
-          {ORDERS_CONFIG.deleteButton}
-        </S.Button>
       </S.ButtonContainer>
     );
   };
@@ -90,14 +91,14 @@ export const OrderCard = ({ individualOrder }: IOrderCard) => {
       <S.BodyContainer>
         <S.OrderNameContainer>
           {ORDERS_CONFIG.orderBy}
-          {individualOrder.OrderBy}
+          {individualOrder?.orderBy}
         </S.OrderNameContainer>
         <S.DateContainer>
           {ORDERS_CONFIG.date}
-          {individualOrder.Date}
+          {individualOrder?.date}
         </S.DateContainer>
         <S.RupeeContainer>
-          {ORDERS_CONFIG.prMrp} {individualOrder.Total}
+          {ORDERS_CONFIG.prMrp} {individualOrder?.totalAmount}
         </S.RupeeContainer>
         {_renderButton()}
       </S.BodyContainer>
@@ -110,7 +111,12 @@ export const OrderCard = ({ individualOrder }: IOrderCard) => {
         {_renderTitle()}
         {_renderBody()}
       </S.CardContainer>
-      <ViewItemModal modalShow={modal} onClose={() => setModal(false)} />
+      <ViewItemModal
+        modalShow={modal}
+        onClose={() => setModal(false)}
+        products={individualOrder?.products}
+        totalPrice={individualOrder?.totalAmount}
+      />
     </div>
   );
 };

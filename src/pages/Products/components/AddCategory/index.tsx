@@ -10,6 +10,7 @@ import * as S from "./styles";
 import { useTheme } from "../../../../hooks";
 import { useState } from "react";
 import { PRODUCTS_CONFIG } from "../../config";
+import { toast } from "react-toastify";
 
 export interface IAddCategory {
   modalShow: boolean;
@@ -26,6 +27,10 @@ export const AddCategoryModal = ({
   const [selectedCategory, setSelectedCategory] = useState("");
 
   const _categoryAdded = async () => {
+    if (selectedCategory.trim() === "") {
+      toast.warn("Please fill the Required data");
+      return;
+    }
     const success = await addCategory(selectedCategory);
 
     if (success) {

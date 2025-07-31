@@ -17,8 +17,8 @@ export const createOrder = async (args: createOrderInput[]) => {
   try {
     const token = getItemInLocalStorage("token");
     if (token && token.length > 0) {
-      const { data } = await apolloClient.query({
-        query: CREATE_ORDER,
+      const { data } = await apolloClient.mutate({
+        mutation: CREATE_ORDER,
         variables: {
           products: args,
         },

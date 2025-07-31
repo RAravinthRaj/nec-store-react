@@ -11,19 +11,7 @@ export const CREATE_ORDER = gql`
     createOrder(products: $products) {
       message
       order {
-        id
-        orderBy {
-          id
-          name
-          profilePicture
-          roles
-          rollNumber
-          status
-          updatedAt
-          email
-          department
-          createdAt
-        }
+        orderBy
         orderId
         orderStatus
         paidStatus
@@ -42,10 +30,11 @@ export const CREATE_ORDER = gql`
             updatedAt
           }
         }
+        id
+        deliveryStatus
+        createdAt
         totalAmount
         updatedAt
-        createdAt
-        deliveryStatus
       }
     }
   }

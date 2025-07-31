@@ -45,7 +45,14 @@ export const Navigator = () => {
           </PageContainer>
         }
       />
-      <Route path="/history" element={<MyOrders />} />
+      <Route
+        path="/history"
+        element={
+          <PageContainer showSideBar={true} showHamburgerIcon={true}>
+            <MyOrders />
+          </PageContainer>
+        }
+      />
       <Route
         path="/users"
         element={

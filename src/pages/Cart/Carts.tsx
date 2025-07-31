@@ -6,12 +6,17 @@ Written by Aravinth Raj R <aravinthr235@gmail.com>, 2025.
 */
 import { useEffect, useState } from "react";
 import * as S from "../Cart/components/CartComp/styles";
-import { getItemInLocalStorage, removeItemInLocalStorage } from "../../utils";
+import {
+  getItemInLocalStorage,
+  getUserDetails,
+  removeItemInLocalStorage,
+} from "../../utils";
 import { CartComp, Footer } from "./components";
 import { useGetAllProductsStore, useCreateOrdersStore } from "./stores";
 import { CustomPagination, Error, Loader } from "../../components";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { useGetAllOrdersStore } from "../History/stores";
 
 const Carts = () => {
   const [productIDs, setProductIDs] = useState(() => {
@@ -24,6 +29,7 @@ const Carts = () => {
     limit: 2,
     productIds: productIDs,
   });
+  const userId = getUserDetails()?.id;
 
   const {
     getAllProductsResponse,
@@ -40,6 +46,8 @@ const Carts = () => {
     resetCreateOrder,
     fetchCreateOrder,
   } = useCreateOrdersStore();
+
+  const { fetchGetAllOrders } = useGetAllOrdersStore();
 
   const navigate = useNavigate();
 
@@ -76,6 +84,10 @@ const Carts = () => {
       resetCreateOrder();
       removeItemInLocalStorage("cartProducts");
       removeItemInLocalStorage("totalPrice");
+      if (userId) {
+        fetchGetAllOrders(userId);
+      }
+
       navigate("/products");
     }
   }, [createOrderResponse && Object.keys(createOrderResponse).length > 0]);

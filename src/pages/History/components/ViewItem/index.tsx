@@ -12,20 +12,43 @@ import { ORDERS_CONFIG } from "../../config";
 export interface IAddItem {
   modalShow: boolean;
   onClose: () => void;
+  products: any[];
+  totalPrice: string;
 }
 
-export const ViewItemModal = ({ modalShow: modalShow, onClose }: IAddItem) => {
+export const ViewItemModal = ({
+  modalShow: modalShow,
+  onClose,
+  products,
+  totalPrice,
+}: IAddItem) => {
   const theme = useTheme();
 
   const _renderBodyData = () => {
     return (
       <S.BodyComponent>
-        {ORDERS_CONFIG.orderItems.map((d, index) => (
-          <div>
-            <S.ItemBox key={index}>
-              {Object.entries(d)?.map(([value], id) => (
-                <S.TitleComp key={id}>{value}</S.TitleComp>
-              ))}
+        {products.map((d, index) => (
+          <div key={index}>
+            <S.ItemBox>
+              {Object.entries(d).map(([key, value], id) => {
+                let displayValue = value;
+
+                if (key === "productImage") {
+                  return (
+                    <S.TitleComp key={id}>
+                      <S.productImage
+                        src={value || theme.images.defaultProductImage}
+                      />
+                    </S.TitleComp>
+                  );
+                }
+
+                if (key === "price") {
+                  displayValue = (d.price ?? 0) * (d.quantity ?? 0);
+                }
+
+                return <S.TitleComp key={id}>{displayValue}</S.TitleComp>;
+              })}
             </S.ItemBox>
             <S.Divider />
           </div>
@@ -51,7 +74,7 @@ export const ViewItemModal = ({ modalShow: modalShow, onClose }: IAddItem) => {
     return (
       <S.Amount>
         {ORDERS_CONFIG.prMrp}
-        {90}
+        {totalPrice}
       </S.Amount>
     );
   };

@@ -16,7 +16,7 @@ export const ModalContainer = styled(Modal)`
   margin-top: 35px !important;
 
   @media (max-width: 576px) {
-    max-height: 92vh;
+    max-height: 120vh;
     margin-top: 25px !important;
     .modal-dialog {
       padding: 13px !important;
@@ -28,7 +28,7 @@ export const ModalContainer = styled(Modal)`
 export const ModalBody = styled.div`
   padding: 10px 5px;
   background-color: white;
-  max-height: 50vh;
+  max-height: 60vh;
   white-space: nowrap;
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
@@ -45,28 +45,28 @@ export const ModalBody = styled.div`
 
 export const CloseButton = styled(RxCross2)`
   position: absolute;
-  top: -8%;
-  right: 0.5%;
+  right: 0.2%;
+  transform: translateY(-140%);
   background: none;
   border: none;
-  font-size: 36px;
+  font-size: 38px;
   cursor: pointer;
   color: white;
   z-index: 2000;
 
-  @media (max-width: 768px) {
-    font-size: 32px;
-    top: -7%;
+  media (max-width: 768px) {
+    transform: translateY(-170%);
   }
 
   @media (max-width: 576px) {
+    transform: translateY(-140%);
     font-size: 30px;
-    top: -7%;
   }
 `;
 
 export const TitleBox = styled.div<{ $bgColor: string }>`
   display: flex;
+  align-items: center;
   flex-direction: row;
   justify-content: space-around;
   background-color: ${(props) => props.$bgColor};
@@ -83,12 +83,14 @@ export const TitleBox = styled.div<{ $bgColor: string }>`
 
   @media (max-width: 576px) {
     min-width: 640px;
+    font-size: 13px;
   }
 `;
 
 export const ItemBox = styled.div`
   display: flex;
   flex-direction: row;
+  align-items: center;
   justify-content: space-around;
   padding: 15px;
   border-radius: 10px;
@@ -97,6 +99,7 @@ export const ItemBox = styled.div`
 
   @media (max-width: 576px) {
     min-width: 640px;
+    font-size: 13px;
   }
 `;
 
@@ -139,6 +142,7 @@ export const Button = styled.button<{ $bgColor: string }>`
     width: 85%;
     height: 45px;
     margin: 10px;
+    font-size: 14px;
   }
 `;
 
@@ -177,4 +181,15 @@ export const BodyComponent = styled.div`
 export const Amount = styled.h4`
   text-align: center;
   margin-top: 20px;
+`;
+
+export const productImage = styled.img`
+  width: 55px;
+  height: 55px;
+  border-radius: 8px;
+
+  @media (max-width: 576px) {
+    width: 45px;
+    height: 45px;
+  }
 `;
