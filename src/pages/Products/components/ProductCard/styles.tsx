@@ -99,18 +99,21 @@ export const RupeeContainer = styled.h5`
 
 export const ButtonContainer = styled.div`
   display: flex;
+  flex-direction: column;
   justify-content: space-between;
   gap: 8px;
   margin-top: 15px;
 `;
 
-export const Button = styled.button<{ $bgColor: string }>`
+export const Button = styled.button<{ $bgColor: string; $canAdd: boolean }>`
   flex: 1;
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 8px;
   background-color: ${(props) => props.$bgColor};
+  opacity: ${(props) => (props.$canAdd ? 1 : 0.5)};
+  pointer-events: ${(props) => (props.$canAdd ? "default" : "none")};
   border: none;
   border-radius: 5px;
   color: white;
@@ -119,7 +122,7 @@ export const Button = styled.button<{ $bgColor: string }>`
   cursor: pointer;
 
   &:hover {
-    opacity: 0.9;
+    opacity: ${(props) => (props.$canAdd ? 0.9 : 0.5)};
   }
 
   @media (max-width: 576px) {
@@ -152,4 +155,12 @@ export const CartIcon = styled(LiaCartArrowDownSolid)`
   @media (max-width: 576px) {
     font-size: 16px;
   }
+`;
+
+export const LessStock = styled.div`
+  display: flex;
+  align-items: center;
+  margin-top: -20px;
+  font-size: 12px;
+  color: red;
 `;

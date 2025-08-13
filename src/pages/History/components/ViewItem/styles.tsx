@@ -114,8 +114,12 @@ export const TitleComp = styled.div`
 `;
 
 export const Button = styled.button<{ $bgColor: string }>`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
   flex: 0.7;
-  opacity: 0.5;
+  opacity: 0.9;
   background-color: ${(props) => props?.$bgColor};
   color: white;
   border: none;
@@ -138,6 +142,12 @@ export const Button = styled.button<{ $bgColor: string }>`
     transform: translateY(-2px);
   }
 
+  @media (max-width: 768px) {
+    width: 85%;
+    margin: 10px 20px;
+    font-size: 14px;
+  }
+
   @media (max-width: 576px) {
     width: 85%;
     height: 45px;
@@ -150,7 +160,12 @@ export const Footer = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: space-around;
+  justify-content: space-between;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    width: 100%;
+  }
 
   @media (max-width: 576px) {
     flex-direction: column;

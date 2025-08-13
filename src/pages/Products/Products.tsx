@@ -214,14 +214,8 @@ const Products = () => {
   };
 
   const _renderLoader = () => {
-    if (
-      addCategoryLoading ||
-      getAllCategoriesLoading ||
-      getAllProductsLoading ||
-      addProductLoading ||
-      updateProductLoading
-    ) {
-      return <Loader useModalLoader />;
+    if (getAllProductsLoading) {
+      return <Loader />;
     }
 
     return null;
@@ -276,8 +270,6 @@ const Products = () => {
         />
       );
     }
-
-    return <Loader />;
   };
 
   if (checkAccessControl("products")) {

@@ -37,4 +37,5 @@ export const PRODUCTS_CONFIG = {
   cancelIcon: "×",
   itemAlreadyInCart: "This item is already in your cart.",
   cartErrorMessage: "Something went wrong while adding the item.",
+  outOfStock: "Item Out Of Stock",
 };

@@ -168,9 +168,11 @@ const Carts = () => {
           navigate(-1);
         }}
       />
-      {_renderLoader()}
-      {_renderError()}
-      {_renderPage()}
+      {getAllProductsLoading || createOrderLoading
+        ? _renderLoader()
+        : getAllProductsError && Object.keys(getAllProductsError).length > 0
+        ? _renderError()
+        : _renderPage()}
     </>
   );
 };

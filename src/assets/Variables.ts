@@ -39,6 +39,10 @@ export const theme = {
     orange: "#FF6F00",
     green: "#2fde21",
     sandal: "#FFECCC",
+    paid: "#009124ff",
+    unpaid: "#d97540ff",
+    delivered: "#009124ff",
+    pending: "#d97540ff",
   },
   fonts: {
     sourceSerifPro: "Source Serif Pro",

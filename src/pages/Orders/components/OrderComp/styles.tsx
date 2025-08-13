@@ -9,9 +9,8 @@ import styled from "styled-components";
 export const OrderContainer = styled.div`
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 25px;
-  margin: 20px 0;
-  padding: 20px 0;
+  gap: 30px;
+  margin: 30px 0;
 
   @media (max-width: 1280px) {
     grid-template-columns: repeat(3, 1fr);

@@ -4,7 +4,7 @@ Unauthorized copying of this file, via any medium, is strictly prohibited.
 Proprietary and confidential.  
 Written by Aravinth Raj R <aravinthr235@gmail.com>, 2025.
 */
-export const ORDERS_CONFIG = {
+export const HISTORY_CONFIG = {
   title: [
     "Sl.No",
     "Product Image",
@@ -19,7 +19,9 @@ export const ORDERS_CONFIG = {
   prMrp: "Total : ₹ ",
   deleteButton: "Delete",
   amountReceived: "Amount Paid",
+  amountNotReceived: "Amount Not Paid",
   deliver: "Delivered",
+  deliverPending: "Delivery Pending",
   viewButton: "View",
   delete: "Delete",
   sortedOptions: ["Sort By OrderNo. Asc", "Sort By OrderNo. Desc"],

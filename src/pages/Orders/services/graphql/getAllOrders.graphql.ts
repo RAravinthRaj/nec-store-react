@@ -27,7 +27,8 @@ interface ProductFormatted {
 }
 
 interface OrderFormatted {
-  orderID: string;
+  orderId: string;
+  orderNumber: string;
   orderBy: string;
   date: string;
   totalAmount: number;
@@ -108,14 +109,15 @@ const formatOrders = (orders: any[]): OrderFormatted[] => {
         })) || [];
 
       return {
-        orderID: order?.orderId || "",
+        orderId: order?.id,
+        orderNumber: order?.orderId || "",
         orderBy: order?.rollNumber || "",
         date: formatDate(order?.createdAt),
         totalAmount: order?.totalAmount || 0,
         products,
         rawDate: new Date(order?.createdAt).getTime() || 0,
-        deliveryStatus: order?.deliveryStatus,
         paidStatus: order?.paidStatus,
+        deliveryStatus: order?.deliveryStatus,
       };
     })
     .sort((a, b) => b.rawDate - a.rawDate)

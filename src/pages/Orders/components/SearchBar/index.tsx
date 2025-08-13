@@ -6,24 +6,43 @@ Written by Aravinth Raj R <aravinthr235@gmail.com>, 2025.
 */
 import { useTheme } from "../../../../hooks";
 import * as S from "./styles";
-import { Navbar } from "../../../../components";
 import Dropdown from "react-bootstrap/Dropdown";
-import { ChangeEvent, useState } from "react";
-import { OrderCard } from "../OrderCard";
+import { useState } from "react";
 import { ORDERS_CONFIG } from "../../config";
-import { SideDrawer } from "../../../../navigator/SideDrawer";
-import { CustomPagination } from "../../../../components/Pagination";
-export interface IContainerComp {}
+import { IoIosSearch } from "react-icons/io";
 
-export const ContainerComp = ({}: IContainerComp) => {
+export interface ISearchComp {
+  setPayload(payload: any): void;
+  onSearchPress(): void;
+  onSortPress(type: string): void;
+}
+
+export const SearchBar = ({
+  onSearchPress,
+  onSortPress,
+  setPayload,
+}: ISearchComp) => {
   const theme = useTheme();
+  const [selectedCategory, setSelectedCategory] = useState(
+    ORDERS_CONFIG.orderId
+  );
+  const [searchValue, setSearchValue] = useState("");
 
-  const [menu, setMenu] = useState(false);
-  const [searchProductTitle, setSearchProductTitle] = useState("");
-  const [selectedCategory, setSelectedCategory] = useState(ORDERS_CONFIG.all);
-
-  const _setSearchData = (e: ChangeEvent<HTMLInputElement>) => {
-    setSearchProductTitle(e.target.value);
+  const _setSearchData = (value: string) => {
+    setSearchValue(value);
+    if (selectedCategory === ORDERS_CONFIG.orderId) {
+      setPayload((prev: any) => ({
+        ...prev,
+        orderId: value,
+        rollNumber: "",
+      }));
+    } else {
+      setPayload((prev: any) => ({
+        ...prev,
+        rollNumber: value,
+        orderId: "",
+      }));
+    }
   };
 
   const _renderCategoryDropDownTitle = () => {
@@ -46,7 +65,7 @@ export const ContainerComp = ({}: IContainerComp) => {
               <Dropdown.Item key={cat} eventKey={cat}>
                 {cat}
               </Dropdown.Item>
-              {id != ORDERS_CONFIG.category.length - 1 && <S.Divider />}
+              {id !== ORDERS_CONFIG.category.length - 1 && <S.Divider />}
             </div>
           );
         })}
@@ -58,7 +77,23 @@ export const ContainerComp = ({}: IContainerComp) => {
     return (
       <S.CustomDropdown
         onSelect={(eventKey) => {
-          if (eventKey !== null) setSelectedCategory(eventKey);
+          if (eventKey !== null) {
+            setSelectedCategory(eventKey);
+            setSearchValue("");
+            if (eventKey === ORDERS_CONFIG.orderId) {
+              setPayload((prev: any) => ({
+                ...prev,
+                orderId: "",
+                rollNumber: "",
+              }));
+            } else {
+              setPayload((prev: any) => ({
+                ...prev,
+                rollNumber: "",
+                orderId: "",
+              }));
+            }
+          }
         }}
       >
         {_renderCategoryDropDownTitle()}
@@ -75,10 +110,12 @@ export const ContainerComp = ({}: IContainerComp) => {
           <S.Input
             type="input"
             placeholder="Search"
-            onChange={(e) => {
-              _setSearchData(e);
-            }}
+            value={searchValue}
+            onChange={(e) => _setSearchData(e.target.value)}
           />
+          <S.SearchButton title="Search" onClick={onSearchPress}>
+            <IoIosSearch size={25} />
+          </S.SearchButton>
         </S.InputWrapper>
         <S.SortContainer>{_renderSortedOptions()}</S.SortContainer>
       </S.ActionItem>
@@ -102,7 +139,10 @@ export const ContainerComp = ({}: IContainerComp) => {
       <S.SortedDropdownMenu $bgColor={theme.colors.white}>
         {ORDERS_CONFIG.sortedOptions.map((item, id) => (
           <div key={id}>
-            <S.SortedDropdownItem $bgColor={theme.colors.primary}>
+            <S.SortedDropdownItem
+              $bgColor={theme.colors.primary}
+              eventKey={item}
+            >
               <S.SortedIconText>{item}</S.SortedIconText>
             </S.SortedDropdownItem>
             {id !== ORDERS_CONFIG.sortedOptions.length - 1 && <S.Divider />}
@@ -114,40 +154,18 @@ export const ContainerComp = ({}: IContainerComp) => {
 
   const _renderSortedOptions = () => {
     return (
-      <S.CustomDropdown>
+      <S.CustomDropdown
+        onSelect={(eventKey) => {
+          if (eventKey !== null) {
+            onSortPress(eventKey.includes("Asc") ? "ASC" : "DESC");
+          }
+        }}
+      >
         {_renderSortedOptionsTitle()}
         {_renderSortedOptionsMenu()}
       </S.CustomDropdown>
     );
   };
 
-  const _orders = () => {
-    return (
-      <S.OrderContainer>
-        {ORDERS_CONFIG.orders.map((order, id) => (
-          <OrderCard key={id} individualOrder={order} />
-        ))}
-      </S.OrderContainer>
-    );
-  };
-
-  const _mainContainerItems = () => {
-    return (
-      <div>
-        {_renderActionItems()}
-        {_orders()}
-      </div>
-    );
-  };
-
-  return (
-    <S.MainContainer>
-      <Navbar menu={menu} onToggleMenu={() => setMenu(!menu)} />
-      <SideDrawer menu={menu} toggleMenu={() => setMenu(!menu)} />
-      <S.StyledPageBox>
-        {_mainContainerItems()}
-        <CustomPagination />
-      </S.StyledPageBox>
-    </S.MainContainer>
-  );
+  return <>{_renderActionItems()}</>;
 };

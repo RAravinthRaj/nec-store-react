@@ -11,8 +11,6 @@ import {
   getUserDetails,
 } from "../../../../utils";
 import { GET_ALL_PRODUCTS } from "./queries/getAllProducts.query";
-import { ROLES } from "../../../../config";
-
 export interface GetAllProductsInput {
   title?: string;
   categoryId?: string;
@@ -72,12 +70,7 @@ const formatData = (products: any[]) => {
         price: product?.price,
       };
 
-      if (
-        role === ROLES.retailer ||
-        (role === ROLES.customer && obj?.quantity != 0)
-      ) {
-        productList.push(obj);
-      }
+      productList.push(obj);
     }
   }
 

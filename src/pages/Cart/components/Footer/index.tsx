@@ -10,6 +10,7 @@ import { CARTS_CONFIG } from "../../config";
 import { useTheme } from "../../../../hooks/useTheme.hook";
 import { useEffect, useState } from "react";
 import { getItemInLocalStorage } from "../../../../utils";
+import { useSwalComp } from "../../../../components";
 
 export interface IFooter {
   createOrder(): void;
@@ -34,17 +35,26 @@ export const Footer = ({ createOrder }: IFooter) => {
     return () => window.removeEventListener("cartUpdated", handleCartUpdate);
   }, []);
 
+  const showSwal = useSwalComp();
+  const _handlePlaceOrder = () => {
+    showSwal({
+      title: "Place Order",
+      subtitle: "Are you sure you want to place order with these items?",
+      type: "warning",
+      confirmButtonText: "Yes, Place Order",
+      cancelButtonText: "Cancel",
+      onConfirmedPress: () => {
+        createOrder();
+      },
+    });
+  };
+
   return (
     <S.FooterBox $bgColor={theme.colors.secondaryBackGround}>
       <S.FooterContent>
         {CARTS_CONFIG.prMRP} {totalAmount}
       </S.FooterContent>
-      <S.Button
-        $bgColor={theme.colors.primary}
-        onClick={() => {
-          createOrder();
-        }}
-      >
+      <S.Button $bgColor={theme.colors.primary} onClick={_handlePlaceOrder}>
         <S.CartIcon />
         {CARTS_CONFIG.placeButton}
       </S.Button>

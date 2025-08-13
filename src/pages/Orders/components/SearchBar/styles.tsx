@@ -5,10 +5,9 @@ Proprietary and confidential.
 Written by Aravinth Raj R <aravinthr235@gmail.com>, 2025.
 */
 import styled from "styled-components";
-import { LiaSortAmountDownAltSolid } from "react-icons/lia";
 import { SlArrowDown } from "react-icons/sl";
 import { Dropdown } from "react-bootstrap";
-import { Box } from "@mui/material";
+import { ImSortAlphaAsc } from "react-icons/im";
 
 export const ActionItem = styled.div`
   display: flex;
@@ -79,32 +78,32 @@ export const SortContainer = styled.div`
   display: flex;
   align-items: center;
   flex: 1;
-  justify-content: flex-end;
+  justify-content: center;
 
   @media (max-width: 768px) {
     justify-content: flex-end;
-    flex: 0.2;
+    flex: 0.09;
   }
 
   @media (max-width: 576px) {
+    flex: 0.1;
     justify-content: flex-end;
-    margin-left: 20px;
+    margin: 0 8px;
   }
 `;
 
-export const SortIcon = styled(LiaSortAmountDownAltSolid)<{
+export const SortIcon = styled(ImSortAlphaAsc)<{
   $bgColor: string;
 }>`
   color: black;
-  font-size: 43px;
+  font-size: 30px;
 
   @media (max-width: 768px) {
     align-self: flex-end;
   }
 
   @media (max-width: 576px) {
-    align-self: flex-end;
-    font-size: 35px;
+    font-size: 25px;
   }
 `;
 
@@ -211,37 +210,7 @@ export const Divider = styled.div`
   margin: 4px 10px;
 `;
 
-export const StyledPageBox = styled(Box)`
-  margin-top: 80px;
-  overflow-x: auto;
-
-  @media (min-width: 1300px) {
-    min-width: 81vw;
-  }
-
-  @media (max-width: 768px) {
-    margin-top: 80px;
-  }
-
-  @media (max-width: 576px) {
-    padding: 8px;
-    margin-top: 70px;
-  }
-`;
-
-export const MainContainer = styled(Box)`
-  display: flex;
-  align-items: center;
-  padding: 20px;
-  padding-bottom: 0;
-
-  @media (max-width: 768px) {
-    display: block;
-    align-items: center;
-  }
-  @media (max-width: 576px) {
-    padding: 0;
-    margin-top: 15px;
-    justify-content: center;
-  }
+export const SearchButton = styled.button`
+  background-color: white;
+  border: none;
 `;

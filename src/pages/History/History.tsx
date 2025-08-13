@@ -6,12 +6,16 @@ Written by Aravinth Raj R <aravinthr235@gmail.com>, 2025.
 */
 import { useEffect, useState } from "react";
 import { CustomPagination, Error, Loader } from "../../components";
-import { getUserDetails } from "../../utils";
+import { checkAccessControl, getUserDetails } from "../../utils";
 import { HistoryComp } from "./components";
 import { useGetAllOrdersStore } from "./stores";
 import { GetAllOrdersInput } from "./services/graphql";
+import { SearchBar } from "./components";
+import { useNavigate } from "react-router-dom";
 
 const History = () => {
+  const navigate = useNavigate();
+
   const {
     getAllOrdersError,
     getAllOrdersResponse,
@@ -26,7 +30,7 @@ const History = () => {
     limit: 2,
     orderId: "",
     userId: getUserDetails()?.id,
-    orderBy: "ASC",
+    orderBy: "DESC",
   });
 
   useEffect(() => {
@@ -72,13 +76,13 @@ const History = () => {
   const _onPageChange = (page: number) => {
     setPayload((payload: any) => ({
       ...payload,
-      skip: (page - 1) * 2,
+      skip: (page - 1) * payload.limit,
     }));
 
     resetGetAllOrders();
     fetchGetAllOrders({
       ...payload,
-      skip: (page - 1) * 2,
+      skip: (page - 1) * payload.limit,
     });
   };
 
@@ -88,13 +92,23 @@ const History = () => {
     }
   };
 
+  const _renderError = () => {
+    if (getAllOrdersError && Object.keys(getAllOrdersError).length > 0) {
+      return <Error />;
+    }
+  };
+
   const _renderPage = () => {
     if (getAllOrdersResponse?.payload?.orders.length == 0) {
       return (
         <Error
-          title="No Items Found"
-          subtitle="Make a Order Now"
-          buttonTitle="Explore Products"
+          title="Uh Ohh!!!"
+          subtitle="No Data Found"
+          buttonTitle="Retry"
+          onPress={() => {
+            resetGetAllOrders();
+            fetchGetAllOrders(payload);
+          }}
         />
       );
     }
@@ -102,35 +116,44 @@ const History = () => {
     if (getAllOrdersResponse && Object.keys(getAllOrdersResponse).length > 0) {
       return (
         <>
-          <HistoryComp
-            orders={orders}
-            payload={payload}
-            setPayload={setPayload}
-            onSortPress={_onSortPress}
-            onSearchPress={_onSearchPress}
-          />
+          <HistoryComp orders={orders} />
           <CustomPagination
-            perPageCount={2}
-            totalPageCount={2}
-            currentPage={payload?.skip / 2 + 1}
+            perPageCount={payload.limit}
+            totalPageCount={getAllOrdersResponse?.payload?.totalCount}
+            currentPage={payload?.skip / payload.limit + 1}
             onPageChange={_onPageChange}
           />
         </>
       );
     }
 
-    if (getAllOrdersError && Object.keys(getAllOrdersError).length > 0) {
-      return <Error />;
-    }
-
-    return <Error />;
+    return <Loader />;
   };
 
+  if (checkAccessControl("history")) {
+    return (
+      <>
+        <SearchBar
+          payload={payload}
+          setPayload={setPayload}
+          onSortPress={_onSortPress}
+          onSearchPress={_onSearchPress}
+        />
+        {_renderPage()}
+        {_renderLoader()}
+        {_renderError()}
+      </>
+    );
+  }
+
   return (
-    <>
-      {_renderLoader()}
-      {_renderPage()}
-    </>
+    <Error
+      subtitle="Page Not Found"
+      buttonTitle="Go to Home"
+      onPress={() => {
+        navigate("/");
+      }}
+    />
   );
 };
 

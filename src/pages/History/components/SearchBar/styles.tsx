@@ -5,14 +5,11 @@ Proprietary and confidential.
 Written by Aravinth Raj R <aravinthr235@gmail.com>, 2025.
 */
 import styled from "styled-components";
-import { FiPlus } from "react-icons/fi";
 import { SlArrowDown } from "react-icons/sl";
 import { Dropdown } from "react-bootstrap";
-import { IconButton, Menu, MenuItem } from "@mui/material";
-import { Link } from "react-router-dom";
 import { PiShoppingCartBold } from "react-icons/pi";
+import { Link } from "react-router-dom";
 import { ImSortAlphaAsc } from "react-icons/im";
-import Badge from "@mui/material/Badge";
 
 export const ActionItem = styled.div`
   display: flex;
@@ -20,7 +17,6 @@ export const ActionItem = styled.div`
   justify-content: center;
 
   @media (max-width: 576px) {
-    margin: 0 7px;
     justify-content: center;
     flex: 1;
     margin-top: 10px;
@@ -31,6 +27,7 @@ export const ActionContainer = styled.div`
   display: flex;
   align-items: center;
   margin-top: 10px;
+  justify-content: space-between;
 
   @media (max-width: 576px) {
     margin: 0;
@@ -45,7 +42,7 @@ export const Input = styled.input`
   border: none;
   outline: none;
   font-size: 16px;
-  padding: 0 15px;
+  padding: 0 5px;
 
   flex: 1;
   width: 100%;
@@ -68,7 +65,6 @@ export const InputWrapper = styled.div<{ $bgColor: string }>`
   @media (max-width: 768px) {
     flex: 1;
     height: 45px;
-    width: 100%;
   }
 
   @media (max-width: 576px) {
@@ -85,17 +81,16 @@ export const SortContainer = styled.div`
   display: flex;
   align-items: center;
   flex: 1;
-  justify-content: center;
+  margin-left: 20px;
 
   @media (max-width: 768px) {
     justify-content: flex-end;
-    flex: 0.09;
+    flex: 0;
   }
 
   @media (max-width: 576px) {
-    flex: 0.1;
+    flex: 0.08;
     justify-content: flex-end;
-    margin-left: 8px;
   }
 `;
 
@@ -107,10 +102,13 @@ export const SortIcon = styled(ImSortAlphaAsc)<{
 
   @media (max-width: 768px) {
     align-self: flex-end;
+    font-size: 25px;
   }
 
   @media (max-width: 576px) {
-    font-size: 25px;
+    align-self: flex-end;
+    margin-left: -20px;
+    font-size: 30px;
   }
 `;
 
@@ -124,7 +122,7 @@ export const SortedIconText = styled.div`
   font-size: 16px;
 
   @media (max-width: 576px) {
-    font-size: 12px;
+    font-size: 14px;
   }
 `;
 
@@ -140,87 +138,6 @@ export const SortedDropdownItem = styled(Dropdown.Item)<{ $bgColor: string }>`
     ${SortedIconText} {
       color: ${(props) => props?.$bgColor};
     }
-  }
-`;
-
-export const ButtonContainer = styled.div`
-  flex: 0.8;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 30px;
-  margin-left: 10px;
-`;
-
-export const Button = styled.button<{ $bgColor: string }>`
-  flex: 1;
-  display: flex;
-  align-items: center;
-  padding: 10px 0;
-  justify-content: center;
-  border: none;
-  background-color: ${(props) => props?.$bgColor};
-  border-radius: 5px;
-  gap: 10px;
-  color: white;
-
-  @media (max-width: 576px) {
-    padding: 5px 0;
-    gap: 10px;
-  }
-`;
-
-export const AddIcon = styled(FiPlus)`
-  color: white;
-  font-size: 18px;
-`;
-
-export const FabAddIcon = styled(FiPlus)`
-  color: black;
-  font-size: 18px;
-`;
-
-export const PlusButtonContainer = styled(FiPlus)<{ $bgColor: string }>`
-  color: white;
-  padding: 5px;
-  font-size: 50px;
-  height: 40px;
-  width: 40px;
-  background-color: ${(props) => props?.$bgColor};
-  border-radius: 50%;
-  position: fixed;
-  bottom: 40px;
-  right: 40px;
-  cursor: pointer;
-  z-index: 1000;
-
-  @media (max-width: 768px) {
-    height: 45px;
-    width: 45px;
-    padding: 10px;
-    font-size: 40px;
-  }
-
-  @media (max-width: 576px) {
-    font-size: 30px;
-    bottom: 30px;
-    right: 30px;
-    height: 40px;
-    width: 40px;
-    padding: 10px;
-    font-size: 30px;
-  }
-`;
-
-export const FabDivider = styled.div`
-  border-top: 0.2px solid rgba(0, 0, 0, 0.2);
-  margin: 4px 10px;
-
-  @media (max-width: 576px) {
-    width: 95%;
-    margin-left: 5px;
-    margin-top: -7px;
-    margin-bottom: 6px;
   }
 `;
 
@@ -254,35 +171,12 @@ export const IconText = styled.div<{ $bgColor: string }>`
   color: ${(props) => props.$bgColor};
 
   @media (max-width: 576px) {
-    font-size: 13px;
+    font-size: 14px;
   }
 `;
 
 export const CategoryDropDownMenu = styled(Dropdown.Menu)`
   margin-top: 10px;
-
-  @media (max-width: 576px) {
-    font-size: 14px;
-  }
-`;
-
-export const ProductContainer = styled.div`
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  margin-top: 15px;
-
-  @media (max-width: 1024px) {
-    grid-template-columns: repeat(3, 1fr);
-  }
-
-  @media (max-width: 768px) {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  @media (max-width: 576px) {
-    margin-top: 20px;
-    grid-template-columns: repeat(1, 1fr);
-  }
 `;
 
 export const DropdownMenu = styled(Dropdown.Menu)<{ $bgColor: string }>`
@@ -297,50 +191,6 @@ export const DropdownMenu = styled(Dropdown.Menu)<{ $bgColor: string }>`
 export const Divider = styled.div`
   border-top: 0.2px solid rgba(0, 0, 0, 0.2);
   margin: 4px 10px;
-`;
-
-export const FixedMenu = styled(Menu)<{ $bgColor: string }>`
-  & .MuiPaper-root {
-    left: auto !important;
-    right: 110px !important;
-    top: 85% !important;
-    border-radius: 10px;
-    transform: none !important;
-    overflow: visible;
-    filter: drop-shadow(0px 2px 8px rgba(0, 0, 0, 0.32));
-    padding: 0 5px;
-    background-color: ${(props) => props?.$bgColor};
-    color: black;
-
-    &::before {
-      content: "";
-      position: absolute;
-      left: 100%;
-    }
-  }
-
-  @media (max-width: 576px) {
-    & .MuiPaper-root {
-      right: 80px !important;
-      bottom: 20% !important;
-      height: 75px !important;
-      width: 150px !important;
-      padding: 5px !important;
-    }
-  }
-`;
-
-export const StyledMenuItem = styled(MenuItem)`
-  display: flex;
-  align-items: center;
-  padding: 0 15px;
-  font-size: 14px;
-  gap: 10px;
-
-  @media (max-width: 576px) {
-    margin-top: -15px !important;
-    font-size: 13px !important;
-  }
 `;
 
 export const CartContainer = styled(Link)<{ $bgColor: string }>`
@@ -413,63 +263,4 @@ export const Count = styled.div<{ $bgColor: string }>`
 export const SearchButton = styled.button`
   background-color: white;
   border: none;
-`;
-
-export const StyledBadge = styled(Badge)<{ $bgColor: string }>`
-  & .MuiBadge-badge {
-    right: -3px !important;
-    top: -5px !important;
-    background: ${(props) => props?.$bgColor};
-    color: white;
-    font-weight: 600;
-    font-size: 12px;
-    height: 23px;
-    width: 23px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: 1.5px solid white; /* cleaner than black for contrast */
-    box-shadow: 0 2px 6px rgba(0, 86, 210, 0.5),
-      inset 0 0 4px rgba(255, 255, 255, 0.4);
-    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
-    transition: transform 0.2s ease-in-out;
-  }
-
-  &:hover .MuiBadge-badge {
-    transform: scale(1.05);
-  }
-`;
-
-export const CartButton = styled(IconButton)`
-  width: 45px;
-  height: 45px;
-  background: linear-gradient(145deg, #ffffff, #f5f5f5);
-  border: 2px solid #000000 !important;
-  border-radius: 50%;
-  padding: 10px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.08),
-    inset 0 -2px 4px rgba(255, 255, 255, 0.7);
-  transition: all 0.25s ease-in-out;
-
-  &:hover {
-    background: linear-gradient(145deg, #fdfdfd, #f0f0f0);
-    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.15),
-      inset 0 -2px 6px rgba(255, 255, 255, 0.9);
-
-    svg {
-      color: #0056d2;
-      filter: drop-shadow(0 0 4px rgba(0, 86, 210, 0.6));
-    }
-  }
-
-  svg {
-    font-size: 26px;
-    color: #1a1a1a;
-    transition: color 0.25s ease, filter 0.25s ease;
-  }
 `;

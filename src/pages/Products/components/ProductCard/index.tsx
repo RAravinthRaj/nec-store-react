@@ -92,6 +92,7 @@ export const ProductCard = ({
         <S.ButtonContainer>
           <S.Button
             $bgColor={theme.colors.primary}
+            $canAdd={true}
             onClick={() => setModal(true)}
           >
             <S.EditIcon />
@@ -108,9 +109,13 @@ export const ProductCard = ({
           onClick={() => {
             itemAdded();
           }}
+          $canAdd={product?.quantity > 0}
         >
           <S.CartIcon />
-          {PRODUCTS_CONFIG.addToCartButton}
+          {product?.quantity > 0
+            ? PRODUCTS_CONFIG.addToCartButton
+            : PRODUCTS_CONFIG.outOfStock}
+          {}
         </S.Button>
       </S.ButtonContainer>
     );

@@ -8,64 +8,21 @@ import { useState } from "react";
 import { useTheme } from "../../../../hooks";
 import * as S from "./styles";
 import { ViewItemModal } from "../ViewItem";
-import { ORDERS_CONFIG } from "../../config";
-import Swal, { SweetAlertIcon } from "sweetalert2";
-import { RxCross2 } from "react-icons/rx";
-import ReactDOMServer from "react-dom/server";
-import { VscCheck } from "react-icons/vsc";
+import { HISTORY_CONFIG } from "../../config";
 
 export interface IOrderCard {
-  individualOrder: {
-    orderID: string;
-    orderBy: string;
-    date: string;
-    totalAmount: string;
-    OrderNumber: string;
-    OrderBy: string;
-    Date: string;
-    Total: number;
-    products: any[];
-  };
+  individualOrder: any;
 }
 
 export const OrderCard = ({ individualOrder }: IOrderCard) => {
   const theme = useTheme();
   const [modal, setModal] = useState(false);
 
-  const _deleteItem = () => {
-    Swal.fire({
-      title: ORDERS_CONFIG.swal.title,
-      text: ORDERS_CONFIG.swal.text,
-      icon: ORDERS_CONFIG.swal.icon as SweetAlertIcon,
-      confirmButtonColor: theme.colors.primary,
-      cancelButtonColor: theme.colors.cancel,
-      color: theme.colors.swalButton,
-      confirmButtonText: `${ReactDOMServer.renderToString(
-        <VscCheck size={20} style={{ marginTop: "-2px", marginRight: "5px" }} />
-      )} ${ORDERS_CONFIG.swal.confirmButtonText} `,
-      cancelButtonText: `${ReactDOMServer.renderToString(
-        <RxCross2 size={19} style={{ marginTop: "-1px" }} />
-      )} ${ORDERS_CONFIG.swal.cancelButtonText}`,
-      showCancelButton: true,
-      reverseButtons: true,
-    }).then((result) => {
-      if (result.isConfirmed) {
-        Swal.fire({
-          title: ORDERS_CONFIG.swal.successTitle,
-          text: ORDERS_CONFIG.swal.successText,
-          icon: ORDERS_CONFIG.swal.successIcon as SweetAlertIcon,
-          confirmButtonColor: theme.colors.primary,
-          color: theme.colors.swalButton,
-        });
-      }
-    });
-  };
-
   const _renderTitle = () => {
     return (
       <S.TitleContainer $bgColor={theme.colors.primary}>
         <S.Title>
-          {ORDERS_CONFIG.orderNumber}
+          {HISTORY_CONFIG.orderNumber}
           {individualOrder?.orderID}
         </S.Title>
       </S.TitleContainer>
@@ -80,7 +37,7 @@ export const OrderCard = ({ individualOrder }: IOrderCard) => {
           onClick={() => setModal(true)}
         >
           <S.ViewIcon />
-          {ORDERS_CONFIG.viewButton}
+          {HISTORY_CONFIG.viewButton}
         </S.Button>
       </S.ButtonContainer>
     );
@@ -90,15 +47,15 @@ export const OrderCard = ({ individualOrder }: IOrderCard) => {
     return (
       <S.BodyContainer>
         <S.OrderNameContainer>
-          {ORDERS_CONFIG.orderBy}
+          {HISTORY_CONFIG.orderBy}
           {individualOrder?.orderBy}
         </S.OrderNameContainer>
         <S.DateContainer>
-          {ORDERS_CONFIG.date}
+          {HISTORY_CONFIG.date}
           {individualOrder?.date}
         </S.DateContainer>
         <S.RupeeContainer>
-          {ORDERS_CONFIG.prMrp} {individualOrder?.totalAmount}
+          {HISTORY_CONFIG.prMrp} {individualOrder?.totalAmount}
         </S.RupeeContainer>
         {_renderButton()}
       </S.BodyContainer>
@@ -116,6 +73,8 @@ export const OrderCard = ({ individualOrder }: IOrderCard) => {
         onClose={() => setModal(false)}
         products={individualOrder?.products}
         totalPrice={individualOrder?.totalAmount}
+        paidStatus={individualOrder?.paidStatus}
+        deliveryStatus={individualOrder?.deliveryStatus}
       />
     </div>
   );

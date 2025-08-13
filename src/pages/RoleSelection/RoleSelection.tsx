@@ -109,7 +109,7 @@ const RoleSelection = () => {
       );
     }
 
-    return <Error />;
+    return <Loader />;
   };
 
   return (

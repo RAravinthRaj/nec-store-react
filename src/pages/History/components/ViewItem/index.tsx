@@ -7,13 +7,17 @@ Written by Aravinth Raj R <aravinthr235@gmail.com>, 2025.
 import Modal from "react-bootstrap/Modal";
 import * as S from "./styles";
 import { useTheme } from "../../../../hooks";
-import { ORDERS_CONFIG } from "../../config";
+import { HISTORY_CONFIG } from "../../config";
+import { TiTick } from "react-icons/ti";
+import { LuClock3 } from "react-icons/lu";
 
 export interface IAddItem {
   modalShow: boolean;
   onClose: () => void;
   products: any[];
   totalPrice: string;
+  deliveryStatus: string;
+  paidStatus: string;
 }
 
 export const ViewItemModal = ({
@@ -21,6 +25,8 @@ export const ViewItemModal = ({
   onClose,
   products,
   totalPrice,
+  paidStatus,
+  deliveryStatus,
 }: IAddItem) => {
   const theme = useTheme();
 
@@ -61,7 +67,7 @@ export const ViewItemModal = ({
     return (
       <Modal.Body as={S.ModalBody}>
         <S.TitleBox $bgColor={theme.colors.secondaryBackGround}>
-          {ORDERS_CONFIG.title?.map((d, index) => (
+          {HISTORY_CONFIG.title?.map((d, index) => (
             <S.TitleComp key={index}>{d}</S.TitleComp>
           ))}
         </S.TitleBox>
@@ -73,7 +79,7 @@ export const ViewItemModal = ({
   const _renderAmount = () => {
     return (
       <S.Amount>
-        {ORDERS_CONFIG.prMrp}
+        {HISTORY_CONFIG.prMrp}
         {totalPrice}
       </S.Amount>
     );
@@ -82,11 +88,36 @@ export const ViewItemModal = ({
   const _renderFooter = () => {
     return (
       <S.Footer>
-        <S.Button $bgColor={theme.colors.primary}>
-          {ORDERS_CONFIG.amountReceived}
+        <S.Button
+          $bgColor={
+            paidStatus === "paid" ? theme.colors.paid : theme.colors.unpaid
+          }
+        >
+          {paidStatus === "paid" ? (
+            <TiTick size={20} />
+          ) : (
+            <LuClock3 size={20} />
+          )}
+          {paidStatus === "paid"
+            ? HISTORY_CONFIG.amountReceived
+            : HISTORY_CONFIG.amountNotReceived}
         </S.Button>
-        <S.Button $bgColor={theme.colors.primary}>
-          {ORDERS_CONFIG.deliver}
+
+        <S.Button
+          $bgColor={
+            deliveryStatus === "delivered"
+              ? theme.colors.delivered
+              : theme.colors.pending
+          }
+        >
+          {deliveryStatus === "delivered" ? (
+            <TiTick size={20} />
+          ) : (
+            <LuClock3 size={20} />
+          )}
+          {deliveryStatus === "delivered"
+            ? HISTORY_CONFIG.deliver
+            : HISTORY_CONFIG.deliverPending}
         </S.Button>
       </S.Footer>
     );

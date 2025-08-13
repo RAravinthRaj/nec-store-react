@@ -46,7 +46,6 @@ export const CartComp = ({
         totalPrice += product.price;
       }
 
-      // console.log(totalPrice);
       setItemInLocalStorage("totalPrice", totalPrice);
       setCartProducts(localCart);
     };

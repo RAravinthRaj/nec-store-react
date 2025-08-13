@@ -35,7 +35,14 @@ export const Navigator = () => {
           </PageContainer>
         }
       />
-      <Route path="/orders" element={<Orders />} />
+      <Route
+        path="/orders"
+        element={
+          <PageContainer showSideBar={true} showHamburgerIcon={true}>
+            <Orders />
+          </PageContainer>
+        }
+      />
       <Route path="/sales" element={<Sales />} />
       <Route
         path="/carts"

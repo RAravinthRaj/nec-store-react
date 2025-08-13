@@ -18,7 +18,7 @@ import { IoIosSearch } from "react-icons/io";
 import { AddProductInput } from "../../services/graphql";
 import { getItemInLocalStorage } from "../../../../utils";
 import { useNavigate } from "react-router-dom";
-
+import { PiShoppingCart } from "react-icons/pi";
 export interface ISearchBarComp {
   categories: any[];
   addCategory(name: string): Promise<boolean>;
@@ -160,14 +160,24 @@ export const SearchBar = ({
       }
 
       return (
-        <>
-          <S.CartContainer $bgColor={theme.colors.backGround} to="/carts">
-            <S.CartIcon />
-          </S.CartContainer>
-          <S.CartItemsCount $bgColor={theme.colors.primary} $isMobile={false}>
-            <S.Count $bgColor={theme.colors.white}>{cartItemsCount}</S.Count>
-          </S.CartItemsCount>
-        </>
+        <S.CartButton
+          aria-label="cart"
+          onClick={() => {
+            navigate("/carts");
+          }}
+        >
+          <S.StyledBadge
+            badgeContent={cartItemsCount}
+            $bgColor={theme.colors.primary}
+            anchorOrigin={{
+              vertical: "top",
+              horizontal: "right",
+            }}
+            color="secondary"
+          >
+            <PiShoppingCart />
+          </S.StyledBadge>
+        </S.CartButton>
       );
     }
   };
@@ -256,12 +266,24 @@ export const SearchBar = ({
               : { position: "fixed", bottom: 15, right: 45 }
           }
         >
-          <S.CartContainer $bgColor={theme.colors.backGround} to="/carts">
-            <S.CartIcon />
-          </S.CartContainer>
-          <S.CartItemsCount $bgColor={theme.colors.primary} $isMobile={true}>
-            <S.Count $bgColor={theme.colors.white}>{cartItemsCount}</S.Count>
-          </S.CartItemsCount>
+          <S.CartButton
+            aria-label="cart"
+            onClick={() => {
+              navigate("/carts");
+            }}
+          >
+            <S.StyledBadge
+              badgeContent={cartItemsCount}
+              $bgColor={theme.colors.primary}
+              anchorOrigin={{
+                vertical: "top",
+                horizontal: "right",
+              }}
+              color="secondary"
+            >
+              <PiShoppingCart />
+            </S.StyledBadge>
+          </S.CartButton>
         </Box>
       );
     }
