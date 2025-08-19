@@ -191,22 +191,27 @@ export const CartComp = ({
       _renderItemField(key, value, item)
     );
 
-  const _renderCartsData = () =>
-    cartProductsDetails.map((item, index) => {
-      const productId = item?.productId || index;
-      return (
-        <div key={index}>
-          <S.ItemBox>
-            {_renderItemFields(item)}
-            <S.CancelComp
-              $bgColor={theme.colors.primary}
-              onClick={() => _deleteItem(productId)}
-            />
-          </S.ItemBox>
-          <S.CartDivider />
-        </div>
-      );
-    });
+  const _renderCartsData = () => {
+    return (
+      <>
+        {cartProductsDetails.map((item, index) => {
+          const productId = item?.productId || index;
+          return (
+            <div key={index}>
+              <S.ItemBox>
+                {_renderItemFields(item)}
+                <S.CancelComp
+                  $bgColor={theme.colors.primary}
+                  onClick={() => _deleteItem(productId)}
+                />
+              </S.ItemBox>
+              <S.CartDivider />
+            </div>
+          );
+        })}
+      </>
+    );
+  };
 
   return (
     <S.CartContainer>

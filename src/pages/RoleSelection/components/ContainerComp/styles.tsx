@@ -11,9 +11,9 @@ export const MainContainer = styled(Container)`
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  justify-content: center;
   align-items: center;
   padding: 20px;
-  margin-top: 35px;
 
   @media (max-width: 768px) {
     flex-direction: column;

@@ -42,11 +42,8 @@ const Products = () => {
     resetGetAllProducts,
   } = useGetAllProductsStore();
 
-  const {
-    getAllCategoriesResponse,
-    fetchGetAllCategories,
-    getAllCategoriesLoading,
-  } = useGetAllCategoriesStore();
+  const { getAllCategoriesResponse, fetchGetAllCategories } =
+    useGetAllCategoriesStore();
 
   const {
     addCategoryResponse,

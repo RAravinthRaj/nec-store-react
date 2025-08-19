@@ -5,25 +5,32 @@ Proprietary and confidential.
 Written by Aravinth Raj R <aravinthr235@gmail.com>, 2025.
 */
 import styled from "styled-components";
-import { LiaSortAmountDownAltSolid } from "react-icons/lia";
 import { SlArrowDown } from "react-icons/sl";
 import { Dropdown } from "react-bootstrap";
-import { Box } from "@mui/material";
-import { LiaDownloadSolid } from "react-icons/lia";
+import { ImSortAlphaAsc } from "react-icons/im";
 
 export const ActionContainer = styled.div`
   display: flex;
   align-items: center;
+  justify-content: space-between;
   margin-top: 5px;
+  gap: 15px;
 
   @media (max-width: 1024px) {
     flex-direction: column;
     margin-top: 0;
-    gap: 15px;
 
     > * {
       width: 100%;
     }
+  }
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    margin-top: 0;
+    justify-content: center;
+    font-size: 12px;
+    gap: 15px;
   }
 
   @media (max-width: 576px) {
@@ -31,7 +38,7 @@ export const ActionContainer = styled.div`
     margin-top: 0;
     justify-content: center;
     font-size: 12px;
-    padding: 0 3px;
+    padding: 0 5px;
 
     > * {
       width: 100%;
@@ -73,38 +80,36 @@ export const InputWrapper = styled.div<{ $bgColor: string }>`
     border-radius: 5px;
   }
 `;
-
 export const SortContainer = styled.div`
   display: flex;
   align-items: center;
   flex: 1;
-  margin-top: 3px;
-  justify-content: flex-end;
+  justify-content: center;
 
   @media (max-width: 768px) {
     justify-content: flex-end;
-    flex: 0.2;
+    flex: 0.09;
   }
 
   @media (max-width: 576px) {
+    flex: 0.1;
     justify-content: flex-end;
-    margin-left: 20px;
+    margin-left: 8px;
   }
 `;
 
-export const SortIcon = styled(LiaSortAmountDownAltSolid)<{
+export const SortIcon = styled(ImSortAlphaAsc)<{
   $bgColor: string;
 }>`
   color: black;
-  font-size: 40px;
+  font-size: 30px;
 
   @media (max-width: 768px) {
     align-self: flex-end;
   }
 
   @media (max-width: 576px) {
-    align-self: flex-end;
-    font-size: 35px;
+    font-size: 25px;
   }
 `;
 
@@ -224,41 +229,10 @@ export const ActionItem = styled.div`
   }
 `;
 
-export const StyledPageBox = styled(Box)`
-  margin-top: 70px;
-  overflow-x: auto;
-  width: 100vw;
-  padding: 10px;
-
-  @media (max-width: 768px) {
-    margin-top: 80px;
-  }
-
-  @media (max-width: 576px) {
-    padding: 8px;
-    margin-top: 64px;
-  }
-`;
-
-export const MainContainer = styled(Box)`
-  display: flex;
-  align-items: center;
-  padding: 20px;
-
-  @media (max-width: 768px) {
-    padding: 12px;
-  }
-
-  @media (max-width: 576px) {
-    padding: 0;
-    margin-top: 15px;
-    justify-content: center;
-  }
-`;
-
 export const Date = styled.div`
   flex: 1.5;
   display: flex;
+  justify-content: space-between;
   border-radius: 8px;
 
   @media (max-width: 768px) {
@@ -273,7 +247,7 @@ export const Date = styled.div`
   }
 `;
 
-export const DateContainer = styled.div`
+export const ToDateContainer = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -284,8 +258,31 @@ export const DateContainer = styled.div`
 
   @media (max-width: 1024px) {
     margin: 0 15px;
-    justify-content: space-around;
-    gap: -20px;
+    justify-content: flex-end;
+  }
+
+  @media (max-width: 768px) {
+    gap: 8px;
+    margin: 0;
+  }
+
+  @media (max-width: 576px) {
+    flex-direction: row;
+  }
+`;
+
+export const FromDateContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  flex: 1;
+  border-radius: 5px;
+  gap: 18px;
+  margin: 0 15px;
+
+  @media (max-width: 1024px) {
+    margin: 0 15px;
+    justify-content: flex-start;
   }
 
   @media (max-width: 768px) {
@@ -332,121 +329,7 @@ export const DateInput = styled.input`
   }
 `;
 
-export const TitleBox = styled.div<{ $bgColor: string }>`
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
-  background-color: ${(props) => props?.$bgColor};
-  padding: 18px 15px;
-  border-radius: 10px;
-  margin-bottom: 10px;
-  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.2);
-  min-width: 620px;
-  position: sticky;
-  top: 0;
-  z-index: 1;
-
-  @media (max-width: 576px) {
-    min-width: 640px;
-    font-size: 13px;
-    padding: 13px;
-  }
-`;
-
-export const ItemBox = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
-  padding: 15px;
-  border-radius: 10px;
-  min-width: 620px;
-
-  @media (max-width: 576px) {
-    min-width: 640px;
-  }
-`;
-
-export const TitleComp = styled.div`
-  flex: 1;
-  text-align: center;
-  white-space: normal;
-  overflow-wrap: break-word;
-  word-break: break-word;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  padding: 0 8px;
-
-  @media (max-width: 576px) {
-    font-size: 13px;
-  }
-`;
-
-export const BodyComponent = styled.div`
-  height: 500px;
-`;
-
-export const SalesContainer = styled.div`
-  margin-top: 30px;
-  overflow-x: auto;
-  overflow-y: auto;
-  max-height: 60vh;
-  margin-bottom: 20px;
-
-  @media (max-width: 768px) {
-    max-height: 100vh;
-  }
-
-  @media (max-width: 576px) {
-    margin-bottom: 40px;
-  }
-`;
-
-export const SalesDivider = styled.div`
-  border: solid 0.5px rgba(0, 0, 0, 0.2);
-  transform: scaleY(0.9);
-  min-width: 500px;
-  margin: 5px;
-
-  @media (max-width: 768px) {
-    margin: 10px 20px;
-    min-width: 560px;
-  }
-
-  @media (max-width: 576px) {
-    margin: 7px 7px;
-    min-width: 620px;
-  }
-`;
-
-export const FooterContent = styled.div`
-  flex: 1;
-
-  @media (max-width: 576px) {
-    font-size: 14px;
-  }
-`;
-
-export const FooterBox = styled.div<{ $bgColor: string }>`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  background-color: ${(props) => props?.$bgColor};
-  padding: 15px;
-  border-radius: 10px;
-  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.2);
-
-  @media (max-width: 576px) {
-    flex-direction: column;
-    gap: 20px;
-    margin-bottom: 10px;
-  }
-`;
-
-export const DownloadIcon = styled(LiaDownloadSolid)`
-  color: white;
-  font-size: 21px;
+export const SearchButton = styled.button`
+  background-color: white;
+  border: none;
 `;
