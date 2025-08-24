@@ -7,10 +7,6 @@ Written by Aravinth Raj R <aravinthr235@gmail.com>, 2025.
 import { useTheme } from "../../../../hooks";
 import * as S from "./styles";
 import { CARTS_CONFIG } from "../../config";
-import { RxCross2 } from "react-icons/rx";
-import Swal, { SweetAlertIcon } from "sweetalert2";
-import ReactDOMServer from "react-dom/server";
-import { VscCheck } from "react-icons/vsc";
 import { FaPlus, FaMinus } from "react-icons/fa6";
 import { toast } from "react-toastify";
 import { useEffect, useRef, useState } from "react";
@@ -19,6 +15,7 @@ import {
   setItemInLocalStorage,
 } from "../../../../utils";
 import { useNavigate } from "react-router-dom";
+import { useSwalComp } from "../../../../components";
 
 export interface IContainerComp {
   cartProductsDetails: any[];
@@ -61,37 +58,24 @@ export const CartComp = ({
     };
   }, [navigate]);
 
+  const showSwal = useSwalComp();
   const _deleteItem = (productId: string) => {
-    Swal.fire({
+    showSwal({
       title: CARTS_CONFIG.swal.title,
-      text: CARTS_CONFIG.swal.text,
-      icon: CARTS_CONFIG.swal.icon as SweetAlertIcon,
-      confirmButtonColor: theme.colors.primary,
-      cancelButtonColor: theme.colors.cancel,
-      color: theme.colors.swalButton,
-      confirmButtonText: `${ReactDOMServer.renderToString(
-        <VscCheck size={20} style={{ marginTop: "-2px", marginRight: "5px" }} />
-      )} ${CARTS_CONFIG.swal.confirmButtonText}`,
-      cancelButtonText: `${ReactDOMServer.renderToString(
-        <RxCross2 size={19} style={{ marginTop: "-1px" }} />
-      )} ${CARTS_CONFIG.swal.cancelButtonText}`,
-      showCancelButton: true,
-      reverseButtons: true,
-    }).then((result) => {
-      if (!result.isConfirmed) return;
+      subtitle: CARTS_CONFIG.swal.text,
+      type: "warning",
+      confirmButtonText: CARTS_CONFIG.swal.confirmButtonText,
+      cancelButtonText: "Cancel",
+      onConfirmedPress: () => {
+        const updatedCart = cartProducts.filter(
+          (item) => item.id !== productId
+        );
+        setItemInLocalStorage("cartProducts", updatedCart);
+        setProductIDs(updatedCart.map((item) => item.id));
+        window.dispatchEvent(new Event("cartUpdated"));
 
-      const updatedCart = cartProducts.filter((item) => item.id !== productId);
-      setItemInLocalStorage("cartProducts", updatedCart);
-      setProductIDs(updatedCart.map((item) => item.id));
-      window.dispatchEvent(new Event("cartUpdated"));
-
-      Swal.fire({
-        title: CARTS_CONFIG.swal.successTitle,
-        text: CARTS_CONFIG.swal.successText,
-        icon: CARTS_CONFIG.swal.successIcon as SweetAlertIcon,
-        confirmButtonColor: theme.colors.primary,
-        color: theme.colors.swalButton,
-      });
+        toast.success("Item Removed From Cart");
+      },
     });
   };
 
