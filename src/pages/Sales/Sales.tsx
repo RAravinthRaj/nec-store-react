@@ -22,8 +22,11 @@ const Sales = () => {
     resetGetSales,
   } = useGetSalesStore();
 
-  const { getAllCategoriesResponse, fetchGetAllCategories } =
-    useGetAllCategoriesStore();
+  const {
+    getAllCategoriesResponse,
+    fetchGetAllCategories,
+    resetGetAllCategories,
+  } = useGetAllCategoriesStore();
 
   const {
     getSalesReportResponse,
@@ -46,10 +49,12 @@ const Sales = () => {
   const [categories, setCategories] = useState([]);
 
   useEffect(() => {
+    resetGetAllCategories();
     fetchGetAllCategories();
   }, [fetchGetAllCategories]);
 
   useEffect(() => {
+    resetGetSales();
     fetchGetSales(payload);
   }, [payload.categoryId, payload.from, payload.to]);
 
@@ -57,6 +62,8 @@ const Sales = () => {
     if (getSalesReportResponse) {
       toast.success(getSalesReportResponse?.payload?.message);
     }
+
+    resetGetSalesReport();
   }, [getSalesReportResponse]);
 
   useEffect(() => {
@@ -72,6 +79,8 @@ const Sales = () => {
     if (getSalesReportError && Object.keys(getSalesReportError).length > 0) {
       toast.error(getSalesReportError);
     }
+
+    resetGetSales();
   }, []);
 
   const _onSearchPress = () => {
