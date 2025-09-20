@@ -41,8 +41,14 @@ export const getGraphqlError = (err: any): string => {
 
 export const setItemInLocalStorage = (key: string, value: any): void => {
   try {
-    const serializedValue = JSON.stringify(value);
-    localStorage.setItem(key, serializedValue);
+    if (
+      (key === "token" || key === "signInToken") &&
+      typeof value === "string"
+    ) {
+      localStorage.setItem(key, value);
+    } else {
+      localStorage.setItem(key, JSON.stringify(value));
+    }
   } catch (err) {
     console.error(`Error setting item in localStorage with key "${key}":`, err);
     throw err;
@@ -52,13 +58,17 @@ export const setItemInLocalStorage = (key: string, value: any): void => {
 export const getItemInLocalStorage = (key: string): any => {
   try {
     const item = localStorage.getItem(key);
-    return item ? JSON.parse(item) : undefined;
+    if (!item) return undefined;
+    if (key === "token" || key === "signInToken") {
+      return item;
+    }
+    return JSON.parse(item);
   } catch (err) {
     console.error(
       `Error getting or parsing item from localStorage with key "${key}":`,
       err
     );
-    throw err;
+    return undefined;
   }
 };
 

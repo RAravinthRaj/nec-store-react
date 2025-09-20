@@ -12,6 +12,7 @@ export const getAccessToken = async (role: string, signInToken: string) => {
   try {
     const { data } = await apolloClient.query({
       query: GET_ACCESS_TOKEN,
+      fetchPolicy: "no-cache",
       variables: {
         role,
       },
