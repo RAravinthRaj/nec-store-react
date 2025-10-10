@@ -28,6 +28,7 @@ export interface INavbar {
 export const Navbar = ({ menu, onToggleMenu, showHamburgerIcon }: INavbar) => {
   const theme = useTheme();
   const [userData, setUserData] = useState<IUserData>({ name: "" });
+  const [token, setToken] = useState<string>(getItemInLocalStorage("token"));
   const isMobile = useIsNotDesktop();
   const navigate = useNavigate();
 
@@ -53,11 +54,12 @@ export const Navbar = ({ menu, onToggleMenu, showHamburgerIcon }: INavbar) => {
 
   const _onDropDownItemClick = (id: string, link: string) => {
     if (id === "switchRole") {
-      navigate("/roles");
+      navigate("/roles", {
+        state: { token: token },
+      });
       return;
     } else if (id === "logOut") {
       localStorage.removeItem("token");
-      localStorage.removeItem("signInToken");
       setUserData({ name: "" });
       navigate("/signin");
       return;

@@ -11,7 +11,6 @@ import { useSignInStore, useVerifyOtpStore } from "./stores";
 import { SignInParams, verifyOTPParams } from "./services/rest";
 import { Loader } from "../../components";
 import { useNavigate } from "react-router-dom";
-import { setItemInLocalStorage } from "../../utils";
 
 const SignIn = () => {
   const {
@@ -45,8 +44,9 @@ const SignIn = () => {
 
   useEffect(() => {
     if (verifyOtpResponse && Object.keys(verifyOtpResponse).length > 0) {
-      setItemInLocalStorage("signInToken", verifyOtpResponse?.signInToken);
-      navigate("/roles");
+      navigate("/roles", {
+        state: { token: verifyOtpResponse.signInToken },
+      });
 
       resetSignIn();
       resetVerifyOtp();

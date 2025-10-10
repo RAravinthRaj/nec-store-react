@@ -4,23 +4,18 @@ Unauthorized copying of this file, via any medium, is strictly prohibited.
 Proprietary and confidential.  
 Written by Aravinth Raj R <aravinthr235@gmail.com>, 2025.
 */
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { ContainerComp } from "./components";
 import { useGetAccessTokenStore, useGetRolesStore } from "./stores";
 import { Error, Loader } from "../../components";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { toast } from "react-toastify";
-import {
-  getItemInLocalStorage,
-  setItemInLocalStorage,
-  removeItemInLocalStorage,
-} from "../../utils";
+import { setItemInLocalStorage, removeItemInLocalStorage } from "../../utils";
 import { ROLE_SELECTION_CONFIG } from "./config";
 
 const RoleSelection = () => {
-  const [signInToken, setSignInToken] = useState<string>(
-    getItemInLocalStorage("signInToken") || ""
-  );
+  const location = useLocation();
+  const token = location.state?.token;
 
   const { getRolesResponse, getRolesError, fetchGetRoles, resetGetRoles } =
     useGetRolesStore();
@@ -36,11 +31,11 @@ const RoleSelection = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (signInToken) {
+    if (token) {
       resetGetRoles();
-      fetchGetRoles(signInToken);
+      fetchGetRoles(token);
     }
-  }, [signInToken]);
+  }, [token]);
 
   useEffect(() => {
     return () => {
@@ -74,8 +69,8 @@ const RoleSelection = () => {
     resetGetAccessToken();
     resetGetRoles();
 
-    if (signInToken) {
-      fetchGetAccessToken(role, signInToken);
+    if (token) {
+      fetchGetAccessToken(role, token);
     } else {
       toast.error("Sign-in token is missing. Please sign in again.");
     }
@@ -86,6 +81,19 @@ const RoleSelection = () => {
 
   const _renderPage = () => {
     if (getAccessTokenLoading) return <Loader />;
+
+    if (!token) {
+      return (
+        <Error
+          subtitle="No Token Found"
+          buttonTitle="Retry"
+          onPress={() => {
+            resetGetRoles();
+            fetchGetRoles(token);
+          }}
+        />
+      );
+    }
 
     if (getRolesResponse?.payload) {
       return (
@@ -103,7 +111,7 @@ const RoleSelection = () => {
           buttonTitle="Retry"
           onPress={() => {
             resetGetRoles();
-            fetchGetRoles(signInToken);
+            fetchGetRoles(token);
           }}
         />
       );
