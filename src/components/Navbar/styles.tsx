@@ -44,9 +44,19 @@ export const TitleContainer = styled.div`
   }
 `;
 
-export const Logo = styled.img`
+export const Logo = styled.img<{ $isProfilePage: boolean }>`
   width: 50px;
   height: 50px;
+
+  @media (max-width: 768px) {
+    width: 45px;
+    height: 45px;
+  }
+
+  @media (max-width: 576px) {
+    width: 40px;
+    height: 40px;
+  }
 `;
 
 export const TitleText = styled.div`
@@ -63,8 +73,14 @@ export const UserContainer = styled.div`
   gap: 20px;
   margin: 3px 10px;
 
+  @media (max-width: 768px) {
+    gap: 15px;
+    margin: 0;
+  }
+
   @media (max-width: 576px) {
-    margin: 3px;
+    gap: 8px;
+    margin: 0;
   }
 `;
 
@@ -100,6 +116,7 @@ export const ImageBackGround = styled.div`
 export const UserImage = styled.img`
   width: 50px;
   height: 50px;
+  border-radius: 50%;
 
   @media (max-width: 576px) {
     width: 37px;

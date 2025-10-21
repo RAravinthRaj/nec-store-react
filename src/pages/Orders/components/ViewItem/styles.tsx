@@ -7,6 +7,7 @@ Written by Aravinth Raj R <aravinthr235@gmail.com>, 2025.
 import Modal from "react-bootstrap/Modal";
 import styled from "styled-components";
 import { RxCross2 } from "react-icons/rx";
+import Select from "@mui/material/Select";
 
 export const ModalContainer = styled(Modal)`
   display: flex;
@@ -15,12 +16,8 @@ export const ModalContainer = styled(Modal)`
   max-height: 92vh;
   margin-top: 35px !important;
 
-  @media (max-width: 768px) {
-    size: 180%;
-  }
-
   @media (max-width: 576px) {
-    max-height: 92vh;
+    max-height: 120vh;
     margin-top: 25px !important;
     .modal-dialog {
       padding: 13px !important;
@@ -31,10 +28,12 @@ export const ModalContainer = styled(Modal)`
 
 export const ModalBody = styled.div`
   padding: 10px 5px;
-  max-height: 50vh;
+  background-color: white;
+  max-height: 60vh;
   white-space: nowrap;
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
+  border-radius: 5px;
 
   @media (max-width: 768px) {
     max-height: 55vh;
@@ -47,28 +46,28 @@ export const ModalBody = styled.div`
 
 export const CloseButton = styled(RxCross2)`
   position: absolute;
-  top: -8%;
-  right: 0.5%;
+  right: 0.2%;
+  transform: translateY(-140%);
   background: none;
   border: none;
-  font-size: 36px;
+  font-size: 38px;
   cursor: pointer;
   color: white;
   z-index: 2000;
 
-  @media (max-width: 768px) {
-    font-size: 32px;
-    top: -7%;
+  media (max-width: 768px) {
+    transform: translateY(-170%);
   }
 
   @media (max-width: 576px) {
+    transform: translateY(-140%);
     font-size: 30px;
-    top: -7%;
   }
 `;
 
 export const TitleBox = styled.div<{ $bgColor: string }>`
   display: flex;
+  align-items: center;
   flex-direction: row;
   justify-content: space-around;
   background-color: ${(props) => props.$bgColor};
@@ -85,12 +84,14 @@ export const TitleBox = styled.div<{ $bgColor: string }>`
 
   @media (max-width: 576px) {
     min-width: 640px;
+    font-size: 13px;
   }
 `;
 
 export const ItemBox = styled.div`
   display: flex;
   flex-direction: row;
+  align-items: center;
   justify-content: space-around;
   padding: 15px;
   border-radius: 10px;
@@ -99,6 +100,7 @@ export const ItemBox = styled.div`
 
   @media (max-width: 576px) {
     min-width: 640px;
+    font-size: 13px;
   }
 `;
 
@@ -112,13 +114,19 @@ export const TitleComp = styled.div`
   overflow-wrap: break-word;
 `;
 
-export const Button = styled.button<{ $bgColor: string; $isActive: boolean }>`
-  flex: 0.7;
+export const Button = styled.button<{ $bgColor: string; $isValid: boolean }>`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
   background-color: ${(props) => props?.$bgColor};
+  opacity: ${(props) => (props.$isValid ? "0.6" : "1")};
+  pointer-events: ${(props) => (props.$isValid ? "none" : "not-allowed")};
   color: white;
   border: none;
   height: 45px;
-  margin: 20px 30px;
+  width: 100%;
+  margin: 20px;
   padding: 10px;
   outline: none;
   font-size: 16px;
@@ -129,33 +137,43 @@ export const Button = styled.button<{ $bgColor: string; $isActive: boolean }>`
   cursor: pointer;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   transition: box-shadow 0.3s ease, transform 0.2s ease;
+  cursor: no-drop !important;
 
   &:hover {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
     transform: translateY(-2px);
   }
 
-  @media (max-width: 576px) {
-    width: 85%;
+  @media (max-width: 768px) {
     height: 45px;
-    margin: 10px;
+    margin: 3px;
+    gap: 3px;
+    font-size: 14px;
   }
 
-  ${({ $isActive }) =>
-    !$isActive &&
-    `   opacity:0.4;
-        cursor:no-drop !important;
-    `};
+  @media (max-width: 576px) {
+    height: 45px;
+    margin: 3px;
+    font-size: 14px;
+  }
 `;
 
 export const Footer = styled.div`
+  margin: 0 20px;
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-around;
+  padding: 10px 0;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    gap: 0;
+  }
 
   @media (max-width: 576px) {
     flex-direction: column;
+    gap: 5px;
   }
 `;
 
@@ -180,7 +198,83 @@ export const BodyComponent = styled.div`
   margin: 10px;
 `;
 
-export const Amount = styled.h4`
+export const Amount = styled.h5`
   text-align: center;
-  margin-top: 20px;
+  margin: 20px 0;
+`;
+
+export const productImage = styled.img`
+  width: 55px;
+  height: 55px;
+  border-radius: 8px;
+
+  @media (max-width: 576px) {
+    width: 45px;
+    height: 45px;
+  }
+`;
+
+export const DropDown = styled.div`
+  margin: 0 20px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+
+  @media (max-width: 768px) {
+    gap: 5px;
+    width: 100%;
+  }
+
+  @media (max-width: 576px) {
+    flex-direction: column;
+    width: 100%;
+    gap: 10px;
+  }
+`;
+
+export const StyledSelect = styled(Select)`
+  height: 35px;
+  padding: 22px;
+  width: 320px;
+  display: flex;
+  align-items: center;
+  border-radius: 7px;
+  background-color: white;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+
+  .MuiSelect-select {
+    display: flex;
+    align-items: center;
+    padding: 0 8px;
+    height: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  fieldset {
+    border: none !important;
+  }
+
+  &:hover fieldset {
+    border: none !important;
+  }
+
+  &.Mui-focused fieldset {
+    border: none !important;
+  }
+
+  @media (max-width: 768px) {
+    min-width: 200px;
+    padding: 20px 5px;
+    font-size: 14px !important;
+  }
+
+  @media (max-width: 576px) {
+    min-width: 100%;
+    max-width: 100%;
+    padding: 20px 5px;
+    font-size: 14px !important;
+  }
 `;

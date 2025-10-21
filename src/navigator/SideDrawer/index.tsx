@@ -11,6 +11,8 @@ import { SIDE_DRAWER_CONFIG } from "./config";
 import { Box } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { SIDE_DRAWER_ROLE_MANAGEMENT } from "../../config";
+import { getUserDetails } from "../../utils";
+import { useEffect, useState } from "react";
 
 export interface ISideDrawer {
   menu: boolean;
@@ -21,6 +23,27 @@ export const SideDrawer = ({ menu, toggleMenu }: ISideDrawer) => {
   const theme = useTheme();
   const isMobile = useIsNotDesktop();
   const navigate = useNavigate();
+  const [actions, setActions] = useState<any>([]);
+
+  useEffect(() => {
+    const userData = getUserDetails();
+
+    if (userData?.role && userData?.role.length > 0) {
+      const role = SIDE_DRAWER_ROLE_MANAGEMENT.roles[userData?.role];
+      const action = SIDE_DRAWER_CONFIG.Actions.filter((action) =>
+        role.includes(action.id)
+      );
+
+      setActions(action);
+    }
+  }, [navigate]);
+
+  const handleCloseMenu = () => {
+    if (document.activeElement instanceof HTMLElement) {
+      document.activeElement.blur();
+    }
+    toggleMenu();
+  };
 
   const _renderHeaderSM = () => {
     if (isMobile) {
@@ -30,7 +53,7 @@ export const SideDrawer = ({ menu, toggleMenu }: ISideDrawer) => {
             <S.Logo
               src={theme.images.logo}
               onClick={() => {
-                navigate("/products");
+                navigate("/");
               }}
             />
             <S.Title>{SIDE_DRAWER_CONFIG.title}</S.Title>
@@ -41,47 +64,47 @@ export const SideDrawer = ({ menu, toggleMenu }: ISideDrawer) => {
     }
   };
 
-  const roleName = "admin";
-
-  const role = SIDE_DRAWER_ROLE_MANAGEMENT.roles[roleName];
-  const actions = SIDE_DRAWER_CONFIG.Actions.filter((action) =>
-    role.includes(action.id)
-  );
-
   const _renderNavigationList = () => {
-    return (
-      <S.CustomList>
-        {_renderHeaderSM()}
-        {actions.map((item) => (
-          <div key={item.id}>
-            <S.ItemContainer
-              $hoverBgColor={theme.colors.primary}
-              disablePadding
-            >
-              <S.SideDrawerLink
-                to={item.link}
-                style={({ isActive }) => ({
-                  color: isActive ? theme.colors.primary : "inherit",
-                  display: "block",
-                  width: "100%",
-                })}
+    if (actions && actions.length > 0) {
+      return (
+        <S.CustomList>
+          {_renderHeaderSM()}
+          {actions?.map((item: any) => (
+            <div key={item.id}>
+              <S.ItemContainer
+                $hoverBgColor={theme.colors.primary}
+                disablePadding
               >
-                <S.Item>
-                  <S.Icon $bgColor={theme.colors.primary} src={item.imageSrc} />
-                  <S.ItemText primary={item.title} />
-                </S.Item>
-              </S.SideDrawerLink>
-            </S.ItemContainer>
-            <S.Divider />
-          </div>
-        ))}
-      </S.CustomList>
-    );
+                <S.SideDrawerLink
+                  to={item.link}
+                  style={({ isActive }) => ({
+                    color: isActive ? theme.colors.primary : "inherit",
+                    display: "block",
+                    width: "100%",
+                  })}
+                >
+                  <S.Item>
+                    <S.Icon
+                      $bgColor={theme.colors.primary}
+                      src={item.imageSrc}
+                    />
+                    <S.ItemText primary={item.title} />
+                  </S.Item>
+                </S.SideDrawerLink>
+              </S.ItemContainer>
+              <S.Divider />
+            </div>
+          ))}
+        </S.CustomList>
+      );
+    }
+
+    return null;
   };
 
   const _renderDrawer = () => {
     return (
-      <S.DrawerBox onClick={isMobile ? toggleMenu : () => {}}>
+      <S.DrawerBox onClick={isMobile ? handleCloseMenu : () => {}}>
         {_renderNavigationList()}
       </S.DrawerBox>
     );

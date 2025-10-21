@@ -25,7 +25,7 @@ export const NAVBAR_CONFIG = {
       id: "logOut",
       title: "LogOut",
       imageSrc: theme.images.logout,
-      link: "/",
+      link: "/signin",
     },
   ],
 };

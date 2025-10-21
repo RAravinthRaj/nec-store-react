@@ -8,33 +8,47 @@ import Form from "react-bootstrap/Form";
 import Modal from "react-bootstrap/Modal";
 import * as S from "./styles";
 import { useTheme } from "../../../../hooks";
-import { useState } from "react";
-import { toast } from "react-toastify";
+import { useEffect, useState } from "react";
 import { PROFILE_CONFIG } from "../../config";
 import MenuItem from "@mui/material/MenuItem";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 
-export interface IAddItem {
+export interface IAddRole {
   modalShow: boolean;
   onClose: () => void;
   email: string;
+  roles: string[];
+  onAddRole(roles: string): void;
 }
 
-export const AddRoleModal = ({ modalShow, onClose, email }: IAddItem) => {
+export const AddRoleModal = ({
+  modalShow,
+  onClose,
+  email,
+  roles,
+  onAddRole,
+}: IAddRole) => {
   const theme = useTheme();
 
-  const [selectedCategory, setSelectedCategory] = useState("");
+  const [selectedRole, setSelectedRole] = useState("");
+
+  useEffect(() => {
+    if (!modalShow) {
+      setSelectedRole("");
+    }
+  }, [modalShow]);
 
   const _handleChange = (event: SelectChangeEvent<unknown>) => {
-    setSelectedCategory(event.target.value as string);
-    if (!modalShow) {
-      setSelectedCategory("");
+    if (modalShow) {
+      setSelectedRole(event.target.value as string);
+    } else {
+      setSelectedRole("");
     }
   };
 
-  const _productAdded = () => {
-    toast.success(PROFILE_CONFIG.addItemToastSuccess);
-    setSelectedCategory("");
+  const _roleAdded = () => {
+    onAddRole(selectedRole);
+    setSelectedRole("");
     onClose();
   };
 
@@ -42,12 +56,12 @@ export const AddRoleModal = ({ modalShow, onClose, email }: IAddItem) => {
     return (
       <S.StyledFormControl fullWidth>
         <Select
-          value={selectedCategory}
+          value={selectedRole}
           onChange={(e) => _handleChange(e)}
           displayEmpty
           renderValue={(selected) => (selected ? selected : "Role")}
         >
-          {PROFILE_CONFIG.roles?.map((cat, id) => {
+          {roles?.map((cat, id) => {
             return (
               <MenuItem key={id} value={cat}>
                 {cat}
@@ -65,7 +79,7 @@ export const AddRoleModal = ({ modalShow, onClose, email }: IAddItem) => {
       <S.Header>
         <S.CloseButton onClick={onClose} />
         <S.Title id="contained-modal-title-vcenter">
-          {PROFILE_CONFIG.addItemTitle}
+          {PROFILE_CONFIG.addRoleTitle}
         </S.Title>
       </S.Header>
     );
@@ -78,7 +92,12 @@ export const AddRoleModal = ({ modalShow, onClose, email }: IAddItem) => {
           <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
             <Form.Label>{PROFILE_CONFIG.email}</Form.Label>
             <S.InputWrapper>
-              <S.Input type="text" value={email} />
+              <S.Input
+                type="text"
+                value={email}
+                readOnly
+                $textColor={theme.colors.textSecondary}
+              />
             </S.InputWrapper>
           </Form.Group>
           <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
@@ -93,10 +112,7 @@ export const AddRoleModal = ({ modalShow, onClose, email }: IAddItem) => {
   const _renderModalFooter = () => {
     return (
       <S.Footer>
-        <S.Button
-          $bgColor={theme.colors.primary}
-          onClick={() => _productAdded()}
-        >
+        <S.Button $bgColor={theme.colors.primary} onClick={() => _roleAdded()}>
           {PROFILE_CONFIG.submitButton}
         </S.Button>
       </S.Footer>

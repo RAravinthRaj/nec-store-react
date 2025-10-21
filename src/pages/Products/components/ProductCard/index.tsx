@@ -10,78 +10,87 @@ import * as S from "./styles";
 import { EditItemModal } from "../EditItem";
 import { toast } from "react-toastify";
 import { PRODUCTS_CONFIG } from "../../config";
-import Swal, { SweetAlertIcon } from "sweetalert2";
-import { RxCross2 } from "react-icons/rx";
-import ReactDOMServer from "react-dom/server";
-import { VscCheck } from "react-icons/vsc";
-
+import { AddRecentInput, UpdateProductInput } from "../../services/graphql";
+import {
+  getItemInLocalStorage,
+  getUserDetails,
+  setItemInLocalStorage,
+} from "../../../../utils";
 export interface IProductCard {
-  individualProduct: {
-    Title: string;
-    Category: string;
-    Quantity: number;
-    MRP: number;
-  };
+  product: any;
+  categories: any[];
+  updateProduct(args: UpdateProductInput): Promise<boolean>;
+  addRecent(args: AddRecentInput): Promise<boolean>;
+  isRetailer: boolean;
 }
 
-export const ProductCard = ({ individualProduct }: IProductCard) => {
+export const ProductCard = ({
+  product,
+  categories,
+  updateProduct,
+  isRetailer,
+  addRecent,
+}: IProductCard) => {
   const theme = useTheme();
   const [modal, setModal] = useState(false);
-  const isRetailer = true;
+  const [userId, setUserId] = useState<string>(getUserDetails()?.id);
 
   const itemAdded = () => {
-    toast.success(PRODUCTS_CONFIG.addItem);
-  };
+    try {
+      const cartProducts = getItemInLocalStorage("cartProducts") || [];
 
-  const _deleteItem = () => {
-    Swal.fire({
-      title: PRODUCTS_CONFIG.swal.title,
-      text: PRODUCTS_CONFIG.swal.text,
-      icon: PRODUCTS_CONFIG.swal.icon as SweetAlertIcon,
-      confirmButtonColor: theme.colors.primary,
-      cancelButtonColor: theme.colors.cancel,
-      color: theme.colors.swalButton,
-      confirmButtonText: `${ReactDOMServer.renderToString(
-        <VscCheck size={20} style={{ marginTop: "-2px", marginRight: "5px" }} />
-      )} ${PRODUCTS_CONFIG.swal.confirmButtonText} `,
-      cancelButtonText: `${ReactDOMServer.renderToString(
-        <RxCross2 size={19} style={{ marginTop: "-1px" }} />
-      )} ${PRODUCTS_CONFIG.swal.cancelButtonText}`,
-      showCancelButton: true,
-      reverseButtons: true,
-    }).then((result) => {
-      if (result.isConfirmed) {
-        Swal.fire({
-          title: PRODUCTS_CONFIG.swal.successTitle,
-          text: PRODUCTS_CONFIG.swal.successText,
-          icon: PRODUCTS_CONFIG.swal.successIcon as SweetAlertIcon,
-          confirmButtonColor: theme.colors.primary,
-          color: theme.colors.swalButton,
-        });
+      const existingProduct = cartProducts.find(
+        (item: { id: any }) => item.id === product?.id
+      );
+
+      if (!existingProduct) {
+        const newProduct = {
+          id: product?.id,
+          quantity: 1,
+          price: Number(product?.price),
+        };
+        cartProducts.push(newProduct);
+
+        if (product?.id) {
+          addRecent({ userId, productId: product.id });
+        }
+
+        setItemInLocalStorage("cartProducts", cartProducts);
+
+        toast.success(PRODUCTS_CONFIG.addItem);
+        window.dispatchEvent(new Event("cartUpdated"));
+      } else {
+        toast.info(PRODUCTS_CONFIG.itemAlreadyInCart);
       }
-    });
+    } catch (error) {
+      toast.error(PRODUCTS_CONFIG.cartErrorMessage);
+    }
   };
 
   const _renderCardInitialDetails = () => {
     return (
-      <div>
+      <S.ProductDetailContainer>
         <S.ImageContainer>
-          <S.Image src={theme.images.tagFile} />
+          <S.Image
+            src={product.productImage ?? theme.images.defaultProductImage}
+          />
         </S.ImageContainer>
-        <S.TitleContainer>{individualProduct.Title}</S.TitleContainer>
-        <S.CategoryContainer $bgColor={theme.colors.primary}>
-          {individualProduct.Category}
-        </S.CategoryContainer>
-        <S.ProductDes>
-          <S.QuantityContainer>
-            {PRODUCTS_CONFIG.prQuantity}
-            {individualProduct.Quantity}
-          </S.QuantityContainer>
-          <S.RupeeContainer>
-            {PRODUCTS_CONFIG.prMrp} {individualProduct.MRP}
-          </S.RupeeContainer>
-        </S.ProductDes>
-      </div>
+        <div>
+          <S.TitleContainer>{product?.title}</S.TitleContainer>
+          <S.CategoryContainer $bgColor={theme.colors.primary}>
+            {product?.category}
+          </S.CategoryContainer>
+          <S.ProductDes>
+            <S.QuantityContainer>
+              {PRODUCTS_CONFIG.prQuantity}
+              {product?.quantity}
+            </S.QuantityContainer>
+            <S.RupeeContainer>
+              {PRODUCTS_CONFIG.prMrp} {product?.price}
+            </S.RupeeContainer>
+          </S.ProductDes>
+        </div>
+      </S.ProductDetailContainer>
     );
   };
 
@@ -91,17 +100,11 @@ export const ProductCard = ({ individualProduct }: IProductCard) => {
         <S.ButtonContainer>
           <S.Button
             $bgColor={theme.colors.primary}
+            $canAdd={true}
             onClick={() => setModal(true)}
           >
             <S.EditIcon />
             {PRODUCTS_CONFIG.editButton}
-          </S.Button>
-          <S.Button
-            $bgColor={theme.colors.primary}
-            onClick={() => _deleteItem()}
-          >
-            <S.DeleteIcon />
-            {PRODUCTS_CONFIG.deleteButton}
           </S.Button>
         </S.ButtonContainer>
       );
@@ -114,9 +117,13 @@ export const ProductCard = ({ individualProduct }: IProductCard) => {
           onClick={() => {
             itemAdded();
           }}
+          $canAdd={product?.quantity > 0}
         >
           <S.CartIcon />
-          {PRODUCTS_CONFIG.addToCartButton}
+          {product?.quantity > 0
+            ? PRODUCTS_CONFIG.addToCartButton
+            : PRODUCTS_CONFIG.outOfStock}
+          {}
         </S.Button>
       </S.ButtonContainer>
     );
@@ -131,7 +138,9 @@ export const ProductCard = ({ individualProduct }: IProductCard) => {
       <EditItemModal
         modalShow={modal}
         onClose={() => setModal(false)}
-        individualProduct={individualProduct}
+        product={product}
+        categories={categories}
+        updateProduct={updateProduct}
       />
     </div>
   );

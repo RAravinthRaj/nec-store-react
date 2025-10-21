@@ -50,10 +50,7 @@ export const Loader = ({
       >
         <S.ModalInnerContainer $bgColor={theme.colors.white}>
           <LazyLottieAnimation loop play $useModalLoader={useModalLoader} />
-          <S.LoadingText
-            $useModalLoader={useModalLoader}
-            $fontFamily={theme.fonts.sourceSerifPro}
-          >
+          <S.LoadingText $useModalLoader={useModalLoader}>
             {loadingText}
           </S.LoadingText>
         </S.ModalInnerContainer>
@@ -64,10 +61,7 @@ export const Loader = ({
   return (
     <S.LoaderMainContainer>
       <LazyLottieAnimation loop play $useModalLoader={useModalLoader} />
-      <S.LoadingText
-        $useModalLoader={useModalLoader}
-        $fontFamily={theme.fonts.sourceSerifPro}
-      >
+      <S.LoadingText $useModalLoader={useModalLoader}>
         {loadingText}
       </S.LoadingText>
     </S.LoaderMainContainer>

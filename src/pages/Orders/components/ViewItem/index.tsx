@@ -8,42 +8,126 @@ import Modal from "react-bootstrap/Modal";
 import * as S from "./styles";
 import { useTheme } from "../../../../hooks";
 import { ORDERS_CONFIG } from "../../config";
+import { useState, useEffect } from "react";
 import { toast } from "react-toastify";
-import { useState } from "react";
+import { MenuItem } from "@mui/material";
+import { TiTick } from "react-icons/ti";
 
 export interface IAddItem {
   modalShow: boolean;
   onClose: () => void;
+  individualOrder: any;
+  updateOrder: (
+    orderId: string,
+    deliveryStatus?: string,
+    paidStatus?: string
+  ) => void;
 }
 
-export const ViewItemModal = ({ modalShow: modalShow, onClose }: IAddItem) => {
+export const ViewItemModal = ({
+  modalShow,
+  onClose,
+  individualOrder,
+  updateOrder,
+}: IAddItem) => {
   const theme = useTheme();
+  const [paidStatus, setPaidStatus] = useState(individualOrder?.paidStatus);
+  const [deliveryStatus, setDeliveryStatus] = useState(
+    individualOrder?.deliveryStatus
+  );
 
-  const [activeDeliver, setActiveDeliver] = useState(false);
-
-  const _activeDeliverStatus = () => {
-    if (activeDeliver === false) {
-      toast.success(ORDERS_CONFIG.amountReceived);
+  // ✅ Reset dropdowns to original values whenever order changes or modal opens
+  useEffect(() => {
+    if (individualOrder) {
+      setPaidStatus(individualOrder.paidStatus);
+      setDeliveryStatus(individualOrder.deliveryStatus);
     }
-    setActiveDeliver(true);
+  }, [individualOrder, modalShow]);
+
+  const _handleClose = () => {
+    // reset before closing
+    setPaidStatus(individualOrder?.paidStatus);
+    setDeliveryStatus(individualOrder?.deliveryStatus);
+    onClose();
   };
 
-  const _productDelivered = () => {
-    if (activeDeliver === true) {
-      toast.success(ORDERS_CONFIG.productDelivered);
+  const _changeStatus = () => {
+    if (
+      individualOrder?.paidStatus !== paidStatus ||
+      individualOrder?.deliveryStatus !== deliveryStatus
+    ) {
+      updateOrder(individualOrder?.orderId, paidStatus, deliveryStatus);
+      _handleClose();
+    } else {
+      toast.info("Nothing to Update", { toastId: "no-update" }); // ✅ avoid duplicate toast
     }
-    setActiveDeliver(false);
+  };
+
+  const _renderDropDown = (
+    data: string,
+    setData: (value: string) => void,
+    currentValue: string,
+    changedValue: string,
+    displayCurrentValue: string,
+    displayChangedValue: string,
+    orderStatus: "paidStatus" | "deliveryStatus"
+  ) => {
+    const isPaidSection = orderStatus === "paidStatus";
+    const isDeliveredSection = orderStatus === "deliveryStatus";
+
+    const shouldShowGreenButton =
+      (isPaidSection && individualOrder?.paidStatus === "paid") ||
+      (isDeliveredSection && individualOrder?.deliveryStatus === "delivered");
+
+    if (shouldShowGreenButton) {
+      return (
+        <S.Button $bgColor={theme.colors.delivered} $isValid={false}>
+          <TiTick size={25} />
+          {displayCurrentValue}
+        </S.Button>
+      );
+    }
+
+    // ✅ Always render both options but disable current one
+    return (
+      <S.DropDown>
+        <S.StyledSelect value={data} onChange={(e) => setData(e.target.value)}>
+          <MenuItem value={currentValue} disabled={data === currentValue}>
+            {displayCurrentValue}
+          </MenuItem>
+          <MenuItem value={changedValue} disabled={data === changedValue}>
+            {displayChangedValue}
+          </MenuItem>
+        </S.StyledSelect>
+      </S.DropDown>
+    );
   };
 
   const _renderBodyData = () => {
     return (
       <S.BodyComponent>
-        {ORDERS_CONFIG.orderItems.map((d, index) => (
-          <div>
-            <S.ItemBox key={index}>
-              {Object.entries(d)?.map(([key, value], id) => (
-                <S.TitleComp key={id}>{value}</S.TitleComp>
-              ))}
+        {individualOrder?.products.map((item: any, index: number) => (
+          <div key={index}>
+            <S.ItemBox>
+              {Object.entries(item).map(([key, value], id) => {
+                let displayValue = value;
+
+                if (key === "productImage") {
+                  return (
+                    <S.TitleComp key={id}>
+                      <S.productImage
+                        src={value || theme.images.defaultProductImage}
+                      />
+                    </S.TitleComp>
+                  );
+                }
+
+                if (key === "price") {
+                  displayValue = (item.price ?? 0) * (item.quantity ?? 0);
+                }
+
+                return <S.TitleComp key={id}>{displayValue}</S.TitleComp>;
+              })}
             </S.ItemBox>
             <S.Divider />
           </div>
@@ -69,7 +153,7 @@ export const ViewItemModal = ({ modalShow: modalShow, onClose }: IAddItem) => {
     return (
       <S.Amount>
         {ORDERS_CONFIG.prMrp}
-        {90}
+        {individualOrder?.totalAmount}
       </S.Amount>
     );
   };
@@ -77,19 +161,35 @@ export const ViewItemModal = ({ modalShow: modalShow, onClose }: IAddItem) => {
   const _renderFooter = () => {
     return (
       <S.Footer>
+        {_renderDropDown(
+          paidStatus,
+          setPaidStatus,
+          "paid",
+          "unpaid",
+          ORDERS_CONFIG.amountReceived,
+          ORDERS_CONFIG.amountNotReceived,
+          "paidStatus"
+        )}
+
+        {_renderDropDown(
+          deliveryStatus,
+          setDeliveryStatus,
+          "delivered",
+          "not_delivered",
+          ORDERS_CONFIG.deliver,
+          ORDERS_CONFIG.deliverPending,
+          "deliveryStatus"
+        )}
+
         <S.Button
           $bgColor={theme.colors.primary}
-          $isActive={true}
-          onClick={_activeDeliverStatus}
+          onClick={_changeStatus}
+          $isValid={
+            individualOrder?.paidStatus === "paid" &&
+            individualOrder?.deliveryStatus === "delivered"
+          }
         >
-          {ORDERS_CONFIG.amountReceived}
-        </S.Button>
-        <S.Button
-          $bgColor={theme.colors.primary}
-          $isActive={activeDeliver}
-          onClick={_productDelivered}
-        >
-          {ORDERS_CONFIG.deliver}
+          {ORDERS_CONFIG.save}
         </S.Button>
       </S.Footer>
     );
@@ -98,13 +198,16 @@ export const ViewItemModal = ({ modalShow: modalShow, onClose }: IAddItem) => {
   return (
     <S.ModalContainer
       aria-labelledby="contained-modal-title-vcenter"
-      size="lg"
+      size="xl"
       centered
       show={modalShow}
       backdrop="static"
-      onHide={() => onClose()}
+      animation={false}
+      restoreFocus={false}
+      enforceFocus={false}
+      onHide={_handleClose}
     >
-      <S.CloseButton onClick={onClose}></S.CloseButton>
+      <S.CloseButton onClick={_handleClose}></S.CloseButton>
       {_renderBody()}
       {_renderAmount()}
       {_renderFooter()}

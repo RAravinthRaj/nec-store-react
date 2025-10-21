@@ -34,6 +34,7 @@ export const RoleContainer = styled.div<{ $bgColor: string }>`
   display: flex;
   flex-direction: row;
   align-items: center;
+  justify-content: center;
   margin: 60px;
 
   @media (max-width: 768px) {

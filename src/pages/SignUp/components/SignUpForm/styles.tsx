@@ -60,6 +60,7 @@ export const InputWrapper = styled.div<{ $bgColor: string }>`
   padding: 10px 20px;
   display: flex;
   align-items: center;
+  gap: 20px;
 
   @media (max-width: 576px) {
     width: 100%;
@@ -74,36 +75,32 @@ export const InputWrapper = styled.div<{ $bgColor: string }>`
 export const MailIcon = styled(GoMail)<{ $bgColor: string }>`
   color: ${(props) => props?.$bgColor};
   font-size: 20px;
-  margin-right: 15px;
   margin-top: 1px;
 `;
 
 export const UserIcon = styled(HiOutlineUser)<{ $bgColor: string }>`
   color: ${(props) => props?.$bgColor};
   font-size: 20px;
-  margin-right: 15px;
   margin-top: 1px;
 `;
 
 export const RollNumberIcon = styled(SlBadge)<{ $bgColor: string }>`
   color: ${(props) => props?.$bgColor};
   font-size: 20px;
-  margin-right: 15px;
 `;
 
 export const DepartmentIcon = styled(LiaUniversitySolid)<{ $bgColor: string }>`
   color: ${(props) => props?.$bgColor};
   font-size: 24px;
-  margin-right: 11px;
   margin-top: 1px;
 `;
 
 export const Input = styled.input`
+  flex: 0.5;
   background: transparent;
   border: none;
   outline: none;
   font-size: 16px;
-  flex: 1;
 `;
 
 export const Button = styled.button<{ $bgColor: string }>`

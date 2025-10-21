@@ -9,12 +9,13 @@ import { useState } from "react";
 import * as S from "./styles";
 import { toast } from "react-toastify";
 import { SIGNUP_CONFIG } from "../../config";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import MenuItem from "@mui/material/MenuItem";
 import { SelectChangeEvent } from "@mui/material/Select";
+import { CreateUserParams } from "../../services/rest/createUser.rest";
 
 export interface ISignUpForm {
-  onSignUpPress?: () => void;
+  onSignUpPress: (data: CreateUserParams) => void;
 }
 
 export const SignUpForm = ({ onSignUpPress }: ISignUpForm) => {
@@ -22,20 +23,23 @@ export const SignUpForm = ({ onSignUpPress }: ISignUpForm) => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [rollNumber, setRollNumber] = useState("");
-  const [selectedDepartment, setSelectedDepartment] = useState<string | null>(
-    SIGNUP_CONFIG.department
-  );
-
-  const navigate = useNavigate();
+  const [selectedDepartment, setSelectedDepartment] = useState("");
 
   const _checkValidity = () => {
     if (
-      name !== "" &&
-      email !== "" &&
-      rollNumber !== "" &&
-      selectedDepartment !== SIGNUP_CONFIG.department
+      name.trim() !== "" &&
+      email.trim() !== "" &&
+      rollNumber.trim() !== "" &&
+      selectedDepartment !== ""
     ) {
-      onSignUpPress();
+      const userData: CreateUserParams = {
+        name: name.trim(),
+        email: email.trim(),
+        rollNumber: rollNumber.trim(),
+        department: selectedDepartment,
+      };
+
+      onSignUpPress(userData);
     } else {
       toast.info(SIGNUP_CONFIG.requiredData);
     }
@@ -68,6 +72,10 @@ export const SignUpForm = ({ onSignUpPress }: ISignUpForm) => {
           )}
           style={{ padding: "0", color: theme.colors.textSecondary }}
         >
+          <MenuItem value="" disabled>
+            {SIGNUP_CONFIG.department}
+          </MenuItem>
+
           {SIGNUP_CONFIG.departments?.map((item, id) => {
             return (
               <MenuItem key={id} value={item}>
@@ -131,7 +139,7 @@ export const SignUpForm = ({ onSignUpPress }: ISignUpForm) => {
       <S.SignInContainer>
         <S.SignInSubText $textColor={theme.colors.textSecondary}>
           {SIGNUP_CONFIG.signInText}
-          <Link to="/">
+          <Link to="/signin">
             <S.SignInBold $textColor={theme.colors.primary}>
               {SIGNUP_CONFIG.signInDirect}
             </S.SignInBold>

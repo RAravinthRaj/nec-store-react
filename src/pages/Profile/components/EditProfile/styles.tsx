@@ -8,6 +8,7 @@ import Modal from "react-bootstrap/Modal";
 import styled from "styled-components";
 import { RxCross2 } from "react-icons/rx";
 import FormControl from "@mui/material/FormControl";
+import Select from "@mui/material/Select";
 
 export const ModalContainer = styled(Modal)`
   display: flex;
@@ -189,4 +190,81 @@ export const StyledFormControl = styled(FormControl)`
 export const Divider = styled.div`
   border-top: 0.2px solid rgba(0, 0, 0, 0.2);
   margin: 4px 10px;
+`;
+
+export const StyledSelect = styled(Select)`
+  width: 100%;
+  margin-left: -9px;
+`;
+
+export const ProductImageContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 1rem;
+`;
+
+export const ImageWrapper = styled.div`
+  position: relative;
+  display: inline-block;
+`;
+
+export const PreviewProductImage = styled.img`
+  width: 50px;
+  height: 50px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+`;
+
+export const CancelButton = styled.button`
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  background: #ff4d4f;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 22px;
+  height: 22px;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &:hover {
+    background: #d9363e;
+  }
+`;
+export const SubTitle = styled.div`
+  font-size: 15px;
+`;
+
+export const FileTypesHint = styled.span`
+  display: inline-block;
+  margin-left: 8px;
+  padding: 2px 8px;
+  background-color: #f0f4f8;
+  color: #3a3a3a;
+  font-size: 0.85em;
+  border-radius: 6px;
+`;
+
+export const RemoveButton = styled.button`
+  position: absolute;
+  background: #ff4d4f;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  width: 50px;
+  height: 22px;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  margin-top: 5px;
 `;

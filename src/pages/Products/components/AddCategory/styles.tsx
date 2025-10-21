@@ -7,6 +7,7 @@ Written by Aravinth Raj R <aravinthr235@gmail.com>, 2025.
 import Modal from "react-bootstrap/Modal";
 import styled from "styled-components";
 import { RxCross2 } from "react-icons/rx";
+import { Form } from "react-bootstrap";
 
 export const ModalContainer = styled(Modal)`
   display: flex;
@@ -130,4 +131,19 @@ export const Footer = styled(Modal.Footer)`
   display: flex;
   align-items: center;
   justify-content: center;
+`;
+
+export const Label = styled(Form.Label)`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 4px;
+`;
+
+export const SubTitle = styled.div`
+  font-size: 15px;
+`;
+
+export const Required = styled.div`
+  color: red;
 `;

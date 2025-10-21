@@ -4,13 +4,147 @@ Unauthorized copying of this file, via any medium, is strictly prohibited.
 Proprietary and confidential.  
 Written by Aravinth Raj R <aravinthr235@gmail.com>, 2025.
 */
+import { useEffect } from "react";
 import { ContainerComp } from "./components";
+import { useGetUserStore, useUpdateUserStore } from "./stores";
+import { Error, Loader } from "../../components";
+import { useLocation, useNavigate } from "react-router-dom";
+import { checkAccessControl, setItemInLocalStorage } from "../../utils";
+import { toast } from "react-toastify";
 
 const Profile = () => {
+  const location = useLocation();
+  const prevPage = location.state?.prevPage;
+  const userId = location.state?.id;
+
+  const navigate = useNavigate();
+
+  const { getUserResponse, getUserError, fetchGetUser, resetGetUser } =
+    useGetUserStore();
+  const {
+    updateUserResponse,
+    updateUserError,
+    updateUserLoading,
+    fetchUpdateUser,
+    resetUpdateUser,
+  } = useUpdateUserStore();
+
+  useEffect(() => {
+    fetchGetUser(userId);
+
+    return () => {
+      resetGetUser();
+    };
+  }, [prevPage, navigate]);
+
+  const _getUserData = () => {
+    resetGetUser();
+    fetchGetUser(userId);
+  };
+
+  useEffect(() => {
+    if (updateUserResponse && Object.keys(updateUserResponse).length > 0) {
+      resetUpdateUser();
+      _getUserData();
+
+      if (prevPage === "navbar") {
+        const updatedToken = updateUserResponse?.payload?.token;
+
+        if (updatedToken) {
+          localStorage.clear();
+          setItemInLocalStorage("token", updatedToken);
+        }
+      }
+
+      setTimeout(() => {
+        toast.success("User Updated Successfully !!");
+      }, 1000);
+    }
+  }, [updateUserResponse && Object.keys(updateUserResponse).length > 0]);
+
+  useEffect(() => {
+    if (updateUserError && updateUserError.length > 0) {
+      resetUpdateUser();
+      toast.error(updateUserError);
+    }
+  }, [updateUserError && updateUserError.length > 0]);
+
+  const _renderLoader = () => {
+    if (updateUserLoading) {
+      return <Loader useModalLoader />;
+    }
+
+    return null;
+  };
+
+  const _onChangeUserStatus = (status: string) => {
+    fetchUpdateUser({ id: userId, status });
+  };
+
+  const _addRole = (roles: string) => {
+    fetchUpdateUser({ id: userId, roles: [roles] });
+  };
+
+  const _editProfile = async (
+    name?: string,
+    email?: string,
+    rollNumber?: string,
+    department?: string,
+    profilePicture?: string | null
+  ) => {
+    return fetchUpdateUser({
+      id: userId,
+      name,
+      email,
+      rollNumber,
+      department,
+      profilePicture,
+    });
+  };
+
+  const _renderPage = () => {
+    if (getUserResponse && Object.keys(getUserResponse).length > 0) {
+      return (
+        <ContainerComp
+          prevPage={prevPage}
+          user={getUserResponse?.payload?.user}
+          onChangeUserStatus={_onChangeUserStatus}
+          onAddRole={_addRole}
+          onEditProfile={_editProfile}
+        />
+      );
+    }
+
+    if (getUserError && getUserError.length > 0) {
+      return (
+        <Error
+          subtitle={getUserError}
+          buttonTitle="Retry"
+          onPress={_getUserData}
+        />
+      );
+    }
+
+    return <Loader />;
+  };
+
+  if (checkAccessControl("profile")) {
+    return (
+      <>
+        {_renderPage()}
+        {_renderLoader()}
+      </>
+    );
+  }
+
   return (
-    <>
-      <ContainerComp />
-    </>
+    <Error
+      subtitle="Page Not Found"
+      buttonTitle="Go to Home"
+      onPress={() => {
+        navigate("/");
+      }}
+    />
   );
 };
 

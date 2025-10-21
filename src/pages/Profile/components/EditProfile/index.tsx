@@ -8,40 +8,107 @@ import Form from "react-bootstrap/Form";
 import Modal from "react-bootstrap/Modal";
 import * as S from "./styles";
 import { useTheme } from "../../../../hooks";
-import { useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import { toast } from "react-toastify";
 import { PROFILE_CONFIG } from "../../config";
 import MenuItem from "@mui/material/MenuItem";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
+import { convertFileToBase64 } from "../../../../utils";
 
 export interface IEditItem {
   modalShow: boolean;
   onClose: () => void;
-  individualProfile: {
-    Name: string;
-    Department: string;
-    RollNumber: String;
-    Email: String;
-  };
+  user: any;
+  onEditProfile(
+    name?: string,
+    email?: string,
+    rollNumber?: string,
+    department?: string,
+    profilePicture?: string | null
+  ): void;
 }
 
 export const EditProfileModal = ({
   modalShow,
   onClose,
-  individualProfile,
+  user,
+  onEditProfile,
 }: IEditItem) => {
   const theme = useTheme();
 
-  const [name, setName] = useState(individualProfile.Name);
-  const [email, setEmail] = useState(individualProfile.Email);
-  const [rollNumber, setRollNumber] = useState(individualProfile.RollNumber);
-  const [department, setDepartment] = useState<string | null>(
-    individualProfile.Department
+  const [name, setName] = useState(user?.name);
+  const [email, setEmail] = useState(user?.email);
+  const [rollNumber, setRollNumber] = useState(user?.rollNumber);
+  const [department, setDepartment] = useState<string>(user?.department);
+  const [profilePicture, setProfilePicture] = useState<string | null>(
+    user?.profilePicture
   );
 
-  const _productEdited = () => {
-    toast.success("Profile Updated");
-    onClose();
+  const fileInputRef = useRef<HTMLInputElement | null>(null);
+
+  useEffect(() => {
+    if (modalShow && user) {
+      setName(user.name || "");
+      setEmail(user.email || "");
+      setRollNumber(user.rollNumber || "");
+      setDepartment(user.department || "");
+      setProfilePicture(user.profilePicture || null);
+      if (fileInputRef.current) fileInputRef.current.value = "";
+    }
+  }, [modalShow, user]);
+
+  const _resetFields = () => {
+    setName(user?.name || "");
+    setEmail(user?.email || "");
+    setRollNumber(user?.rollNumber || "");
+    setDepartment(user?.department || "");
+    setProfilePicture(user?.profilePicture || null);
+    if (fileInputRef.current) fileInputRef.current.value = "";
+  };
+
+  const _profileEdited = async () => {
+    const updatedFields: any = {};
+
+    if (name !== user?.name) updatedFields.name = name;
+    if (profilePicture !== user?.profilePicture)
+      updatedFields.profilePicture = profilePicture;
+
+    const updatedUser = {
+      ...user,
+      ...updatedFields,
+    };
+
+    try {
+      await onEditProfile(
+        updatedUser.name,
+        user?.email,
+        user?.rollNumber,
+        user?.department,
+        updatedUser.profilePicture
+      );
+
+      const changedData = {
+        ...user,
+        name: updatedFields.name?.trim() ? updatedFields.name : user?.name,
+        profilePicture:
+          updatedFields.profilePicture === null
+            ? null
+            : typeof updatedFields.profilePicture === "string" &&
+              updatedFields.profilePicture.trim() !== ""
+            ? updatedFields.profilePicture
+            : user?.profilePicture,
+      };
+
+      window.dispatchEvent(
+        new CustomEvent("user-updated", { detail: changedData })
+      );
+
+      _resetFields();
+      onClose();
+    } catch (err) {
+      console.error(err);
+      toast.error("Failed to update profile");
+    }
   };
 
   const _handleChange = (event: SelectChangeEvent<unknown>) => {
@@ -51,101 +118,168 @@ export const EditProfileModal = ({
     }
   };
 
-  const _renderMenu = () => {
-    return (
-      <S.StyledFormControl fullWidth>
-        <Select
-          onChange={(e) => _handleChange(e)}
-          displayEmpty
-          inputProps={{ "aria-label": "Category" }}
-          renderValue={(selected: string | null) => selected ?? department}
-        >
-          {PROFILE_CONFIG.departments.map((cat, id) => {
-            return (
-              <MenuItem key={id} value={cat}>
-                {cat}
-                <S.Divider />
-              </MenuItem>
-            );
-          })}
-        </Select>
-      </S.StyledFormControl>
-    );
+  const _resetImageField = () => {
+    setProfilePicture(user?.profilePicture);
+    if (fileInputRef.current) fileInputRef.current.value = "";
   };
 
-  const _renderModalHeader = () => {
-    return (
-      <S.Header>
-        <S.CloseButton onClick={onClose}></S.CloseButton>
-        <S.Title id="contained-modal-title-vcenter">
-          {PROFILE_CONFIG.edit}
-        </S.Title>
-      </S.Header>
-    );
+  const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    const validImageTypes = PROFILE_CONFIG.validImageTypes;
+
+    if (!validImageTypes.includes(file.type)) {
+      toast.error("Invalid ProfilePicture");
+      return;
+    }
+
+    try {
+      const base64 = await convertFileToBase64(file, 150, 150, 0.7);
+      setProfilePicture(base64);
+    } catch (err) {
+      console.error(err);
+      toast.error("Invalid ProfilePicture");
+    }
   };
 
-  const _renderModalBody = () => {
-    return (
-      <Modal.Body>
-        <Form>
-          <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-            <Form.Label>{PROFILE_CONFIG.name}</Form.Label>
-            <S.InputWrapper>
-              <S.Input
-                type="text"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-              />
-            </S.InputWrapper>
-          </Form.Group>
-          <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-            <Form.Label>{PROFILE_CONFIG.email}</Form.Label>
-            <S.InputWrapper>
-              <S.Input
-                type="text"
-                value={String(email)}
-                onChange={(e) => setEmail(e.target.value)}
-              />
-            </S.InputWrapper>
-          </Form.Group>
-          <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-            <Form.Label>{PROFILE_CONFIG.rollNumber}</Form.Label>
-            <S.InputWrapper>
-              <S.Input
-                type="text"
-                value={String(rollNumber)}
-                onChange={(e) => setRollNumber(e.target.value)}
-              />
-            </S.InputWrapper>
-          </Form.Group>
-          <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-            <Form.Label>{PROFILE_CONFIG.department}</Form.Label>
-            {_renderMenu()}
-          </Form.Group>
-        </Form>
-      </Modal.Body>
-    );
-  };
+  const _renderMenu = () => (
+    <S.StyledFormControl fullWidth>
+      <Select
+        value={department ?? ""}
+        onChange={(e) => _handleChange(e)}
+        displayEmpty
+        inputProps={{ "aria-label": "Category" }}
+        renderValue={(selected: string | null) => selected ?? department}
+      >
+        {PROFILE_CONFIG.departments.map((cat, id) => (
+          <MenuItem key={id} value={cat}>
+            {cat}
+            <S.Divider />
+          </MenuItem>
+        ))}
+      </Select>
+    </S.StyledFormControl>
+  );
 
-  const _renderModalFooter = () => {
-    return (
-      <S.Footer>
-        <S.Button
-          $bgColor={theme.colors.primary}
-          onClick={() => _productEdited()}
-        >
-          {PROFILE_CONFIG.submitButton}
-        </S.Button>
-      </S.Footer>
-    );
-  };
+  const _renderImageField = () => (
+    <>
+      <Form.Label>
+        <S.SubTitle>
+          {PROFILE_CONFIG.image}
+          <S.FileTypesHint>{PROFILE_CONFIG.acceptedImageTypes}</S.FileTypesHint>
+        </S.SubTitle>
+      </Form.Label>
+      <S.ProductImageContainer>
+        <input
+          ref={fileInputRef}
+          type="file"
+          className="form-control"
+          accept="image/*"
+          onChange={handleImageChange}
+        />
+        {profilePicture && (
+          <S.ImageWrapper>
+            <S.PreviewProductImage src={profilePicture} alt="Preview" />
+            {profilePicture !== user?.profilePicture && (
+              <S.CancelButton onClick={_resetImageField}>
+                {PROFILE_CONFIG.cancelIcon}
+              </S.CancelButton>
+            )}
+            {profilePicture === user?.profilePicture && (
+              <S.RemoveButton
+                onClick={() => {
+                  setProfilePicture(null);
+                }}
+              >
+                Remove
+              </S.RemoveButton>
+            )}
+          </S.ImageWrapper>
+        )}
+      </S.ProductImageContainer>
+    </>
+  );
+
+  const _renderModalHeader = () => (
+    <S.Header>
+      <S.CloseButton
+        onClick={() => {
+          _resetFields(); // reset on manual close
+          onClose();
+        }}
+      ></S.CloseButton>
+      <S.Title id="contained-modal-title-vcenter">
+        {PROFILE_CONFIG.edit}
+      </S.Title>
+    </S.Header>
+  );
+
+  const _renderModalBody = () => (
+    <Modal.Body>
+      <Form>
+        <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+          <Form.Label>{PROFILE_CONFIG.name}</Form.Label>
+          <S.InputWrapper>
+            <S.Input
+              type="text"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+            />
+          </S.InputWrapper>
+        </Form.Group>
+
+        <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+          <Form.Label>{PROFILE_CONFIG.email}</Form.Label>
+          <S.InputWrapper>
+            <S.Input
+              type="text"
+              value={String(email)}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+          </S.InputWrapper>
+        </Form.Group>
+
+        <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+          <Form.Label>{PROFILE_CONFIG.rollNumber}</Form.Label>
+          <S.InputWrapper>
+            <S.Input
+              type="text"
+              value={String(rollNumber)}
+              onChange={(e) => setRollNumber(e.target.value)}
+            />
+          </S.InputWrapper>
+        </Form.Group>
+
+        <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+          <Form.Label>{PROFILE_CONFIG.department}</Form.Label>
+          {_renderMenu()}
+        </Form.Group>
+
+        <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+          {_renderImageField()}
+        </Form.Group>
+      </Form>
+    </Modal.Body>
+  );
+
+  const _renderModalFooter = () => (
+    <S.Footer>
+      <S.Button $bgColor={theme.colors.primary} onClick={_profileEdited}>
+        {PROFILE_CONFIG.submitButton}
+      </S.Button>
+    </S.Footer>
+  );
 
   return (
     <S.ModalContainer
       aria-labelledby="contained-modal-title-vcenter"
       centered
       show={modalShow}
-      onHide={onClose}
+      onHide={() => {
+        _resetFields(); // reset fields on close
+        onClose();
+      }}
       backdrop="static"
     >
       {_renderModalHeader()}

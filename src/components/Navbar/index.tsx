@@ -7,33 +7,106 @@ Written by Aravinth Raj R <aravinthr235@gmail.com>, 2025.
 import { useTheme, useIsNotDesktop } from "../../hooks";
 import * as S from "./styles";
 import { NAVBAR_CONFIG } from "./config";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { AppBar } from "@mui/material";
-import { NAVBAR_ROLE_MANAGEMENT } from "../../config";
+import { useEffect, useState } from "react";
+import { getItemInLocalStorage, getUserDetails } from "../../utils";
+import { Notification, Recent } from "../../pages";
+
+interface IUserData {
+  id?: string;
+  name: string;
+  profilePicture?: string;
+  role?: string;
+}
 
 export interface INavbar {
   menu: boolean;
   onToggleMenu: (newMenuState: boolean) => void;
+  showHamburgerIcon: boolean;
 }
 
-export const Navbar = ({ menu, onToggleMenu }: INavbar) => {
+export const Navbar = ({ menu, onToggleMenu, showHamburgerIcon }: INavbar) => {
   const theme = useTheme();
+  const [userData, setUserData] = useState<IUserData>({ name: "" });
+  const [token, setToken] = useState<string>(getItemInLocalStorage("token"));
   const isMobile = useIsNotDesktop();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const syncUser = (e?: any) => {
+      let newUserData;
+
+      if (e?.detail) {
+        newUserData = e.detail;
+        localStorage.setItem("userDetails", JSON.stringify(newUserData));
+      } else {
+        const currentUserData = getUserDetails();
+        newUserData = currentUserData?.name ? currentUserData : { name: "" };
+      }
+
+      setUserData((prev) => {
+        if (JSON.stringify(prev) !== JSON.stringify(newUserData)) {
+          return newUserData;
+        }
+        return prev;
+      });
+    };
+
+    syncUser();
+
+    window.addEventListener("storage", syncUser);
+    window.addEventListener("user-updated", syncUser);
+
+    return () => {
+      window.removeEventListener("storage", syncUser);
+      window.removeEventListener("user-updated", syncUser);
+    };
+  }, []);
 
   const _toggleMenu = () => {
-    const updatedMenuState = !menu;
-    onToggleMenu(updatedMenuState);
+    onToggleMenu(!menu);
+  };
+
+  const _onDropDownItemClick = (id: string, link: string) => {
+    if (id === "switchRole") {
+      navigate("/roles", {
+        state: { token: token },
+      });
+      return;
+    } else if (id === "logOut") {
+      localStorage.removeItem("token");
+      localStorage.removeItem("cartProducts");
+      localStorage.removeItem("totalPrice");
+      navigate("/signin");
+      return;
+    } else if (id === "profile") {
+      navigate("/profile", { state: { id: userData?.id, prevPage: "navbar" } });
+      return;
+    }
+    navigate(link);
   };
 
   const _renderTitle = () => {
     if (!isMobile) {
       return (
         <S.TitleContainer>
-          <Link to="/products">
-            <S.Logo src={theme.images.logo} />
+          <Link to="/">
+            <S.Logo
+              src={theme.images.logo}
+              $isProfilePage={showHamburgerIcon}
+            />
           </Link>
           <S.TitleText>{NAVBAR_CONFIG.title}</S.TitleText>
         </S.TitleContainer>
+      );
+    }
+
+    if (!showHamburgerIcon) {
+      return (
+        <Link to="/">
+          <S.Logo src={theme.images.logo} $isProfilePage={!showHamburgerIcon} />
+        </Link>
       );
     }
 
@@ -41,83 +114,76 @@ export const Navbar = ({ menu, onToggleMenu }: INavbar) => {
   };
 
   const _renderUserName = () => {
-    if (!isMobile) {
+    const firstName = userData?.name?.split(" ")[0] ?? "";
+    if (!isMobile && firstName) {
       return (
-        <S.UserName $bgColor={theme.colors.primary}>
-          Hii , Aravinth !!
-        </S.UserName>
+        <>
+          <S.UserName
+            $bgColor={theme.colors.primary}
+          >{`Hii, ${firstName} !!`}</S.UserName>
+        </>
       );
     }
-
     return null;
   };
 
   const _renderUserNameSM = () => {
-    if (isMobile) {
+    const firstName = userData?.name?.split(" ")[0] ?? "";
+    if (isMobile && firstName) {
       return (
         <S.MobileNameContainer>
-          <S.UserName $bgColor={theme.colors.primary}>
-            Hii , Aravinth !!
-          </S.UserName>
+          <S.UserName
+            $bgColor={theme.colors.primary}
+          >{`Hii, ${firstName} !!`}</S.UserName>
           <S.UserNameDivider />
         </S.MobileNameContainer>
       );
     }
-
     return null;
   };
 
-  const _renderUserImage = () => {
-    return (
-      <S.ImageBackGround>
-        <S.UserImage src={theme.images.user}></S.UserImage>
-      </S.ImageBackGround>
-    );
-  };
-
-  const roleName = "admin";
-
-  const role = NAVBAR_ROLE_MANAGEMENT.roles[roleName];
-  const actions = NAVBAR_CONFIG.navBarOptions.filter((action) =>
-    role.includes(action.id)
+  const _renderUserImage = () => (
+    <S.ImageBackGround>
+      <S.UserImage
+        src={userData?.profilePicture ?? theme.images.user}
+      ></S.UserImage>
+    </S.ImageBackGround>
   );
 
-  const _renderDropDownItem = () => {
-    return actions.map((item, id) => {
-      return (
-        <div key={id}>
-          <S.DropdownItem
-            as={Link}
-            to={item.link}
-            $bgColor={theme.colors.primary}
-          >
-            <S.ItemIcon src={item?.imageSrc}></S.ItemIcon>
-            <S.IconText>{item?.title}</S.IconText>
-          </S.DropdownItem>
-          {id != actions.length - 1 && <S.NameDivider />}
-        </div>
-      );
-    });
-  };
+  const _renderDropDownItem = () =>
+    NAVBAR_CONFIG.navBarOptions.map((item: any, index: number) => (
+      <div key={item.id}>
+        <S.DropdownItem
+          onClick={() => _onDropDownItemClick(item.id, item.link)}
+          $bgColor={theme.colors.primary}
+        >
+          <S.ItemIcon src={item.imageSrc} />
+          <S.IconText>{item.title}</S.IconText>
+        </S.DropdownItem>
+        {index !== NAVBAR_CONFIG.navBarOptions.length - 1 && <S.NameDivider />}
+      </div>
+    ));
 
-  const _renderDropDownMenu = () => {
-    return (
-      <S.DropdownMenu $bgColor={theme.colors.white}>
-        {_renderUserNameSM()}
-        {_renderDropDownItem()}
-      </S.DropdownMenu>
-    );
-  };
+  const _renderDropDownMenu = () => (
+    <S.DropdownMenu $bgColor={theme.colors.white}>
+      {_renderUserNameSM()}
+      {_renderDropDownItem()}
+    </S.DropdownMenu>
+  );
 
-  const _renderDropDown = () => {
-    return (
-      <S.CustomDropdown
-        title={_renderUserImage()}
-        className="custom-nav-dropdown"
-      >
-        {_renderDropDownMenu()}
-      </S.CustomDropdown>
-    );
+  const _renderDropDown = () => (
+    <S.CustomDropdown
+      title={_renderUserImage()}
+      className="custom-nav-dropdown"
+    >
+      {_renderDropDownMenu()}
+    </S.CustomDropdown>
+  );
+
+  const _recentViewed = () => {
+    if (getUserDetails()?.role !== "admin") {
+      return <Recent />;
+    }
   };
 
   return (
@@ -127,6 +193,8 @@ export const Navbar = ({ menu, onToggleMenu }: INavbar) => {
         <S.UserContainer>
           {_renderDropDown()}
           {_renderUserName()}
+          <Notification />
+          {_recentViewed()}
         </S.UserContainer>
       </S.NavbarContainer>
     </AppBar>

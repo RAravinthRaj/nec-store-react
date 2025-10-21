@@ -9,25 +9,33 @@ import Modal from "react-bootstrap/Modal";
 import * as S from "./styles";
 import { useTheme } from "../../../../hooks";
 import { useState } from "react";
-import { toast } from "react-toastify";
 import { PRODUCTS_CONFIG } from "../../config";
+import { toast } from "react-toastify";
 
 export interface IAddCategory {
   modalShow: boolean;
   onClose: () => void;
+  addCategory(name: string): Promise<boolean>;
 }
 
 export const AddCategoryModal = ({
   modalShow: modalShow,
   onClose,
+  addCategory,
 }: IAddCategory) => {
   const theme = useTheme();
   const [selectedCategory, setSelectedCategory] = useState("");
 
-  const _categoryAdded = () => {
-    setSelectedCategory(selectedCategory);
-    toast.success(PRODUCTS_CONFIG.categoryToastSuccess);
-    onClose();
+  const _categoryAdded = async () => {
+    if (selectedCategory.trim() === "") {
+      toast.warn("Please fill the Required data");
+      return;
+    }
+    const success = await addCategory(selectedCategory);
+
+    if (success) {
+      onClose();
+    }
   };
 
   const _renderModalHeader = () => {
@@ -46,9 +54,16 @@ export const AddCategoryModal = ({
       <Modal.Body>
         <Form>
           <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-            <Form.Label>{PRODUCTS_CONFIG.category}</Form.Label>
+            <S.Label>
+              <S.SubTitle>{PRODUCTS_CONFIG.category}</S.SubTitle>
+              <S.Required>*</S.Required>
+            </S.Label>
             <S.InputWrapper>
-              <S.Input type="Name" placeholder={PRODUCTS_CONFIG.title} />
+              <S.Input
+                type="Name"
+                placeholder={PRODUCTS_CONFIG.title}
+                onChange={(e) => setSelectedCategory(e.target.value)}
+              />
             </S.InputWrapper>
           </Form.Group>
         </Form>

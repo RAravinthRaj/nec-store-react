@@ -35,7 +35,7 @@ export const CardContainer = styled.div`
 
 export const BodyContainer = styled.div`
   text-align: center;
-  padding: 20px;
+  padding: 15px;
 `;
 
 export const TitleContainer = styled.div<{ $bgColor: string }>`

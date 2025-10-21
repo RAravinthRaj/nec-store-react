@@ -6,26 +6,39 @@ Written by Aravinth Raj R <aravinthr235@gmail.com>, 2025.
 */
 import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
-import useMediaQuery from "@mui/material/useMediaQuery";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import * as S from "./styles";
 import { BsChevronBarLeft, BsChevronBarRight } from "react-icons/bs";
 import { HiOutlineChevronLeft, HiOutlineChevronRight } from "react-icons/hi";
 
-export interface IPagination {}
+export interface IPagination {
+  perPageCount: number;
+  totalPageCount: number;
+  currentPage: number;
+  onPageChange(page: number): void;
+}
 
-export const CustomPagination = () => {
-  const isMobile = useMediaQuery("(max-width:576px)");
-  const [page, setPage] = useState(1);
-  const count = 10;
+export const CustomPagination = ({
+  perPageCount,
+  totalPageCount,
+  currentPage,
+  onPageChange,
+}: IPagination) => {
+  const [page, setPage] = useState(currentPage);
+  const [count, setCount] = useState(10);
+
+  useEffect(() => {
+    setCount(Math.ceil(totalPageCount / perPageCount));
+  }, [perPageCount, totalPageCount]);
 
   const goToPage = (value: number) => {
-    setPage(Math.min(Math.max(1, value), count));
+    setPage(value);
+    onPageChange(value);
   };
 
   const _renderPrev = () => {
     return (
-      <Stack spacing={1} direction="row">
+      <>
         <BsChevronBarLeft
           onClick={() => goToPage(1)}
           color={page === 1 ? "lightgray" : "black"}
@@ -44,13 +57,13 @@ export const CustomPagination = () => {
             cursor: "pointer",
           }}
         />
-      </Stack>
+      </>
     );
   };
 
   const _renderNext = () => {
     return (
-      <Stack direction="row" spacing={1}>
+      <>
         <HiOutlineChevronRight
           onClick={() => goToPage(page + 1)}
           color={page === count ? "lightgray" : "black"}
@@ -69,7 +82,7 @@ export const CustomPagination = () => {
             cursor: "pointer",
           }}
         />
-      </Stack>
+      </>
     );
   };
 
@@ -89,18 +102,6 @@ export const CustomPagination = () => {
       </Stack>
     );
   };
-
-  if (isMobile) {
-    return (
-      <S.PaginationContainer>
-        <Stack spacing={1} alignItems="center">
-          {_renderPrev()}
-          {_renderPages()}
-          {_renderNext()}
-        </Stack>
-      </S.PaginationContainer>
-    );
-  }
 
   return (
     <S.PaginationContainer>

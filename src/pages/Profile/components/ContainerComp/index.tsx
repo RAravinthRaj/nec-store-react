@@ -6,104 +6,86 @@ Written by Aravinth Raj R <aravinthr235@gmail.com>, 2025.
 */
 import { useTheme } from "../../../../hooks";
 import * as S from "./styles";
-import { Navbar } from "../../../../components";
-import { useRef, useState } from "react";
-import { SideDrawer } from "../../../../navigator/SideDrawer";
+import { useState } from "react";
 import { AddRoleModal } from "../AddRole";
 import { EditProfileModal } from "../EditProfile";
 import { PROFILE_CONFIG } from "../../config";
-import { toast } from "react-toastify";
-import Swal, { SweetAlertIcon } from "sweetalert2";
-import ReactDOMServer from "react-dom/server";
-import { RxCross2 } from "react-icons/rx";
-import { VscCheck } from "react-icons/vsc";
+import { useSwalComp } from "../../../../components";
+import { useNavigate } from "react-router-dom";
 
-export interface IContainerComp {}
+export interface IContainerComp {
+  prevPage: string;
+  user: any;
+  onChangeUserStatus(status: string): void;
+  onAddRole(roles: string): void;
+  onEditProfile(
+    name?: string,
+    email?: string,
+    rollNumber?: string,
+    department?: string,
+    profilePicture?: string | null
+  ): void;
+}
 
-export const ContainerComp = ({}: IContainerComp) => {
+export const ContainerComp = ({
+  prevPage,
+  user,
+  onChangeUserStatus,
+  onAddRole,
+  onEditProfile,
+}: IContainerComp) => {
   const theme = useTheme();
-  const [menu, setMenu] = useState(false);
   const [openRole, setOpenRole] = useState(false);
   const [openEdit, setOpenEdit] = useState(false);
-  const [isBlock, setIsBlock] = useState(false);
-  const [imageSrc, setImageSrc] = useState(theme.images.user);
-  const fileInputRef = useRef<HTMLInputElement>(null);
 
-  const isAdmin = true;
+  const navigate = useNavigate();
 
-  const _deleteItem = () => {
-    Swal.fire({
-      title: PROFILE_CONFIG.swal.title,
-      text: PROFILE_CONFIG.swal.text,
-      icon: PROFILE_CONFIG.swal.icon as SweetAlertIcon,
-      confirmButtonColor: theme.colors.primary,
-      cancelButtonColor: theme.colors.cancel,
-      color: theme.colors.swalButton,
-      confirmButtonText: `${ReactDOMServer.renderToString(
-        <VscCheck size={20} style={{ marginTop: "-2px", marginRight: "5px" }} />
-      )} ${PROFILE_CONFIG.swal.confirmButtonText} `,
-      cancelButtonText: `${ReactDOMServer.renderToString(
-        <RxCross2 size={19} style={{ marginTop: "-1px" }} />
-      )} ${PROFILE_CONFIG.swal.cancelButtonText}`,
-      showCancelButton: true,
-      reverseButtons: true,
-    }).then((result) => {
-      if (result.isConfirmed) {
-        Swal.fire({
-          title: PROFILE_CONFIG.swal.successTitle,
-          text: PROFILE_CONFIG.swal.successText,
-          icon: PROFILE_CONFIG.swal.successIcon as SweetAlertIcon,
-          confirmButtonColor: theme.colors.primary,
-          color: theme.colors.swalButton,
-        });
-        setIsBlock(!isBlock);
-      }
-    });
-  };
-
-  const _handleIconClick = () => {
-    fileInputRef.current?.click();
-  };
-
-  const _handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = () => {
-        if (typeof reader.result === "string") {
-          setImageSrc(reader.result);
-        }
-      };
-      reader.readAsDataURL(file);
-    }
-  };
-
-  const _setBlock = () => {
-    if (!isBlock) {
-      _deleteItem();
+  const showSwal = useSwalComp();
+  const _setUserStatus = () => {
+    if (user?.status === PROFILE_CONFIG.userStatus.active) {
+      showSwal({
+        title: "Block User",
+        subtitle: "Are you sure you want to block this user?",
+        type: "warning",
+        confirmButtonText: "Yes, Block",
+        cancelButtonText: "Cancel",
+        onConfirmedPress: () => {
+          onChangeUserStatus("suspended");
+        },
+      });
     } else {
-      toast.success("Profile UnBlocked");
-      setIsBlock(!isBlock);
+      showSwal({
+        title: "Permit User",
+        subtitle: "Are you sure you want to permit this user?",
+        type: "warning",
+        confirmButtonText: "Yes, Permit",
+        cancelButtonText: "Cancel",
+        onConfirmedPress: () => {
+          onChangeUserStatus("active");
+        },
+      });
     }
   };
 
   const _renderBanner = () => {
-    return <S.BannerContainer src={theme.images.banner} />;
+    return (
+      <>
+        <S.PreviousPageLink
+          onClick={() => {
+            navigate(-1);
+          }}
+        />
+        <S.BannerContainer src={theme.images.banner} />
+      </>
+    );
   };
 
   const _renderUserImage = () => {
     return (
       <S.UserImageContainer>
-        <S.UserImage src={imageSrc} alt="User Profile" />
-        <S.PlusIconContainer onClick={_handleIconClick}>
-          <S.AddIcon />
-        </S.PlusIconContainer>
-        <input
-          type="file"
-          accept="image/*"
-          ref={fileInputRef}
-          onChange={_handleImageChange}
-          style={{ display: "none" }}
+        <S.UserImage
+          src={user?.profilePicture ?? theme.images.user}
+          alt="User Profile"
         />
       </S.UserImageContainer>
     );
@@ -116,19 +98,19 @@ export const ContainerComp = ({}: IContainerComp) => {
           <S.Title $color={theme.colors.textSecondary}>
             {PROFILE_CONFIG.email}
           </S.Title>
-          2312070@nec.edu.in
+          {user?.email}
         </S.EmailContainer>
         <S.DeptContainer>
           <S.Title $color={theme.colors.textSecondary}>
             {PROFILE_CONFIG.department}
           </S.Title>
-          CSE
+          {user?.department}
         </S.DeptContainer>
         <S.RollContainer>
           <S.Title $color={theme.colors.textSecondary}>
             {PROFILE_CONFIG.rollNumber}
           </S.Title>
-          2312070
+          {user?.rollNumber}
         </S.RollContainer>
       </S.DetailsContainer>
     );
@@ -137,21 +119,21 @@ export const ContainerComp = ({}: IContainerComp) => {
   const _renderData = () => {
     return (
       <S.DataContainer>
-        <S.NameContainer>Aravinth Raj R</S.NameContainer>
+        <S.NameContainer>{user?.name}</S.NameContainer>
         {_renderDetails()}
       </S.DataContainer>
     );
   };
 
   const _renderButton = () => {
-    if (isAdmin) {
+    if (prevPage === "users") {
       return (
         <S.ButtonContainer>
           <S.Button
             $bgColor={theme.colors.red}
-            $isBlock={isBlock}
+            $isBlock={user?.status === PROFILE_CONFIG.userStatus.suspended}
             onClick={() => {
-              _setBlock();
+              _setUserStatus();
             }}
           >
             <S.BlockIcon />
@@ -159,9 +141,9 @@ export const ContainerComp = ({}: IContainerComp) => {
           </S.Button>
           <S.Button
             $bgColor={theme.colors.green}
-            $isBlock={!isBlock}
+            $isBlock={user?.status === PROFILE_CONFIG.userStatus.active}
             onClick={() => {
-              _setBlock();
+              _setUserStatus();
             }}
           >
             <S.PermitIcon /> {PROFILE_CONFIG.permit}
@@ -174,69 +156,73 @@ export const ContainerComp = ({}: IContainerComp) => {
   };
 
   const _renderModals = () => {
+    const userRoles = PROFILE_CONFIG?.roles.filter(
+      (role) => !user?.roles.includes(role)
+    );
+
     return (
       <>
         <AddRoleModal
           modalShow={openRole}
-          email={"2312070@nec.edu.in"}
+          email={user?.email}
+          roles={userRoles}
+          onAddRole={onAddRole}
           onClose={() => {
             setOpenRole(false);
           }}
         />
         <EditProfileModal
           modalShow={openEdit}
-          individualProfile={PROFILE_CONFIG.data}
           onClose={() => {
             setOpenEdit(false);
           }}
+          onEditProfile={onEditProfile}
+          user={user}
         />
       </>
     );
   };
 
-  const _editRoles = () => {
-    return (
-      <S.RoleContainer>
-        <S.Circle
-          $bgColor={theme.colors.red}
-          $isNotFirst={false}
-          $isLast={false}
-        />
-        <S.Circle
-          $bgColor={theme.colors.green}
-          $isNotFirst={true}
-          $isLast={false}
-        />
-        <S.Circle
+  const _renderAddRole = () => {
+    if (prevPage === "users" && user?.roles.length < 3) {
+      return (
+        <S.AddCircle
           $bgColor={theme.colors.sandal}
-          $isNotFirst={true}
-          $isLast={true}
           onClick={() => {
             setOpenRole(true);
           }}
         >
           <S.RoleAddIcon />
-        </S.Circle>
+        </S.AddCircle>
+      );
+    }
+  };
+
+  const _editRoles = () => {
+    return (
+      <S.RoleContainer>
+        {user?.roles.map((role: string, index: number) => {
+          return (
+            <S.Circle
+              title={role}
+              key={index}
+              $bgColor={theme.colors[PROFILE_CONFIG[role]]}
+              $textColor={theme.colors.white}
+              $isNotFirst={index !== 0}
+            >
+              {role.charAt(0).toUpperCase()}
+            </S.Circle>
+          );
+        })}
+        {_renderAddRole()}
       </S.RoleContainer>
     );
   };
 
   const _renderRoles = () => {
-    if (isAdmin) {
-      return (
-        <S.EditContainer>
-          {_editRoles()}
-          <S.EditIcon
-            onClick={() => {
-              setOpenEdit(true);
-            }}
-          />
-        </S.EditContainer>
-      );
-    }
-
     return (
       <S.EditContainer>
+        {_editRoles()}
         <S.EditIcon
           onClick={() => {
             setOpenEdit(true);
@@ -263,13 +249,9 @@ export const ContainerComp = ({}: IContainerComp) => {
   };
 
   return (
-    <S.MainContainer>
-      <Navbar menu={menu} onToggleMenu={() => setMenu(!menu)} />
-      <SideDrawer menu={menu} toggleMenu={() => setMenu(!menu)} />
-      <S.StyledPageBox>
-        {_renderBanner()}
-        <S.MainContainerItems>{_mainContainerItems()}</S.MainContainerItems>
-      </S.StyledPageBox>
-    </S.MainContainer>
+    <S.ProfileContainer>
+      {_renderBanner()}
+      {_mainContainerItems()}
+    </S.ProfileContainer>
   );
 };
