@@ -26,7 +26,7 @@ const Carts = () => {
 
   const [payload, setPayload] = useState({
     skip: 0,
-    limit: 2,
+    limit: 6,
     productIds: productIDs,
   });
   const userId = getUserDetails()?.id;
@@ -67,13 +67,13 @@ const Carts = () => {
   const _onPageChange = (page: number) => {
     setPayload((payload: any) => ({
       ...payload,
-      skip: (page - 1) * 2,
+      skip: (page - 1) * 6,
     }));
 
     resetGetAllProducts();
     fetchGetAllProducts({
       ...payload,
-      skip: (page - 1) * 2,
+      skip: (page - 1) * 6,
     });
   };
 
@@ -137,9 +137,9 @@ const Carts = () => {
             cartProductsDetails={getAllProductsResponse?.payload?.products}
           />
           <CustomPagination
-            perPageCount={2}
+            perPageCount={6}
             totalPageCount={getAllProductsResponse?.payload?.totalCount}
-            currentPage={payload?.skip / 2 + 1}
+            currentPage={payload?.skip / 6 + 1}
             onPageChange={_onPageChange}
           />
           <Footer createOrder={_createOrder} />

@@ -19,15 +19,24 @@ export const FooterBox = styled.div<{ $bgColor: string }>`
   align-items: center;
   justify-content: space-between;
   text-align: center;
-  background-color: ${(props) => props?.$bgColor};
+  background-color: #d9d9d9;
   padding: 15px 30px;
   border-radius: 10px;
   box-shadow: 0 4px 4px rgba(0, 0, 0, 0.2);
+  position: fixed;
+  bottom: 0;
+  width: 96%;
+  z-index: 100;
+  margin: 0 15px 20px 0;
 
   @media (max-width: 576px) {
+    position: relative;
     flex-direction: column;
     gap: 20px;
-    margin-bottom: 10px;
+    width: 100%;
+    border-radius: 10px;
+    box-shadow: none;
+    padding: 15px;
   }
 `;
 

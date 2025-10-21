@@ -13,7 +13,7 @@ export const PROFILE_CONFIG = {
   image: "Image",
   departments: ["CSE", "IT", "MECH", "AIDS", "CIVIL", "EEE", "ECE"],
   addRoleTitle: "Add Role",
-  submitButton: "Submit",
+  submitButton: "Save Changes",
   name: "Name",
   roles: ["admin", "retailer", "customer"],
   edit: "Edit Profile",

@@ -8,3 +8,4 @@ export * from "./getAllCategories.store";
 export * from "./addCategory.store";
 export * from "./getAllProducts.store";
 export * from "./addProduct.store";
+export * from "./addRecent.store";

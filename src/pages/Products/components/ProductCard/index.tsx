@@ -10,15 +10,17 @@ import * as S from "./styles";
 import { EditItemModal } from "../EditItem";
 import { toast } from "react-toastify";
 import { PRODUCTS_CONFIG } from "../../config";
-import { UpdateProductInput } from "../../services/graphql";
+import { AddRecentInput, UpdateProductInput } from "../../services/graphql";
 import {
   getItemInLocalStorage,
+  getUserDetails,
   setItemInLocalStorage,
 } from "../../../../utils";
 export interface IProductCard {
   product: any;
   categories: any[];
   updateProduct(args: UpdateProductInput): Promise<boolean>;
+  addRecent(args: AddRecentInput): Promise<boolean>;
   isRetailer: boolean;
 }
 
@@ -27,9 +29,11 @@ export const ProductCard = ({
   categories,
   updateProduct,
   isRetailer,
+  addRecent,
 }: IProductCard) => {
   const theme = useTheme();
   const [modal, setModal] = useState(false);
+  const [userId, setUserId] = useState<string>(getUserDetails()?.id);
 
   const itemAdded = () => {
     try {
@@ -46,6 +50,10 @@ export const ProductCard = ({
           price: Number(product?.price),
         };
         cartProducts.push(newProduct);
+
+        if (product?.id) {
+          addRecent({ userId, productId: product.id });
+        }
 
         setItemInLocalStorage("cartProducts", cartProducts);
 

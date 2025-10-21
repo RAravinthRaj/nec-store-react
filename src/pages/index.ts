@@ -15,3 +15,5 @@ export { default as MyOrders } from "./History/History";
 export { default as Users } from "./Users/Users";
 export { default as Profile } from "./Profile/Profile";
 export { default as Landing } from "./Landing/Landing";
+export { default as Notification } from "./Notifications/Notifications";
+export { default as Recent } from "./Recents/Recents";

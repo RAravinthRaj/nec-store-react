@@ -13,6 +13,7 @@ import {
   UpdateProductInput,
 } from "./graphql";
 import { GetAllProductsInput, getAllProducts } from "./graphql";
+import { addRecent, AddRecentInput } from "./graphql/addRecent.graphql";
 
 class ProductsService {
   private static instance: ProductsService;
@@ -48,6 +49,11 @@ class ProductsService {
 
   async updateProductAPI(args: UpdateProductInput): Promise<any> {
     const res = await UpdateProduct(args);
+    return res;
+  }
+
+  async addRecentAPI(args: AddRecentInput): Promise<any> {
+    const res = await addRecent(args);
     return res;
   }
 }

@@ -27,7 +27,7 @@ const History = () => {
 
   const [payload, setPayload] = useState<GetAllOrdersInput>({
     skip: 0,
-    limit: 2,
+    limit: 8,
     orderId: "",
     userId: getUserDetails()?.id,
     orderBy: "DESC",

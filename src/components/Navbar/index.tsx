@@ -11,6 +11,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { AppBar } from "@mui/material";
 import { useEffect, useState } from "react";
 import { getItemInLocalStorage, getUserDetails } from "../../utils";
+import { Notification, Recent } from "../../pages";
 
 interface IUserData {
   id?: string;
@@ -33,19 +34,34 @@ export const Navbar = ({ menu, onToggleMenu, showHamburgerIcon }: INavbar) => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const syncUser = () => {
-      const currentUserData = getUserDetails();
-      if (currentUserData && currentUserData.name) {
-        setUserData(currentUserData);
+    const syncUser = (e?: any) => {
+      let newUserData;
+
+      if (e?.detail) {
+        newUserData = e.detail;
+        localStorage.setItem("userDetails", JSON.stringify(newUserData));
       } else {
-        setUserData({ name: "" });
+        const currentUserData = getUserDetails();
+        newUserData = currentUserData?.name ? currentUserData : { name: "" };
       }
+
+      setUserData((prev) => {
+        if (JSON.stringify(prev) !== JSON.stringify(newUserData)) {
+          return newUserData;
+        }
+        return prev;
+      });
     };
 
     syncUser();
 
     window.addEventListener("storage", syncUser);
-    return () => window.removeEventListener("storage", syncUser);
+    window.addEventListener("user-updated", syncUser);
+
+    return () => {
+      window.removeEventListener("storage", syncUser);
+      window.removeEventListener("user-updated", syncUser);
+    };
   }, []);
 
   const _toggleMenu = () => {
@@ -60,7 +76,8 @@ export const Navbar = ({ menu, onToggleMenu, showHamburgerIcon }: INavbar) => {
       return;
     } else if (id === "logOut") {
       localStorage.removeItem("token");
-      setUserData({ name: "" });
+      localStorage.removeItem("cartProducts");
+      localStorage.removeItem("totalPrice");
       navigate("/signin");
       return;
     } else if (id === "profile") {
@@ -100,9 +117,11 @@ export const Navbar = ({ menu, onToggleMenu, showHamburgerIcon }: INavbar) => {
     const firstName = userData?.name?.split(" ")[0] ?? "";
     if (!isMobile && firstName) {
       return (
-        <S.UserName
-          $bgColor={theme.colors.primary}
-        >{`Hii, ${firstName} !!`}</S.UserName>
+        <>
+          <S.UserName
+            $bgColor={theme.colors.primary}
+          >{`Hii, ${firstName} !!`}</S.UserName>
+        </>
       );
     }
     return null;
@@ -161,6 +180,12 @@ export const Navbar = ({ menu, onToggleMenu, showHamburgerIcon }: INavbar) => {
     </S.CustomDropdown>
   );
 
+  const _recentViewed = () => {
+    if (getUserDetails()?.role !== "admin") {
+      return <Recent />;
+    }
+  };
+
   return (
     <AppBar position="fixed" sx={{ zIndex: 30 }}>
       <S.NavbarContainer $bgColor={theme.colors.secondaryOptional}>
@@ -168,6 +193,8 @@ export const Navbar = ({ menu, onToggleMenu, showHamburgerIcon }: INavbar) => {
         <S.UserContainer>
           {_renderDropDown()}
           {_renderUserName()}
+          <Notification />
+          {_recentViewed()}
         </S.UserContainer>
       </S.NavbarContainer>
     </AppBar>

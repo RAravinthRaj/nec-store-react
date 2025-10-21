@@ -5,11 +5,7 @@ Proprietary and confidential.
 Written by Aravinth Raj R <aravinthr235@gmail.com>, 2025.
 */
 import { apolloClient } from "../../../../clients";
-import {
-  getGraphqlError,
-  getItemInLocalStorage,
-  getUserDetails,
-} from "../../../../utils";
+import { getGraphqlError, getItemInLocalStorage } from "../../../../utils";
 import { GET_ALL_PRODUCTS } from "./queries/getAllProducts.query";
 export interface GetAllProductsInput {
   title?: string;
@@ -18,6 +14,7 @@ export interface GetAllProductsInput {
   limit?: number;
   orderBy?: string;
   productIDs?: string[];
+  isRecentProduct?: boolean;
 }
 
 export const getAllProducts = async (args: GetAllProductsInput) => {
@@ -55,8 +52,6 @@ export const getAllProducts = async (args: GetAllProductsInput) => {
 };
 
 const formatData = (products: any[]) => {
-  const role = getUserDetails()?.role;
-
   let productList: any = [];
 
   if (products && products.length > 0) {

@@ -11,26 +11,34 @@ import {
   useAddProductStore,
   useGetAllCategoriesStore,
   useGetAllProductsStore,
+  useAddRecentStore,
 } from "./stores";
 import { toast } from "react-toastify";
 import { CustomPagination, Loader, Error } from "../../components";
 import { checkAccessControl, getUserDetails } from "../../utils";
 import { ROLES } from "../../config";
-import { AddProductInput, UpdateProductInput } from "./services/graphql";
+import {
+  AddProductInput,
+  AddRecentInput,
+  UpdateProductInput,
+} from "./services/graphql";
 import { useNavigate } from "react-router-dom";
 import { useUpdateProductStore } from "./stores/updateProduct.store";
+import { useGetAllRecentProductsStore } from "../Recents/stores";
 
 const Products = () => {
   const [isRetailer, setIsRetailer] = useState<boolean>(false);
+  const [userId, setUserId] = useState<string>(getUserDetails()?.id);
   const navigate = useNavigate();
 
   const [payload, setPayload] = useState({
     skip: 0,
-    limit: 4,
+    limit: 12,
     title: "",
     categoryId: "",
     orderBy: "ASC",
     productIDs: [],
+    isRecentProduct: false,
   });
   const [categories, setCategories] = useState([]);
 
@@ -68,6 +76,16 @@ const Products = () => {
     fetchUpdateProduct,
     resetUpdateProduct,
   } = useUpdateProductStore();
+
+  const {
+    addRecentResponse,
+    addRecentError,
+    addRecentLoading,
+    fetchAddRecent,
+    resetAddRecent,
+  } = useAddRecentStore();
+
+  const { fetchGetAllRecentProducts } = useGetAllRecentProductsStore();
 
   useEffect(() => {
     const role = getUserDetails()?.role;
@@ -157,6 +175,23 @@ const Products = () => {
     }
   }, [updateProductError, resetUpdateProduct]);
 
+  useEffect(() => {
+    if (addRecentResponse && Object.keys(addRecentResponse).length > 0) {
+      resetAddRecent();
+      fetchGetAllRecentProducts(userId);
+    }
+  }, [addRecentResponse, fetchAddRecent, resetAddRecent]);
+
+  useEffect(() => {
+    if (addRecentError && Object.keys(addRecentError).length > 0) {
+      resetAddRecent();
+
+      setTimeout(() => {
+        toast.error(addRecentError);
+      }, 1000);
+    }
+  }, [addRecentError, resetAddRecent]);
+
   const _onSearchPress = () => {
     setPayload((payload: any) => ({
       ...payload,
@@ -188,13 +223,13 @@ const Products = () => {
   const _onPageChange = (page: number) => {
     setPayload((payload: any) => ({
       ...payload,
-      skip: (page - 1) * 4,
+      skip: (page - 1) * 12,
     }));
 
     resetGetAllProducts();
     fetchGetAllProducts({
       ...payload,
-      skip: (page - 1) * 4,
+      skip: (page - 1) * 12,
     });
   };
 
@@ -208,6 +243,10 @@ const Products = () => {
 
   const _UpdateProduct = (args: UpdateProductInput) => {
     return fetchUpdateProduct(args);
+  };
+
+  const _addRecent = (args: AddRecentInput) => {
+    return fetchAddRecent(args);
   };
 
   const _renderLoader = () => {
@@ -232,11 +271,12 @@ const Products = () => {
               categories={categories}
               isRetailer={isRetailer}
               updateProduct={_UpdateProduct}
+              addRecent={_addRecent}
             />
             <CustomPagination
-              perPageCount={4}
+              perPageCount={12}
               totalPageCount={getAllProductsResponse?.payload?.totalCount}
-              currentPage={payload?.skip / 4 + 1}
+              currentPage={payload?.skip / 12 + 1}
               onPageChange={_onPageChange}
             />
           </>

@@ -113,12 +113,16 @@ export const getUserDetails = (): any => {
 };
 
 export const convertFileToBase64 = (
-  file: File,
+  file: File | string,
   maxWidth = 150,
   maxHeight = 150,
   quality = 0.3
 ): Promise<string> =>
   new Promise((resolve, reject) => {
+    if (typeof file === "string") {
+      return resolve(file);
+    }
+
     const reader = new FileReader();
 
     reader.onload = (e) => {
@@ -135,23 +139,30 @@ export const convertFileToBase64 = (
             width = Math.round(maxHeight * ratio);
           }
         }
+
         const canvas = document.createElement("canvas");
         canvas.width = width;
         canvas.height = height;
+
         const ctx = canvas.getContext("2d");
         if (!ctx) return reject(new Error("Canvas context not available"));
+
         ctx.drawImage(img, 0, 0, width, height);
+
         const mime = ["image/png", "image/gif", "image/webp"].includes(
           file.type
         )
           ? file.type
           : "image/jpeg";
+
         const base64 =
           mime === "image/jpeg"
             ? canvas.toDataURL(mime, quality)
             : canvas.toDataURL(mime);
+
         resolve(base64);
       };
+
       if (e.target?.result) img.src = e.target.result as string;
     };
 

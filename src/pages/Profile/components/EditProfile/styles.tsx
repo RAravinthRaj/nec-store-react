@@ -250,3 +250,21 @@ export const FileTypesHint = styled.span`
   font-size: 0.85em;
   border-radius: 6px;
 `;
+
+export const RemoveButton = styled.button`
+  position: absolute;
+  background: #ff4d4f;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  width: 50px;
+  height: 22px;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  margin-top: 5px;
+`;

@@ -39,7 +39,7 @@ const Sales = () => {
   const navigate = useNavigate();
   const [payload, setPayload] = useState({
     skip: 0,
-    limit: 4,
+    limit: 5,
     orderBy: "ASC",
     categoryId: "",
     from: "",
@@ -114,13 +114,13 @@ const Sales = () => {
   const _onPageChange = (page: number) => {
     setPayload((payload: any) => ({
       ...payload,
-      skip: (page - 1) * 4,
+      skip: (page - 1) * 5,
     }));
 
     resetGetSales();
     fetchGetSales({
       ...payload,
-      skip: (page - 1) * 4,
+      skip: (page - 1) * 5,
     });
   };
 
@@ -168,9 +168,9 @@ const Sales = () => {
         <>
           <SalesComp SalesDetails={salesData} />
           <CustomPagination
-            perPageCount={4}
+            perPageCount={5}
             totalPageCount={getSalesResponse?.payload?.totalCount}
-            currentPage={payload?.skip / 4 + 1}
+            currentPage={payload?.skip / 5 + 1}
             onPageChange={_onPageChange}
           />
           <Footer

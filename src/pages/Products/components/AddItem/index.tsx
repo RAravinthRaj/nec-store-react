@@ -59,6 +59,11 @@ export const AddItemModal = ({
       const success = await addProduct(productData);
       if (success) {
         onClose();
+        setTitle("");
+        setCategoryId("");
+        setQuantity(0);
+        setPrice(0.0);
+        setProductImage("");
       }
     } else {
       toast.info(PRODUCTS_CONFIG.requiredData);

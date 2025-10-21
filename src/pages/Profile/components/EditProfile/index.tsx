@@ -8,7 +8,7 @@ import Form from "react-bootstrap/Form";
 import Modal from "react-bootstrap/Modal";
 import * as S from "./styles";
 import { useTheme } from "../../../../hooks";
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import { toast } from "react-toastify";
 import { PROFILE_CONFIG } from "../../config";
 import MenuItem from "@mui/material/MenuItem";
@@ -46,9 +46,69 @@ export const EditProfileModal = ({
 
   const fileInputRef = useRef<HTMLInputElement | null>(null);
 
-  const _profileEdited = () => {
-    onEditProfile(name, email, rollNumber, department, profilePicture);
-    onClose();
+  useEffect(() => {
+    if (modalShow && user) {
+      setName(user.name || "");
+      setEmail(user.email || "");
+      setRollNumber(user.rollNumber || "");
+      setDepartment(user.department || "");
+      setProfilePicture(user.profilePicture || null);
+      if (fileInputRef.current) fileInputRef.current.value = "";
+    }
+  }, [modalShow, user]);
+
+  const _resetFields = () => {
+    setName(user?.name || "");
+    setEmail(user?.email || "");
+    setRollNumber(user?.rollNumber || "");
+    setDepartment(user?.department || "");
+    setProfilePicture(user?.profilePicture || null);
+    if (fileInputRef.current) fileInputRef.current.value = "";
+  };
+
+  const _profileEdited = async () => {
+    const updatedFields: any = {};
+
+    if (name !== user?.name) updatedFields.name = name;
+    if (profilePicture !== user?.profilePicture)
+      updatedFields.profilePicture = profilePicture;
+
+    const updatedUser = {
+      ...user,
+      ...updatedFields,
+    };
+
+    try {
+      await onEditProfile(
+        updatedUser.name,
+        user?.email,
+        user?.rollNumber,
+        user?.department,
+        updatedUser.profilePicture
+      );
+
+      const changedData = {
+        ...user,
+        name: updatedFields.name?.trim() ? updatedFields.name : user?.name,
+        profilePicture:
+          updatedFields.profilePicture === null
+            ? null
+            : typeof updatedFields.profilePicture === "string" &&
+              updatedFields.profilePicture.trim() !== ""
+            ? updatedFields.profilePicture
+            : user?.profilePicture,
+      };
+
+      window.dispatchEvent(
+        new CustomEvent("user-updated", { detail: changedData })
+      );
+
+      _resetFields();
+      onClose();
+    } catch (err) {
+      console.error(err);
+      toast.error("Failed to update profile");
+    }
   };
 
   const _handleChange = (event: SelectChangeEvent<unknown>) => {
@@ -60,9 +120,7 @@ export const EditProfileModal = ({
 
   const _resetImageField = () => {
     setProfilePicture(user?.profilePicture);
-    if (fileInputRef.current) {
-      fileInputRef.current.value = "";
-    }
+    if (fileInputRef.current) fileInputRef.current.value = "";
   };
 
   const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -85,139 +143,143 @@ export const EditProfileModal = ({
     }
   };
 
-  const _renderMenu = () => {
-    return (
-      <S.StyledFormControl fullWidth>
-        <Select
-          value={department ?? ""}
-          onChange={(e) => _handleChange(e)}
-          displayEmpty
-          inputProps={{ "aria-label": "Category" }}
-          renderValue={(selected: string | null) => selected ?? department}
-        >
-          {PROFILE_CONFIG.departments.map((cat, id) => {
-            return (
-              <MenuItem key={id} value={cat}>
-                {cat}
-                <S.Divider />
-              </MenuItem>
-            );
-          })}
-        </Select>
-      </S.StyledFormControl>
-    );
-  };
+  const _renderMenu = () => (
+    <S.StyledFormControl fullWidth>
+      <Select
+        value={department ?? ""}
+        onChange={(e) => _handleChange(e)}
+        displayEmpty
+        inputProps={{ "aria-label": "Category" }}
+        renderValue={(selected: string | null) => selected ?? department}
+      >
+        {PROFILE_CONFIG.departments.map((cat, id) => (
+          <MenuItem key={id} value={cat}>
+            {cat}
+            <S.Divider />
+          </MenuItem>
+        ))}
+      </Select>
+    </S.StyledFormControl>
+  );
 
-  const _renderImageField = () => {
-    return (
-      <>
-        <Form.Label>
-          <S.SubTitle>
-            {PROFILE_CONFIG.image}
-            <S.FileTypesHint>
-              {PROFILE_CONFIG.acceptedImageTypes}
-            </S.FileTypesHint>
-          </S.SubTitle>
-        </Form.Label>
-        <S.ProductImageContainer>
-          <input
-            ref={fileInputRef}
-            type="file"
-            className="form-control"
-            accept="image/*"
-            onChange={handleImageChange}
-          />
-          {profilePicture && (
-            <S.ImageWrapper>
-              <S.PreviewProductImage src={profilePicture} alt="Preview" />
-              {profilePicture !== user?.profilePicture && (
-                <S.CancelButton onClick={_resetImageField}>
-                  {PROFILE_CONFIG.cancelIcon}
-                </S.CancelButton>
-              )}
-            </S.ImageWrapper>
-          )}
-        </S.ProductImageContainer>
-      </>
-    );
-  };
+  const _renderImageField = () => (
+    <>
+      <Form.Label>
+        <S.SubTitle>
+          {PROFILE_CONFIG.image}
+          <S.FileTypesHint>{PROFILE_CONFIG.acceptedImageTypes}</S.FileTypesHint>
+        </S.SubTitle>
+      </Form.Label>
+      <S.ProductImageContainer>
+        <input
+          ref={fileInputRef}
+          type="file"
+          className="form-control"
+          accept="image/*"
+          onChange={handleImageChange}
+        />
+        {profilePicture && (
+          <S.ImageWrapper>
+            <S.PreviewProductImage src={profilePicture} alt="Preview" />
+            {profilePicture !== user?.profilePicture && (
+              <S.CancelButton onClick={_resetImageField}>
+                {PROFILE_CONFIG.cancelIcon}
+              </S.CancelButton>
+            )}
+            {profilePicture === user?.profilePicture && (
+              <S.RemoveButton
+                onClick={() => {
+                  setProfilePicture(null);
+                }}
+              >
+                Remove
+              </S.RemoveButton>
+            )}
+          </S.ImageWrapper>
+        )}
+      </S.ProductImageContainer>
+    </>
+  );
 
-  const _renderModalHeader = () => {
-    return (
-      <S.Header>
-        <S.CloseButton onClick={onClose}></S.CloseButton>
-        <S.Title id="contained-modal-title-vcenter">
-          {PROFILE_CONFIG.edit}
-        </S.Title>
-      </S.Header>
-    );
-  };
+  const _renderModalHeader = () => (
+    <S.Header>
+      <S.CloseButton
+        onClick={() => {
+          _resetFields(); // reset on manual close
+          onClose();
+        }}
+      ></S.CloseButton>
+      <S.Title id="contained-modal-title-vcenter">
+        {PROFILE_CONFIG.edit}
+      </S.Title>
+    </S.Header>
+  );
 
-  const _renderModalBody = () => {
-    return (
-      <Modal.Body>
-        <Form>
-          <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-            <Form.Label>{PROFILE_CONFIG.name}</Form.Label>
-            <S.InputWrapper>
-              <S.Input
-                type="text"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-              />
-            </S.InputWrapper>
-          </Form.Group>
-          <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-            <Form.Label>{PROFILE_CONFIG.email}</Form.Label>
-            <S.InputWrapper>
-              <S.Input
-                type="text"
-                value={String(email)}
-                onChange={(e) => setEmail(e.target.value)}
-              />
-            </S.InputWrapper>
-          </Form.Group>
-          <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-            <Form.Label>{PROFILE_CONFIG.rollNumber}</Form.Label>
-            <S.InputWrapper>
-              <S.Input
-                type="text"
-                value={String(rollNumber)}
-                onChange={(e) => setRollNumber(e.target.value)}
-              />
-            </S.InputWrapper>
-          </Form.Group>
-          <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-            <Form.Label>{PROFILE_CONFIG.department}</Form.Label>
-            {_renderMenu()}
-          </Form.Group>
-          <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-            {_renderImageField()}
-          </Form.Group>
-        </Form>
-      </Modal.Body>
-    );
-  };
+  const _renderModalBody = () => (
+    <Modal.Body>
+      <Form>
+        <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+          <Form.Label>{PROFILE_CONFIG.name}</Form.Label>
+          <S.InputWrapper>
+            <S.Input
+              type="text"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+            />
+          </S.InputWrapper>
+        </Form.Group>
 
-  const _renderModalFooter = () => {
-    return (
-      <S.Footer>
-        <S.Button
-          $bgColor={theme.colors.primary}
-          onClick={() => _profileEdited()}
-        >
-          {PROFILE_CONFIG.submitButton}
-        </S.Button>
-      </S.Footer>
-    );
-  };
+        <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+          <Form.Label>{PROFILE_CONFIG.email}</Form.Label>
+          <S.InputWrapper>
+            <S.Input
+              type="text"
+              value={String(email)}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+          </S.InputWrapper>
+        </Form.Group>
+
+        <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+          <Form.Label>{PROFILE_CONFIG.rollNumber}</Form.Label>
+          <S.InputWrapper>
+            <S.Input
+              type="text"
+              value={String(rollNumber)}
+              onChange={(e) => setRollNumber(e.target.value)}
+            />
+          </S.InputWrapper>
+        </Form.Group>
+
+        <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+          <Form.Label>{PROFILE_CONFIG.department}</Form.Label>
+          {_renderMenu()}
+        </Form.Group>
+
+        <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+          {_renderImageField()}
+        </Form.Group>
+      </Form>
+    </Modal.Body>
+  );
+
+  const _renderModalFooter = () => (
+    <S.Footer>
+      <S.Button $bgColor={theme.colors.primary} onClick={_profileEdited}>
+        {PROFILE_CONFIG.submitButton}
+      </S.Button>
+    </S.Footer>
+  );
 
   return (
     <S.ModalContainer
       aria-labelledby="contained-modal-title-vcenter"
       centered
       show={modalShow}
-      onHide={onClose}
+      onHide={() => {
+        _resetFields(); // reset fields on close
+        onClose();
+      }}
       backdrop="static"
     >
       {_renderModalHeader()}

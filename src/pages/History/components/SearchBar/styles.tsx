@@ -10,6 +10,8 @@ import { Dropdown } from "react-bootstrap";
 import { PiShoppingCartBold } from "react-icons/pi";
 import { Link } from "react-router-dom";
 import { ImSortAlphaAsc } from "react-icons/im";
+import { IconButton } from "@mui/material";
+import Badge from "@mui/material/Badge";
 
 export const ActionItem = styled.div`
   display: flex;
@@ -80,8 +82,8 @@ export const InputWrapper = styled.div<{ $bgColor: string }>`
 export const SortContainer = styled.div`
   display: flex;
   align-items: center;
-  flex: 1;
-  margin-left: 20px;
+  flex: 0.6;
+  margin-left: 30px;
 
   @media (max-width: 768px) {
     justify-content: flex-end;
@@ -263,4 +265,55 @@ export const Count = styled.div<{ $bgColor: string }>`
 export const SearchButton = styled.button`
   background-color: white;
   border: none;
+`;
+
+export const StyledBadge = styled(Badge)<{ $bgColor: string }>`
+  & .MuiBadge-badge {
+    right: -3px !important;
+    top: -5px !important;
+    background: ${(props) => props?.$bgColor};
+    color: white;
+    font-weight: 600;
+    font-size: 12px;
+    height: 23px;
+    width: 23px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1.5px solid white; /* cleaner than black for contrast */
+    box-shadow: 0 2px 6px rgba(0, 86, 210, 0.5),
+      inset 0 0 4px rgba(255, 255, 255, 0.4);
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
+    transition: transform 0.2s ease-in-out;
+  }
+`;
+
+export const CartButton = styled(IconButton)`
+  width: 45px;
+  height: 45px;
+  background: linear-gradient(145deg, #ffffff, #f5f5f5);
+  border: 2px solid #000000 !important;
+  border-radius: 50%;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.08),
+    inset 0 -2px 4px rgba(255, 255, 255, 0.7);
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+  &:hover {
+    background: linear-gradient(145deg, #fdfdfd, #f0f0f0);
+    transform: scale(1.1);
+    box-shadow: 0 5px 12px rgba(0, 0, 0, 0.15),
+      inset 0 -3px 6px rgba(255, 255, 255, 0.8);
+  }
+
+  svg {
+    font-size: 26px;
+    color: #1a1a1a;
+    transition: color 0.25s ease, filter 0.25s ease;
+  }
 `;

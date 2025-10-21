@@ -9,8 +9,6 @@ import { FiPlus } from "react-icons/fi";
 import { SlArrowDown } from "react-icons/sl";
 import { Dropdown } from "react-bootstrap";
 import { IconButton, Menu, MenuItem } from "@mui/material";
-import { Link } from "react-router-dom";
-import { PiShoppingCartBold } from "react-icons/pi";
 import { ImSortAlphaAsc } from "react-icons/im";
 import Badge from "@mui/material/Badge";
 
@@ -343,73 +341,6 @@ export const StyledMenuItem = styled(MenuItem)`
   }
 `;
 
-export const CartContainer = styled(Link)<{ $bgColor: string }>`
-  padding: 10px;
-  border-radius: 50%;
-  background-color: ${(props) => props?.$bgColor};
-  border: solid 2px black;
-
-  @media (max-width: 768px) {
-    padding: 13px 9px;
-  }
-
-  @media (max-width: 576px) {
-    padding: 13px 9px;
-  }
-`;
-
-export const CartIcon = styled(PiShoppingCartBold)`
-  flex: 1;
-  color: black;
-  font-size: 25px;
-
-  @media (max-width: 576px) {
-    flex: 1;
-  }
-`;
-
-export const CartItemsCount = styled.div<{
-  $bgColor: string;
-  $isMobile: boolean;
-}>`
-  background-color: ${(props) => props?.$bgColor};
-  position: relative;
-  border: solid 1px white;
-  top: ${(props) => (!props.$isMobile ? "-21px" : "-43px")};
-  left: ${(props) => (!props.$isMobile ? "-20px" : "28px")};
-  padding: 4px;
-  border-radius: 50%;
-  display: flex;
-  flex-wrap: wrap;
-  width: fit-content;
-  align-items: center;
-  justify-content: center;
-
-  @media (max-width: 576px) {
-    padding: 1px 3px;
-  }
-`;
-
-export const Count = styled.div<{ $bgColor: string }>`
-  color: ${(props) => props?.$bgColor};
-  font-size: 12px;
-  height: 15px;
-  width: 12px;
-  margin: 0 2px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  @media (max-width: 768px) {
-    font-size: 10px;
-  }
-
-  @media (max-width: 576px) {
-    font-size: 10px;
-    margin: 2px;
-  }
-`;
-
 export const SearchButton = styled.button`
   background-color: white;
   border: none;
@@ -435,10 +366,6 @@ export const StyledBadge = styled(Badge)<{ $bgColor: string }>`
     text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
     transition: transform 0.2s ease-in-out;
   }
-
-  &:hover .MuiBadge-badge {
-    transform: scale(1.05);
-  }
 `;
 
 export const CartButton = styled(IconButton)`
@@ -454,17 +381,13 @@ export const CartButton = styled(IconButton)`
 
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.08),
     inset 0 -2px 4px rgba(255, 255, 255, 0.7);
-  transition: all 0.25s ease-in-out;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 
   &:hover {
     background: linear-gradient(145deg, #fdfdfd, #f0f0f0);
-    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.15),
-      inset 0 -2px 6px rgba(255, 255, 255, 0.9);
-
-    svg {
-      color: #0056d2;
-      filter: drop-shadow(0 0 4px rgba(0, 86, 210, 0.6));
-    }
+    transform: scale(1.1);
+    box-shadow: 0 5px 12px rgba(0, 0, 0, 0.15),
+      inset 0 -3px 6px rgba(255, 255, 255, 0.8);
   }
 
   svg {

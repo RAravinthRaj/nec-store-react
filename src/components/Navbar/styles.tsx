@@ -74,10 +74,12 @@ export const UserContainer = styled.div`
   margin: 3px 10px;
 
   @media (max-width: 768px) {
+    gap: 15px;
     margin: 0;
   }
 
   @media (max-width: 576px) {
+    gap: 8px;
     margin: 0;
   }
 `;

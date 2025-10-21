@@ -17,7 +17,7 @@ const Users = () => {
   const navigate = useNavigate();
   const [payload, setPayload] = useState({
     skip: 0,
-    limit: 2,
+    limit: 8,
     name: "",
     email: "",
     orderBy: "ASC",
@@ -42,13 +42,13 @@ const Users = () => {
   const _onPageChange = (page: number) => {
     setPayload((payload: any) => ({
       ...payload,
-      skip: (page - 1) * 2,
+      skip: (page - 1) * 8,
     }));
 
     resetGetAllUsers();
     fetchGetAllUsers({
       ...payload,
-      skip: (page - 1) * 2,
+      skip: (page - 1) * 8,
     });
   };
 
@@ -102,9 +102,9 @@ const Users = () => {
               tokenId={tokenId}
             />
             <CustomPagination
-              perPageCount={2}
+              perPageCount={8}
               totalPageCount={getAllUsersResponse?.payload?.totalCount}
-              currentPage={payload?.skip / 2 + 1}
+              currentPage={payload?.skip / 8 + 1}
               onPageChange={_onPageChange}
             />
           </>

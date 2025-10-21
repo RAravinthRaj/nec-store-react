@@ -85,14 +85,14 @@ const Profile = () => {
     fetchUpdateUser({ id: userId, roles: [roles] });
   };
 
-  const _editProfile = (
+  const _editProfile = async (
     name?: string,
     email?: string,
     rollNumber?: string,
     department?: string,
     profilePicture?: string | null
   ) => {
-    fetchUpdateUser({
+    return fetchUpdateUser({
       id: userId,
       name,
       email,

@@ -49,7 +49,7 @@ const Orders = () => {
 
   const [payload, setPayload] = useState<GetAllOrdersInput>({
     skip: 0,
-    limit: 6,
+    limit: 12,
     orderId: "",
     rollNumber: "",
     orderBy: "ASC",

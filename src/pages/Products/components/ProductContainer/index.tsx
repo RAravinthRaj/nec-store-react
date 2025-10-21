@@ -6,13 +6,18 @@ Written by Aravinth Raj R <aravinthr235@gmail.com>, 2025.
 */
 import * as S from "./styles";
 import { ProductCard } from "../ProductCard";
-import { UpdateProductInput } from "../../services/graphql";
+import {
+  addRecent,
+  AddRecentInput,
+  UpdateProductInput,
+} from "../../services/graphql";
 
 export interface IProductContainer {
   categories: any[];
   products: any[];
   isRetailer: boolean;
   updateProduct(args: UpdateProductInput): Promise<boolean>;
+  addRecent(args: AddRecentInput): Promise<boolean>;
 }
 
 export const ProductContainer = ({
@@ -20,6 +25,7 @@ export const ProductContainer = ({
   categories,
   updateProduct,
   isRetailer,
+  addRecent,
 }: IProductContainer) => {
   return (
     <S.ProductContainer>
@@ -30,6 +36,7 @@ export const ProductContainer = ({
           categories={categories}
           updateProduct={updateProduct}
           isRetailer={isRetailer}
+          addRecent={addRecent}
         />
       ))}
     </S.ProductContainer>

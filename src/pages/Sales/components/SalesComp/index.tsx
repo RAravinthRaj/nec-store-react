@@ -48,7 +48,7 @@ export const SalesComp = ({ SalesDetails }: ISalesComp) => {
           return (
             <div key={index}>
               <S.ItemBox>{_renderItemFields(item)}</S.ItemBox>
-              <S.Divider />
+              <S.SalesDivider />
             </div>
           );
         })}
