@@ -5,4 +5,4 @@ Proprietary and confidential.
 Written by Aravinth Raj R <aravinthr235@gmail.com>, 2025.
 */
 export * from "./signIn.rest";
-export * from "./verifyOTP.rest";
+export * from "./verifyOtp.rest";
