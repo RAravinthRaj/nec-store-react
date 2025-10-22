@@ -55,17 +55,20 @@ export const TitleBox = styled.div<{ $bgColor: string }>`
   }
 `;
 
-export const ItemBox = styled.div`
+export const ItemBox = styled.div<{
+  isOddIndex: boolean;
+}>`
   display: flex;
   flex-direction: row;
-  align-items: center;
   justify-content: space-around;
-  padding: 15px;
+  padding: 10px 10px;
   border-radius: 10px;
-  min-width: 620px;
+  margin: 5px 0px;
+  min-width: 600px;
+  background-color: ${(props) =>
+    props.isOddIndex ? "rgba(160, 196, 255, 0.12)" : ""};
 
   @media (max-width: 576px) {
-    padding: 8px;
     min-width: 640px;
   }
 `;

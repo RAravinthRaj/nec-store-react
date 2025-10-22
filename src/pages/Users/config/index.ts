@@ -7,7 +7,7 @@ Written by Aravinth Raj R <aravinthr235@gmail.com>, 2025.
 export const USERS_CONFIG = {
   category: ["Name", "Email"],
   sortedOptions: ["Sort By Name Asc", "Sort By Name Desc"],
-  title: ["Sl.No", "Name", "Email", "Roles", "Action"],
+  title: ["Name", "Email", "Roles", "Action"],
   button: "View / Edit",
   admin: "red",
   retailer: "orange",

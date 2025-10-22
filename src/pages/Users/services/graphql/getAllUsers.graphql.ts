@@ -52,13 +52,11 @@ export const getAllUsers = async (args: GetAllUsersInput) => {
 
 const formatData = ({ users }: any) => {
   let usersList: any = [];
-  let index = 1;
 
   if (users && users.length > 0) {
     for (let user of users) {
       let obj = {
         id: user?.id,
-        slNo: index++,
         name: user?.name,
         email: user?.email,
         roles: user?.roles,

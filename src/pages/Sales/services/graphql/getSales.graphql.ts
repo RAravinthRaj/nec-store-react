@@ -56,14 +56,11 @@ export const getSales = async (args: GetSalesInput) => {
 };
 
 const formatData = (products: any[]) => {
-  let index = 0;
-
   let productList: any = [];
 
   if (products && products.length > 0) {
     for (let product of products) {
       let obj = {
-        slNo: ++index,
         productImage: product?.productImage,
         category: product?.category?.name,
         title: product?.title,

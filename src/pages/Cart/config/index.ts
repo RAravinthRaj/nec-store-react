@@ -11,7 +11,6 @@ export const CARTS_CONFIG = {
   all: "All",
   orderPlaced: "Order Placed Successfully",
   title: [
-    "Sl.No",
     "Product Image",
     "Category",
     "Product Name",

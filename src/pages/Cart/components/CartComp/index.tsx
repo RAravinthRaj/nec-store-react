@@ -182,14 +182,13 @@ export const CartComp = ({
           const productId = item?.productId || index;
           return (
             <div key={index}>
-              <S.ItemBox>
+              <S.ItemBox isOddIndex={index % 2 != 0}>
                 {_renderItemFields(item)}
                 <S.CancelComp
                   $bgColor={theme.colors.primary}
                   onClick={() => _deleteItem(productId)}
                 />
               </S.ItemBox>
-              <S.CartDivider />
             </div>
           );
         })}
