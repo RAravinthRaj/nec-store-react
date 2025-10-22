@@ -46,8 +46,7 @@ export const TitleBox = styled.div<{ $bgColor: string }>`
   justify-content: space-around;
   background-color: ${(props) => props.$bgColor};
   padding: 18px 15px;
-  border-radius: 10px;
-  margin-bottom: 10px;
+  border-radius: 5px;
   box-shadow: 0 4px 4px rgba(0, 0, 0, 0.2);
   min-width: 640px;
   position: sticky;
@@ -59,14 +58,18 @@ export const TitleBox = styled.div<{ $bgColor: string }>`
   }
 `;
 
-export const ItemBox = styled.div`
+export const ItemBox = styled.div<{
+  isOddIndex: boolean;
+}>`
   display: flex;
   flex-direction: row;
   justify-content: space-around;
-  padding: 5px 10px;
+  padding: 10px 10px;
   border-radius: 10px;
   margin: 5px 0px;
   min-width: 600px;
+  background-color: ${(props) =>
+    props.isOddIndex ? "rgba(160, 196, 255, 0.12)" : ""};
 
   @media (max-width: 576px) {
     min-width: 640px;
@@ -141,12 +144,12 @@ export const UserDivider = styled.div`
   margin: 0px 7px;
 
   @media (max-width: 768px) {
-    margin: 10px 20px;
+    margin: 0px 20px;
     min-width: 560px;
   }
 
   @media (max-width: 576px) {
-    margin: 7px 7px;
+    margin: 0px 7px;
     min-width: 620px;
   }
 `;
@@ -178,3 +181,8 @@ export const Circle = styled.div<{
     margin-left: ${(props) => (props.$isNotFirst ? "-8px" : "0px")};
   }
 `;
+
+export const UserComponent = styled.div<{
+  isOddIndex: boolean;
+  $bgColor: string;
+}>``;

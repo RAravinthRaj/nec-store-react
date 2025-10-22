@@ -47,7 +47,7 @@ export const UserDetails = ({
       <div>
         {Users.map((item: any, index: number) => (
           <div key={index}>
-            <S.ItemBox>
+            <S.ItemBox isOddIndex={index % 2 == 0}>
               {Object.entries(item)?.map(([key, value], index) => {
                 if (key === "id") {
                   return null;
@@ -69,7 +69,6 @@ export const UserDetails = ({
                 </S.Button>
               </S.TitleComp>
             </S.ItemBox>
-            <S.UserDivider />
           </div>
         ))}
       </div>

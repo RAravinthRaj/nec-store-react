@@ -38,33 +38,17 @@ export const FooterBox = styled.div<{ $bgColor: string }>`
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
   text-align: center;
   background-color: ${(props) => props?.$bgColor};
-  padding: 15px 30px;
+  padding: 15px;
   border-radius: 10px;
   box-shadow: 0 4px 4px rgba(0, 0, 0, 0.2);
-  position: fixed;
-  width: 80%;
-  bottom: 0;
-  z-index: 100;
-  margin-bottom: 20px;
-
-  @media (max-width: 768px) {
-    width: 95%;
-    border-radius: 10px;
-    box-shadow: none;
-    padding: 15px;
-  }
 
   @media (max-width: 576px) {
-    position: relative;
     flex-direction: column;
     gap: 20px;
-    width: 100%;
-    border-radius: 10px;
-    box-shadow: none;
-    padding: 15px;
+    margin-bottom: 10px;
   }
 `;
 

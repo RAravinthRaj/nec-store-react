@@ -47,8 +47,9 @@ export const SalesComp = ({ SalesDetails }: ISalesComp) => {
         {SalesDetails.map((item: any, index: any) => {
           return (
             <div key={index}>
-              <S.ItemBox>{_renderItemFields(item)}</S.ItemBox>
-              <S.SalesDivider />
+              <S.ItemBox isOddIndex={index % 2 != 0}>
+                {_renderItemFields(item)}
+              </S.ItemBox>
             </div>
           );
         })}

@@ -20,7 +20,6 @@ export const SALES_CONFIG = {
   sortedOptions: ["Sort By Title Asc", "Sort By Title Desc"],
   all: "All",
   title: [
-    "Sl.No",
     "Product Image",
     "Category",
     "Product Name",
