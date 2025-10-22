@@ -20,7 +20,7 @@ import viewProfile from "../assets/images/dashboard.png";
 import logout from "../assets/images/logout.png";
 import banner from "../assets/images/banner.png";
 import history from "../assets/images/history.png";
-import error from "../assets/images/error.png";
+import error from "../assets/images/error.jpeg";
 import defaultProductImage from "../assets/images/defaultProduct.png";
 
 export const theme = {
