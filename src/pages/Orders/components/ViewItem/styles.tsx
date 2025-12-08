@@ -120,8 +120,9 @@ export const Button = styled.button<{ $bgColor: string; $isValid: boolean }>`
   justify-content: center;
   gap: 10px;
   background-color: ${(props) => props?.$bgColor};
-  opacity: ${(props) => (props.$isValid ? "0.6" : "1")};
-  pointer-events: ${(props) => (props.$isValid ? "none" : "not-allowed")};
+  opacity: ${(props) => (props.$isValid ? "0.5" : "1")};
+  cursor: ${(props) => (props.$isValid ? "not-allowed" : "pointer")};
+  pointer-events: ${(props) => (props.$isValid ? "none" : "auto")};
   color: white;
   border: none;
   height: 45px;
@@ -134,10 +135,8 @@ export const Button = styled.button<{ $bgColor: string; $isValid: boolean }>`
   text-align: center;
   font-weight: 600;
   border-radius: 7px;
-  cursor: pointer;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   transition: box-shadow 0.3s ease, transform 0.2s ease;
-  cursor: no-drop !important;
 
   &:hover {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);

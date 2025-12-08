@@ -36,7 +36,6 @@ export const ViewItemModal = ({
     individualOrder?.deliveryStatus
   );
 
-  // ✅ Reset dropdowns to original values whenever order changes or modal opens
   useEffect(() => {
     if (individualOrder) {
       setPaidStatus(individualOrder.paidStatus);
@@ -45,7 +44,6 @@ export const ViewItemModal = ({
   }, [individualOrder, modalShow]);
 
   const _handleClose = () => {
-    // reset before closing
     setPaidStatus(individualOrder?.paidStatus);
     setDeliveryStatus(individualOrder?.deliveryStatus);
     onClose();
@@ -59,9 +57,11 @@ export const ViewItemModal = ({
       updateOrder(individualOrder?.orderId, paidStatus, deliveryStatus);
       _handleClose();
     } else {
-      toast.info("Nothing to Update", { toastId: "no-update" }); // ✅ avoid duplicate toast
+      toast.info("Nothing to Update", { toastId: "no-update" });
     }
   };
+
+  console.log(individualOrder?.orderStatus);
 
   const _renderDropDown = (
     data: string,
@@ -88,7 +88,6 @@ export const ViewItemModal = ({
       );
     }
 
-    // ✅ Always render both options but disable current one
     return (
       <S.DropDown>
         <S.StyledSelect value={data} onChange={(e) => setData(e.target.value)}>
@@ -184,10 +183,7 @@ export const ViewItemModal = ({
         <S.Button
           $bgColor={theme.colors.primary}
           onClick={_changeStatus}
-          $isValid={
-            individualOrder?.paidStatus === "paid" &&
-            individualOrder?.deliveryStatus === "delivered"
-          }
+          $isValid={individualOrder?.orderStatus === "completed"}
         >
           {ORDERS_CONFIG.save}
         </S.Button>

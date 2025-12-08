@@ -35,6 +35,7 @@ interface OrderFormatted {
   products: ProductFormatted[];
   paidStatus: string;
   deliveryStatus: string;
+  orderStatus: string;
 }
 
 interface GetAllOrdersResponse {
@@ -118,6 +119,7 @@ const formatOrders = (orders: any[]): OrderFormatted[] => {
         rawDate: new Date(order?.createdAt).getTime() || 0,
         paidStatus: order?.paidStatus,
         deliveryStatus: order?.deliveryStatus,
+        orderStatus: order?.orderStatus,
       };
     })
     .sort((a, b) => b.rawDate - a.rawDate)
