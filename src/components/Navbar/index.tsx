@@ -181,7 +181,7 @@ export const Navbar = ({ menu, onToggleMenu, showHamburgerIcon }: INavbar) => {
   );
 
   const _recentViewed = () => {
-    if (getUserDetails()?.role !== "admin") {
+    if (getUserDetails()?.role === "customer") {
       return <Recent />;
     }
   };

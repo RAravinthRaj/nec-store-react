@@ -7,8 +7,8 @@ Written by Aravinth Raj R <aravinthr235@gmail.com>, 2025.
 import * as S from "./styles";
 import { ProductCard } from "../ProductCard";
 import {
-  addRecent,
   AddRecentInput,
+  AddStockInput,
   UpdateProductInput,
 } from "../../services/graphql";
 
@@ -17,6 +17,7 @@ export interface IProductContainer {
   products: any[];
   isRetailer: boolean;
   updateProduct(args: UpdateProductInput): Promise<boolean>;
+  addStock(args: AddStockInput): Promise<boolean>;
   addRecent(args: AddRecentInput): Promise<boolean>;
 }
 
@@ -26,6 +27,7 @@ export const ProductContainer = ({
   updateProduct,
   isRetailer,
   addRecent,
+  addStock,
 }: IProductContainer) => {
   return (
     <S.ProductContainer>
@@ -35,6 +37,7 @@ export const ProductContainer = ({
           product={product}
           categories={categories}
           updateProduct={updateProduct}
+          addStock={addStock}
           isRetailer={isRetailer}
           addRecent={addRecent}
         />

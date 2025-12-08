@@ -180,7 +180,9 @@ export const EditItemModal = ({
     return (
       <S.Header>
         <S.CloseButton onClick={onClose}></S.CloseButton>
-        <S.Title id="contained-modal-title-vcenter">Edit Item</S.Title>
+        <S.Title id="contained-modal-title-vcenter">
+          {PRODUCTS_CONFIG.editItemTitle}
+        </S.Title>
       </S.Header>
     );
   };

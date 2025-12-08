@@ -88,6 +88,7 @@ const Orders = () => {
       fetchGetAllOrders({
         ...payload,
       });
+      resetUpdateOrder();
     }
   }, [updateOrderResponse]);
 

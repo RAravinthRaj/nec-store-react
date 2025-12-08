@@ -64,9 +64,10 @@ const formatData = (products: any[]) => {
         productImage: product?.productImage,
         category: product?.category?.name,
         title: product?.title,
+        price: product?.totalPrice / product?.sold,
         sold: product?.sold,
         left: product?.left,
-        price: product?.totalPrice,
+        total: product?.totalPrice,
       };
 
       productList.push(obj);

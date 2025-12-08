@@ -6,3 +6,4 @@ Written by Aravinth Raj R <aravinthr235@gmail.com>, 2025.
 */
 export * from "./ProductContainer";
 export * from "./SearchBar";
+export * from "./AddStock";

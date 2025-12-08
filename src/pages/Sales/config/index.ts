@@ -23,6 +23,7 @@ export const SALES_CONFIG = {
     "Product Image",
     "Category",
     "Product Name",
+    "Price(Per unit.)",
     "Sold",
     "Left",
     "Total Amount(in Rs.)",

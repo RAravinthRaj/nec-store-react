@@ -14,6 +14,7 @@ export const CARTS_CONFIG = {
     "Product Image",
     "Category",
     "Product Name",
+    "Price(Per unit.)",
     "Quantity",
     "Total Amount(in Rs.)",
     "Action",

@@ -8,9 +8,14 @@ import { useState } from "react";
 import { useTheme } from "../../../../hooks";
 import * as S from "./styles";
 import { EditItemModal } from "../EditItem";
+import { AddStockModel } from "../AddStock";
 import { toast } from "react-toastify";
 import { PRODUCTS_CONFIG } from "../../config";
-import { AddRecentInput, UpdateProductInput } from "../../services/graphql";
+import {
+  AddRecentInput,
+  AddStockInput,
+  UpdateProductInput,
+} from "../../services/graphql";
 import {
   getItemInLocalStorage,
   getUserDetails,
@@ -21,6 +26,7 @@ export interface IProductCard {
   categories: any[];
   updateProduct(args: UpdateProductInput): Promise<boolean>;
   addRecent(args: AddRecentInput): Promise<boolean>;
+  addStock(args: AddStockInput): Promise<boolean>;
   isRetailer: boolean;
 }
 
@@ -28,11 +34,13 @@ export const ProductCard = ({
   product,
   categories,
   updateProduct,
+  addStock,
   isRetailer,
   addRecent,
 }: IProductCard) => {
   const theme = useTheme();
   const [modal, setModal] = useState(false);
+  const [addModal, setAddModal] = useState(false);
   const [userId, setUserId] = useState<string>(getUserDetails()?.id);
 
   const itemAdded = () => {
@@ -86,7 +94,7 @@ export const ProductCard = ({
               {product?.quantity}
             </S.QuantityContainer>
             <S.RupeeContainer>
-              {PRODUCTS_CONFIG.prMrp} {product?.price}
+              {PRODUCTS_CONFIG.prMrp} {Number(product?.price ?? 0).toFixed(2)}
             </S.RupeeContainer>
           </S.ProductDes>
         </div>
@@ -105,6 +113,14 @@ export const ProductCard = ({
           >
             <S.EditIcon />
             {PRODUCTS_CONFIG.editButton}
+          </S.Button>
+          <S.Button
+            $bgColor={theme.colors.primary}
+            $canAdd={true}
+            onClick={() => setAddModal(true)}
+          >
+            <S.AddIcon />
+            {PRODUCTS_CONFIG.addStockButton}
           </S.Button>
         </S.ButtonContainer>
       );
@@ -141,6 +157,12 @@ export const ProductCard = ({
         product={product}
         categories={categories}
         updateProduct={updateProduct}
+      />
+      <AddStockModel
+        modalShow={addModal}
+        onClose={() => setAddModal(false)}
+        product={product}
+        addStock={addStock}
       />
     </div>
   );

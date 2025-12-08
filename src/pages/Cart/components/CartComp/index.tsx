@@ -156,7 +156,7 @@ export const CartComp = ({
           </S.TitleComp>
         );
 
-      case "price":
+      case "total":
         return (
           <S.TitleComp key={`${item?.productId}-${key}`}>
             ₹{orderQuantity * item?.price}
