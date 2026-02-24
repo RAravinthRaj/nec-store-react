@@ -11,6 +11,8 @@ import { GET_SALES_REPORT } from "./queries/getSalesReport.query";
 export interface GetSalesReportInput {
   from?: string;
   to?: string;
+  categoryId?: string;
+  title?: string;
 }
 
 export const getSalesReport = async (args: GetSalesReportInput) => {

@@ -24,6 +24,14 @@ export const SalesComp = ({ SalesDetails }: ISalesComp) => {
           </S.TitleComp>
         );
 
+      case "price":
+      case "total":
+        return (
+          <S.TitleComp key={`${item?.productId}-${key}`}>
+            {Number(value).toFixed(2)}
+          </S.TitleComp>
+        );
+
       default:
         return (
           <S.TitleComp key={`${item?.productId}-${key}`}>{value}</S.TitleComp>
@@ -35,7 +43,7 @@ export const SalesComp = ({ SalesDetails }: ISalesComp) => {
     return (
       <>
         {Object.entries(item).map(([key, value]) =>
-          _renderItemField(key, value, item)
+          _renderItemField(key, value, item),
         )}
       </>
     );

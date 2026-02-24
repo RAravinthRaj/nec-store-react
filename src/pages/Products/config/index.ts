@@ -35,6 +35,7 @@ export const PRODUCTS_CONFIG = {
     "image/webp",
     "image/gif",
   ],
+  threshold: 10,
   acceptedImageTypes: " Accepted : jpeg, png, jpg, webp, gif",
   cancelIcon: "×",
   itemAlreadyInCart: "This item is already in your cart.",

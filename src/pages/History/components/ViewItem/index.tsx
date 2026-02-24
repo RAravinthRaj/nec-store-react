@@ -50,7 +50,9 @@ export const ViewItemModal = ({
                 }
 
                 if (key === "price") {
-                  displayValue = (d.price ?? 0) * (d.quantity ?? 0);
+                  displayValue = Number(
+                    (d.price ?? 0) * (d.quantity ?? 0),
+                  ).toFixed(2);
                 }
 
                 return <S.TitleComp key={id}>{displayValue}</S.TitleComp>;
@@ -80,7 +82,7 @@ export const ViewItemModal = ({
     return (
       <S.Amount>
         {HISTORY_CONFIG.prMrp}
-        {totalPrice}
+        {Number(totalPrice).toFixed(2)}
       </S.Amount>
     );
   };

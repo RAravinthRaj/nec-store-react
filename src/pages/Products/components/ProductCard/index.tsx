@@ -4,7 +4,8 @@ Unauthorized copying of this file, via any medium, is strictly prohibited.
 Proprietary and confidential.  
 Written by Aravinth Raj R <aravinthr235@gmail.com>, 2025.
 */
-import { useState } from "react";
+
+import { useEffect, useState } from "react";
 import { useTheme } from "../../../../hooks";
 import * as S from "./styles";
 import { EditItemModal } from "../EditItem";
@@ -21,6 +22,7 @@ import {
   getUserDetails,
   setItemInLocalStorage,
 } from "../../../../utils";
+
 export interface IProductCard {
   product: any;
   categories: any[];
@@ -41,14 +43,22 @@ export const ProductCard = ({
   const theme = useTheme();
   const [modal, setModal] = useState(false);
   const [addModal, setAddModal] = useState(false);
-  const [userId, setUserId] = useState<string>(getUserDetails()?.id);
+  const [userId] = useState<string>(getUserDetails()?.id);
+  const [isAvailableInCart, setIsAvailableInCart] = useState(false);
+
+  /* 🔹 Sync button state from localStorage on mount */
+  useEffect(() => {
+    const cartProducts = getItemInLocalStorage("cartProducts") || [];
+    const exists = cartProducts.some((item: any) => item.id === product?.id);
+    setIsAvailableInCart(exists);
+  }, [product?.id]);
 
   const itemAdded = () => {
     try {
       const cartProducts = getItemInLocalStorage("cartProducts") || [];
 
       const existingProduct = cartProducts.find(
-        (item: { id: any }) => item.id === product?.id
+        (item: { id: any }) => item.id === product?.id,
       );
 
       if (!existingProduct) {
@@ -57,6 +67,7 @@ export const ProductCard = ({
           quantity: 1,
           price: Number(product?.price),
         };
+
         cartProducts.push(newProduct);
 
         if (product?.id) {
@@ -64,43 +75,43 @@ export const ProductCard = ({
         }
 
         setItemInLocalStorage("cartProducts", cartProducts);
+        setIsAvailableInCart(true); // ✅ instant UI update
 
         toast.success(PRODUCTS_CONFIG.addItem);
         window.dispatchEvent(new Event("cartUpdated"));
       } else {
+        setIsAvailableInCart(true);
         toast.info(PRODUCTS_CONFIG.itemAlreadyInCart);
       }
-    } catch (error) {
+    } catch {
       toast.error(PRODUCTS_CONFIG.cartErrorMessage);
     }
   };
 
-  const _renderCardInitialDetails = () => {
-    return (
-      <S.ProductDetailContainer>
-        <S.ImageContainer>
-          <S.Image
-            src={product.productImage ?? theme.images.defaultProductImage}
-          />
-        </S.ImageContainer>
-        <div>
-          <S.TitleContainer>{product?.title}</S.TitleContainer>
-          <S.CategoryContainer $bgColor={theme.colors.primary}>
-            {product?.category}
-          </S.CategoryContainer>
-          <S.ProductDes>
-            <S.QuantityContainer>
-              {PRODUCTS_CONFIG.prQuantity}
-              {product?.quantity}
-            </S.QuantityContainer>
-            <S.RupeeContainer>
-              {PRODUCTS_CONFIG.prMrp} {Number(product?.price ?? 0).toFixed(2)}
-            </S.RupeeContainer>
-          </S.ProductDes>
-        </div>
-      </S.ProductDetailContainer>
-    );
-  };
+  const _renderCardInitialDetails = () => (
+    <S.ProductDetailContainer>
+      <S.ImageContainer>
+        <S.Image
+          src={product.productImage ?? theme.images.defaultProductImage}
+        />
+      </S.ImageContainer>
+      <div>
+        <S.TitleContainer>{product?.title}</S.TitleContainer>
+        <S.CategoryContainer $bgColor={theme.colors.primary}>
+          {product?.category}
+        </S.CategoryContainer>
+        <S.ProductDes>
+          <S.QuantityContainer>
+            {PRODUCTS_CONFIG.prQuantity}
+            {product?.quantity}
+          </S.QuantityContainer>
+          <S.RupeeContainer>
+            {PRODUCTS_CONFIG.prMrp} {Number(product?.price ?? 0).toFixed(2)}
+          </S.RupeeContainer>
+        </S.ProductDes>
+      </div>
+    </S.ProductDetailContainer>
+  );
 
   const _renderButton = () => {
     if (isRetailer) {
@@ -108,7 +119,7 @@ export const ProductCard = ({
         <S.ButtonContainer>
           <S.Button
             $bgColor={theme.colors.primary}
-            $canAdd={true}
+            $canAdd
             onClick={() => setModal(true)}
           >
             <S.EditIcon />
@@ -116,7 +127,7 @@ export const ProductCard = ({
           </S.Button>
           <S.Button
             $bgColor={theme.colors.primary}
-            $canAdd={true}
+            $canAdd
             onClick={() => setAddModal(true)}
           >
             <S.AddIcon />
@@ -126,20 +137,22 @@ export const ProductCard = ({
       );
     }
 
+    const isOutOfStock = product?.quantity <= PRODUCTS_CONFIG.threshold;
+
     return (
       <S.ButtonContainer>
         <S.Button
           $bgColor={theme.colors.primary}
-          onClick={() => {
-            itemAdded();
-          }}
-          $canAdd={product?.quantity > 0}
+          disabled={isAvailableInCart || isOutOfStock}
+          onClick={!isAvailableInCart && !isOutOfStock ? itemAdded : undefined}
+          $canAdd={!isOutOfStock && !isAvailableInCart}
         >
           <S.CartIcon />
-          {product?.quantity > 0
-            ? PRODUCTS_CONFIG.addToCartButton
-            : PRODUCTS_CONFIG.outOfStock}
-          {}
+          {isOutOfStock
+            ? PRODUCTS_CONFIG.outOfStock
+            : isAvailableInCart
+              ? "Added to Cart"
+              : PRODUCTS_CONFIG.addToCartButton}
         </S.Button>
       </S.ButtonContainer>
     );
@@ -151,6 +164,7 @@ export const ProductCard = ({
         {_renderCardInitialDetails()}
         {_renderButton()}
       </S.CardContainer>
+
       <EditItemModal
         modalShow={modal}
         onClose={() => setModal(false)}
@@ -158,6 +172,7 @@ export const ProductCard = ({
         categories={categories}
         updateProduct={updateProduct}
       />
+
       <AddStockModel
         modalShow={addModal}
         onClose={() => setAddModal(false)}

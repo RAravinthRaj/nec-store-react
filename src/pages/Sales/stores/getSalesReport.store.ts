@@ -6,7 +6,7 @@ Written by Aravinth Raj R <aravinthr235@gmail.com>, 2025.
 */
 import { create } from "zustand";
 import SalesService from "../services";
-import { GetSalesInput, GetSalesReportInput } from "../services/graphql";
+import { GetSalesReportInput } from "../services/graphql";
 
 type State = {
   getSalesReportLoading: boolean;

@@ -20,7 +20,7 @@ export interface IAddItem {
   updateOrder: (
     orderId: string,
     deliveryStatus?: string,
-    paidStatus?: string
+    paidStatus?: string,
   ) => void;
 }
 
@@ -33,7 +33,7 @@ export const ViewItemModal = ({
   const theme = useTheme();
   const [paidStatus, setPaidStatus] = useState(individualOrder?.paidStatus);
   const [deliveryStatus, setDeliveryStatus] = useState(
-    individualOrder?.deliveryStatus
+    individualOrder?.deliveryStatus,
   );
 
   useEffect(() => {
@@ -70,7 +70,7 @@ export const ViewItemModal = ({
     changedValue: string,
     displayCurrentValue: string,
     displayChangedValue: string,
-    orderStatus: "paidStatus" | "deliveryStatus"
+    orderStatus: "paidStatus" | "deliveryStatus",
   ) => {
     const isPaidSection = orderStatus === "paidStatus";
     const isDeliveredSection = orderStatus === "deliveryStatus";
@@ -122,7 +122,9 @@ export const ViewItemModal = ({
                 }
 
                 if (key === "price") {
-                  displayValue = (item.price ?? 0) * (item.quantity ?? 0);
+                  displayValue = Number(
+                    (item.price ?? 0) * (item.quantity ?? 0),
+                  ).toFixed(2);
                 }
 
                 return <S.TitleComp key={id}>{displayValue}</S.TitleComp>;
@@ -152,7 +154,7 @@ export const ViewItemModal = ({
     return (
       <S.Amount>
         {ORDERS_CONFIG.prMrp}
-        {individualOrder?.totalAmount}
+        {Number(individualOrder?.totalAmount).toFixed(2)}
       </S.Amount>
     );
   };
@@ -167,7 +169,7 @@ export const ViewItemModal = ({
           "unpaid",
           ORDERS_CONFIG.amountReceived,
           ORDERS_CONFIG.amountNotReceived,
-          "paidStatus"
+          "paidStatus",
         )}
 
         {_renderDropDown(
@@ -177,7 +179,7 @@ export const ViewItemModal = ({
           "not_delivered",
           ORDERS_CONFIG.deliver,
           ORDERS_CONFIG.deliverPending,
-          "deliveryStatus"
+          "deliveryStatus",
         )}
 
         <S.Button

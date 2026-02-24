@@ -29,7 +29,7 @@ export const CartComp = ({
   const theme = useTheme();
   const lastToastTimeRef = useRef<number | null>(null);
   const [cartProducts, setCartProducts] = useState<any[]>(
-    getItemInLocalStorage("cartProducts") || []
+    getItemInLocalStorage("cartProducts") || [],
   );
 
   const navigate = useNavigate();
@@ -68,7 +68,7 @@ export const CartComp = ({
       cancelButtonText: "Cancel",
       onConfirmedPress: () => {
         const updatedCart = cartProducts.filter(
-          (item) => item.id !== productId
+          (item) => item.id !== productId,
         );
         setItemInLocalStorage("cartProducts", updatedCart);
         setProductIDs(updatedCart.map((item) => item.id));
@@ -82,7 +82,7 @@ export const CartComp = ({
   const _updateProduct = (
     isDecrement: boolean,
     item: any,
-    productInCart: any
+    productInCart: any,
   ) => {
     const now = Date.now();
     const lastShown = lastToastTimeRef.current;
@@ -106,7 +106,8 @@ export const CartComp = ({
       updatedCart[index].quantity = currentQty - 1;
       updatedCart[index].price = (currentQty - 1) * item?.price;
     } else {
-      if (currentQty >= maxQty) return showToast("Quantity exceeds limit");
+      if (currentQty >= maxQty - CARTS_CONFIG.threshold)
+        return showToast("Quantity exceeds limit");
       updatedCart[index].quantity = currentQty + 1;
       updatedCart[index].price = (currentQty + 1) * item?.price;
     }
@@ -159,7 +160,14 @@ export const CartComp = ({
       case "total":
         return (
           <S.TitleComp key={`${item?.productId}-${key}`}>
-            ₹{orderQuantity * item?.price}
+            ₹{Number(orderQuantity * item?.price).toFixed(2)}
+          </S.TitleComp>
+        );
+
+      case "price":
+        return (
+          <S.TitleComp key={`${item?.productId}-${key}`}>
+            ₹{Number(value).toFixed(2)}
           </S.TitleComp>
         );
 
@@ -172,7 +180,7 @@ export const CartComp = ({
 
   const _renderItemFields = (item: any) =>
     Object.entries(item).map(([key, value]) =>
-      _renderItemField(key, value, item)
+      _renderItemField(key, value, item),
     );
 
   const _renderCartsData = () => {

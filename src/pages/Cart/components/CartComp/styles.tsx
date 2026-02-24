@@ -65,6 +65,7 @@ export const ItemBox = styled.div<{
   border-radius: 10px;
   margin: 5px 0px;
   min-width: 600px;
+  align-items: center;
   background-color: ${(props) =>
     props.isOddIndex ? "rgba(160, 196, 255, 0.12)" : ""};
 

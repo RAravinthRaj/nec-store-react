@@ -53,7 +53,7 @@ interface GetAllOrdersResult {
 }
 
 export const getAllOrders = async (
-  args: GetAllOrdersInput
+  args: GetAllOrdersInput,
 ): Promise<GetAllOrdersResult> => {
   try {
     const token = getItemInLocalStorage("token");
@@ -88,7 +88,7 @@ export const getAllOrders = async (
 
 const formatDate = (input: string | number): string => {
   const date = new Date(
-    typeof input === "string" && /^\d+$/.test(input) ? parseInt(input) : input
+    typeof input === "string" && /^\d+$/.test(input) ? parseInt(input) : input,
   );
   if (isNaN(date.getTime())) return "Invalid Date";
   return date.toLocaleDateString("en-GB").split("/").join(".");
