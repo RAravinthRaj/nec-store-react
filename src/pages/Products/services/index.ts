@@ -8,6 +8,8 @@ import {
   addCategory,
   addProduct,
   AddProductInput,
+  addStock,
+  AddStockInput,
   getAllCategories,
   UpdateProduct,
   UpdateProductInput,
@@ -54,6 +56,11 @@ class ProductsService {
 
   async addRecentAPI(args: AddRecentInput): Promise<any> {
     const res = await addRecent(args);
+    return res;
+  }
+
+  async addStockAPI(args: AddStockInput): Promise<any> {
+    const res = await addStock(args);
     return res;
   }
 }

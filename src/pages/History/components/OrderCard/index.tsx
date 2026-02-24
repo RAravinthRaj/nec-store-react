@@ -55,7 +55,8 @@ export const OrderCard = ({ individualOrder }: IOrderCard) => {
           {individualOrder?.date}
         </S.DateContainer>
         <S.RupeeContainer>
-          {HISTORY_CONFIG.prMrp} {individualOrder?.totalAmount}
+          {HISTORY_CONFIG.prMrp}{" "}
+          {Number(individualOrder?.totalAmount).toFixed(2)}
         </S.RupeeContainer>
         {_renderButton()}
       </S.BodyContainer>

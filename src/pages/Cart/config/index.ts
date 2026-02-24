@@ -14,11 +14,12 @@ export const CARTS_CONFIG = {
     "Product Image",
     "Category",
     "Product Name",
+    "Price(Per unit.)",
     "Quantity",
     "Total Amount(in Rs.)",
     "Action",
   ],
-
+  threshold: 10,
   swal: {
     title: "Are you sure you want to delete?",
     text: "You won't be able to revert this!",

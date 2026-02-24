@@ -30,7 +30,7 @@ export const Footer = ({
         </S.FooterContent>
         <S.FooterContent>
           {SALES_CONFIG.prMRP}
-          {totalAmount}
+          {Number(totalAmount).toFixed(2)}
         </S.FooterContent>
         <S.Button $bgColor={theme.colors.primary} onClick={getSalesReport}>
           <S.DownloadIcon />

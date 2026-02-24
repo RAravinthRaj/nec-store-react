@@ -57,8 +57,9 @@ const formatData = (products: any[]) => {
         productImage: product?.productImage,
         title: product?.title,
         category: product?.category?.name,
-        quantity: product?.quantity,
         price: product?.price,
+        quantity: product?.quantity,
+        total: product?.price,
         productId: product?.id,
       };
 

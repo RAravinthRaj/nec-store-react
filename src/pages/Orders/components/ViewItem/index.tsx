@@ -20,7 +20,7 @@ export interface IAddItem {
   updateOrder: (
     orderId: string,
     deliveryStatus?: string,
-    paidStatus?: string
+    paidStatus?: string,
   ) => void;
 }
 
@@ -33,10 +33,9 @@ export const ViewItemModal = ({
   const theme = useTheme();
   const [paidStatus, setPaidStatus] = useState(individualOrder?.paidStatus);
   const [deliveryStatus, setDeliveryStatus] = useState(
-    individualOrder?.deliveryStatus
+    individualOrder?.deliveryStatus,
   );
 
-  // ✅ Reset dropdowns to original values whenever order changes or modal opens
   useEffect(() => {
     if (individualOrder) {
       setPaidStatus(individualOrder.paidStatus);
@@ -45,7 +44,6 @@ export const ViewItemModal = ({
   }, [individualOrder, modalShow]);
 
   const _handleClose = () => {
-    // reset before closing
     setPaidStatus(individualOrder?.paidStatus);
     setDeliveryStatus(individualOrder?.deliveryStatus);
     onClose();
@@ -59,9 +57,11 @@ export const ViewItemModal = ({
       updateOrder(individualOrder?.orderId, paidStatus, deliveryStatus);
       _handleClose();
     } else {
-      toast.info("Nothing to Update", { toastId: "no-update" }); // ✅ avoid duplicate toast
+      toast.info("Nothing to Update", { toastId: "no-update" });
     }
   };
+
+  console.log(individualOrder?.orderStatus);
 
   const _renderDropDown = (
     data: string,
@@ -70,7 +70,7 @@ export const ViewItemModal = ({
     changedValue: string,
     displayCurrentValue: string,
     displayChangedValue: string,
-    orderStatus: "paidStatus" | "deliveryStatus"
+    orderStatus: "paidStatus" | "deliveryStatus",
   ) => {
     const isPaidSection = orderStatus === "paidStatus";
     const isDeliveredSection = orderStatus === "deliveryStatus";
@@ -88,7 +88,6 @@ export const ViewItemModal = ({
       );
     }
 
-    // ✅ Always render both options but disable current one
     return (
       <S.DropDown>
         <S.StyledSelect value={data} onChange={(e) => setData(e.target.value)}>
@@ -123,7 +122,9 @@ export const ViewItemModal = ({
                 }
 
                 if (key === "price") {
-                  displayValue = (item.price ?? 0) * (item.quantity ?? 0);
+                  displayValue = Number(
+                    (item.price ?? 0) * (item.quantity ?? 0),
+                  ).toFixed(2);
                 }
 
                 return <S.TitleComp key={id}>{displayValue}</S.TitleComp>;
@@ -153,7 +154,7 @@ export const ViewItemModal = ({
     return (
       <S.Amount>
         {ORDERS_CONFIG.prMrp}
-        {individualOrder?.totalAmount}
+        {Number(individualOrder?.totalAmount).toFixed(2)}
       </S.Amount>
     );
   };
@@ -168,7 +169,7 @@ export const ViewItemModal = ({
           "unpaid",
           ORDERS_CONFIG.amountReceived,
           ORDERS_CONFIG.amountNotReceived,
-          "paidStatus"
+          "paidStatus",
         )}
 
         {_renderDropDown(
@@ -178,16 +179,13 @@ export const ViewItemModal = ({
           "not_delivered",
           ORDERS_CONFIG.deliver,
           ORDERS_CONFIG.deliverPending,
-          "deliveryStatus"
+          "deliveryStatus",
         )}
 
         <S.Button
           $bgColor={theme.colors.primary}
           onClick={_changeStatus}
-          $isValid={
-            individualOrder?.paidStatus === "paid" &&
-            individualOrder?.deliveryStatus === "delivered"
-          }
+          $isValid={individualOrder?.orderStatus === "completed"}
         >
           {ORDERS_CONFIG.save}
         </S.Button>

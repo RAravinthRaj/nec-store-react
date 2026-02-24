@@ -7,6 +7,8 @@ Written by Aravinth Raj R <aravinthr235@gmail.com>, 2025.
 export const PRODUCTS_CONFIG = {
   addCategoryTitle: "Add Category",
   addItemTitle: "Add Item",
+  editItemTitle: "Edit Item",
+  addStockTitle: "Add Stock",
   category: "Category",
   quantity: "Quantity",
   mrp: "MRP",
@@ -33,9 +35,11 @@ export const PRODUCTS_CONFIG = {
     "image/webp",
     "image/gif",
   ],
+  threshold: 10,
   acceptedImageTypes: " Accepted : jpeg, png, jpg, webp, gif",
   cancelIcon: "×",
   itemAlreadyInCart: "This item is already in your cart.",
   cartErrorMessage: "Something went wrong while adding the item.",
   outOfStock: "Item Out Of Stock",
+  addStockButton: "Add",
 };

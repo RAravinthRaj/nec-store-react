@@ -125,12 +125,13 @@ const Sales = () => {
   };
 
   const _getSalesReport = () => {
-    const { from, to } = payload;
+    const { from, to, categoryId, title } = payload;
     if (from.trim() === "" || to.trim() === "") {
       toast.info("Enter the dates");
       return;
     }
-    fetchGetSalesReport({ from, to });
+
+    fetchGetSalesReport({ from, to, categoryId, title });
     resetGetSalesReport();
   };
 

@@ -6,25 +6,29 @@ Written by Aravinth Raj R <aravinthr235@gmail.com>, 2025.
 */
 import { apolloClient } from "../../../../clients";
 import { getGraphqlError, getItemInLocalStorage } from "../../../../utils";
-import { GET_SALES_REPORT } from "./queries/getSalesReport.query";
+import { ADD_STOCK } from "./mutations/addStock.mutation";
 
-export interface GetSalesReportInput {
-  from?: string;
-  to?: string;
-  categoryId?: string;
-  title?: string;
+export interface AddStockInput {
+  id: string;
+  quantity: number;
+  price: number;
 }
 
-export const getSalesReport = async (args: GetSalesReportInput) => {
+export const addStock = async (args: AddStockInput) => {
   try {
     const token = getItemInLocalStorage("token");
     if (token && token.length > 0) {
-      const { data } = await apolloClient.query({
-        query: GET_SALES_REPORT,
+      const { id, quantity, price } = args;
+
+      const { data } = await apolloClient.mutate({
+        mutation: ADD_STOCK,
         variables: {
-          input: args,
+          input: {
+            id,
+            quantity,
+            price,
+          },
         },
-        fetchPolicy: "no-cache",
         context: {
           headers: {
             "Content-Type": "application/json",
@@ -35,16 +39,17 @@ export const getSalesReport = async (args: GetSalesReportInput) => {
 
       return {
         payload: {
-          message: data?.getSalesReport?.message,
+          data: data?.addProduct,
         },
       };
     }
 
     throw new Error("Unauthorized");
   } catch (err: any) {
-    let msg = getGraphqlError(err) || "An error occurred while fetching Sales.";
+    const msg =
+      getGraphqlError(err) || "An error occurred while adding the Stock.";
 
-    console.error("Error in getSales: ", msg);
+    console.error("Error in addStock: ", msg);
     throw new Error(msg);
   }
 };

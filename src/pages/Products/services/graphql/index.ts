@@ -10,3 +10,4 @@ export * from "./getAllProducts.graphql";
 export * from "./addProduct.graphql";
 export * from "./updateProduct.mutation";
 export * from "./addRecent.graphql";
+export * from "./addStock.graphql";

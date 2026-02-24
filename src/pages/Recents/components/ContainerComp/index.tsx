@@ -30,7 +30,7 @@ export const RecentProducts = ({ products }: IRecentProducts) => {
       const cartProducts = getItemInLocalStorage("cartProducts") || [];
 
       const existingProduct = cartProducts.find(
-        (item: { id: any }) => item.id === product?.id
+        (item: { id: any }) => item.id === product?.id,
       );
 
       if (!existingProduct) {
@@ -75,7 +75,7 @@ export const RecentProducts = ({ products }: IRecentProducts) => {
               </div>
               <div>
                 {RECENT_CONFIG.mrp}
-                {product?.product?.price}
+                {Number(product?.product?.price).toFixed(2)}
               </div>
             </S.Details>
           </div>

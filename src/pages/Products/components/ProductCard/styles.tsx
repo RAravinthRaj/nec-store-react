@@ -2,6 +2,7 @@ import styled from "styled-components";
 import { FaPencilAlt } from "react-icons/fa";
 import { ImBin } from "react-icons/im";
 import { LiaCartArrowDownSolid } from "react-icons/lia";
+import { FiPlus } from "react-icons/fi";
 
 export const CardContainer = styled.div`
   width: 100%;
@@ -99,7 +100,7 @@ export const RupeeContainer = styled.h5`
 
 export const ButtonContainer = styled.div`
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   justify-content: space-between;
   gap: 8px;
   margin-top: 15px;
@@ -118,7 +119,7 @@ export const Button = styled.button<{ $bgColor: string; $canAdd: boolean }>`
   border-radius: 5px;
   color: white;
   font-size: 14px;
-  gap: 6px;
+  gap: 5px;
   cursor: pointer;
 
   &:hover {
@@ -132,7 +133,7 @@ export const Button = styled.button<{ $bgColor: string; $canAdd: boolean }>`
 
 export const EditIcon = styled(FaPencilAlt)`
   color: white;
-  font-size: 14px;
+  font-size: 13px;
 
   @media (max-width: 576px) {
     font-size: 13px;
@@ -164,3 +165,191 @@ export const LessStock = styled.div`
   font-size: 12px;
   color: red;
 `;
+
+export const AddIcon = styled(FiPlus)`
+  color: white;
+  font-size: 16px;
+`;
+// import styled from "styled-components";
+// import { FaPencilAlt } from "react-icons/fa";
+// import { ImBin } from "react-icons/im";
+// import { LiaCartArrowDownSolid } from "react-icons/lia";
+// import { FiPlus } from "react-icons/fi";
+
+// export const CardContainer = styled.div`
+//   width: 100%;
+//   height: 100%;
+
+//   display: flex;
+//   flex-direction: column;
+//   justify-content: space-between;
+//   padding: 20px;
+//   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+//   border-radius: 10px;
+//   transition: transform 0.2s ease-in-out;
+//   background-color: #fff;
+
+//   &:hover {
+//     transform: scale(1.02);
+//     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+//   }
+
+//   @media (max-width: 576px) {
+//     padding: 10px;
+
+//     &:hover {
+//       transform: none;
+//       box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+//     }
+//   }
+// `;
+
+// export const ProductDetailContainer = styled.div`
+//   display: flex;
+//   flex-direction: column;
+//   align-items: center;
+// `;
+
+// export const ImageContainer = styled.div`
+//   width: 90%;
+//   height: 70px;
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
+//   margin-bottom: 10px;
+// `;
+
+// export const Image = styled.img`
+//   width: 100%;
+//   height: 100%;
+//   object-fit: contain;
+// `;
+
+// export const TitleContainer = styled.h3`
+//   text-align: center;
+//   font-size: 22px;
+//   margin: 12px 0;
+//   word-wrap: break-word;
+
+//   @media (max-width: 576px) {
+//     font-size: 14px;
+//     margin: 5px 0;
+//   }
+// `;
+
+// export const CategoryContainer = styled.h5<{ $bgColor: string }>`
+//   color: ${(props) => props.$bgColor};
+//   text-align: center;
+//   font-size: 14px;
+//   margin-bottom: 10px;
+
+//   @media (max-width: 576px) {
+//     font-size: 10px;
+//   }
+// `;
+
+// export const ProductDes = styled.div`
+//   display: flex;
+//   flex-direction: row;
+//   gap: 50px;
+//   justify-content: space-between;
+//   align-items: center;
+//   font-size: 13px;
+//   margin-top: 20px;
+// `;
+
+// export const QuantityContainer = styled.h5`
+//   display: flex;
+//   flex-direction: column;
+//   font-size: 13px;
+
+//   @media (max-width: 576px) {
+//     font-size: 10px;
+//     text-align: center;
+//     space-x: 10px;
+//   }
+// `;
+
+// export const RupeeContainer = styled.h5`
+//   display: flex;
+//   flex-direction: column;
+//   font-size: 13px;
+
+//   @media (max-width: 576px) {
+//     font-size: 10px;
+//     text-align: center;
+//   }
+// `;
+
+// export const ButtonContainer = styled.div`
+//   display: flex;
+//   flex-direction: row;
+//   justify-content: space-between;
+//   gap: 8px;
+//   margin-top: 15px;
+// `;
+
+// export const Button = styled.button<{ $bgColor: string; $canAdd: boolean }>`
+//   flex: 1;
+//   display: flex;
+//   align-items: center;
+//   justify-content: center;
+//   padding: 8px;
+//   background-color: ${(props) => props.$bgColor};
+//   opacity: ${(props) => (props.$canAdd ? 1 : 0.5)};
+//   pointer-events: ${(props) => (props.$canAdd ? "default" : "none")};
+//   border: none;
+//   border-radius: 5px;
+//   color: white;
+//   font-size: 14px;
+//   gap: 5px;
+//   cursor: pointer;
+
+//   &:hover {
+//     opacity: ${(props) => (props.$canAdd ? 0.9 : 0.5)};
+//   }
+
+//   @media (max-width: 576px) {
+//     font-size: 13px;
+//   }
+// `;
+
+// export const EditIcon = styled(FaPencilAlt)`
+//   color: white;
+//   font-size: 13px;
+
+//   @media (max-width: 576px) {
+//     font-size: 13px;
+//   }
+// `;
+
+// export const DeleteIcon = styled(ImBin)`
+//   color: white;
+//   font-size: 14px;
+
+//   @media (max-width: 576px) {
+//     font-size: 13px;
+//   }
+// `;
+
+// export const CartIcon = styled(LiaCartArrowDownSolid)`
+//   color: white;
+//   font-size: 18px;
+
+//   @media (max-width: 576px) {
+//     font-size: 16px;
+//   }
+// `;
+
+// export const LessStock = styled.div`
+//   display: flex;
+//   align-items: center;
+//   margin-top: -20px;
+//   font-size: 12px;
+//   color: red;
+// `;
+
+// export const AddIcon = styled(FiPlus)`
+//   color: white;
+//   font-size: 16px;
+// `;

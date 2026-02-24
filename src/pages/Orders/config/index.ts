@@ -11,7 +11,7 @@ export const ORDERS_CONFIG = {
     "Product Name",
     "Category",
     "Quantity",
-    "MRP",
+    "Total Price",
   ],
   orderNumber: "Order Number : ",
   orderBy: "Order By : ",

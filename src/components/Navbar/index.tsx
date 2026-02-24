@@ -39,7 +39,6 @@ export const Navbar = ({ menu, onToggleMenu, showHamburgerIcon }: INavbar) => {
 
       if (e?.detail) {
         newUserData = e.detail;
-        localStorage.setItem("userDetails", JSON.stringify(newUserData));
       } else {
         const currentUserData = getUserDetails();
         newUserData = currentUserData?.name ? currentUserData : { name: "" };
@@ -181,7 +180,7 @@ export const Navbar = ({ menu, onToggleMenu, showHamburgerIcon }: INavbar) => {
   );
 
   const _recentViewed = () => {
-    if (getUserDetails()?.role !== "admin") {
+    if (getUserDetails()?.role === "customer") {
       return <Recent />;
     }
   };

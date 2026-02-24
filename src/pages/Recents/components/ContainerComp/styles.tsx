@@ -13,7 +13,9 @@ export const RecentIcon = styled(PiClockCounterClockwise)`
   font-size: 28px;
   color: #000000;
   cursor: pointer;
-  transition: transform 0.2s ease, color 0.2s ease;
+  transition:
+    transform 0.2s ease,
+    color 0.2s ease;
 
   &:hover {
     transform: scale(1.1);
@@ -73,7 +75,9 @@ export const ImageWrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
 
   &:hover {
     transform: scale(1.05);
@@ -82,7 +86,7 @@ export const ImageWrapper = styled.div`
   img {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: fill;
     border-radius: inherit;
   }
 
@@ -118,6 +122,7 @@ export const Details = styled.div`
   justify-content: space-between;
   margin-top: 8px;
   font-size: 14px;
+  gap: 5px;
 
   @media (max-width: 768px) {
     font-size: 15px;
@@ -170,7 +175,9 @@ export const Button = styled.button<{ $bgColor: string }>`
   cursor: pointer;
   gap: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  transition: box-shadow 0.3s ease, transform 0.2s ease;
+  transition:
+    box-shadow 0.3s ease,
+    transform 0.2s ease;
 
   &:hover {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);

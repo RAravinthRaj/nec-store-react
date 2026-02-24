@@ -35,6 +35,7 @@ interface OrderFormatted {
   products: ProductFormatted[];
   paidStatus: string;
   deliveryStatus: string;
+  orderStatus: string;
 }
 
 interface GetAllOrdersResponse {
@@ -52,7 +53,7 @@ interface GetAllOrdersResult {
 }
 
 export const getAllOrders = async (
-  args: GetAllOrdersInput
+  args: GetAllOrdersInput,
 ): Promise<GetAllOrdersResult> => {
   try {
     const token = getItemInLocalStorage("token");
@@ -87,7 +88,7 @@ export const getAllOrders = async (
 
 const formatDate = (input: string | number): string => {
   const date = new Date(
-    typeof input === "string" && /^\d+$/.test(input) ? parseInt(input) : input
+    typeof input === "string" && /^\d+$/.test(input) ? parseInt(input) : input,
   );
   if (isNaN(date.getTime())) return "Invalid Date";
   return date.toLocaleDateString("en-GB").split("/").join(".");
@@ -118,6 +119,7 @@ const formatOrders = (orders: any[]): OrderFormatted[] => {
         rawDate: new Date(order?.createdAt).getTime() || 0,
         paidStatus: order?.paidStatus,
         deliveryStatus: order?.deliveryStatus,
+        orderStatus: order?.orderStatus,
       };
     })
     .sort((a, b) => b.rawDate - a.rawDate)

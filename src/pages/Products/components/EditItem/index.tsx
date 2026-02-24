@@ -35,10 +35,10 @@ export const EditItemModal = ({
 
   const [title, setTitle] = useState(product?.title);
   const [quantity, setQuantity] = useState<number>(product?.quantity);
-  const [price, setPrice] = useState<number>(product?.price);
+  const [price, setPrice] = useState<number>(Number(product?.price).toFixed(2));
   const [categoryId, setCategoryId] = useState<string>("");
   const [productImage, setProductImage] = useState<string>(
-    product?.productImage
+    product?.productImage,
   );
 
   const fileInputRef = useRef<HTMLInputElement | null>(null);
@@ -180,7 +180,9 @@ export const EditItemModal = ({
     return (
       <S.Header>
         <S.CloseButton onClick={onClose}></S.CloseButton>
-        <S.Title id="contained-modal-title-vcenter">Edit Item</S.Title>
+        <S.Title id="contained-modal-title-vcenter">
+          {PRODUCTS_CONFIG.editItemTitle}
+        </S.Title>
       </S.Header>
     );
   };

@@ -12,6 +12,7 @@ import {
   useGetAllCategoriesStore,
   useGetAllProductsStore,
   useAddRecentStore,
+  useAddStockStore,
 } from "./stores";
 import { toast } from "react-toastify";
 import { CustomPagination, Loader, Error } from "../../components";
@@ -20,11 +21,13 @@ import { ROLES } from "../../config";
 import {
   AddProductInput,
   AddRecentInput,
+  AddStockInput,
   UpdateProductInput,
 } from "./services/graphql";
 import { useNavigate } from "react-router-dom";
 import { useUpdateProductStore } from "./stores/updateProduct.store";
 import { useGetAllRecentProductsStore } from "../Recents/stores";
+import { argsToArgsConfig } from "graphql/type/definition";
 
 const Products = () => {
   const [isRetailer, setIsRetailer] = useState<boolean>(false);
@@ -84,6 +87,14 @@ const Products = () => {
     fetchAddRecent,
     resetAddRecent,
   } = useAddRecentStore();
+
+  const {
+    addStockError,
+    addStockLoading,
+    addStockResponse,
+    fetchAddStock,
+    resetAddStock,
+  } = useAddStockStore();
 
   const { fetchGetAllRecentProducts } = useGetAllRecentProductsStore();
 
@@ -192,6 +203,27 @@ const Products = () => {
     }
   }, [addRecentError, resetAddRecent]);
 
+  useEffect(() => {
+    if (addStockResponse && Object.keys(addStockResponse).length > 0) {
+      resetAddStock();
+      fetchGetAllProducts(payload);
+
+      setTimeout(() => {
+        toast.success("Stock Added Successfully !!");
+      }, 1000);
+    }
+  }, [addStockResponse, resetAddStock]);
+
+  useEffect(() => {
+    if (addStockError && Object.keys(addStockError).length > 0) {
+      resetAddStock();
+
+      setTimeout(() => {
+        toast.error(addStockError);
+      }, 1000);
+    }
+  }, [addStockError, resetAddStock]);
+
   const _onSearchPress = () => {
     setPayload((payload: any) => ({
       ...payload,
@@ -249,6 +281,10 @@ const Products = () => {
     return fetchAddRecent(args);
   };
 
+  const _addStock = (args: AddStockInput) => {
+    return fetchAddStock(args);
+  };
+
   const _renderLoader = () => {
     if (getAllProductsLoading) {
       return <Loader />;
@@ -271,6 +307,7 @@ const Products = () => {
               categories={categories}
               isRetailer={isRetailer}
               updateProduct={_UpdateProduct}
+              addStock={_addStock}
               addRecent={_addRecent}
             />
             <CustomPagination

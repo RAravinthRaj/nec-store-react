@@ -18,7 +18,7 @@ export interface IOrderCard {
   updateOrder: (
     orderId: string,
     deliveryStatus?: string,
-    paidStatus?: string
+    paidStatus?: string,
   ) => void;
 }
 
@@ -85,7 +85,8 @@ export const OrderCard = ({
           {individualOrder?.date}
         </S.DateContainer>
         <S.RupeeContainer>
-          {ORDERS_CONFIG.prMrp} {individualOrder?.totalAmount}
+          {ORDERS_CONFIG.prMrp}{" "}
+          {Number(individualOrder?.totalAmount).toFixed(2)}
         </S.RupeeContainer>
         {_renderButton()}
       </S.BodyContainer>
