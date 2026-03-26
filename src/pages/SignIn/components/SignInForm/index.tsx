@@ -163,7 +163,7 @@ export const SignInForm = ({
       {_renderResend()}
       {_renderButton(
         OTPVisible ? SIGNIN_CONFIG.signInText : SIGNIN_CONFIG.getOTPText,
-        () => _onSubmitEmail()
+        () => _onSubmitEmail(),
       )}
       {_renderFooter()}
     </S.FormMainContainer>

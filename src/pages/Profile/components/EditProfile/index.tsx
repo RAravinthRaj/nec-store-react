@@ -24,7 +24,7 @@ export interface IEditItem {
     email?: string,
     rollNumber?: string,
     department?: string,
-    profilePicture?: string | null
+    profilePicture?: string | null,
   ): void;
 }
 
@@ -41,7 +41,7 @@ export const EditProfileModal = ({
   const [rollNumber, setRollNumber] = useState(user?.rollNumber);
   const [department, setDepartment] = useState<string>(user?.department);
   const [profilePicture, setProfilePicture] = useState<string | null>(
-    user?.profilePicture
+    user?.profilePicture,
   );
 
   const fileInputRef = useRef<HTMLInputElement | null>(null);
@@ -69,7 +69,12 @@ export const EditProfileModal = ({
   const _profileEdited = async () => {
     const updatedFields: any = {};
 
-    if (name !== user?.name) updatedFields.name = name;
+    if (name.trim() !== user?.name) updatedFields.name = name;
+    if (email.trim() !== user?.email) updatedFields.email = email;
+    if (rollNumber.trim() !== user?.rollNumber)
+      updatedFields.rollNumber = rollNumber;
+    if (department.trim() !== user?.department)
+      updatedFields.department = department;
     if (profilePicture !== user?.profilePicture)
       updatedFields.profilePicture = profilePicture;
 
@@ -81,10 +86,10 @@ export const EditProfileModal = ({
     try {
       await onEditProfile(
         updatedUser.name,
-        user?.email,
-        user?.rollNumber,
-        user?.department,
-        updatedUser.profilePicture
+        updatedUser?.email,
+        updatedUser?.rollNumber,
+        updatedUser?.department,
+        updatedUser.profilePicture,
       );
 
       const changedData = {
@@ -94,13 +99,13 @@ export const EditProfileModal = ({
           updatedFields.profilePicture === null
             ? null
             : typeof updatedFields.profilePicture === "string" &&
-              updatedFields.profilePicture.trim() !== ""
-            ? updatedFields.profilePicture
-            : user?.profilePicture,
+                updatedFields.profilePicture.trim() !== ""
+              ? updatedFields.profilePicture
+              : user?.profilePicture,
       };
 
       window.dispatchEvent(
-        new CustomEvent("user-updated", { detail: changedData })
+        new CustomEvent("user-updated", { detail: changedData }),
       );
 
       _resetFields();
@@ -205,7 +210,7 @@ export const EditProfileModal = ({
     <S.Header>
       <S.CloseButton
         onClick={() => {
-          _resetFields(); // reset on manual close
+          _resetFields();
           onClose();
         }}
       ></S.CloseButton>
@@ -225,17 +230,6 @@ export const EditProfileModal = ({
               type="text"
               value={name}
               onChange={(e) => setName(e.target.value)}
-            />
-          </S.InputWrapper>
-        </Form.Group>
-
-        <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-          <Form.Label>{PROFILE_CONFIG.email}</Form.Label>
-          <S.InputWrapper>
-            <S.Input
-              type="text"
-              value={String(email)}
-              onChange={(e) => setEmail(e.target.value)}
             />
           </S.InputWrapper>
         </Form.Group>

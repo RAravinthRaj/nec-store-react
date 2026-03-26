@@ -27,8 +27,6 @@ import {
 import { useNavigate } from "react-router-dom";
 import { useUpdateProductStore } from "./stores/updateProduct.store";
 import { useGetAllRecentProductsStore } from "../Recents/stores";
-import { argsToArgsConfig } from "graphql/type/definition";
-
 const Products = () => {
   const [isRetailer, setIsRetailer] = useState<boolean>(false);
   const [userId, setUserId] = useState<string>(getUserDetails()?.id);
@@ -105,6 +103,7 @@ const Products = () => {
 
   useEffect(() => {
     fetchGetAllCategories();
+    console.log("fetching categories");
   }, [fetchGetAllCategories]);
 
   useEffect(() => {
@@ -250,6 +249,8 @@ const Products = () => {
       orderBy: type,
       skip: 0,
     });
+
+    console.log("sort by", type);
   };
 
   const _onPageChange = (page: number) => {
